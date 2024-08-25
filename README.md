@@ -16,8 +16,8 @@ The **Strings** library includes a string builder and formatter.
 ### 4. Tags
 The **Tags** library provides an object identification mechanism used throughout the framework. It implements an ownership model, where each tag has exactly one owner at any time, allowing for O(1) access when requested from an owner collection.
 
-### 5. Result
-The **Result** library offers a simple and intuitive result type, which is a wrapper around an `INT`. In this system:
+### 5. Results
+The **Results** library offers a simple and intuitive result type, which is a wrapper around an `INT`. In this system:
 - Negative values indicate errors(Base: `Error := -1`),
 - Positive values indicate successes(Base: `Ok := 1`),
 - Zero represents no result (Base: `None := 0`).
@@ -28,7 +28,7 @@ It also includes helper functions for quick result identification and a set of b
 The **Broadcast** library is an implementation of the publish-subscribe pattern. It uses a dynamic (but not dynamically allocated) signal table internally to notify receivers when a signal is emitted. The library provides base collection types for signals and receivers, streamlining event-driven programming.
 
 ### 7. Flags
-The **Flags** library is a wrapper around tagged boolean values, allowing for quick identification of the state of a given object.
+The **Flags** library is a wrapper around tagged `BOOL` values, allowing for quick identification of the state of a given object.
 
 ### 8. States
 The **States** library is an implementation of the state and strategy patterns. It provides state buffers, repositories, and state machines, along with an abstract state class that includes base functionality.
@@ -41,7 +41,7 @@ The **Domain** library is a collection of tagged flags, signals, receivers, and 
 
 ## Packages
 
-The solution provides 2 packages. One contains Stage libraries that require qualified access(x.x.x.1) and the other do not(x.x.x.0).
+The solution provides 2 packages. One contains Stage libraries that require qualified access(StageQ: x.x.x.1) and the other do not(Stage: x.x.x.0).
 
 ## Contributing
 
