@@ -18,5 +18,6 @@ PROGRAM MAIN
   END_IF
 END_PROGRAM
 ```
+Result:
 
-![Debug Result](main/Examples/Images/DebugResult.png)
+![Debug Result](/Examples/Images/DbgResult.png)
