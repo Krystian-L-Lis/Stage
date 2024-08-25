@@ -5,7 +5,7 @@
 VAR_GENERIC CONSTANT
 	nMax				: UDINT(0..16#FFFFFFE) := 1;
 END_VAR
-IMPLEMENTS I_SignalList
+IMPLEMENTS I_SignalList, I_MutSignalList
 VAR
 	_bIsReleased		: BOOL;
 	_iSignal			: ARRAY[0..nMax] OF I_Signal;

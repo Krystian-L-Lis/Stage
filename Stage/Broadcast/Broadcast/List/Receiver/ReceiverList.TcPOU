@@ -5,7 +5,7 @@
 VAR_GENERIC CONSTANT
 	nMax				: UDINT(0..16#FFFFFFE) := 1;
 END_VAR
-IMPLEMENTS I_ReceiverList
+IMPLEMENTS I_ReceiverList, I_MutReceiverList
 VAR
 	_bIsReleased		: BOOL;
 	_iRec				: ARRAY[0..nMax] OF I_Receiver;
