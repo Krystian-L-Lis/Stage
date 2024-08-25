@@ -4,31 +4,11 @@
     <Declaration><![CDATA[FUNCTION_BLOCK DomainIter
 VAR
 	_iPointer		: I_DomainNode;
-	_eState			: Results.Result;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="FB_init" Id="{14feefc1-5b26-43a6-8d8e-f8f61ce37de8}">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
-METHOD FB_Init: BOOL
-VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_iPointer := _Domain.iFirst;
-IF _iPointer <> 0 THEN
-	_eState := Results.Ok;
-ELSE
-	_eState := Results.None;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="First" Id="{0ae4b593-0598-4640-b825-87c86a6b6f45}">
       <Declaration><![CDATA[METHOD First : Results.Result
 VAR_OUTPUT
@@ -38,12 +18,11 @@ END_VAR
       <Implementation>
         <ST><![CDATA[_iPointer := _Domain.iFirst;
 IF _iPointer <> 0 THEN
-	_eState := Results.Ok;
+	iDomain := _iPointer;
+	First := Results.Ok;
 ELSE
-	_eState := Results.None;
-END_IF
-First := _eState;
-iDomain := _iPointer;]]></ST>
+	First := Results.Error;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Get" Id="{e57b4431-ad94-43b0-b826-4d385de919cb}">
@@ -53,8 +32,11 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Get := _eState;
-iDomain := _iPointer;]]></ST>
+        <ST><![CDATA[IF _iPointer <> 0 THEN
+	iDomain := _iPointer;
+	Get := Results.Ok;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetPos" Id="{3ed358f8-6359-4940-a199-33cfcc66141e}">
@@ -71,28 +53,25 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iPointer := _Domain.iFirst;
 IF _iPointer = 0 THEN
-    _eState := Results.None;
-   	GetPos := _eState;
+    GetPos := Results.None;
 	RETURN;
 END_IF
 
 IF nPos = 0 THEN
-	_eState := Results.Ok;
+	GetPos := Results.Ok;
 	iDomain := _iPointer;
-	GetPos := _eState;
 	RETURN;
 END_IF
 
 FOR i := 0 TO nPos - 1 DO
     _iPointer := _iPointer.Next;
     IF _iPointer = 0 THEN
-		_eState := Results.None;
-        GetPos := _eState;
+		GetPos := Results.None;
+		RETURN;
     END_IF
 END_FOR
 
-_eState := Results.Ok;
-GetPos := _eState;
+GetPos := Results.Ok;
 iDomain := _iPointer;
 ]]></ST>
       </Implementation>
@@ -105,12 +84,11 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iPointer := _Domain.iLast;
 IF _iPointer <> 0 THEN
-	_eState := Results.Ok;
+	iDomain := _iPointer;
+	Last := Results.Ok;
 ELSE
-	_eState := Results.None;
-END_IF
-Last := _eState;
-iDomain := _iPointer;]]></ST>
+	Last := Results.Error;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Next" Id="{69156cd3-3bba-497c-93f4-b2a152ad3172}">
@@ -120,19 +98,19 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _eState <> Results.Ok THEN
-	Next := Results.None;
-	RETURN;
+        <ST><![CDATA[IF _iPointer = 0 THEN
+	_iPointer := _Domain.iFirst;
+ELSE
+	_iPointer := _iPointer.Next;
 END_IF
 
-_iPointer := _iPointer.Next;
 IF _iPointer <> 0 THEN
-	_eState := Results.Ok;
+	iDomain := _iPointer;
+	Next := Results.Ok;
 ELSE
-	_eState := Results.None;
+	Next := Results.Error;
 END_IF
-Next := _eState;
-iDomain := _iPointer;]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Peek" Id="{2a2ce12f-e6f8-4e99-8d59-230b93d9755e}">
@@ -142,18 +120,15 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _eState <> Results.Ok THEN
-	Peek := Results.None;
-	RETURN;
+        <ST><![CDATA[IF _iPointer <> 0 THEN
+	iDomain := _iPointer.Next;
 END_IF
 
-iDomain := _iPointer.Next;
 IF iDomain <> 0 THEN
-	_eState := Results.Ok;
+	Peek := Results.Ok;
 ELSE
-	_eState := Results.None;
-END_IF
-Peek := _eState;]]></ST>
+	Peek := Results.Error;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="PeekBack" Id="{78aed9ad-5f9c-4bb5-acce-3ee0f1eeb0fa}">
@@ -163,18 +138,15 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _eState <> Results.Ok THEN
-	PeekBack := Results.None;
-	RETURN;
+        <ST><![CDATA[IF _iPointer <> 0 THEN
+	iDomain := _iPointer.Prev;
 END_IF
 
-iDomain := _iPointer.Prev;
 IF iDomain <> 0 THEN
-	_eState := Results.Ok;
+	PeekBack := Results.Ok;
 ELSE
-	_eState := Results.None;
-END_IF
-PeekBack := _eState;]]></ST>
+	PeekBack := Results.Error;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="PeekPos" Id="{429fdda8-7f70-483a-b503-91e2a495570b}">
@@ -192,28 +164,25 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iNode := _Domain.iFirst;
 IF _iNode = 0 THEN
-    _eState := Results.None;
-   	PeekPos := _eState;
+    PeekPos := Results.None;
 	RETURN;
 END_IF
 
 IF nPos = 0 THEN
-	_eState := Results.Ok;
-	iDomain := _iNode;
-	PeekPos := _eState;
+	PeekPos := Results.Ok;
+	iDomain := _iPointer;
 	RETURN;
 END_IF
 
 FOR i := 0 TO nPos - 1 DO
     _iNode := _iNode.Next;
     IF _iNode = 0 THEN
-		_eState := Results.None;
-        PeekPos := _eState;
+		PeekPos := Results.None;
+		RETURN;
     END_IF
 END_FOR
 
-_eState := Results.Ok;
-PeekPos := _eState;
+PeekPos := Results.Ok;
 iDomain := _iNode;
 ]]></ST>
       </Implementation>
@@ -225,19 +194,18 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _eState <> Results.Ok THEN
-	Prev := Results.None;
-	RETURN;
+        <ST><![CDATA[IF _iPointer = 0 THEN
+	_iPointer := _Domain.iLast;
+ELSE
+	_iPointer := _iPointer.Prev;
 END_IF
 
-_iPointer := _iPointer.Prev;
 IF _iPointer <> 0 THEN
-	_eState := Results.Ok;
+	iDomain := _iPointer;
+	Prev := Results.Ok;
 ELSE
-	_eState := Results.None;
+	Prev := Results.Error;
 END_IF
-Prev := _eState;
-iDomain := _iPointer;
 ]]></ST>
       </Implementation>
     </Method>
