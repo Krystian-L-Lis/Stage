@@ -48,8 +48,8 @@ It provides the following functions:
 - `IsOk(ResultInput, ResultOutput) : BOOL` - Checks if the result is a success.
 - `IsSome(ResultInput, ResultOutput) : BOOL` - Checks if the result is either an error or a success.
 - `IsNone(ResultInput, ResultOutput) : BOOL` - Checks if the result is none (zero).
-- `IsNull(ResultInput, ResultOutput) : BOOL` - Checks if the result is null.
-- `IsNotNull(ResultInput, ResultOutput) : BOOL` - Checks if the result is not null.
+- `IsNull(Interface: ANY) : BOOL` - Checks if the interface is null.
+- `IsNotNull(Interface: ANY) : BOOL` - Checks if the interface is not null.
 
 ### 6. Broadcast
 The **Broadcast** library is an implementation of the publish-subscribe pattern. It uses a dynamic (but not dynamically allocated) signal table internally to notify receivers when a signal is emitted. The library provides base collection types for signals and receivers, streamlining event-driven programming.
