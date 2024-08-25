@@ -1,17 +1,16 @@
 FUNCTION_BLOCK FB_Example IMPLEMENTS I_Debug
-METHOD ToDebug : Debug.I_Debug
-ToDebug := THIS^;
-END_METHOD
+  METHOD ToDebug : Debug.I_Debug
+    ToDebug := THIS^;
+  END_METHOD
 END_FUNCTION_BLOCK
 
 PROGRAM MAIN
-VAR
-fbExample : FB_Example;
-bInit : BOOL;
-END_VAR
-
-IF bInit THEN
-DebugMsg(fbExample, ': Example message!');
-END_IF
-
+  VAR
+    fbExample : FB_Example;
+    bInit : BOOL;
+  END_VAR
+  
+  IF bInit THEN
+    DebugMsg(fbExample, ': Example message!');
+  END_IF
 END_PROGRAM
