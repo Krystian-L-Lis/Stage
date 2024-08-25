@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_NewPair" Id="{90dc8b23-23c7-4bfd-afaf-bc35610f1d15}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _NewPair : Results.Result
+VAR_INPUT
+	iSignal				: I_SignalNode;
+	iReceiver			: I_ReceiverNode;
+END_VAR
+VAR
+	_nSignalSize		: UDINT;
+	_nSignalCount		: UDINT;
+	_nSignalId			: UDINT;
+	
+	_nNewId				: UDINT;
+	_nNewSize			: UDINT;
+	_nRequestedSize		: UDINT;
+	_nDiff				: UDINT;
+	
+	_nFree				: UDINT;
+	
+	_bReallocation		: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//If itfs are 0
+IF iSignal = 0 OR iReceiver = 0 THEN
+	_NewPair := Results.Err.Itf0;
+	RETURN;
+END_IF	
+//If pair already exist
+IF _ArePaired(iSignal, iReceiver) THEN
+	_NewPair := Results.None;
+	RETURN;
+END_IF
+// First signal ever
+IF _Channel.nAssigned = 0 THEN
+	_Channel.stEntry[1].iSignal := iSignal;
+	_Channel.stEntry[1].iReceiver := iReceiver;
+	iSignal.id := 1;
+	iSignal.size := 1;
+	iSignal.count := 1;
+	_Channel.nAssigned := 1;;
+	_NewPair := Results.Ok;
+	RETURN;	
+END_IF
+
+//If signal has enough space
+IF (_nSignalCount := iSignal.count) > 0 AND_THEN _nSignalCount < (_nSignalSize := iSignal.size) THEN
+	_Channel.stEntry[iSignal.id + _nSignalCount].iSignal := iSignal;
+	_Channel.stEntry[iSignal.id + _nSignalCount].iReceiver := iReceiver;
+	iSignal.count := _nSignalCount + 1;
+	_NewPair := Results.Ok;
+	RETURN;
+END_IF
+
+IF iSignal.id <> 0 THEN
+	//If signal has enough space after
+	IF Results.IsOk(_FindChunkAfter(_nSignalSize + (_nSignalId := iSignal.id), 1, nNewSize => _nNewSize)) THEN
+		_Channel.stEntry[iSignal.id + _nSignalCount].iSignal := iSignal;
+		_Channel.stEntry[iSignal.id + _nSignalCount].iReceiver := iReceiver;
+		iSignal.size := _nNewSize + _nSignalSize;
+		iSignal.count := _nSignalCount + 1;
+		_Channel.nAssigned := _Channel.nAssigned + 1;
+		_NewPair := Results.Ok;
+		RETURN;
+	END_IF
+END_IF
+
+// What new size should be
+IF (_nFree := Param.nChannelSize - _Channel.nAssigned) >= _nSignalSize + 1 THEN
+	_nRequestedSize := _nSignalSize + 1;
+ELSE
+	_NewPair := Results.Err.Ovf;
+	RETURN;
+END_IF
+
+_nSignalId := iSignal.id;
+IF Results.IsOk(_FindBestChunk(_nSignalId, _nRequestedSize, nNewId => _nNewId, nNewSize => _nNewSize)) THEN
+	IF _nSignalId <> 0 THEN
+		_Copy(_nSignalId, _nSignalSize, _nNewId);
+		_Clear(_nSignalId, _nSignalSize);		
+	END_IF		
+	_Channel.stEntry[_nNewId + _nSignalCount].iSignal := iSignal;
+	_Channel.stEntry[_nNewId + _nSignalCount].iReceiver := iReceiver;
+	iSignal.id := _nNewId;
+	iSignal.size := _nNewSize;
+	iSignal.count := _nSignalCount + 1;
+	_Channel.nAssigned := _Channel.nAssigned - _nSignalSize + _nNewSize;
+	_NewPair := Results.Ok;	
+	RETURN;
+END_IF
+
+_SoftCompress();
+_Cleanup();
+
+
+_nSignalId := iSignal.id; // _nSignalId needs to be rewalidated.
+IF Results.IsOk(_FindBestChunk(_nSignalId, _nRequestedSize, nNewId => _nNewId, nNewSize => _nNewSize)) THEN
+	IF _nSignalId <> 0 THEN
+		_Copy(_nSignalId, _nSignalSize, _nNewId);
+		_Clear(_nSignalId, _nSignalSize);		
+	END_IF
+	_Channel.stEntry[_nNewId + _nSignalCount].iSignal := iSignal;
+	_Channel.stEntry[_nNewId + _nSignalCount].iReceiver := iReceiver;
+	iSignal.id := _nNewId;
+	iSignal.size := _nNewSize;
+	iSignal.count := _nSignalCount + 1;
+	_Channel.nAssigned := _Channel.nAssigned - _nSignalSize + _nNewSize;
+	_NewPair := Results.Ok;	
+	RETURN;
+END_IF
+
+_NewPair := Results.Error;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="DomainIter" Id="{d0b9b2f0-6a24-490f-b3f4-e2653f5c7e8a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK DomainIter
+VAR
+	_iPointer		: I_DomainNode;
+	_eState			: Results.Result;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{14feefc1-5b26-43a6-8d8e-f8f61ce37de8}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iPointer := _Domain.iFirst;
+IF _iPointer <> 0 THEN
+	_eState := Results.Ok;
+ELSE
+	_eState := Results.None;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="First" Id="{0ae4b593-0598-4640-b825-87c86a6b6f45}">
+      <Declaration><![CDATA[METHOD First : Results.Result
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iPointer := _Domain.iFirst;
+IF _iPointer <> 0 THEN
+	_eState := Results.Ok;
+ELSE
+	_eState := Results.None;
+END_IF
+First := _eState;
+iDomain := _iPointer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Get" Id="{e57b4431-ad94-43b0-b826-4d385de919cb}">
+      <Declaration><![CDATA[METHOD Get : Results.Result
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Get := _eState;
+iDomain := _iPointer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPos" Id="{3ed358f8-6359-4940-a199-33cfcc66141e}">
+      <Declaration><![CDATA[METHOD GetPos : Results.Result
+VAR_INPUT
+	nPos		: UDINT;
+END_VAR
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+VAR
+	i			: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iPointer := _Domain.iFirst;
+IF _iPointer = 0 THEN
+    _eState := Results.None;
+   	GetPos := _eState;
+	RETURN;
+END_IF
+
+IF nPos = 0 THEN
+	_eState := Results.Ok;
+	iDomain := _iPointer;
+	GetPos := _eState;
+	RETURN;
+END_IF
+
+FOR i := 0 TO nPos - 1 DO
+    _iPointer := _iPointer.Next;
+    IF _iPointer = 0 THEN
+		_eState := Results.None;
+        GetPos := _eState;
+    END_IF
+END_FOR
+
+_eState := Results.Ok;
+GetPos := _eState;
+iDomain := _iPointer;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Last" Id="{5aff5d9c-0302-409f-9c35-40bee7d2f099}">
+      <Declaration><![CDATA[METHOD Last : Results.Result
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iPointer := _Domain.iLast;
+IF _iPointer <> 0 THEN
+	_eState := Results.Ok;
+ELSE
+	_eState := Results.None;
+END_IF
+Last := _eState;
+iDomain := _iPointer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Next" Id="{69156cd3-3bba-497c-93f4-b2a152ad3172}">
+      <Declaration><![CDATA[METHOD Next : Results.Result
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _eState <> Results.Ok THEN
+	Next := Results.None;
+	RETURN;
+END_IF
+
+_iPointer := _iPointer.Next;
+IF _iPointer <> 0 THEN
+	_eState := Results.Ok;
+ELSE
+	_eState := Results.None;
+END_IF
+Next := _eState;
+iDomain := _iPointer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Peek" Id="{2a2ce12f-e6f8-4e99-8d59-230b93d9755e}">
+      <Declaration><![CDATA[METHOD Peek : Results.Result
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _eState <> Results.Ok THEN
+	Peek := Results.None;
+	RETURN;
+END_IF
+
+iDomain := _iPointer.Next;
+IF iDomain <> 0 THEN
+	_eState := Results.Ok;
+ELSE
+	_eState := Results.None;
+END_IF
+Peek := _eState;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PeekBack" Id="{78aed9ad-5f9c-4bb5-acce-3ee0f1eeb0fa}">
+      <Declaration><![CDATA[METHOD PeekBack : Results.Result
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _eState <> Results.Ok THEN
+	PeekBack := Results.None;
+	RETURN;
+END_IF
+
+iDomain := _iPointer.Prev;
+IF iDomain <> 0 THEN
+	_eState := Results.Ok;
+ELSE
+	_eState := Results.None;
+END_IF
+PeekBack := _eState;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PeekPos" Id="{429fdda8-7f70-483a-b503-91e2a495570b}">
+      <Declaration><![CDATA[METHOD PeekPos : Results.Result
+VAR_INPUT
+	nPos		: UDINT;
+END_VAR
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+VAR
+	i			: UDINT;
+	_iNode		: I_DomainNode;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iNode := _Domain.iFirst;
+IF _iNode = 0 THEN
+    _eState := Results.None;
+   	PeekPos := _eState;
+	RETURN;
+END_IF
+
+IF nPos = 0 THEN
+	_eState := Results.Ok;
+	iDomain := _iNode;
+	PeekPos := _eState;
+	RETURN;
+END_IF
+
+FOR i := 0 TO nPos - 1 DO
+    _iNode := _iNode.Next;
+    IF _iNode = 0 THEN
+		_eState := Results.None;
+        PeekPos := _eState;
+    END_IF
+END_FOR
+
+_eState := Results.Ok;
+PeekPos := _eState;
+iDomain := _iNode;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prev" Id="{d58e3fdf-e3b6-495d-afd2-7db9d92b945a}">
+      <Declaration><![CDATA[METHOD Prev : Results.Result
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _eState <> Results.Ok THEN
+	Prev := Results.None;
+	RETURN;
+END_IF
+
+_iPointer := _iPointer.Prev;
+IF _iPointer <> 0 THEN
+	_eState := Results.Ok;
+ELSE
+	_eState := Results.None;
+END_IF
+Prev := _eState;
+iDomain := _iPointer;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

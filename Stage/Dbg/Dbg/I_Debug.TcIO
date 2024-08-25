@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Debug" Id="{72f669f1-a251-4fd7-81e9-899cb76da53c}">
+    <Declaration><![CDATA[INTERFACE I_Debug
+]]></Declaration>
+    <Method Name="ToDebug" Id="{028771b9-f4e1-4118-b5d5-7a74b3ce0d43}">
+      <Declaration><![CDATA[METHOD ToDebug : I_Debug
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

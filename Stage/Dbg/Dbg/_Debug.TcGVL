@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="_Debug" Id="{2a504fcf-83e8-4dbb-bb0d-d2a7e0a5f5bb}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL INTERNAL
+	stDebug				: ARRAY[0..Param.nMaxDebugArraySize] OF ST_DebugInfo;
+	nDebugLen			: UDINT;	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

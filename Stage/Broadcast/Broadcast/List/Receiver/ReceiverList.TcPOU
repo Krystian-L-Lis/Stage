@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ReceiverList" Id="{2c7fb1ae-695d-49e8-8419-2f56fc878238}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL ReceiverList
+VAR_GENERIC CONSTANT
+	nMax				: UDINT(0..16#FFFFFFE) := 1;
+END_VAR
+IMPLEMENTS I_ReceiverList
+VAR
+	_bIsReleased		: BOOL;
+	_iRec				: ARRAY[0..nMax] OF I_Receiver;
+	_nLen				: UDINT;
+	_fbTagOwner			: Tags.TagOwner;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Get" Id="{05612056-46a3-40a7-84c9-45506bc7d65d}">
+      <Folder Name="_GetByTag" Id="{40b76c13-6795-4bd3-9caf-e348108548fd}" />
+    </Folder>
+    <Folder Name="Other" Id="{d8a9d827-cc67-4c3e-a2ff-21e715785f11}" />
+    <Folder Name="Push" Id="{dce31998-e999-46ea-8529-656da5d65a57}">
+      <Folder Name="_Extend" Id="{214a6644-f5cf-43b7-ae00-026a715a4b84}" />
+      <Folder Name="_Push" Id="{4a48cdce-03d6-4a8d-a15f-c09c1a7b3da2}" />
+    </Folder>
+    <Method Name="_ExtendIfTagged" Id="{c3056bb9-27f6-4627-a8cf-7abd9f457b31}" FolderPath="Push\_Extend\">
+      <Declaration><![CDATA[METHOD PRIVATE _ExtendIfTagged : Results.Result
+VAR_INPUT
+	iReceiverList		: I_ReceiverList;
+END_VAR
+VAR
+	i					: UDINT;
+	_iExtRec			: I_Receiver;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT iReceiverList.IsReleased() THEN
+	_ExtendIfTagged := Results.Err.NoMatch;
+	RETURN;
+END_IF
+
+IF iReceiverList.Length() + _nLen > nMax THEN
+	_ExtendIfTagged := Results.Err.Ovf;
+	RETURN;
+END_IF
+
+WHILE Results.IsOk(iReceiverList.GetByPos(i, iRec => _iExtRec)) DO
+	i := i + 1;
+	_iExtRec.Tag.Join(_fbTagOwner, _nLen);
+	_iRec[_nLen] := _iExtRec;
+	_nLen := _nLen + 1;
+END_WHILE
+
+_ExtendIfTagged := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_ExtendIfUntagged" Id="{a0185ea0-f976-4a61-8fab-2977fd175721}" FolderPath="Push\_Extend\">
+      <Declaration><![CDATA[METHOD PRIVATE _ExtendIfUntagged : Results.Result
+VAR_INPUT
+	iReceiverList		: I_ReceiverList;
+END_VAR
+VAR
+	i					: UDINT;
+	j					: UDINT;
+
+	_iExtRec			: I_Receiver;
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nLen <> 0 THEN
+	_ExtendIfUntagged := _ExtendIfUntaggedIfNotEmpty(iReceiverList);
+ELSE
+	IF iReceiverList.Cap() > nMax THEN
+		_ExtendIfUntagged := Results.Err.Ovf;
+		RETURN;
+	END_IF	
+
+	WHILE Results.IsOk(iReceiverList.GetByPos(i, iRec => _iExtRec)) DO
+		i := i + 1;
+		_iExtRec.Tag.Join(_fbTagOwner, _nLen);
+		_iRec[_nLen] := _iExtRec;
+		_nLen := _nLen + 1;
+	END_WHILE
+	
+	_ExtendIfUntagged := Results.Ok;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_ExtendIfUntaggedIfNotEmpty" Id="{3c319204-8333-4d04-97d0-017fef2d5972}" FolderPath="Push\_Extend\">
+      <Declaration><![CDATA[METHOD PRIVATE _ExtendIfUntaggedIfNotEmpty : Results.Result
+VAR_INPUT
+	iReceiverList		: I_ReceiverList;
+END_VAR
+VAR
+	i					: UDINT;
+	j					: UDINT;
+	k					: UDINT;
+
+	_iTemp				: ARRAY[0..nMax] OF I_Receiver;
+
+	_iExtRec			: I_Receiver;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE Results.IsOk(iReceiverList.GetByPos(i, iRec => _iExtRec)) DO
+	
+	FOR j := 0 TO _nLen - 1 DO
+		IF _iRec[j] = _iExtRec THEN
+			_iExtRec := 0;
+			EXIT;
+		END_IF	
+	END_FOR
+	
+	IF _iExtRec <> 0 THEN
+		_iTemp[k] := _iExtRec;
+		k := k + 1;
+	END_IF
+	
+	i := i + 1;
+END_WHILE
+
+IF k = 0 THEN
+	_ExtendIfUntaggedIfNotEmpty := Results.Ok;
+	RETURN;
+END_IF
+
+FOR i := 0 TO k - 1 DO
+	_iRec[_nLen] := _iTemp[i];
+	_nLen := _nLen + 1;
+END_FOR
+
+_ExtendIfUntaggedIfNotEmpty := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_GetByTagIfTagged" Id="{f79aa12c-52bc-4a38-89dc-e5d8cca61b43}" FolderPath="Get\_GetByTag\">
+      <Declaration><![CDATA[METHOD PRIVATE _GetByTagIfTagged : Results.Result
+VAR_INPUT
+	iTag				: Tags.I_Tag;
+END_VAR
+VAR_OUTPUT
+	iRec				: I_Receiver;
+	nPos				: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iTag.Owner <> _fbTagOwner.Self THEN
+	_GetByTagIfTagged := Results.None;
+	RETURN;
+END_IF
+
+iRec := _iRec[iTag.Cache];
+_GetByTagIfTagged := Results.Ok;
+nPos := iTag.Cache;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_GetByTagIfUntagged" Id="{af1b5aa1-a15c-483a-a19b-f5a8273c7eae}" FolderPath="Get\_GetByTag\">
+      <Declaration><![CDATA[METHOD PRIVATE _GetByTagIfUntagged : Results.Result
+VAR_INPUT
+	iTag				: Tags.I_Tag;
+END_VAR
+VAR_OUTPUT
+	iRec				: I_Receiver;
+	nPos				: UDINT;
+END_VAR
+VAR
+	i					: UDINT;
+	cmp					: Tags.TagCmp;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO _nLen - 1 DO
+	IF cmp.Set(iTag).Match(_iRec[i].Tag).IsOk() THEN
+		_GetByTagIfUntagged := Results.Ok;
+		RETURN;
+	END_IF	
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_PushIfTagged" Id="{90b5439e-808a-4bbf-a73d-db7d87fa897f}" FolderPath="Push\_Push\">
+      <Declaration><![CDATA[METHOD PRIVATE _PushIfTagged : Results.Result
+VAR_INPUT
+	iRec			: I_Receiver;
+END_VAR
+VAR_OUTPUT
+	nPos			: UDINT;
+END_VAR
+VAR
+	_iTag			: Tags.I_Tag;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iRec = 0 THEN
+	_PushIfTagged := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF nMax < _nLen THEN
+	_PushIfTagged := Results.Err.Ovf;
+	RETURN;
+END_IF
+
+IF Results.IsErr(iRec.Tag.Join(_fbTagOwner, _nLen), eCarry => _PushIfTagged) THEN
+	RETURN;
+END_IF
+
+_iRec[_nLen] := iRec;
+_nLen := _nLen + 1;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_PushIfUntagged" Id="{a5242f72-7fcc-4e97-a04f-168e2b673757}" FolderPath="Push\_Push\">
+      <Declaration><![CDATA[METHOD PRIVATE _PushIfUntagged : Results.Result
+VAR_INPUT
+	iRec			: I_Receiver;
+END_VAR
+VAR_OUTPUT
+	nPos			: UDINT;
+END_VAR
+VAR
+	i				: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iRec = 0 THEN
+	_PushIfUntagged := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF nMax < _nLen THEN
+	_PushIfUntagged := Results.Err.Ovf;
+	RETURN;
+END_IF
+
+FOR i := 0 TO _nLen - 1 DO
+	IF _iRec[i] = iRec THEN
+		_PushIfUntagged := Results.None;
+		RETURN;
+	END_IF	
+END_FOR
+
+_iRec[_nLen] := iRec;
+_nLen := _nLen + 1;
+_PushIfUntagged := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Cap" Id="{7b5febf8-495e-4894-99ff-986ab997bb30}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Cap : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Cap := nMax;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Extend" Id="{8d98678d-5095-4a07-a3a9-4df69f2ae709}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Extend 			: Results.Result
+VAR_INPUT
+	fbReceiverListExtend	: ReceiverListExtender;
+END_VAR
+VAR
+	_iReceiverList			: I_ReceiverList;
+	_iThis					: I_ReceiverList := THIS^;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iReceiverList := fbReceiverListExtend.List;
+
+IF _iReceiverList = 0 THEN
+	Extend := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF _iReceiverList = _iThis THEN
+	Extend := Results.Err.ItfEq;
+	RETURN;
+END_IF
+
+
+IF _bIsReleased THEN
+	Extend :=_ExtendIfUntagged(_iReceiverList);
+ELSE
+	Extend := _ExtendIfTagged(_iReceiverList);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetByPos" Id="{005dfdc3-f285-4818-8416-fe1bbe566312}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetByPos : Results.Result
+VAR_INPUT
+	nPos		: UDINT;
+END_VAR
+VAR_OUTPUT
+	iRec		: I_Receiver;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nPos > nMax THEN
+	GetByPos := Results.Err.Ovf;
+	RETURN;
+END_IF
+
+iRec := _iRec[nPos];
+IF iRec <> 0 THEN
+	GetByPos := Results.Ok;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetByTag" Id="{ccc4cdec-a9cd-42b9-b271-fb7cfa2cd9b9}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetByTag : Results.Result;
+VAR_INPUT
+	iTag				: Tags.I_Tag;
+END_VAR
+VAR_OUTPUT
+	iRec				: I_Receiver;
+	nPos				: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nLen = 0 THEN
+	GetByTag := Results.None;
+	RETURN;
+END_IF
+
+IF iTag = 0 THEN
+	GetByTag := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF _bIsReleased THEN
+	GetByTag := _GetByTagIfUntagged(iTag, iRec => iRec, nPos => nPos);
+ELSE
+	GetByTag := _GetByTagIfTagged(iTag, iRec => iRec, nPos => nPos);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetExtender" Id="{8e7a0836-b498-47f1-ad84-7a712a639187}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetExtender : ReceiverListExtender
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetExtender.List := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsReleased" Id="{e328d318-43d4-422d-80dd-00ac15e47501}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD IsReleased : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsReleased := _bIsReleased;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Length" Id="{ef7d9c5f-5d2e-47f2-92ec-92c87d118b88}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Length : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Length := _nLen;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{f179fe91-824e-4b31-b63a-b7309840036a}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Push : Results.Result
+VAR_INPUT
+	iRec			: I_Receiver;
+END_VAR
+VAR_OUTPUT
+	nPos			: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _bIsReleased THEN
+	Push :=_PushIfuntagged(iRec, nPos => nPos);
+ELSE
+	Push := _PushIfTagged(iRec, nPos => nPos);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Release" Id="{629b19cf-33b5-45b2-9f9d-6b7dcf148f09}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD Release 				: ReceiverListExtender;
+VAR
+	i						: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _bIsReleased THEN
+	FOR i := 0 TO _nLen - 1 DO
+		_iRec[i].Tag.Leave(_fbTagOwner);
+	END_FOR
+	
+	_bIsReleased := TRUE;
+END_IF
+
+Release.List := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToDebug" Id="{5716606c-547c-439f-9599-a4bce2667e3f}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

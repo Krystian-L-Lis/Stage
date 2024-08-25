@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="Param" Id="{257743f2-67a2-43da-bad7-f53be5f08e22}" ParameterList="True">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	nChannelSize		: UDINT(1..16#FFFFFFE) := 100;
+	nBaseSlotAlloc		: UDINT := 1;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="_Runtime" Id="{55de2ba6-744e-4ec9-80fc-f3d85235951c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL INTERNAL
+	iFirstCyclic		: I_ExecuteNode;
+	iLastCyclic			: I_ExecuteNode;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

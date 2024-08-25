@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="_Channel" Id="{22f7a211-245d-48ea-b392-287640146104}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL INTERNAL
+	{attribute 'ExpandFully'} 
+	stEntry				: ARRAY[0..Param.nChannelSize] OF ST_Entry;
+	
+	nAssigned			: UDINT;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

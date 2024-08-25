@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="_Domain" Id="{a8340913-95a9-44cd-82a6-2ed5326f03f8}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL INTERNAL
+	iFirst			: I_DomainNode;
+	iLast			: I_DomainNode;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

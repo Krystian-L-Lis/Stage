@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_Cleanup" Id="{2a20a463-c817-4833-9c12-1d87fdc2ac90}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _Cleanup
+VAR
+	i					: UDINT;
+	_iSignal			: I_SignalNode;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR i := 1 TO Param.nChannelSize DO
+	IF _Channel.stEntry[i].iSignal <> 0 AND_THEN _Channel.stEntry[i].iSignal <> _iSignal THEN
+			_iSignal := _Channel.stEntry[i].iSignal;
+			_iSignal.id := i;
+	END_IF
+END_FOR]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Flag" Id="{8923833a-63ee-4bdd-8989-492b2c0dec51}">
+    <Declaration><![CDATA[INTERFACE I_Flag EXTENDS Debug.I_Debug, Tags.I_Tagged
+]]></Declaration>
+    <Method Name="IsLowered" Id="{80fd9e90-471e-4626-8311-270df904b500}">
+      <Declaration><![CDATA[METHOD IsLowered : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsRised" Id="{f5d2728d-de30-45bf-99f3-6800a8dbc690}">
+      <Declaration><![CDATA[METHOD IsRised : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Tag" Id="{105135e3-c17a-46a0-825e-a8b7bf61063e}">
+      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag]]></Declaration>
+      <Get Name="Get" Id="{e2c1591c-f789-472e-ba5a-c393968e67f1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="ToDebug" Id="{5e441cd5-9a11-4a63-b28b-027cade9e75b}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

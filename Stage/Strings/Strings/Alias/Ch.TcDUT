@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Ch" Id="{b71b32e5-3895-434d-8583-ea43f14b4247}">
+    <Declaration><![CDATA[TYPE Ch : STRING(1); END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

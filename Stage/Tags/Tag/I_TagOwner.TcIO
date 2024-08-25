@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_TagOwner" Id="{75009c1b-4b32-4472-82ce-f26080344dc4}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_TagOwner
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

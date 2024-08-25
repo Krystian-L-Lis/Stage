@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="IsSome" Id="{a98731ff-27dc-440b-b01b-ce65cfe43b72}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsSome : BOOL
+VAR_INPUT
+	eResult			: Result;
+END_VAR
+VAR_OUTPUT
+	eCarry			: Result;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsSome := eResult <> 0;
+eCarry := eResult;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

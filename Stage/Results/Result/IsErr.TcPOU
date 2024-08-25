@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="IsErr" Id="{d8e5ecc7-39a3-4a90-b2be-f8d0e55647cb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsErr : BOOL
+VAR_INPUT
+	eResult			: Result;
+END_VAR
+VAR_OUTPUT
+	eCarry			: Result;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsErr := eResult < 0;
+eCarry := eResult;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

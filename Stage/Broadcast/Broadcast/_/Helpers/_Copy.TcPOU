@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_Copy" Id="{ed389fa7-e6f6-4fe6-9ec4-5f151830c653}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _Copy : Results.Result;
+VAR_INPUT
+	nOldId		: UDINT;
+	nOldSize	: UDINT;
+	nNewId		: UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Results.IsNone(UDINT_TO_INT(Tc2_System.MEMMOVE(ADR(_Channel.stEntry[nNewId]), ADR(_Channel.stEntry[nOldId]), nOldSize * SIZEOF(ST_Entry)))) THEN
+	_Copy := Results.Err.TcLib;
+ELSE
+	_Copy := Results.Ok;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

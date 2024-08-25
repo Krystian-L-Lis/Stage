@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Strb" Id="{61ef5f73-47e1-427c-8b79-77ed2e5ef7d0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Strb IMPLEMENTS I_Strb
+VAR
+	_sString	: Str;
+	_nLength	: INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="_" Id="{b47ef6e7-6ca8-4336-9904-09f7a5974402}" />
+    <Folder Name="I_Build" Id="{2b9a3c3c-c488-43cc-8676-6a319d0d0d08}" />
+    <Property Name="_this" Id="{6d485d05-01ce-40c2-bb6f-a904a5396ea4}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY PRIVATE _this : I_Strb]]></Declaration>
+      <Get Name="Get" Id="{b91c709c-36c7-4824-9b77-23ad7a17fa1a}">
+        <Declaration><![CDATA[VAR
+	_iThis : I_Strb := THIS^;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_this := _iThis;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Append" Id="{c5dafb45-d808-4b27-bc94-e5dea4153101}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Append : I_Strb;
+VAR_INPUT
+	sToAdd		: Str;
+END_VAR
+VAR
+	_nNewLength	: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Append := _this;
+
+IF sToAdd = '' THEN
+	RETURN;
+END_IF
+
+_nNewLength := Tc2_Standard.LEN(sToAdd) + _nLength;
+IF _nNewLength > 255 THEN
+	_nNewLength := 255;
+END_IF
+
+_sString := Tc2_Standard.CONCAT(_sString, sToAdd);
+_nLength := _nNewLength;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FindFirstAfter" Id="{a581496a-5ce4-40c5-a7d6-73b41c3e3937}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD FindFirstAfter 	: I_Strb;
+VAR_INPUT
+	sToFind			: Str;
+	nPosition		: INT := 1;
+END_VAR
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
+END_VAR
+VAR
+	_sTemp			: Str;
+	_nOffset		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FindFirstAfter := _this;
+
+IF sToFind = '' THEN
+	RETURN;
+END_IF
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+_sTemp := Tc2_Standard.MID(_sString, _nLength, nPosition);
+IF (_nOffset := Tc2_Standard.FIND(_sTemp, sToFind)) <> 0 THEN
+	nStart := nPosition + _nOffset - 1;
+	nEnd := nPosition + _nOffset - 2 + Tc2_Standard.LEN(sToFind);
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FindLastBefore" Id="{778d7031-30ae-47fa-9ca0-621374c00d14}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD FindLastBefore 	: I_Strb;
+VAR_INPUT
+	sToFind			: Str;
+	nPosition		: INT := 256;
+END_VAR
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
+END_VAR
+VAR
+	_sTemp			: Str;
+	_nFindLength	: INT := Tc2_Standard.LEN(sToFind);
+	_nOffset		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FindLastBefore := _this;
+
+IF sToFind = '' THEN
+	RETURN;
+END_IF
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nPosition = 256 THEN
+	nPosition := _nLength;
+END_IF
+
+REPEAT
+	_sTemp := Tc2_Standard.MID(_sString, _nFindLength, nPosition);
+	IF _sTemp = sToFind THEN
+		nStart 	:= nPosition;
+		nEnd	:= nPosition + _nFindLength - 1;
+		RETURN;
+	END_IF
+UNTIL
+	(nPosition := nPosition - 1) <= 0
+END_REPEAT]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HasAfter" Id="{bf76046d-8671-4c7f-aa51-7481673e264d}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD HasAfter : BOOL
+VAR_INPUT
+	sToFind		: Str;
+	nPosition	: INT := 0;
+END_VAR
+VAR
+	_nResult		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FindFirstAfter(sToFind, nPosition, nStart => _nResult);
+HasAfter := nPosition > 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HasBefore" Id="{ac4d6b5e-df2c-4e2c-9d4e-67b1bc75b248}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD HasBefore : BOOL
+VAR_INPUT
+	sToFind		: Str;
+	nPosition	: INT := 256;
+END_VAR
+VAR
+	_nResult		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nPosition = 256 THEN
+	nPosition := Tc2_Standard.LEN(_sString);
+END_IF
+
+FindLastBefore(sToFind, nPosition, nStart => _nResult);
+HasBefore := _nResult > 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Inject" Id="{4c41e1ee-82d8-4ac8-b184-a35162ee532b}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Inject : I_Strb
+VAR_INPUT
+	nPosition	: INT;
+	sToInject	: Str;
+END_VAR
+VAR
+	_nNewLength	: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Inject := _this;
+
+IF sToInject = '' THEN
+	RETURN;
+END_IF
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nPosition > _nLength THEN
+	RETURN;
+END_IF
+
+_nNewLength := Tc2_Standard.LEN(sToInject) + _nLength;
+IF _nNewLength > 255 THEN
+	_nNewLength := 255;
+END_IF
+
+_sString := Tc2_Standard.INSERT(_sString, sToInject, nPosition);
+_nLength := _nNewLength;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsEmpty" Id="{48446732-b2d7-4766-879f-4af625a79c21}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD IsEmpty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsEmpty := _nLength = 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Length" Id="{45004f77-d2cb-4754-b4fb-c7b6ee0e2290}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Length : INT;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Length := _nLength;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepend" Id="{f8c33334-f519-40ee-8359-4a689d3afbef}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Prepend : I_Strb;
+VAR_INPUT
+	sToAdd		: Str;
+END_VAR
+VAR
+	_nNewLength	: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Prepend := _this;
+
+IF sToAdd = '' THEN
+	RETURN;
+END_IF
+
+_nNewLength := Tc2_Standard.LEN(sToAdd) + _nLength;
+IF _nNewLength > 255 THEN
+	_nNewLength := 255;
+END_IF
+
+_sString := Tc2_Standard.CONCAT(sToAdd, _sString);
+_nLength := _nNewLength;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Read" Id="{2ce4f6b7-1c85-434c-af83-6226e33c2b8d}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Read : Str;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Read := _sString;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Remove" Id="{8af192fa-69a3-405d-92de-1d27949f433a}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Remove : I_Strb;
+VAR_INPUT
+	nLength		: INT;
+	nPosition	: INT;
+END_VAR
+VAR
+	_nPosition	: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Remove := _this;
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nPosition > _nLength THEN
+	RETURN;
+END_IF
+
+IF nLength = 0 THEN
+	RETURN;
+END_IF
+
+IF nLength + nPosition > _nLength THEN
+	nLength := _nLength - nPosition + 1;
+END_IF
+
+_sString := Tc2_Standard.DELETE(_sString, nLength, nPosition);
+_nLength := _nLength - nLength;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Set" Id="{9d464aa9-3729-41f3-a992-cfa0e8eacb53}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Set : I_Strb;
+VAR_INPUT
+	sLiteral	: Str;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Set 		:= _this;
+
+_sString 	:= sLiteral;
+_nLength	:= Tc2_Standard.LEN(sLiteral);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Slice" Id="{b36b2935-53ac-42f8-b9cd-d569ebc22d57}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Slice : I_Strb
+VAR_INPUT
+	nPosition	: INT;
+	nLength		: INT;
+END_VAR
+VAR_OUTPUT
+	sSlice			: Strb;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Slice := _this;
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nLength = 0 THEN
+	RETURN;
+END_IF
+
+sSlice.Set(Tc2_Standard.MID(_sString, nLength, nPosition));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Split" Id="{c7390c7d-7d5d-48c4-a31d-61c6a6df5693}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Split : I_Strb;
+VAR_INPUT
+	nPosition	: INT;
+END_VAR
+VAR_OUTPUT
+	sLeft		: Strb;
+	sRight		: Strb;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Split := _this;
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+sLeft.Set(Tc2_Standard.LEFT(_sString, nPosition));
+sRight.Set(Tc2_Standard.RIGHT(_sString, _nLength - nPosition));]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

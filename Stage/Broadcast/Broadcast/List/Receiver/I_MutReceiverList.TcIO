@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_MutReceiverList" Id="{db452e49-1265-4060-8d55-6761eef6027a}">
+    <Declaration><![CDATA[INTERFACE I_MutReceiverList EXTENDS Debug.I_Debug, I_ReceiverList
+]]></Declaration>
+    <Folder Name="Push" Id="{625f8185-241f-403c-b810-0092c3b60a0f}" />
+    <Method Name="Extend" Id="{c597d5d5-9ad4-400f-a8b3-25bbcf81c7c7}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Extend 			: Results.Result
+VAR_INPUT
+	fbReceiverListExtend	: ReceiverListExtender;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Push" Id="{2ed16c57-2a93-4fdf-9c17-b7c00c671600}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Push : Results.Result
+VAR_INPUT
+	iRec			: I_Receiver;
+END_VAR
+VAR_OUTPUT
+	nPos			: UDINT;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

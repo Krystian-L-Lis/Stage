@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="StateMachine" Id="{97b2de87-3917-4773-b314-ea0c1fbfae6e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL StateMachine IMPLEMENTS I_StateMachine, Rt.I_Execute
+VAR
+	_fbExe					: Rt.Execute(THIS^);
+	_fbTag					: Tags.Tag;
+	_iCurrentState			: I_State;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="ChangeState" Id="{53e3d103-2a8c-4c39-b30e-d1540390b5c1}">
+      <Declaration><![CDATA[METHOD ChangeState : Results.Result
+VAR_INPUT
+	iNewState	: I_State;
+END_VAR
+VAR_OUTPUT
+	iOldState	: I_State;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iNewState = 0 THEN
+	_fbTag.Option := CState.FAIL;
+	ChangeState := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF iNewState = _iCurrentState THEN
+	_fbTag.Option := CState.SAME;
+	ChangeState := Results.None;
+END_IF
+
+IF NOT iNewState.CanActivate() THEN
+	_fbTag.Option := CState.FAIL;
+	ChangeState := Results.None;
+	RETURN;
+END_IF
+
+IF _iCurrentState <> 0 AND_THEN NOT _iCurrentState.CanDeactivate() THEN
+	_fbTag.Option := CState.FAIL;
+	ChangeState := Results.None;
+	RETURN;
+END_IF
+
+IF _iCurrentState <> 0 THEN
+	_iCurrentState.OnExit();
+END_IF
+
+iNewState.OnInit();
+iOldState := _iCurrentState;
+_iCurrentState := iNewState;
+_fbTag.Option := CState.SUCCESS;
+ChangeState := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{be580cf5-85ef-4792-96a8-f31414ea2d5f}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _iCurrentState <> 0 THEN
+	_iCurrentState.OnExecute();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetState" Id="{b6d58190-7611-407c-8a8d-d6a30f452fcf}">
+      <Declaration><![CDATA[METHOD GetState : I_State
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetState := _iCurrentState;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Tag" Id="{e46935d4-0059-464d-8b61-064a170202fc}">
+      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag]]></Declaration>
+      <Get Name="Get" Id="{a1902aaf-aa01-4be4-b991-79b26b893f94}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ToDebug" Id="{5e787b93-7d10-4a5d-bf08-9890016e978d}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

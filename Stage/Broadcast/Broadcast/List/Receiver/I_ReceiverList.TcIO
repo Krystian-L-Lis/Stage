@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_ReceiverList" Id="{e8a2a3b3-d10e-4cf5-a30d-0a77b0b05371}">
+    <Declaration><![CDATA[INTERFACE I_ReceiverList EXTENDS Debug.I_Debug
+]]></Declaration>
+    <Folder Name="Get" Id="{d92b47ff-ad9a-4196-87eb-590f6c09cd20}" />
+    <Folder Name="Other" Id="{af5639b7-e122-4cab-98d9-1e01a9c7319d}" />
+    <Method Name="Cap" Id="{b0c1213f-2e25-4c13-acac-070f696955ba}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Cap : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetByPos" Id="{efde4af8-f24c-4a23-93fd-995e70d10462}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetByPos : Results.Result
+VAR_INPUT
+	nPos			: UDINT;
+END_VAR
+VAR_OUTPUT
+	iRec			: I_Receiver;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetByTag" Id="{2bd04f50-823d-4d69-bd00-b33edf082a6d}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetByTag : Results.Result
+VAR_INPUT
+	iTag			: Tags.I_Tag;
+END_VAR
+VAR_OUTPUT
+	iRec			: I_Receiver;
+	nPos			: UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="GetExtender" Id="{b6650471-cd84-4a5e-916b-c4c1fd3c053a}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetExtender : ReceiverListExtender
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsReleased" Id="{62ceecda-5d5c-4910-9fd1-312d81a9dacf}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD IsReleased : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Length" Id="{4030a647-51c5-4375-843b-67080467453e}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Length : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Release" Id="{9bf14676-deef-4d6f-b564-a92db3b2ee26}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD Release : ReceiverListExtender;]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

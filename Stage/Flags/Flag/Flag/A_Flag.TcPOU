@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="A_Flag" Id="{8de42f7c-a145-42ba-b5c2-497c1741e9a4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK A_Flag IMPLEMENTS Debug.I_Debug;]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{2e6bd023-da59-4369-a5ad-e7ccb71f88b7}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	iFlagList				: I_MutFlagList;
+	iFlag					: I_Flag;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iFlagList = 0 THEN
+	Debug.DebugMsg(THIS^, ': iFlagList: Itf = 0!');
+	RETURN;
+END_IF
+IF iFlag = 0 THEN
+	Debug.DebugMsg(THIS^, ': iFlag: Itf = 0!');
+	RETURN;
+END_IF
+
+CASE iFlagList.Push(iFlag) OF
+	Results.Ok:
+		// No Error
+	Results.None:
+		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
+		Debug.DebugMsg(iFlag.ToDebug(), 'Im a double!');
+	Results.Err.Ovf:
+		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
+		Debug.DebugMsg(iFlag.ToDebug(), 'Cause of overflow!');
+	Results.Err.NoMatch:
+		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
+		Debug.DebugMsg(iFlag.ToDebug(), 'This already have an owner!');
+	ELSE
+		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
+		Debug.DebugMsg(iFlag.ToDebug(), 'Cause!');		
+END_CASE
+
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToDebug" Id="{96c87b8f-6248-412a-bbeb-79d61e8b1a52}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

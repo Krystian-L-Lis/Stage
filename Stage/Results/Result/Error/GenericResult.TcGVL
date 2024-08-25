@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="GenericResult" Id="{e3fb325e-a78d-4ac8-8262-dec20f5fadc3}">
+    <Declaration><![CDATA[VAR_GLOBAL CONSTANT
+	None	: Result := 0;
+	Ok		: Result := 1;
+	Error	: Result := -1;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

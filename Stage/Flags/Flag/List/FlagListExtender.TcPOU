@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FlagListExtender" Id="{ec7afdb6-076b-4e9c-8d6c-36629837f2f3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FlagListExtender
+VAR
+	_iList		: I_FlagList;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="List" Id="{aa5b4145-1ceb-48c4-9a9d-987d7cd30beb}">
+      <Declaration><![CDATA[PROPERTY INTERNAL List : I_FlagList]]></Declaration>
+      <Get Name="Get" Id="{869770d4-278b-41af-87df-03ff9d205269}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[List := _iList;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a3893ab2-b7d5-4e86-8d6c-c3dfec6f9578}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iList := List;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

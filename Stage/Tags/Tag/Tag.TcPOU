@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Tag" Id="{62ca4927-4975-427b-9d4f-c107a36fa9ac}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'reflection'}
+FUNCTION_BLOCK Tag IMPLEMENTS I_Tag
+VAR
+	{attribute 'instance-path'} 
+    {attribute 'noinit'} 
+	_sId			: Strings.Str;
+	_nOptionPos		: USINT;
+	_nOptionLen		: USINT;
+	_nCache			: UDINT;
+	_iOwner			: I_TagOwner;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Cache" Id="{31e567c1-84ea-46eb-9fdc-bbaff4cca7d0}">
+      <Declaration><![CDATA[PROPERTY Cache : UDINT]]></Declaration>
+      <Get Name="Get" Id="{f25a9d69-6d6e-4469-879c-93f392d59d1c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Cache := _nCache;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{6d8fbfb8-5809-4a8b-b251-034e8e055ab1}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+VAR
+	i				: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Delete this name
+FOR i := Tc2_Standard.LEN(_sId) TO 1 BY -1 DO
+	IF Tc2_Standard.MID(_sId, 1, i) = '.' THEN
+		_sId := Tc2_Standard.LEFT(_sId, i - 1);
+		EXIT;
+	END_IF
+END_FOR
+
+// Delete project name
+FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
+	IF Tc2_Standard.MID(_sId, 1, i) = '.' THEN
+		_sId := Tc2_Standard.DELETE(_sId, i, 1);
+		EXIT;
+	END_IF
+END_FOR
+
+// Delete plc name
+FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
+	IF Tc2_Standard.MID(_sId, 1, i) = '.' THEN
+		_sId := Tc2_Standard.DELETE(_sId, i, 1);
+		EXIT;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetId" Id="{1e7c2d46-85b3-4961-9ee8-452fbfd30f72}">
+      <Declaration><![CDATA[METHOD GetId : Strings.Str
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nOptionPos <> 0 THEN
+	GetId := Tc2_Standard.DELETE(_sId, _nOptionLen, _nOptionPos); 
+ELSE
+	GetId := _sId;
+END_IF
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Join" Id="{ec7b1158-e43b-430d-9d25-e55222f877f1}">
+      <Declaration><![CDATA[METHOD Join : Results.Result
+VAR_INPUT
+	iOwner		: I_TagOwner;
+	nCache		: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iOwner = 0 THEN
+	Join := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF _iOwner <> 0 THEN
+	Join := Results.Err.ItfEq;
+	RETURN;
+END_IF
+
+_iOwner := iOwner;
+_nCache := nCache;
+Join := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Leave" Id="{7703d5eb-5cdb-4692-bbc5-0b272eb249d2}">
+      <Declaration><![CDATA[METHOD Leave : Results.Result
+VAR_INPUT
+	iOwner		: I_TagOwner;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iOwner = 0 THEN
+	Leave := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF _iOwner <> iOwner THEN
+	Leave := Results.Err.ItfEq;
+	RETURN;
+END_IF
+
+_iOwner := 0;
+Leave := Results.Ok;
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Option" Id="{a87258c3-8a4d-4f79-bed1-5cd6eb67bb5c}">
+      <Declaration><![CDATA[PROPERTY Option : Strings.Str]]></Declaration>
+      <Get Name="Get" Id="{d70a5443-5cec-419b-a600-5b201698b86d}">
+        <Declaration><![CDATA[VAR
+	i				: INT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _nOptionPos <> 0 THEN
+	Option := Tc2_Standard.DELETE(_sId, _nOptionPos, 1); 
+ELSE
+	Option := '';
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{711c7481-b132-44f6-9eb4-329138f9c5dc}">
+        <Declaration><![CDATA[VAR
+	nCase		: USINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF Option <> '' THEN
+    _nOptionLen := INT_TO_USINT(Tc2_Standard.LEN(Option));    
+    IF _nOptionPos <> 0 THEN
+        _sId := Tc2_Standard.LEFT(_sId, _nOptionPos);
+        _sId := Tc2_Standard.CONCAT(_sId, Option);
+    ELSE
+        // The option does not exist, so we append it
+        _nOptionPos := INT_TO_USINT(Tc2_Standard.LEN(_sId) + 1);
+        _sId := Tc2_Standard.CONCAT(_sId, '.');
+        _sId := Tc2_Standard.CONCAT(_sId, Option);
+    END_IF
+ELSIF _nOptionPos <> 0 THEN
+    _sId := Tc2_Standard.LEFT(_sId, _nOptionPos - 1);
+    _nOptionPos := 0;
+END_IF
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Owner" Id="{7d22447e-9b37-49ee-8dfa-1abfd149d2a7}">
+      <Declaration><![CDATA[PROPERTY Owner : I_TagOwner]]></Declaration>
+      <Get Name="Get" Id="{0ff4112d-ce28-467a-ac12-a9c0ee0f1f20}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Owner := _iOwner;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Self" Id="{2bf468fc-144d-481b-af97-9bbf22caa508}">
+      <Declaration><![CDATA[PROPERTY Self : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{735cc7bd-2863-42f9-8ff2-a104770ddc52}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Self := THIS^;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ToDebug" Id="{1014fb8c-cfa4-4693-b896-eb5151d05aa0}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

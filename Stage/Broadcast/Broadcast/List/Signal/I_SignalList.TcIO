@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_SignalList" Id="{4a024443-5944-43d0-af01-9e0c0863973b}">
+    <Declaration><![CDATA[INTERFACE I_SignalList EXTENDS Debug.I_Debug
+]]></Declaration>
+    <Folder Name="Get" Id="{dff3990d-0fc1-4630-8207-806fa93e97e1}" />
+    <Folder Name="Other" Id="{76a045ee-1d6c-4216-8106-3c8d0e5f4ce5}" />
+    <Method Name="Cap" Id="{63d8ac3e-4567-4630-982a-d8dc8a19d085}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Cap : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetByPos" Id="{eb4a8061-400b-4cd6-9091-a4d6a15eba74}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetByPos : Results.Result
+VAR_INPUT
+	nPos			: UDINT;
+END_VAR
+VAR_OUTPUT
+	iSignal			: I_Signal;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetByTag" Id="{1d654506-5088-4c00-ab2d-ba19828bf5fc}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetByTag : Results.Result
+VAR_INPUT
+	iTag			: Tags.I_Tag;
+END_VAR
+VAR_OUTPUT
+	iSignal			: I_Signal;
+	nPos			: UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="GetExtender" Id="{9984d70c-6532-4064-b749-b093769db3f0}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD GetExtender : SignalListExtender
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsReleased" Id="{2e599184-03c6-4951-9f1f-16ccc430d807}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD IsReleased : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Length" Id="{b718ad37-6903-4848-ac9a-a356ebc906d3}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Length : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Release" Id="{ceb8adad-5129-42bb-88a8-4c3f48dd9bf5}" FolderPath="Get\">
+      <Declaration><![CDATA[METHOD Release : SignalListExtender;]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

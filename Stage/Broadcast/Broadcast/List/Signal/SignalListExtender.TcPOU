@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="SignalListExtender" Id="{0f799782-1ff9-4e36-a7c9-b4588827fc12}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FINAL SignalListExtender
+VAR
+	_iList		: I_SignalList;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="List" Id="{487fe7c7-f5f3-47a8-bafe-6491cdde4457}">
+      <Declaration><![CDATA[PROPERTY INTERNAL List : I_SignalList]]></Declaration>
+      <Get Name="Get" Id="{f0efffd7-2c40-4e68-8922-fe371c28bca9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[List := _iList;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{f376151b-771b-46cd-81e9-5b7a4fcdaaab}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iList := List;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

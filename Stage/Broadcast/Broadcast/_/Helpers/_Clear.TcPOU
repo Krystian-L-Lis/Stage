@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_Clear" Id="{24f3a2ad-3a25-42f4-a35f-dd237e0cf0ff}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _Clear : Results.Result
+VAR_INPUT
+	nId		: UDINT;
+	nSize	: UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Results.IsNone(UDINT_TO_INT(Tc2_SYSTEM.MEMSET(ADR(_Channel.stEntry[nId]), 0, SIZEOF(ST_Entry) * nSize))) THEN
+	_Clear := Results.Err.TcLib;
+ELSE
+	_Clear := Results.Ok;
+END_IF
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

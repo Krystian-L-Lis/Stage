@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="CState" Id="{fcc3794d-0502-4b10-a5b1-1fb168391c12}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	SUCCESS		: Strings.Str := 'Success';
+	FAIL		: Strings.Str := 'Fail';
+	SAME		: Strings.Str := 'Same';
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

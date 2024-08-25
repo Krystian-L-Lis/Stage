@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="IsNull" Id="{fb608fd7-adb1-4f4b-830d-e41af9edea98}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsNull : BOOL
+VAR_INPUT
+	anyPtrType		: ANY;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF anyPtrType.diSize = SIZEOF(POINTER TO BYTE) THEN
+	IsNull := anyPtrType.pValue^ = 0;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

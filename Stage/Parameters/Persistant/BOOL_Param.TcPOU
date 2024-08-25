@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="BOOL_Param" Id="{86d3985b-ce36-49e3-b31b-ca03b5ee72a3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BOOL_Param
+VAR_INPUT PERSISTENT
+	val				: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

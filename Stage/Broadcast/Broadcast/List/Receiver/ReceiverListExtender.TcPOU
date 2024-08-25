@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ReceiverListExtender" Id="{70918c97-6f50-4cac-862b-1465246836fd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FINAL ReceiverListExtender
+VAR
+	_iList		: I_ReceiverList;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="List" Id="{f5b2f04a-332b-4755-9e45-aa4b076e8c53}">
+      <Declaration><![CDATA[PROPERTY INTERNAL List : I_ReceiverList]]></Declaration>
+      <Get Name="Get" Id="{e6958808-e26e-4000-a99e-1b29cd3e3059}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[List := _iList;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{83395991-4c47-4626-acb1-e3b3d9fa46df}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iList := List;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

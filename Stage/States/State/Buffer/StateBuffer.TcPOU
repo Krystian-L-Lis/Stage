@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="StateBuffer" Id="{c72b10a5-ebed-4e92-a090-567cf79b812e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StateBuffer
+VAR_GENERIC CONSTANT
+	nMax				: UDINT(0..16#FFFFFFE) := 1;
+END_VAR
+IMPLEMENTS I_StateBuffer
+VAR
+	_iState				: ARRAY[0..nMax] OF I_State;
+	_nHead				: UDINT;
+	_nTail				: UDINT;
+	_nLen				: UDINT;
+
+	
+	_fbTagOwner			: Tags.TagOwner;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Other" Id="{9e7ac76f-4d0e-4ca5-8870-fa5600f9c22c}" />
+    <Folder Name="Push" Id="{fca17cab-fb89-4124-bdc0-545fbd4443f5}" />
+    <Method Name="Cap" Id="{cd19f415-bdc0-4a48-be4d-06e0fa03966e}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Cap : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Cap := nMax;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Length" Id="{8357a420-23aa-4183-9087-bb8cd5148145}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Length : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Length := _nLen;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{722c1396-ea3f-4454-a3a0-4804c31d5645}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Pop : Results.Result
+VAR_OUTPUT
+	iState			: I_State;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nHead = _nTail THEN
+    Pop := Results.None;
+    RETURN;
+END_IF
+
+iState := _iState[_nHead];
+_iState[_nHead] := 0;
+
+_nHead := _nHead + 1;
+_nLen := _nLen - 1;
+
+IF _nHead > nMax THEN
+    _nHead := 0;
+END_IF
+
+Pop := Results.Ok;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{9d46582f-4419-4027-8c47-8930019ed874}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Push : Results.Result
+VAR_INPUT
+	iState			: I_State;
+END_VAR
+VAR
+	_nNextTail 		: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iState = 0 THEN
+	Push := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+_nNextTail := _nTail + 1;
+
+IF _nNextTail > nMax THEN
+    _nNextTail := 0;
+END_IF
+
+IF _nNextTail = _nHead THEN
+    Push := Results.Err.Ovf; 
+    RETURN;
+END_IF
+
+_nLen := _nLen + 1;
+_iState[_nTail] := iState;
+_nTail := _nNextTail;
+Push := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToDebug" Id="{93183e31-fbae-494d-b3b3-511c70a6b8f0}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

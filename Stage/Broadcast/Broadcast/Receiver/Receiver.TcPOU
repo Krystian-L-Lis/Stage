@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Receiver" Id="{257bc56d-d4ab-4dfa-8333-731f29b2e514}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Receiver IMPLEMENTS I_ReceiverNode, I_Receiver
+VAR
+	_iReceiver		: I_Call;
+	_fbTag			: Tags.Tag;
+	_bIsOk			: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{951a002b-ff7a-48cf-b743-6a05c2c3370f}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+
+	iReceiver		: I_Call;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iReceiver := iReceiver;
+_bIsOk := _iReceiver <> 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsOk" Id="{4a36423a-d62a-4434-aa29-147d4a2a72c0}">
+      <Declaration><![CDATA[PROPERTY INTERNAL IsOk : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9181fb34-27f0-4f1d-8d52-cbee4d6fcb65}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsOk := _bIsOk;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Pair" Id="{27407187-acff-4901-8f63-f09886ed298e}">
+      <Declaration><![CDATA[METHOD Pair : Results.Result
+VAR_INPUT
+	iSignal		: I_Signal;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iSignal <> 0 THEN
+	Pair := iSignal.Pair(THIS^);
+ELSE
+	Pair := Results.Error;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Receive" Id="{34f6591a-4c68-42fe-83cd-983703da5774}">
+      <Declaration><![CDATA[METHOD INTERNAL Receive
+VAR_INPUT
+	iTag			: Tags.I_Tag;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iReceiver.Call(iTag);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Tag" Id="{93b0a7a7-1505-4fb2-9b7a-4f06daa0687d}">
+      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag]]></Declaration>
+      <Get Name="Get" Id="{05560be5-36b7-415d-aeaa-e1a122c5c12d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := _fbTag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ToDebug" Id="{4d2d1b4f-7113-4930-a8e9-4bb3e4020fbd}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

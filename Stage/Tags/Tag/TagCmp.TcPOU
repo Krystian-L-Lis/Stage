@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TagCmp" Id="{fc472a51-95c8-4c63-b8c5-5dfa13d61d73}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TagCmp IMPLEMENTS I_TagCmp
+VAR
+	_iBaseTag		: I_Tag;
+	_eResult		: Results.Result;
+	_bLock			: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="_self" Id="{fe4340bb-7f6f-44d0-993a-3f0ac0014f79}">
+      <Declaration><![CDATA[PROPERTY PRIVATE _self : I_TagCmp]]></Declaration>
+      <Get Name="Get" Id="{e6bce7a1-dcf6-45e3-9283-e9e637ba0ada}">
+        <Declaration><![CDATA[VAR
+	_this : I_TagCmp := THIS^;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_self := _this;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="AndIf" Id="{9223b46b-6be4-477a-9010-c0212fbeba73}">
+      <Declaration><![CDATA[METHOD AndIf : I_TagCmp
+VAR_INPUT
+	bCondition: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AndIf := _self;
+
+IF _bLock THEN
+	RETURN;
+END_IF
+
+IF _eResult = Results.Ok AND_THEN bCondition THEN
+	_eResult := Results.Ok;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Default" Id="{4388843a-3f13-4d13-9444-a6c347a1b77c}">
+      <Declaration><![CDATA[METHOD Default : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _bLock THEN
+	RETURN;
+END_IF
+
+IF _eResult <> Results.None THEN
+	RETURN;
+END_IF
+
+_bLock := TRUE;
+Default := TRUE;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsErr" Id="{238cf0db-bccc-4190-9a10-55e053cafa94}">
+      <Declaration><![CDATA[METHOD IsErr : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _bLock THEN
+	RETURN;
+END_IF
+
+IF _eResult >= 0 THEN
+	RETURN;
+END_IF
+
+_bLock := TRUE;
+IsErr := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsOk" Id="{1b9b036d-e9fe-45a3-8945-f3ba7babe854}">
+      <Declaration><![CDATA[METHOD IsOk : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _bLock THEN
+	RETURN;
+END_IF
+
+IF _eResult <> Results.Ok THEN
+	RETURN;
+END_IF
+
+_bLock := TRUE;
+IsOk := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Match" Id="{5c938a28-c260-4bf1-adcc-c84d59421fa8}">
+      <Declaration><![CDATA[METHOD Match : I_TagCmp
+VAR_INPUT
+	iOther: I_Tag;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Match := _self;
+
+IF _bLock THEN
+	RETURN;
+END_IF
+
+CASE _eResult OF
+	Results.Ok,
+	Results.None:
+		IF iOther = _iBaseTag THEN
+			_eResult := Results.Ok;
+		END_IF
+END_CASE
+
+	]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MatchId" Id="{4a9b5161-c30a-43ce-a366-efe275b3f2b8}">
+      <Declaration><![CDATA[METHOD MatchId : I_TagCmp
+VAR_INPUT
+	sOtherId	: Strings.Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MatchId := _self;
+
+IF _bLock THEN
+	RETURN;
+END_IF
+
+CASE _eResult OF
+	Results.Ok,
+	Results.None:
+		IF sOtherId <> '' AND_THEN _iBaseTag.GetId() = sOtherId THEN
+			_eResult := Results.Ok;
+		END_IF
+END_CASE
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MatchPrtId" Id="{78d82c00-f656-4a95-b467-0eabd905f45b}">
+      <Declaration><![CDATA[METHOD MatchPrtId : I_TagCmp
+VAR_INPUT
+	sPartialId		: Strings.Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MatchPrtId := _self;
+
+IF _bLock THEN
+	RETURN;
+END_IF
+
+CASE _eResult OF
+	Results.Ok,
+	Results.None:
+		IF sPartialId <> '' AND_THEN (Tc2_Standard.RIGHT(_iBaseTag.GetId(), Tc2_Standard.LEN(sPartialId)) = sPartialId) THEN
+			_eResult := Results.Ok;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OrIf" Id="{c9bdb97c-3eb5-4133-8ad4-a1531337cf33}">
+      <Declaration><![CDATA[METHOD OrIf : I_TagCmp
+VAR_INPUT
+	bCondition: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OrIf := _self;
+
+IF _bLock THEN
+	RETURN;
+END_IF
+
+IF _eResult = Results.Ok OR_ELSE bCondition THEN
+	_eResult := Results.Ok;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Set" Id="{2167daab-4164-44b9-93b7-a85c88a05ebd}">
+      <Declaration><![CDATA[METHOD Set : I_TagCmp
+VAR_INPUT
+	iBaseTag	: I_Tag;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iBaseTag := iBaseTag;
+_eResult := Results.None;
+_bLock := FALSE;
+
+IF iBaseTag = 0 THEN
+	_eResult := Results.Err.Itf0;
+END_IF
+
+Set := _self;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="XorIf" Id="{ca9c46ad-c94a-433e-aeab-483b4c5ea474}">
+      <Declaration><![CDATA[METHOD XorIf : I_TagCmp
+VAR_INPUT
+	bCondition: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[XorIf := _self;
+
+IF _bLock THEN
+	RETURN;
+END_IF
+
+IF _eResult = Results.Ok XOR bCondition THEN
+	_eResult := Results.Ok;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

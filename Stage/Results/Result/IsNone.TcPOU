@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="IsNone" Id="{0669c756-2af9-48b0-9a82-414df9399dbc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsNone : BOOL
+VAR_INPUT
+	eResult			: Result;
+END_VAR
+VAR_OUTPUT
+	eCarry			: Result;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsNone := eResult = 0;
+eCarry := eResult;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

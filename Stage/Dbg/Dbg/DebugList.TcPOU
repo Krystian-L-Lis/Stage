@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="DebugList" Id="{988c50c4-c1a3-41fc-bd18-6efe33b318e2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK DebugList
+VAR
+	_refDebug			: REFERENCE TO ARRAY[0..Param.nMaxDebugArraySize] OF ST_DebugInfo REF= _Debug.stDebug;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
