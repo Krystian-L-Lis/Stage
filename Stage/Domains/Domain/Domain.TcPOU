@@ -3,7 +3,6 @@
   <POU Name="Domain" Id="{d9e5aa36-819c-4fdc-9f7e-02ca56f488e3}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FINAL Domain IMPLEMENTS I_DomainNode;
 VAR
-	_fbTag			: Tags.Tag;
 	_iDomain		: I_Domain;
 	_iNext			: I_DomainNode;
 	_iPrev			: I_DomainNode;
