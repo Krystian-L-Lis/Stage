@@ -1,3 +1,4 @@
+```
 FUNCTION_BLOCK Example IMPLEMENTS I_Debug
   METHOD ToDebug : I_Debug
     ToDebug := THIS^;
@@ -16,5 +17,6 @@ PROGRAM MAIN
     bInit := FALSE;
   END_IF
 END_PROGRAM
+```
 
 ![Debug Result](main/Examples/Images/DebugResult.png)
