@@ -48,34 +48,58 @@
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
     <PlaceholderReference Include="_Broadcast">
       <DefaultResolution>Broadcast, * (_)</DefaultResolution>
       <Namespace>Broadcast</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
     <PlaceholderReference Include="_Debug">
       <DefaultResolution>Debug, * (_)</DefaultResolution>
       <Namespace>Debug</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
     <PlaceholderReference Include="_Flags">
       <DefaultResolution>Flags, * (_)</DefaultResolution>
       <Namespace>Flags</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
     <PlaceholderReference Include="_Results">
       <DefaultResolution>Results, * (_)</DefaultResolution>
       <Namespace>Results</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
     <PlaceholderReference Include="_States">
       <DefaultResolution>States, * (_)</DefaultResolution>
       <Namespace>States</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
     <PlaceholderReference Include="_Tags">
       <DefaultResolution>Tags, * (_)</DefaultResolution>
       <Namespace>Tags</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>

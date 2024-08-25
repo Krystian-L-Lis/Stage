@@ -4,7 +4,6 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
 	nChannelSize		: UDINT(1..16#FFFFFFE) := 100;
-	nBaseSlotAlloc		: UDINT := 1;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
