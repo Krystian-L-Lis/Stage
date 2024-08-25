@@ -16,3 +16,5 @@ PROGRAM MAIN
     bInit := FALSE;
   END_IF
 END_PROGRAM
+
+![Debug Result](images/DbgResult.png)
