@@ -30,7 +30,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IsRised := _bState = FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="IsRised" Id="{df34ac5f-a14b-4eed-935f-9b7890265338}">
@@ -39,7 +39,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IsRised := _bState = TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Lower" Id="{4a008dce-348c-4da4-b044-d2eca881d21f}">
@@ -62,7 +62,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_bState := TRUE;
-_fbTag.Option := CFLAG.LOWERED;]]></ST>
+_fbTag.Option := CFLAG.RISED;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Tag" Id="{925e92e3-6f08-455e-9dad-64b29e34d18e}">
