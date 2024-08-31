@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Timer" Id="{00cd285a-e79f-4593-82bd-1b987fee49e8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Timer
+VAR_INPUT
+	bIn			: BOOL;
+	bKeep		: BOOL;
+	bPause		: BOOL;
+	
+	tOnDelay	: TIME;
+	tOffDelay	: TIME;	
+END_VAR
+VAR_OUTPUT
+	bOut		: BOOL;
+	tElapsed	: TIME;
+	tRemained	: TIME;
+	tTarget		: TIME;
+END_VAR
+VAR
+	_ton		: Tc2_Standard.TON;
+	_tRemained	: TIME;
+	_tElapsed	: TIME;
+	_nState		: USINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Initial state stransitions
+CASE _nState OF
+	0: //OFF
+		IF bKeep THEN
+			// THIS COMMENT PREVENTS COMP ERROR
+		ELSIF bIn THEN
+			_ton.PT := tOnDelay;
+			_nState := 1;	
+		END_IF
+		
+	1: //ON Delay
+		IF bPause THEN
+			_tRemained := _ton.PT - _ton.ET;
+			_tElapsed := _tElapsed + _ton.ET;
+			_nState := 4;	
+		ELSIF bKeep THEN
+			// THIS COMMENT PREVENTS COMP ERROR
+		ELSIF NOT bIn THEN
+			_nState := 0;
+		END_IF		
+
+	2: //ON
+		IF bKeep THEN
+			// THIS COMMENT PREVENTS COMP ERROR
+		ELSIF NOT bIn THEN
+			_ton.PT := tOffDelay;
+			_nState := 3;	
+		END_IF	
+
+	3: //OFF Delay
+		IF bPause THEN
+			_tRemained := _ton.PT - _ton.ET;
+			_tElapsed := _tElapsed + _ton.ET;
+			_nState := 5;	
+		ELSIF bKeep THEN
+			// THIS COMMENT PREVENTS COMP ERROR
+		ELSIF bIn THEN
+			_nState := 2;
+		END_IF
+	
+	4: // ON Delay Paused
+		IF NOT bPause THEN
+			_ton.PT := _tRemained;
+			_nState := 1;	
+		ELSIF bKeep THEN
+			// THIS COMMENT PREVENTS COMP ERROR
+		ELSIF NOT bIn THEN
+			_nState := 0;
+		END_IF
+
+	5: // OFF Delay Paused
+		IF NOT bPause THEN
+			_ton.PT := _tRemained;
+			_nState := 3;			
+		ELSIF bKeep THEN
+			// THIS COMMENT PREVENTS COMP ERROR
+		ELSIF bIn THEN
+			_nState := 2;
+		END_IF
+		
+END_CASE
+
+// _ton execution
+CASE _nState OF
+	0:	// OFF
+		_ton(IN := FALSE);
+		_tRemained := T#0S;
+		_tElapsed := T#0S;
+	1:	// ON Delay
+		_ton(IN := TRUE);
+		IF _ton.Q THEN
+			_ton(IN := FALSE);
+			_nState := 2;
+		END_IF
+	2:	// ON
+		_ton(IN := FALSE);
+		_tRemained := T#0S;
+		_tElapsed := T#0S;
+	3:	// OFF Delay
+		_ton(IN := TRUE);
+		IF _ton.Q THEN
+			_ton(IN := FALSE);
+			_nState := 0;
+		END_IF
+		
+	4, 5:
+		_ton(IN := FALSE);
+END_CASE
+
+// Base Output
+CASE _nState OF
+	0:	// OFF
+		bOut := FALSE;
+	1:	// ON Delay
+		bOut := FALSE;
+	2:	// ON
+		bOut := TRUE;
+	3:	// OFF Delay
+		bOut := TRUE;
+	4:	// ON Delay Paused
+		bOut := FALSE;
+	5:	// OFF Delay Paused
+		bOut := TRUE;
+END_CASE
+
+CASE _nState OF
+	0,2:
+		tTarget := T#0S;
+	1,4:
+		tTarget := tOnDelay;
+	3,5:
+		tTarget := tOffDelay;
+END_CASE
+tElapsed := _tElapsed + _ton.ET;
+tRemained := tTarget - tElapsed;
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
