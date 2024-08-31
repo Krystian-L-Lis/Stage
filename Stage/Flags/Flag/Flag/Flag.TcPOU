@@ -30,7 +30,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IsRised := _bState = FALSE;]]></ST>
+        <ST><![CDATA[IsLowered := _bState = FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="IsRised" Id="{df34ac5f-a14b-4eed-935f-9b7890265338}">
