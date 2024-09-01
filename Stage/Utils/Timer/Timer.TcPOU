@@ -21,6 +21,9 @@ VAR
 	_tRemained	: TIME;
 	_tElapsed	: TIME;
 	_nState		: USINT;
+	
+	_tOnDelayP	: TIME;
+	_tOffDelayP	: TIME;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -30,12 +33,18 @@ CASE _nState OF
 		IF bKeep THEN
 			// THIS COMMENT PREVENTS COMP ERROR
 		ELSIF bIn THEN
-			_ton.PT := tOnDelay;
 			_nState := 1;	
 		END_IF
 		
 	1: //ON Delay
-		IF bPause THEN
+		IF _tOnDelayP <> tOnDelay THEN
+			_tOnDelayP := tOnDelay;
+			IF tElapsed < tOnDelay THEN
+				_ton.PT := tOnDelay - tElapsed;
+			ELSE
+				_ton.PT := T#0S;
+			END_IF
+		ELSIF bPause THEN
 			_tRemained := _ton.PT - _ton.ET;
 			_tElapsed := _tElapsed + _ton.ET;
 			_nState := 4;	
@@ -54,7 +63,14 @@ CASE _nState OF
 		END_IF	
 
 	3: //OFF Delay
-		IF bPause THEN
+		IF _tOffDelayP <> tOffDelay THEN
+			_tOffDelayP := tOffDelay;
+			IF tElapsed < tOffDelay THEN
+				_ton.PT := tOffDelay - tElapsed;
+			ELSE
+				_ton.PT := T#0S;
+			END_IF
+		ELSIF bPause THEN
 			_tRemained := _ton.PT - _ton.ET;
 			_tElapsed := _tElapsed + _ton.ET;
 			_nState := 5;	
