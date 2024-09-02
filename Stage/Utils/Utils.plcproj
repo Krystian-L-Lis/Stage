@@ -40,6 +40,12 @@
     <VirtualLibrary>true</VirtualLibrary>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Color\Itf\I_Color.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Color\Color.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Timer\Timer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -69,6 +75,8 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Color" />
+    <Folder Include="Color\Itf" />
     <Folder Include="Timer" />
   </ItemGroup>
   <ProjectExtensions>
