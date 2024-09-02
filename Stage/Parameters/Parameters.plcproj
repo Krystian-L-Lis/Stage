@@ -53,6 +53,13 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Strings">
+      <DefaultResolution>Strings, * (_)</DefaultResolution>
+      <Namespace>Strings</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Persistant" />
@@ -68,6 +75,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Persistant\LREAL_Param.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistant\STR_Param.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Persistant\TIME_Param.TcPOU">
