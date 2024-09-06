@@ -3,48 +3,68 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7f3f1d4c-9923-428a-aa31-9c3ca590a3af}</ProjectGuid>
+    <ProjectGuid>{a4313d0c-5223-4da4-b2e2-b88c20b6a69f}</ProjectGuid>
     <SubObjectsSortedByName>true</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Parameters</Name>
+    <Name>Utils</Name>
     <ProgramVersion>3.1.4026.9</ProgramVersion>
-    <Application>{ad7a33cf-ff97-4461-9ac2-fd24b2227526}</Application>
-    <TypeSystem>{0e91b83d-a092-4ba9-9e55-f09115c67fdc}</TypeSystem>
-    <Implicit_Task_Info>{39e692ec-364f-4048-8f69-61f9c74ed973}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{1f2df722-5548-4a71-a575-4f8d069e6438}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{e626228d-f88b-4d65-b2a4-6cc56d533936}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{6ef8435f-7a0e-4573-8d88-3edb856494ab}</LibraryReferences>
+    <Application>{27c6098d-2ecd-41f5-8a4c-9dfd760a4ab6}</Application>
+    <TypeSystem>{c4e484e8-3149-488c-ac2a-3768c5fe01bd}</TypeSystem>
+    <Implicit_Task_Info>{47f005fd-c879-429f-baf9-26e64d516273}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{adc26751-ff6e-475b-8835-e3642302d774}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{06bc0b3e-69b8-409a-8e3b-edb514a6975f}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{60472897-2a0f-40eb-9a35-801263f827c1}</LibraryReferences>
     <Company>_</Company>
     <Released>false</Released>
     <AllowChecksForLibrary>false</AllowChecksForLibrary>
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
-    <Title>Parameters</Title>
-    <ProjectVersion>1.0.0</ProjectVersion>
+    <Title>Utils</Title>
     <LibraryCategories>
-      <LibraryCategory>
-        <Id>{dac10f0f-0209-4392-b996-875b1dead2d2}</Id>
-        <Version>1.0.0.0</Version>
-        <DefaultName>CustomUtils</DefaultName>
-      </LibraryCategory>
-      <LibraryCategory>
+      <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
         <Version>1.0.0.0</Version>
         <DefaultName>Stage</DefaultName>
       </LibraryCategory>
     </LibraryCategories>
     <SelectedLibraryCategories>
-      <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
+      <Id xmlns="">{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
     </SelectedLibraryCategories>
-    <DefaultNamespace>Parameters</DefaultNamespace>
-    <Placeholder>_Parameters</Placeholder>
+    <ProjectVersion>1.0.0</ProjectVersion>
+    <DefaultNamespace>Utils</DefaultNamespace>
+    <Placeholder>_Utils</Placeholder>
     <Author>Krystian Lis et al.</Author>
-    <Description>No more VAR PERSITANT</Description>
+    <Description>Various utilities</Description>
     <VirtualLibrary>true</VirtualLibrary>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Color\Itf\I_Color.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Color\Color.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Timer\Timer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
@@ -53,39 +73,11 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
-    <PlaceholderReference Include="_Strings">
-      <DefaultResolution>Strings, * (_)</DefaultResolution>
-      <Namespace>Strings</Namespace>
-      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
-      <Optional>true</Optional>
-      <QualifiedOnly>true</QualifiedOnly>
-    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Persistant" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Persistant\BOOL_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\REAL_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\DINT_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\LREAL_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\STR_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\TIME_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\UDINT_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
+    <Folder Include="Color" />
+    <Folder Include="Color\Itf" />
+    <Folder Include="Timer" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

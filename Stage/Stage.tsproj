@@ -146,6 +146,18 @@
 					</Contexts>
 				</Instance>
 			</Project>
+			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="Utils" PrjFilePath="Utils\Utils.plcproj" TmcFilePath="Utils\Utils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>Utils Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
 		</Plc>
 	</Project>
 </TcSmProject>
