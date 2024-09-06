@@ -3,92 +3,81 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{312b0c02-1c64-41bd-a486-7564258517b2}</ProjectGuid>
+    <ProjectGuid>{a4313d0c-5223-4da4-b2e2-b88c20b6a69f}</ProjectGuid>
     <SubObjectsSortedByName>true</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Package</Name>
+    <Name>Utils</Name>
     <ProgramVersion>3.1.4026.9</ProgramVersion>
-    <Application>{09d3e32d-bdca-48e6-acd9-244f2f809d83}</Application>
-    <TypeSystem>{ceeec901-d64f-4be6-ae4f-e31e0ba9c894}</TypeSystem>
-    <Implicit_Task_Info>{6d5ee8d9-f8e5-45e4-aae9-5075ec6a3ab7}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{708b91f6-6814-4662-9bc0-e122abf94a9f}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{9406703b-8ae1-401b-badd-ef6ea7a9cbb7}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{26acd379-7caa-4b94-9304-c0646b9cebe7}</LibraryReferences>
-    <Author>Krystian Lis et al.</Author>
+    <Application>{27c6098d-2ecd-41f5-8a4c-9dfd760a4ab6}</Application>
+    <TypeSystem>{c4e484e8-3149-488c-ac2a-3768c5fe01bd}</TypeSystem>
+    <Implicit_Task_Info>{47f005fd-c879-429f-baf9-26e64d516273}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{adc26751-ff6e-475b-8835-e3642302d774}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{06bc0b3e-69b8-409a-8e3b-edb514a6975f}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{60472897-2a0f-40eb-9a35-801263f827c1}</LibraryReferences>
+    <Company>_</Company>
     <Released>false</Released>
     <AllowChecksForLibrary>false</AllowChecksForLibrary>
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
-    <Placeholder>_Stage</Placeholder>
-    <DefaultNamespace>Stage</DefaultNamespace>
+    <Title>Utils</Title>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
         <Version>1.0.0.0</Version>
         <DefaultName>Stage</DefaultName>
       </LibraryCategory>
-      <LibraryCategory xmlns="">
-        <Id>{b124f263-29c8-4dd0-bd37-34a3732ced4e}</Id>
-        <Version>1.0.0.0</Version>
-        <DefaultName>Frameworks</DefaultName>
-      </LibraryCategory>
     </LibraryCategories>
     <SelectedLibraryCategories>
-      <Id xmlns="">{b124f263-29c8-4dd0-bd37-34a3732ced4e}</Id>
+      <Id xmlns="">{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
     </SelectedLibraryCategories>
-    <ProjectVersion>1.0.0.0</ProjectVersion>
-    <Title>Stage</Title>
-    <Company>_</Company>
-    <Description>Stage framework: Package without qualified access.</Description>
+    <ProjectVersion>1.0.0</ProjectVersion>
+    <DefaultNamespace>Utils</DefaultNamespace>
+    <Placeholder>_Utils</Placeholder>
+    <Author>Krystian Lis et al.</Author>
+    <Description>Various utilities</Description>
     <VirtualLibrary>true</VirtualLibrary>
   </PropertyGroup>
   <ItemGroup>
-    <PlaceholderReference Include="_Broadcast">
-      <DefaultResolution>Broadcast, * (_)</DefaultResolution>
-      <Namespace>Broadcast</Namespace>
+    <Compile Include="Color\Itf\I_Color.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Color\Color.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Timer\Timer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
-    <PlaceholderReference Include="_Debug">
-      <DefaultResolution>Debug, * (_)</DefaultResolution>
-      <Namespace>Debug</Namespace>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
-    <PlaceholderReference Include="_Domains">
-      <DefaultResolution>Domains, * (_)</DefaultResolution>
-      <Namespace>Domains</Namespace>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+      <SystemLibrary>true</SystemLibrary>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
-    <PlaceholderReference Include="_Flags">
-      <DefaultResolution>Flags, * (_)</DefaultResolution>
-      <Namespace>Flags</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Parameters">
-      <DefaultResolution>Parameters, * (_)</DefaultResolution>
-      <Namespace>Parameters</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Results">
-      <DefaultResolution>Results, * (_)</DefaultResolution>
-      <Namespace>Results</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Rt">
-      <DefaultResolution>Rt, * (_)</DefaultResolution>
-      <Namespace>Rt</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_States">
-      <DefaultResolution>States, * (_)</DefaultResolution>
-      <Namespace>States</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Strings">
-      <DefaultResolution>Strings, * (_)</DefaultResolution>
-      <Namespace>Strings</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Tags">
-      <DefaultResolution>Tags, * (_)</DefaultResolution>
-      <Namespace>Tags</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Utils">
-      <DefaultResolution>Utils, * (_)</DefaultResolution>
-      <Namespace>Utils</Namespace>
-    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Color" />
+    <Folder Include="Color\Itf" />
+    <Folder Include="Timer" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
