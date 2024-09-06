@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ExampleDomain_Ctx" Id="{ae368b22-3a44-4703-8f0c-54e8c9819d99}">
+    <Declaration><![CDATA[TYPE ExampleDomain_Ctx :
+STRUCT
+	io		: ExampleDomain_Io;
+	hmi		: ExampleDomain_Hmi;
+	priv	: ExampleDomain_Priv;
+	state	: ExampleDomain_States;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

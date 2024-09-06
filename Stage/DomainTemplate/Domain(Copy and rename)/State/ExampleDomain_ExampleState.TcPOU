@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ExampleDomain_ExampleState" Id="{3075723a-c4bd-49b6-8676-8704fb23a14f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ExampleDomain_ExampleState EXTENDS _ExampleDomain_State
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ExampleDomain_StatusText" Id="{0417626f-29d8-4c4d-8561-6690e813f16c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ExampleDomain_StatusText IMPLEMENTS I_Call
+VAR
+	_ctx			: REFERENCE TO ExampleDomain_Ctx;
+	_fbRec			: Receiver(THIS^);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{ec843839-0a57-444d-8dab-5f05f06faa31}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iTag	: Broadcast.Tags.I_Tag;
+END_VAR
+VAR
+	cmp			: TagCmp;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[cmp.Set(_ctx.priv.smgr.Current);			
+
+IF cmp.Match(_ctx.state.iExample).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Example State!';
+	
+	RETURN;
+END_IF
+
+IF cmp.Default() THEN
+	_ctx.hmi.sStatusText := 'Alarm: Internal Error!';
+	
+	RETURN;	
+END_IF
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{643b3677-37ca-4b63-845d-ab58a0ac8a8d}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	ctx			: REFERENCE TO ExampleDomain_Ctx;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx REF= ctx;
+ctx.priv.smgr.GetOnChange().Pair(_fbRec);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToDebug" Id="{f633fa4d-9995-48df-9ef3-d15fca152da0}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

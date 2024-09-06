@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_ExampleDomain_State" Id="{18baacd3-7396-4f90-ad03-48cbc1054b26}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK _ExampleDomain_State EXTENDS State
+VAR
+	_ctx			: REFERENCE TO ExampleDomain_Ctx;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{87256dd6-34be-4d1b-9df7-dc9b37d366a4}">
+      <Declaration><![CDATA[(*FB_Init is always available implicitly and it is used primarily for initialization.
+The return value is not evaluated. For a specific influence, you can also declare the
+methods explicitly and provide additional code there with the standard initialization
+code. You can evaluate the return value.*)
+METHOD FB_Init : BOOL
+VAR_INPUT
+	(* TRUE: the retain variables are initialized (reset warm / reset cold)*)
+	bInitRetains	: BOOL;
+	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
+	bInCopyCode	: BOOL;
+	iStateList	: States.I_StateRepo;
+	ctx			: REFERENCE TO ExampleDomain_Ctx;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx REF= ctx;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

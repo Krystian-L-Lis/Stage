@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ExampleDomain" Id="{2cc7bbb1-01ad-4ca5-8dec-c2ca30454bb0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ExampleDomain IMPLEMENTS I_Domain, I_Execute
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR CONSTANT
+	MAX_STATE		: UDINT := 1;
+END_VAR
+VAR
+	exe				: Execute(THIS^);
+	domTag			: Tag;
+	domain			: Domain(THIS^);
+
+	// Context
+	ctx				: ExampleDomain_Ctx;
+
+	// State Machine
+	
+	stateMachine	: StateMachine;
+	stateRepo		: StateRepo<MAX_STATE>;
+	stateBuffer		: StateBuffer<MAX_STATE>;
+	stateMgr		: StateManager<MAX_STATE>(stateMachine, stateRepo, stateBuffer);
+	smgrAssign		: A_StateManager(stateMgr, ctx.priv.smgr);
+	
+	// States
+	
+	example			: ExampleDomain_ExampleState(stateRepo, ctx);
+	exampleAssign	: A_Tag(example.Tag, ctx.state.iExample);
+	
+	// FLAGS
+	flagList		: FlagList<0>;
+	
+	// SIGNALS
+	signalList		: SignalList<0>;
+	
+	// RECEIVERS
+	receiverList	: ReceiverList<0>;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{c897e5cf-559a-456a-a239-6e33a3deb831}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Flags" Id="{4db84fb6-18e7-4840-b81e-20ed1bcfb711}">
+      <Declaration><![CDATA[PROPERTY Flags : Domains.Flags.I_FlagList
+]]></Declaration>
+      <Get Name="Get" Id="{00ca79e8-abee-48c9-85be-03d77e9dba3a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Flags := flagList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Recs" Id="{c372796d-8471-46e8-bc2f-e9fbc59bc2cd}">
+      <Declaration><![CDATA[PROPERTY Recs : Domains.Broadcast.I_ReceiverList
+]]></Declaration>
+      <Get Name="Get" Id="{5505c604-4912-4ca4-8e80-06c8b24b80d6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Recs := receiverList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Signals" Id="{a2ade698-530a-4037-8f14-c1d0936c2bbf}">
+      <Declaration><![CDATA[PROPERTY Signals : Domains.Broadcast.I_SignalList
+]]></Declaration>
+      <Get Name="Get" Id="{3f0ad137-e5e8-4f74-be8a-170cbfc0dd2f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Signals := signalList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Smgr" Id="{0a45c9ed-627c-4483-a99a-a5d7cb71021a}">
+      <Declaration><![CDATA[PROPERTY Smgr : Domains.States.I_StateManager
+]]></Declaration>
+      <Get Name="Get" Id="{9af2335c-813e-469d-a763-acfc5bbfb01b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Smgr := stateMgr;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Tag" Id="{1066d29a-067b-4d64-804e-1197cdb424c5}">
+      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag
+]]></Declaration>
+      <Get Name="Get" Id="{99210c92-d5dd-4362-8ff9-f26009bebba1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := domTag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ToDebug" Id="{16ff1ce0-9d29-4c22-be24-eb3a4d0ca553}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
