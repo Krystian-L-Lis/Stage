@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.9">
-	<Project ProjectGUID="{C61CA2FA-5123-4198-9125-8734FBACFE30}" Target64Bit="true" ShowHideConfigurations="#x6">
+	<Project ProjectGUID="{C61CA2FA-5123-4198-9125-8734FBACFE30}" ShowHideConfigurations="#x6">
 		<Plc>
 			<Project GUID="{E15936EC-8BEE-4FAE-95F2-95F5F6628B6D}" Name="Broadcast" PrjFilePath="Broadcast\Broadcast.plcproj" TmcFilePath="Broadcast\Broadcast.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
@@ -149,6 +149,18 @@
 			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="Utils" PrjFilePath="Utils\Utils.plcproj" TmcFilePath="Utils\Utils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
 					<Name>Utils Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
+			<Project GUID="{E8054928-9E85-4495-8B5F-7309D93A1365}" Name="DomainTemplate" PrjFilePath="DomainTemplate\DomainTemplate.plcproj" TmcFilePath="DomainTemplate\DomainTemplate.tmc" ReloadTmc="true" AmsPort="864" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502340" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>DomainTemplate Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
