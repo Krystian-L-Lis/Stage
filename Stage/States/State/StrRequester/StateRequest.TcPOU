@@ -27,7 +27,7 @@ END_VAR]]></Declaration>
     </Method>
     <Method Name="Request" Id="{ecb98564-dac7-4f72-8bb1-8bfa72ffcee5}">
       <Declaration><![CDATA[METHOD Request
-VAR
+VAR_INPUT
 	sPartialIdToRequest		: Strings.Str;
 END_VAR
 VAR
