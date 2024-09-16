@@ -69,7 +69,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _nOptionPos <> 0 THEN
-	GetId := Tc2_Standard.DELETE(_sId, _nOptionLen, _nOptionPos); 
+	GetId := Tc2_Standard.DELETE(_sId, _nOptionLen + 1, _nOptionPos); 
 ELSE
 	GetId := _sId;
 END_IF
