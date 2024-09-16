@@ -82,6 +82,9 @@
     <Compile Include="State\State\I_State.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="State\StrRequester\StateStrRequester.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -154,6 +157,7 @@
     <Folder Include="State\Machine" />
     <Folder Include="State\Buffer" />
     <Folder Include="State\Manager" />
+    <Folder Include="State\StrRequester" />
     <Folder Include="State\State" />
   </ItemGroup>
   <ProjectExtensions>
