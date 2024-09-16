@@ -94,7 +94,7 @@ _SoftCompress();
 _Cleanup();
 
 
-_nSignalId := iSignal.id; // _nSignalId needs to be rewalidated.
+_nSignalId := iSignal.id; // _nSignalId needs to be revalidated.
 IF Results.IsOk(_FindBestChunk(_nSignalId, _nRequestedSize, nNewId => _nNewId, nNewSize => _nNewSize)) THEN
 	IF _nSignalId <> 0 THEN
 		_Copy(_nSignalId, _nSignalSize, _nNewId);
