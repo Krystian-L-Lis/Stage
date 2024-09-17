@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_Unpair" Id="{f6ca68ef-51bd-45d7-8f40-7ee95c0dea17}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION _Unpair : Results.Result
+VAR_INPUT
+	iSignal				: I_SignalNode;
+    iReceiver			: I_ReceiverNode;
+END_VAR
+VAR
+	i					: UDINT;
+	_nEnd				: UDINT;
+	
+	_nCount				: UDINT;
+	_nSize				: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSignal.count = 0 THEN
+	_Unpair := Results.None;
+	RETURN;	
+END_IF
+
+_nEnd := iSignal.id + iSignal.count - 1;
+FOR i := iSignal.id TO _nEnd DO
+	IF _Channel.stEntry[i].iReceiver = iReceiver THEN
+		iSignal.count := iSignal.count - 1;
+		
+		_Channel.stEntry[i].iReceiver := 0;
+		_Channel.stEntry[i].iSignal := 0;
+		
+		_Unpair := Results.Ok;
+		RETURN;
+	END_IF
+END_FOR
+
+IF iSignal.count = 0 THEN
+	iSignal.id := 0;
+	iSignal.size := 0;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

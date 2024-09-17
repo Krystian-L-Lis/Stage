@@ -7,6 +7,7 @@ VAR_INPUT
 	iReceiver			: I_ReceiverNode;
 END_VAR
 VAR
+	i					: UDINT;
 	_nSignalSize		: UDINT;
 	_nSignalCount		: UDINT;
 	_nSignalId			: UDINT;
@@ -45,11 +46,27 @@ IF _Channel.nAssigned = 0 THEN
 END_IF
 
 //If signal has enough space
+(* Pre _Unpair method
 IF (_nSignalCount := iSignal.count) > 0 AND_THEN _nSignalCount < (_nSignalSize := iSignal.size) THEN
 	_Channel.stEntry[iSignal.id + _nSignalCount].iSignal := iSignal;
 	_Channel.stEntry[iSignal.id + _nSignalCount].iReceiver := iReceiver;
 	iSignal.count := _nSignalCount + 1;
 	_NewPair := Results.Ok;
+	RETURN;
+END_IF
+*)
+IF (_nSignalCount := iSignal.count) > 0 AND_THEN _nSignalCount < (_nSignalSize := iSignal.size) THEN
+	_nSignalId := iSignal.id;
+	FOR i := _nSignalSize + _nSignalId - 1 TO _nSignalId BY -1 DO
+		IF _Channel.stEntry[i].iSignal = 0 THEN
+			_Channel.stEntry[i].iSignal := iSignal;
+			_Channel.stEntry[i].iReceiver := iReceiver;
+			iSignal.count := _nSignalCount + 1;
+			_NewPair := Results.Ok;
+			RETURN;		
+		END_IF
+	END_FOR
+	_NewPair := Results.Error;
 	RETURN;
 END_IF
 
