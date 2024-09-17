@@ -56,9 +56,9 @@ END_VAR]]></Declaration>
 		IF _iOldState <> 0 THEN
 			_iPrevious		:= _iOldState.Tag;
 		END_IF
-		_fbOnChange.Emit(_iMachine.Tag);
+		_fbOnChange.Option(CState.SUCCESS).Emit(_iMachine.Tag);
 	ELSE
-		_fbOnChange.Emit(_iMachine.Tag);
+		_fbOnChange.Option(CState.FAIL).Emit(_iMachine.Tag);
 	END_IF
 END_IF
 
