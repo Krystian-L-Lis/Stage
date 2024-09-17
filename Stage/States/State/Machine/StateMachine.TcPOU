@@ -29,6 +29,7 @@ END_IF
 IF iNewState = _iCurrentState THEN
 	_fbTag.Option := CState.SAME;
 	ChangeState := Results.None;
+	RETURN;
 END_IF
 
 IF NOT iNewState.CanActivate() THEN
