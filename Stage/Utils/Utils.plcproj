@@ -46,6 +46,9 @@
     <Compile Include="Color\Color.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Iters\GenIter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Timer\Timer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -77,6 +80,7 @@
   <ItemGroup>
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
+    <Folder Include="Iters" />
     <Folder Include="Timer" />
   </ItemGroup>
   <ProjectExtensions>
