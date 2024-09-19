@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK GenIter
 VAR
 	_nIter		: UDINT;
-	_bFirstLoop	: BOOL;
+	_bFirstLoop	: BOOL := TRUE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -93,6 +93,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_nIter := nNewValue;
+_bFirstLoop	:= TRUE;
 Set := _nIter;]]></ST>
       </Implementation>
     </Method>
