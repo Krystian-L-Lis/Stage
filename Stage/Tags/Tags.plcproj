@@ -107,6 +107,9 @@
     <Compile Include="Tag\TagCmp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tag\TagOption.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tag\TagOwner.TcPOU">
       <SubType>Code</SubType>
     </Compile>
