@@ -36,6 +36,24 @@ nVal := _nArray[nPos];
 Get := Results.Ok;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Has" Id="{f9cdc5dd-4001-4931-b8f7-dc63922b25cd}">
+      <Declaration><![CDATA[METHOD Has : BOOL
+VAR_INPUT
+	nVal	: UDINT;
+END_VAR
+VAR
+	i		: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := MI TO MX DO
+	IF _nArray[i] = nVal THEN
+		Has := TRUE;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Pop" Id="{9dafa2b2-c4d9-405e-ae03-7b86841e57aa}">
       <Declaration><![CDATA[METHOD Pop : Results.Result
 VAR_OUTPUT
