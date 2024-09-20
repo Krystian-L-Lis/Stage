@@ -40,13 +40,16 @@
     <VirtualLibrary>true</VirtualLibrary>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Collections\UDINT_Array.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Color\Itf\I_Color.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Color\Color.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Iters\GenIter.TcPOU">
+    <Compile Include="Collections\GenIter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Timer\Timer.TcPOU">
@@ -76,11 +79,18 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Results">
+      <DefaultResolution>Results, * (_)</DefaultResolution>
+      <Namespace>Results</Namespace>
+      <QualifiedOnly>true</QualifiedOnly>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
-    <Folder Include="Iters" />
+    <Folder Include="Collections" />
     <Folder Include="Timer" />
   </ItemGroup>
   <ProjectExtensions>

@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="UDINT_Array" Id="{6beeae34-1876-4583-b54c-fec934e67283}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK UDINT_Array
+VAR_GENERIC CONSTANT
+	MX		: UDINT := 1;
+	MI		: UDINT := 1;
+END_VAR
+VAR
+	_nArray	: ARRAY[MI..MX] OF UDINT;
+	_nHead	: UDINT;
+	_nTail	: UDINT;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Get" Id="{50d45214-fc7c-468e-bc96-136d66d8d035}">
+      <Declaration><![CDATA[METHOD Get : Results.Result
+VAR_INPUT
+	nPos		: UDINT;
+END_VAR
+VAR_OUTPUT
+	nVal		: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nPos < MI OR nPos > MX THEN
+	Get := Results.Error;
+	RETURN;
+END_IF
+
+
+nVal := _nArray[nPos];
+Get := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{9dafa2b2-c4d9-405e-ae03-7b86841e57aa}">
+      <Declaration><![CDATA[METHOD Pop : Results.Result
+VAR_OUTPUT
+    nVal    : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nHead = _nTail THEN
+    Pop := Results.Error;
+    RETURN;
+END_IF
+
+nVal := _nArray[_nTail];
+
+_nTail := (_nTail + 1) MOD (MX - MI + 1);
+
+Pop := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{014e7f24-2205-43b5-a008-1708c183fb13}">
+      <Declaration><![CDATA[METHOD Push : Results.Result
+VAR_INPUT
+    nVal    : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (_nHead + 1) MOD (MX - MI + 1) = _nTail THEN
+    Push := Results.Error;
+    RETURN;
+END_IF
+
+_nArray[_nHead] := nVal;
+
+_nHead := (_nHead + 1) MOD (MX - MI + 1);
+
+Push := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Set" Id="{e272d147-4fee-4862-90da-40e1ad50f7a4}">
+      <Declaration><![CDATA[METHOD Set : UDINT
+VAR_INPUT
+	nPos		: UDINT;
+	nVal		: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nPos < MI OR nPos > MX THEN
+	Get := Results.Error;
+	RETURN;
+END_IF
+
+
+_nArray[nPos] := nVal;
+Get := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
