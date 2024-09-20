@@ -3,8 +3,8 @@
   <POU Name="UDINT_Array" Id="{6beeae34-1876-4583-b54c-fec934e67283}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK UDINT_Array
 VAR_GENERIC CONSTANT
-	MX		: UDINT := 1;
 	MI		: UDINT := 1;
+	MX		: UDINT := 1;
 END_VAR
 VAR
 	_nArray	: ARRAY[MI..MX] OF UDINT;
@@ -75,7 +75,7 @@ Push := Results.Ok;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Set" Id="{e272d147-4fee-4862-90da-40e1ad50f7a4}">
-      <Declaration><![CDATA[METHOD Set : UDINT
+      <Declaration><![CDATA[METHOD Set : Results.Result
 VAR_INPUT
 	nPos		: UDINT;
 	nVal		: UDINT;
@@ -83,13 +83,13 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF nPos < MI OR nPos > MX THEN
-	Get := Results.Error;
+	Set := Results.Error;
 	RETURN;
 END_IF
 
 
 _nArray[nPos] := nVal;
-Get := Results.Ok;]]></ST>
+Set := Results.Ok;]]></ST>
       </Implementation>
     </Method>
   </POU>
