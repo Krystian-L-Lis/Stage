@@ -77,12 +77,12 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF _bFirstLoop THEN
 	_bFirstLoop := FALSE;
-	Next := _nIter;
+	Prev := _nIter;
 	RETURN;	
 END_IF
 
 _nIter := _nIter - 1;
-Next := _nIter;]]></ST>
+Prev := _nIter;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Set" Id="{da18debc-0496-4d1f-a196-2ac754170463}">
