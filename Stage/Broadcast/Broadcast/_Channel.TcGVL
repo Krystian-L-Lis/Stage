@@ -4,8 +4,11 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL INTERNAL
 	{attribute 'ExpandFully'} 
+	// Fixed-size array to store all signal-receiver entries.
+	// Index 0 is reserved and not used (signals with id = 0 are unassigned).
 	stEntry				: ARRAY[0..Param.nChannelSize] OF ST_Entry;
 	
+	// Total number of assigned entries in the stEntry array.
 	nAssigned			: UDINT;
 END_VAR]]></Declaration>
   </GVL>

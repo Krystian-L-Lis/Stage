@@ -133,5 +133,21 @@ END_VAR
         <ST><![CDATA[ToDebug := THIS^;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Unpair" Id="{ae27d934-17a9-4eae-a002-1ba80dc83d65}">
+      <Declaration><![CDATA[METHOD Unpair : Results.Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iReceiver = 0 THEN
+	Unpair := Results.Err.Itf0;
+ELSIF iReceiver.IsOk THEN
+	Unpair := _NewPair(THIS^, iReceiver);
+ELSE
+	Unpair := Results.Error;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

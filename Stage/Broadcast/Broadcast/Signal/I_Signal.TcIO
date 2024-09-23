@@ -10,5 +10,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="Unpair" Id="{0461601a-cc8c-438c-8da1-35cc47a27c85}">
+      <Declaration><![CDATA[METHOD Unpair : Results.Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+END_VAR
+]]></Declaration>
+    </Method>
   </Itf>
 </TcPlcObject>
