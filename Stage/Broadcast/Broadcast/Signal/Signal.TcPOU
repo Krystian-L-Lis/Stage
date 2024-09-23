@@ -143,7 +143,7 @@ END_VAR
         <ST><![CDATA[IF iReceiver = 0 THEN
 	Unpair := Results.Err.Itf0;
 ELSIF iReceiver.IsOk THEN
-	Unpair := _NewPair(THIS^, iReceiver);
+	Unpair := _Unpair(THIS^, iReceiver);
 ELSE
 	Unpair := Results.Error;
 END_IF]]></ST>
