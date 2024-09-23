@@ -16,10 +16,13 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i := 1 TO Param.nChannelSize DO
+      <ST><![CDATA[// Loop through stEntry to find the best chunk
+FOR i := 1 TO Param.nChannelSize DO
 	IF _Channel.stEntry[i].iSignal <> 0 AND_THEN _Channel.stEntry[i].iSignal.id <> nRequesterId THEN
+		// Skip over occupied blocks
 		i := _Channel.stEntry[i].iSignal.id + _Channel.stEntry[i].iSignal.size - 1;
 	ELSE
+		// Start of a free chunk and measure its size
 		FOR j := 0 TO Param.nChannelSize DO
 			IF _Channel.stEntry[i + j].iSignal <> 0 AND_THEN _Channel.stEntry[i].iSignal.id <> nRequesterId THEN
 				EXIT;
@@ -27,6 +30,8 @@ END_VAR
 				EXIT;
 			END_IF			
 		END_FOR
+		
+		// If the chunk is smaller but still fits assign a new best fit
 		IF nNewSize = 0 THEN
 			nNewId := i;
 			nNewSize := j + 1;
@@ -34,6 +39,7 @@ END_VAR
 			nNewId := i;
 			nNewSize := nRequestedSize;
 		END_IF
+		
 		IF _Channel.stEntry[i + j].iSignal = 0 THEN
 			i := i + j;
 		ELSE

@@ -8,7 +8,8 @@ VAR
 	_stEmpty	: ST_Entry;	
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i := 1 TO Param.nChannelSize DO
+      <ST><![CDATA[// Find the first free entry in stEntry
+FOR i := 1 TO Param.nChannelSize DO
 	IF _Channel.stEntry[i].iSignal <> 0 THEN
 		i := _Channel.stEntry[i].iSignal.id + _Channel.stEntry[i].iSignal.size - 1;
 	ELSE
@@ -16,10 +17,12 @@ END_VAR]]></Declaration>
 	END_IF
 END_FOR
 
+// If no free entry found, no need to compress
 IF _nFreePtr = 0 THEN
 	RETURN;
 END_IF 
 
+// Move entries to fill the free space
 FOR i := _nFreePtr TO Param.nChannelSize DO
 	IF _Channel.stEntry[i].iSignal <> 0 AND_THEN _nFreePtr > 0 THEN
 		_Channel.stEntry[_nFreePtr] := _Channel.stEntry[i];

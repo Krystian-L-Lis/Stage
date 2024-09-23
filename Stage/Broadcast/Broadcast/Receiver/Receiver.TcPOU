@@ -81,5 +81,19 @@ END_VAR
         <ST><![CDATA[ToDebug := THIS^;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Unpair" Id="{3df2d2d8-e509-442b-918c-ed9c88636eda}">
+      <Declaration><![CDATA[METHOD Unpair : Results.Result
+VAR_INPUT
+	iSignal		: I_Signal;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iSignal <> 0 THEN
+	Unpair := iSignal.Unpair(THIS^);
+ELSE
+	Unpair := Results.Error;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

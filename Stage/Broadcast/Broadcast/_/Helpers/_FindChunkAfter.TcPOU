@@ -14,7 +14,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i := nId TO Param.nChannelSize DO
+      <ST><![CDATA[// Loop from the starting index to the end of stEntry
+FOR i := nId TO Param.nChannelSize DO
 	IF nRequestedSize = nNewSize THEN
 		EXIT;
 	ELSIF _Channel.stEntry[i].iSignal = 0 THEN
@@ -24,6 +25,7 @@ END_VAR
 	END_IF
 END_FOR
 
+// Check if the required size was found
 IF nNewSize = nRequestedSize THEN
 	_FindChunkAfter := Results.Ok;
 ELSE

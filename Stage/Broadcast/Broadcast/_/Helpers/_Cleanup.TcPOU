@@ -7,7 +7,8 @@ VAR
 	_iSignal			: I_SignalNode;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i := 1 TO Param.nChannelSize DO
+      <ST><![CDATA[// Loop through stEntry to update signal ids
+FOR i := 1 TO Param.nChannelSize DO
 	IF _Channel.stEntry[i].iSignal <> 0 AND_THEN _Channel.stEntry[i].iSignal <> _iSignal THEN
 			_iSignal := _Channel.stEntry[i].iSignal;
 			_iSignal.id := i;

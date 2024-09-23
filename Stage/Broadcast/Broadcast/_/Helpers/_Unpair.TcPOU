@@ -1,42 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="_Unpair" Id="{f6ca68ef-51bd-45d7-8f40-7ee95c0dea17}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION _Unpair : Results.Result
+    <Declaration><![CDATA[FUNCTION INTERNAL _Unpair : Results.Result
 VAR_INPUT
-	iSignal				: I_SignalNode;
-    iReceiver			: I_ReceiverNode;
+	iSignal		: I_SignalNode;
+	iReceiver	: I_ReceiverNode;
 END_VAR
 VAR
-	i					: UDINT;
-	_nEnd				: UDINT;
-	
-	_nCount				: UDINT;
-	_nSize				: UDINT;
+	i			: UDINT;
+	_nPos		: UDINT;
+	_nEnd		: UDINT;
+	_nCount		: UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF iSignal.count = 0 THEN
-	_Unpair := Results.None;
-	RETURN;	
+      <ST><![CDATA[IF iSignal = 0 OR iReceiver = 0 THEN
+	_Unpair := Results.Err.Itf0;
+	RETURN;
 END_IF
 
-_nEnd := iSignal.id + iSignal.count - 1;
-FOR i := iSignal.id TO _nEnd DO
-	IF _Channel.stEntry[i].iReceiver = iReceiver THEN
-		iSignal.count := iSignal.count - 1;
-		
-		_Channel.stEntry[i].iReceiver := 0;
-		_Channel.stEntry[i].iSignal := 0;
-		
-		_Unpair := Results.Ok;
-		RETURN;
-	END_IF
-END_FOR
+IF NOT _ArePaired(iSignal, iReceiver, nPos => _nPos) THEN
+	_Unpair := Results.None;
+	RETURN;
+END_IF
 
-IF iSignal.count = 0 THEN
-	iSignal.id := 0;
-	iSignal.size := 0;
-END_IF]]></ST>
+_nCount := iSignal.count;
+_nEnd := iSignal.id + _nCount - 1;
+
+// Swap with the last receiver if not already the last
+IF _nPos <> _nEnd THEN
+	_Channel.stEntry[_nPos] := _Channel.stEntry[_nEnd];
+END_IF
+
+// Clear the last entry
+_Channel.stEntry[_nEnd].iSignal := 0;
+_Channel.stEntry[_nEnd].iReceiver := 0;
+
+// Update counts
+iSignal.count := _nCount - 1;
+_Channel.nAssigned := _Channel.nAssigned - 1;
+
+// Shrink if needed
+IF iSignal.count < iSignal.size / 2 THEN
+	iSignal.size := iSignal.count;
+END_IF
+
+_Unpair := Results.Ok;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

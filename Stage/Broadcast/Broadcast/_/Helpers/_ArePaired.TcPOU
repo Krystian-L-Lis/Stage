@@ -6,6 +6,9 @@ VAR_INPUT
 	iSignal				: I_SignalNode;
     iReceiver			: I_ReceiverNode;
 END_VAR
+VAR_OUTPUT
+	nPos				: UDINT;
+END_VAR
 VAR
 	i					: UDINT;
 	_nEnd				: UDINT;
@@ -21,6 +24,7 @@ _nEnd := iSignal.id + iSignal.count - 1;
 FOR i := iSignal.id TO _nEnd DO
 	IF _Channel.stEntry[i].iReceiver = iReceiver THEN
 		_ArePaired := TRUE;
+		nPos := i;
 		RETURN;
 	END_IF
 END_FOR]]></ST>
