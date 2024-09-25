@@ -171,31 +171,31 @@ END_IF
 _stTime := Tc2_Utilities.TIME_TO_OTSTRUCT(tValue);
 _stTime.wDay := _stTime.wWeek * 7 + _stTime.wDay;
 
-_sValues[1].Set(Strf.Integer(_stTime.wMilliseconds, 3)).Append('ms');
-_sValues[2].Set(Strf.Integer(_stTime.wSecond, 2)).Append('s');
-_sValues[3].Set(Strf.Integer(_stTime.wMinute, 2)).Append('m');
-_sValues[4].Set(Strf.Integer(_stTime.wHour, 2)).Append('h');
-_sValues[5].Set(Strf.Integer(_stTime.wDay, 3)).Append('d');
-
 _nValues[1] := WORD_TO_UINT(_stTime.wMilliseconds);
 _nValues[2] := WORD_TO_UINT(_stTime.wSecond);
 _nValues[3] := WORD_TO_UINT(_stTime.wMinute);
 _nValues[4] := WORD_TO_UINT(_stTime.wHour);
 _nValues[5] := WORD_TO_UINT(_stTime.wDay);
 
-FOR _i := 5 TO _nMaxUnit BY -1 DO
-	IF _i <= 5 AND _i >= 1 THEN
-		IF _nValues[_i] <> 0 THEN
-			_strb.Append(_sValues[_i].Read()).Append(' ');
-		END_IF
-	END_IF
-END_FOR
+_sValues[1].Set(Strf.Integer(_nValues[1], 3)).Append('ms');
+_sValues[2].Set(Strf.Integer(_nValues[2], 2)).Append('s');
+_sValues[3].Set(Strf.Integer(_nValues[3], 2)).Append('m');
+_sValues[4].Set(Strf.Integer(_nValues[4], 2)).Append('h');
+_sValues[5].Set(Strf.Integer(_nValues[5], 3)).Append('d');
+
+IF _nMaxUnit < 5 THEN
+    FOR _i := 5 TO _nMaxUnit + 1 BY -1 DO
+        IF _nValues[_i] <> 0 THEN
+            _strb.Append(_sValues[_i].Read()).Append(' ');
+        END_IF
+    END_FOR
+END_IF
 
 FOR _i := _nMaxUnit TO _nMinUnit BY -1 DO
-	IF _i <= 5 AND _i >= 1 THEN
-		_strb.Append(_sValues[_i].Read()).Append(' ');
-	END_IF
+    _strb.Append(_sValues[_i].Read()).Append(' ');
 END_FOR
+
+SimpleTime := _strb.Read();
 ]]></ST>
       </Implementation>
     </Method>

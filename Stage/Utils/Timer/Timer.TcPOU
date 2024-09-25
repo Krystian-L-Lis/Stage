@@ -20,6 +20,7 @@ VAR
 	_ton		: Tc2_Standard.TON;
 	_tRemained	: TIME;
 	_tElapsed	: TIME;
+	_tTarget	: TIME;
 	_nState		: USINT;
 	
 	_tOnDelayP	: TIME;
@@ -27,138 +28,115 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Initial state stransitions
+      <ST><![CDATA[// Set timer inputs based on current state
 CASE _nState OF
-	0: //OFF
-		IF bKeep THEN
-			// THIS COMMENT PREVENTS COMP ERROR
-		ELSIF bIn THEN
-			_nState := 1;	
-		END_IF
-		
-	1: //ON Delay
-		IF _tOnDelayP <> tOnDelay THEN
-			_tOnDelayP := tOnDelay;
-			IF tElapsed < tOnDelay THEN
-				_ton.PT := tOnDelay - tElapsed;
-			ELSE
-				_ton.PT := T#0S;
-			END_IF
-		ELSIF bPause THEN
-			_tRemained := _ton.PT - _ton.ET;
-			_tElapsed := _tElapsed + _ton.ET;
-			_nState := 4;	
-		ELSIF bKeep THEN
-			// THIS COMMENT PREVENTS COMP ERROR
-		ELSIF NOT bIn THEN
-			_nState := 0;
-		END_IF		
+    0: // OFF
+        _ton(IN := FALSE, PT := T#0S);
+        _tTarget := T#0S;
+        _tElapsed := T#0S;
 
-	2: //ON
-		IF bKeep THEN
-			// THIS COMMENT PREVENTS COMP ERROR
-		ELSIF NOT bIn THEN
-			_ton.PT := tOffDelay;
-			_nState := 3;	
-		END_IF	
+    1: // ON Delay
+        _ton(IN := TRUE, PT := tOnDelay);
+        _tTarget := tOnDelay;
 
-	3: //OFF Delay
-		IF _tOffDelayP <> tOffDelay THEN
-			_tOffDelayP := tOffDelay;
-			IF tElapsed < tOffDelay THEN
-				_ton.PT := tOffDelay - tElapsed;
-			ELSE
-				_ton.PT := T#0S;
-			END_IF
-		ELSIF bPause THEN
-			_tRemained := _ton.PT - _ton.ET;
-			_tElapsed := _tElapsed + _ton.ET;
-			_nState := 5;	
-		ELSIF bKeep THEN
-			// THIS COMMENT PREVENTS COMP ERROR
-		ELSIF bIn THEN
-			_nState := 2;
-		END_IF
-	
-	4: // ON Delay Paused
-		IF NOT bPause THEN
-			_ton.PT := _tRemained;
-			_nState := 1;	
-		ELSIF bKeep THEN
-			// THIS COMMENT PREVENTS COMP ERROR
-		ELSIF NOT bIn THEN
-			_nState := 0;
-		END_IF
+    2: // ON
+        _ton(IN := FALSE, PT := T#0S);
+        _tTarget := T#0S;
+        _tElapsed := T#0S;
 
-	5: // OFF Delay Paused
-		IF NOT bPause THEN
-			_ton.PT := _tRemained;
-			_nState := 3;			
-		ELSIF bKeep THEN
-			// THIS COMMENT PREVENTS COMP ERROR
-		ELSIF bIn THEN
-			_nState := 2;
-		END_IF
-		
+    3: // OFF Delay
+        _ton(IN := TRUE, PT := tOffDelay);
+        _tTarget := tOffDelay;
+
+    4: // ON Delay Paused
+        _ton(IN := FALSE, PT := _tRemained);
+
+    5: // OFF Delay Paused
+        _ton(IN := FALSE, PT := _tRemained);
 END_CASE
 
-// _ton execution
+// Execute the timer
+_ton();
+
+// Update elapsed and remaining times
+_tElapsed := _ton.ET;
+tElapsed := _tElapsed;
+tRemained := _tTarget - tElapsed;
+
+// State transition logic
 CASE _nState OF
-	0:	// OFF
-		_ton(IN := FALSE);
-		_tRemained := T#0S;
-		_tElapsed := T#0S;
-	1:	// ON Delay
-		_ton(IN := TRUE);
-		IF _ton.Q THEN
-			_ton(IN := FALSE);
-			_nState := 2;
-		END_IF
-	2:	// ON
-		_ton(IN := FALSE);
-		_tRemained := T#0S;
-		_tElapsed := T#0S;
-	3:	// OFF Delay
-		_ton(IN := TRUE);
-		IF _ton.Q THEN
-			_ton(IN := FALSE);
-			_nState := 0;
-		END_IF
-		
-	4, 5:
-		_ton(IN := FALSE);
+    0: // OFF
+        IF bKeep THEN
+            // Remain in OFF state
+        ELSIF bIn THEN
+            _nState := 1; // Transition to ON Delay
+        END_IF
+
+    1: // ON Delay
+        IF bPause THEN
+            _tRemained := _ton.PT - _ton.ET;
+            _nState := 4; // Transition to ON Delay Paused
+        ELSIF _ton.Q THEN
+            _nState := 2; // Transition to ON
+        ELSIF bKeep THEN
+            // Remain in ON Delay state
+        ELSIF NOT bIn THEN
+            _nState := 0; // Transition back to OFF
+        END_IF
+
+    2: // ON
+        IF bKeep THEN
+            // Remain in ON state
+        ELSIF NOT bIn THEN
+            _nState := 3; // Transition to OFF Delay
+        END_IF
+
+    3: // OFF Delay
+        IF bPause THEN
+            _tRemained := _ton.PT - _ton.ET;
+            _nState := 5; // Transition to OFF Delay Paused
+        ELSIF _ton.Q THEN
+            _nState := 0; // Transition to OFF
+        ELSIF bKeep THEN
+            // Remain in OFF Delay state
+        ELSIF bIn THEN
+            _nState := 2; // Return to ON
+        END_IF
+
+    4: // ON Delay Paused
+        IF NOT bPause THEN
+            _nState := 1; // Return to ON Delay
+            _ton.PT := _tRemained; // Restore remaining time
+        ELSIF NOT bIn THEN
+            _nState := 0; // Transition to OFF
+        END_IF
+
+    5: // OFF Delay Paused
+        IF NOT bPause THEN
+            _nState := 3; // Return to OFF Delay
+            _ton.PT := _tRemained; // Restore remaining time
+        ELSIF bIn THEN
+            _nState := 2; // Return to ON
+        END_IF
 END_CASE
 
-// Base Output
+// Output logic
 CASE _nState OF
-	0:	// OFF
-		bOut := FALSE;
-	1:	// ON Delay
-		bOut := FALSE;
-	2:	// ON
-		bOut := TRUE;
-	3:	// OFF Delay
-		bOut := TRUE;
-	4:	// ON Delay Paused
-		bOut := FALSE;
-	5:	// OFF Delay Paused
-		bOut := TRUE;
+    0, 1, 4: // OFF, ON Delay, and ON Delay Paused
+        bOut := FALSE;
+    2, 3, 5: // ON, OFF Delay, and OFF Delay Paused
+        bOut := TRUE;
 END_CASE
 
+// Update tTarget based on state
 CASE _nState OF
-	0,2:
-		tTarget := T#0S;
-	1,4:
-		tTarget := tOnDelay;
-	3,5:
-		tTarget := tOffDelay;
-END_CASE
-tElapsed := _tElapsed + _ton.ET;
-tRemained := tTarget - tElapsed;
-
-
-
-]]></ST>
+    0, 2:
+        tTarget := T#0S;
+    1, 4:
+        tTarget := tOnDelay;
+    3, 5:
+        tTarget := tOffDelay;
+END_CASE]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -8,8 +8,8 @@ VAR_GENERIC CONSTANT
 END_VAR
 VAR
 	_nArray	: ARRAY[MI..MX] OF UDINT;
-	_nHead	: UDINT;
-	_nTail	: UDINT;
+	_nHead	: UDINT := MI;
+	_nTail	: UDINT := MI;
 END_VAR
 
 ]]></Declaration>
@@ -46,12 +46,34 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := MI TO MX DO
-	IF _nArray[i] = nVal THEN
-		Has := TRUE;
-		RETURN;
-	END_IF
-END_FOR]]></ST>
+        <ST><![CDATA[i := _nTail;
+
+WHILE i <> _nHead DO
+    IF _nArray[i] = nVal THEN
+        Has := TRUE;
+        RETURN;
+    END_IF
+	
+    i := MI + ((i - MI + 1) MOD (MX - MI + 1));
+END_WHILE
+
+Has := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Peek" Id="{ea26ee7e-f9a4-453e-baa8-ab74eaa6d2c0}">
+      <Declaration><![CDATA[METHOD Peek : Results.Result
+VAR_OUTPUT
+    nVal    : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nHead = _nTail THEN
+    Peek := Results.Error;
+    RETURN;
+END_IF
+
+nVal := _nArray[_nTail];
+Peek := Results.Ok;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Pop" Id="{9dafa2b2-c4d9-405e-ae03-7b86841e57aa}">
@@ -68,7 +90,7 @@ END_IF
 
 nVal := _nArray[_nTail];
 
-_nTail := (_nTail + 1) MOD (MX - MI + 1);
+_nTail := MI + ((_nTail + 1 - MI) MOD (MX - MI + 1));
 
 Pop := Results.Ok;]]></ST>
       </Implementation>
@@ -80,16 +102,32 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (_nHead + 1) MOD (MX - MI + 1) = _nTail THEN
+        <ST><![CDATA[IF (_nHead + 1 - MI) MOD (MX - MI + 1) + MI = _nTail THEN
     Push := Results.Error;
     RETURN;
 END_IF
 
 _nArray[_nHead] := nVal;
 
-_nHead := (_nHead + 1) MOD (MX - MI + 1);
+_nHead := MI + ((_nHead + 1 - MI) MOD (MX - MI + 1));
 
-Push := Results.Ok;]]></ST>
+Push := Results.Ok;;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{833f35c5-d562-4985-9060-e2bab2630e7b}">
+      <Declaration><![CDATA[METHOD Reset
+VAR
+	i		: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_nHead := MI;
+_nTail := MI;
+
+FOR i := MI TO MX DO
+	_nArray[i] := 0;
+END_FOR
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Set" Id="{e272d147-4fee-4862-90da-40e1ad50f7a4}">
