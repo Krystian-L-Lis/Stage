@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="StateTraceItem" Id="{9b6665aa-0450-4fc9-8bc5-b63b43314ff6}">
+    <Declaration><![CDATA[TYPE StateTraceItem :
+STRUCT
+	iPretender		: Tags.I_Tag;
+	iCurrent		: Tags.I_Tag;
+	iPrevious		: Tags.I_Tag;
+	bSuccess		: BOOL;
+	nTimestamp		: ULINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

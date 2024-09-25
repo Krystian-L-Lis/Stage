@@ -18,7 +18,7 @@ VAR
 	_iCurrent			: Tags.I_Tag;
 	_iPrevious 			: Tags.I_Tag;
 	
-	_fbOnChange			: Broadcast.Signal;
+	OnChange			: Broadcast.Signal;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -56,9 +56,9 @@ END_VAR]]></Declaration>
 		IF _iOldState <> 0 THEN
 			_iPrevious		:= _iOldState.Tag;
 		END_IF
-		_fbOnChange.Option(CState.SUCCESS).Emit(_iMachine.Tag);
+		OnChange.Option(CState.SUCCESS).Emit(_iMachine.Tag);
 	ELSE
-		_fbOnChange.Option(CState.FAIL).Emit(_iMachine.Tag);
+		OnChange.Option(CState.FAIL).Emit(_iMachine.Tag);
 	END_IF
 END_IF
 
@@ -123,7 +123,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GetOnChange := _fbOnChange;]]></ST>
+        <ST><![CDATA[GetOnChange := OnChange;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Pretender" Id="{665a726f-02d8-482c-a5d5-fd4e8b20bc17}" FolderPath="State\">

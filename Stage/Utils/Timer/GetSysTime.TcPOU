@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GetSysTime" Id="{9256dbe0-970c-46b2-beb0-50dc80b906e9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetSysTime : ULINT
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GetSysTime := Tc2_System.F_GetSystemTime() - 11644473600000000000;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

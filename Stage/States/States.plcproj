@@ -85,6 +85,12 @@
     <Compile Include="State\StrRequester\StateRequest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="State\Trace\StateTrace.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Trace\StateTraceItem.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -157,6 +163,7 @@
     <Folder Include="State\Machine" />
     <Folder Include="State\Buffer" />
     <Folder Include="State\Manager" />
+    <Folder Include="State\Trace" />
     <Folder Include="State\StrRequester" />
     <Folder Include="State\State" />
   </ItemGroup>

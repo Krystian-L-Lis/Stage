@@ -52,6 +52,9 @@
     <Compile Include="Collections\GenIter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Timer\GetSysTime.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Timer\Timer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
