@@ -51,6 +51,12 @@
     <Compile Include="State\Buffer\StateBuffer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="State\Find\FindManyState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Find\FindState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="State\List\StateRepo.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -154,6 +160,10 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Utils">
+      <DefaultResolution>Utils, * (_)</DefaultResolution>
+      <Namespace>Utils</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="State" />
@@ -163,6 +173,7 @@
     <Folder Include="State\Machine" />
     <Folder Include="State\Buffer" />
     <Folder Include="State\Manager" />
+    <Folder Include="State\Find" />
     <Folder Include="State\Trace" />
     <Folder Include="State\StrRequester" />
     <Folder Include="State\State" />

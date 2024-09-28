@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FindManyState" Id="{8bd09bf8-aa77-4c2b-888b-00030cac0dcd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION FindManyState : Results.Result
+VAR_INPUT
+	iSmgr			: I_StateManager;
+	nResultPou		: ANY;
+END_VAR
+VAR_IN_OUT
+	sToFind		: ARRAY[*] OF Strings.Str;
+END_VAR
+VAR
+	i			: Utils.GenIter(0);
+	j			: UDINT;
+	cmp			: Tags.TagCmp;
+	_iTag		: Tags.I_Tag;
+	_nLow		: UDINT := DINT_TO_UDINT(LOWER_BOUND(sToFind, 1));
+	_nUp		: UDINT := DINT_TO_UDINT(UPPER_BOUND(sToFind, 1));
+	_nResSize	: UDINT := DINT_TO_UDINT(nResultPou.diSize);
+	_nExpLen	: UDINT := _nUp - _nLow + 1;
+	_nExpSize	: UDINT := _nExpLen * SIZEOF(__UXINT);
+	
+	_nFound		: UDINT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSmgr = 0 THEN
+	FindManyState := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+// Ensure lower bound starts at zero
+IF _nLow <> 0 THEN
+	FindManyState := Results.Err.Ovf;
+	RETURN;
+END_IF
+
+// Ensure result size matches expected size
+IF _nResSize <> _nExpSize THEN
+	FindManyState := Results.Err.NoMatch;
+	RETURN;
+END_IF
+
+// Check if result pointer is null
+IF nResultPou.pValue = 0 THEN
+	FindManyState := Results.Err.Ptr0;
+	RETURN;
+END_IF
+
+// Iterate over the flag list
+WHILE Results.IsOk(iSmgr.Get(i.Next(), iTag => _iTag)) DO
+	cmp.Set(_iTag);
+	FOR j := _nLow TO _nUp DO
+		// Match the string and copy if successful
+		IF cmp.MatchPrtId(sToFind[j]).IsOk() THEN
+			Tc2_System.MEMCPY(ADR(nResultPou.pValue) + SIZEOF(__UXINT) * j, ADR(_iTag), SIZEOF(__UXINT));
+			_nFound := _nFound + 1;
+			sToFind[j] := '';  // Mark as found
+			EXIT;  // Break after first match (since there should be only one)
+		END_IF
+	END_FOR;
+	
+	// Early exit if all entries are found
+	IF _nFound = (_nUp - _nLow + 1) THEN
+		FindManyState := Results.Ok;
+		RETURN;
+	END_IF 
+END_WHILE
+
+// Final check to see if all entries were processed
+FOR j := _nLow TO _nUp DO
+	IF sToFind[j] <> '' THEN  // Check for unfound entries
+		FindManyState := Results.Err.Udf;  // Error if any remain unfound (handled at higher level)
+		RETURN;
+	END_IF
+END_FOR
+
+// Return success if everything is found
+FindManyState := Results.Ok;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

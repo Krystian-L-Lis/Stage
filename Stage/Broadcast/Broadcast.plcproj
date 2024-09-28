@@ -95,12 +95,17 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Utils">
+      <DefaultResolution>Utils, * (_)</DefaultResolution>
+      <Namespace>Utils</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Broadcast" />
     <Folder Include="Broadcast\List" />
     <Folder Include="Broadcast\List\Receiver" />
     <Folder Include="Broadcast\List\Signal" />
+    <Folder Include="Broadcast\Find" />
     <Folder Include="Broadcast\_" />
     <Folder Include="Broadcast\Signal" />
     <Folder Include="Broadcast\Receiver" />
@@ -108,6 +113,18 @@
     <Folder Include="Broadcast\_\Structs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Broadcast\Find\FindRec.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Find\FindSignal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Find\FindManySignals.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Find\FindManyRecs.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Broadcast\List\Receiver\I_ReceiverList.TcIO">
       <SubType>Code</SubType>
     </Compile>

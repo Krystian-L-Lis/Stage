@@ -47,6 +47,13 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+      <QualifiedOnly>true</QualifiedOnly>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
@@ -83,13 +90,21 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Utils">
+      <DefaultResolution>Utils, * (_)</DefaultResolution>
+      <Namespace>Utils</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Flag" />
     <Folder Include="Flag\List" />
     <Folder Include="Flag\Flag" />
+    <Folder Include="Flag\Find" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Flag\Find\FindFlag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Flag\Flag\A_Flag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -101,6 +116,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Flag\Flag\I_Flag.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flag\Find\FindManyFlags.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Flag\List\FlagList.TcPOU">
