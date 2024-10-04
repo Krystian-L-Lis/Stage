@@ -47,6 +47,28 @@ END_IF
 _EmitSignal(THIS^, iTag);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="EmitTo" Id="{7d1b0cf5-ddc0-4b02-8cd3-1b63ae2d2b2b}">
+      <Declaration><![CDATA[METHOD EmitTo : Results.Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+	iTag			: Tags.I_Tag := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iReceiver = 0 THEN
+	EmitTo := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+IF iTag = 0 THEN
+	iTag := _fbTag;
+END_IF
+
+iReceiver.Receive(iTag);
+EmitTo := Results.Ok;
+]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="id" Id="{819ef4a3-3ea7-4562-a22a-db3e51f6c5da}" FolderPath="Node\">
       <Declaration><![CDATA[PROPERTY INTERNAL id : UDINT
 ]]></Declaration>
