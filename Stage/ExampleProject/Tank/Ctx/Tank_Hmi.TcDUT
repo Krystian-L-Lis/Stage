@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Tank_Hmi" Id="{f975de96-8d88-45a3-9cb5-d6f9629b087e}">
+    <Declaration><![CDATA[TYPE Tank_Hmi :
+STRUCT
+	// StatusText
+	sStatusText			: Str;
+	nStatusTextColor	: DWORD;
+	
+	// ResetButton
+	bResetButton		: BOOL;
+	bResetButtonVis		: BOOL;
+	
+	// Params
+	fHighLevel			: Real_Param := (val := 1.00);
+	fRequestLevel		: Real_Param := (val := 0.50);
+	fLowLevel			: Real_Param := (val := 0.10);
+	nTimeout			: Udint_Param := (val := 20);
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

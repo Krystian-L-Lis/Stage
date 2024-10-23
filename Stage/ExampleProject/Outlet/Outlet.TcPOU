@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Outlet" Id="{08f78f88-2f7d-4896-98eb-be94062c7e0b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Outlet IMPLEMENTS I_Domain, I_Execute
+VAR_INPUT
+	bRequestButton	: BOOL;
+END_VAR
+VAR_OUTPUT
+	bDrainValveOpen	: BOOL;
+END_VAR
+VAR CONSTANT
+	MAX_STATE		: UDINT := 2;
+END_VAR
+VAR
+	exe				: Execute(THIS^);
+	domTag			: Tag;
+	domain			: Domain(THIS^);
+
+	// Context
+	ctx				: Outlet_Ctx;
+
+	// State Machine
+	stateMachine	: StateMachine;
+	stateRepo		: StateRepo<MAX_STATE>;
+	stateBuffer		: StateBuffer<MAX_STATE>;
+	stateMgr		: StateManager<MAX_STATE>(stateMachine, stateRepo, stateBuffer);
+	A_Smgr			: A_StateManager(stateMgr, ctx.smgr);
+	
+	// States
+	
+	EStop			: Outlet_EStop(stateRepo, ctx);
+	A_EStop			: A_Tag(EStop.Tag, ctx.iEStop);
+	OnEStop			: Receiver(EStop);
+	
+	Operational		: Outlet_Operational(stateRepo, ctx);
+	A_Operational	: A_Tag(Operational.Tag, ctx.iOperational);
+	
+	// FLAGS
+	flagList		: FlagList<0>;
+	
+	// SIGNALS
+	signalList		: SignalList<1>;
+	A_SmgrChange	: A_Signal(signalList, stateMgr.GetOnChange());
+	
+	// RECEIVERS
+	receiverList	: ReceiverList<1>;
+	A_OnEStop		: A_Receiver(receiverList, OnEStop);
+	
+	// PRIV
+	bInit			: BOOL := TRUE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AssignTank" Id="{2b86b81f-cf6c-43cd-938d-bf9a462ab9fd}">
+      <Declaration><![CDATA[METHOD AssignTank : Result
+VAR_INPUT
+	iTank		: I_Domain;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF ctx.iIsEmpty <> 0 THEN
+	AssignTank := None; // None is default, so this is not necessary!
+	RETURN;
+END_IF
+
+IF iTank = 0 THEN
+	AssignTank := Error;
+	RETURN;
+END_IF
+
+ctx.iTank := iTank;
+
+// Alternatively, this will carry over the error from inside the FindFlag function, 
+// whereas the CASE option allows for change of error type.
+(*
+IF IsErr(FindFlag(iTank.Flags, 'IsEmpty', iFlag => ctx.iIsEmpty), eCarry => AssignTank) THEN
+		DebugMsg(THIS^, 'Missing iIsEmpty! >');
+		DebugMsg(iTank, '< Missing iIsEmpty!');
+END_IF
+*)
+
+CASE FindFlag(iTank.Flags, 'IsEmpty', iFlag => ctx.iIsEmpty) OF 
+	Error:
+		DebugMsg(THIS^, 'Missing iIsEmpty! >');
+		DebugMsg(iTank, '< Missing iIsEmpty!');
+		
+		AssignTank := Error;
+	Ok:	
+		AssignTank := Ok;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{ca2250aa-289a-487f-89bb-e08060846c74}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInit THEN
+	ctx.smgr.Request(ctx.iOperational);
+
+	bInit := FALSE;
+END_IF
+
+// INPUTS
+ctx.bRequestButton := bRequestButton;
+
+// OUTPUTS
+bDrainValveOpen := ctx.bDrainValveOpen;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Flags" Id="{e882d9af-6ec0-434e-8b04-d89f6b7134df}">
+      <Declaration><![CDATA[PROPERTY Flags : Domains.Flags.I_FlagList
+]]></Declaration>
+      <Get Name="Get" Id="{ca52d541-87d6-4a9e-937f-7f63b72bdf08}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Flags := flagList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Recs" Id="{9063afe4-f19e-4025-878f-d63a2f9943b3}">
+      <Declaration><![CDATA[PROPERTY Recs : Domains.Broadcast.I_ReceiverList
+]]></Declaration>
+      <Get Name="Get" Id="{565d9f10-71df-4a7b-931d-ff80c27036cc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Recs := receiverList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Signals" Id="{ab4a53ab-2dc3-439b-ac7c-e9310c9aebba}">
+      <Declaration><![CDATA[PROPERTY Signals : Domains.Broadcast.I_SignalList
+]]></Declaration>
+      <Get Name="Get" Id="{66f8cabd-c820-4c3b-8a83-61a89d97672b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Signals := signalList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Smgr" Id="{7eaf3a87-de67-47d9-b080-58ca0f216505}">
+      <Declaration><![CDATA[PROPERTY Smgr : Domains.States.I_StateManager
+]]></Declaration>
+      <Get Name="Get" Id="{efe03c50-7ae2-4b7b-af46-43737d22c57e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Smgr := stateMgr;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Tag" Id="{5202264c-6afa-4eb7-80cf-eda1e87ca599}">
+      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag
+]]></Declaration>
+      <Get Name="Get" Id="{c2474f0c-bd37-4dbc-a2eb-4d4bdc8c7aa3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := domTag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ToDebug" Id="{f9567eda-f289-4d30-af80-d3a880449631}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

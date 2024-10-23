@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MAIN" Id="{46c268e9-fb81-4ca2-9b53-e3c90b600c5e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	safety		: Safety;
+	tankCtrl	: TankCtrl;
+	tank		: ARRAY[1..CST.MAX_TANK] OF Tank(tankCtrl);
+	outlet		: ARRAY[1..CST.MAX_TANK] OF Outlet;
+	
+	sim			: Sim;
+	
+	eError		: Result;
+	dbgList		: DebugList;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE eError OF 
+	None:
+		eError := AssignOutletToTank(tank, outlet);
+	Ok:
+		Runtime();
+		
+	ELSE
+		DebugMsg(0, 'Failed to execute runtime!');
+END_CASE
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

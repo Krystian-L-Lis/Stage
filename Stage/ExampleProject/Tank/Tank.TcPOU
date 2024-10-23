@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Tank" Id="{a786dec2-6939-4565-9772-0b044609bff7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Tank IMPLEMENTS I_Domain, I_Execute
+VAR_INPUT
+	bEnable			: BOOL;
+	fLevel			: REAL;
+END_VAR
+VAR_OUTPUT
+	bInletValveOpen		: BOOL;
+END_VAR
+VAR_STAT
+	nId				: UDINT;
+END_VAR
+VAR CONSTANT
+	MAX_STATE		: UDINT := 6;
+END_VAR
+VAR
+	exe				: Execute(THIS^);
+	domTag			: Tag;
+	domain			: Domain(THIS^);
+	
+
+	// Context
+	ctx				: Tank_Ctx;
+	A_DomTag		: A_Tag(domTag, ctx.priv.iDomTag);
+	
+	// State Machine
+	
+	stateMachine	: StateMachine;
+	stateRepo		: StateRepo<MAX_STATE>;
+	stateBuffer		: StateBuffer<MAX_STATE>;
+	stateMgr		: StateManager<MAX_STATE>(stateMachine, stateRepo, stateBuffer);
+	A_Smgr			: A_StateManager(stateMgr, ctx.priv.smgr);
+	
+	// States
+	
+	Disabled			: Tank_Disabled(stateRepo, ctx);
+	A_Disabled			: A_Tag(Disabled.Tag, ctx.state.iDisabled);
+	
+	Enabled				: Tank_Enabled(stateRepo, ctx);
+	A_Enabled			: A_Tag(Enabled.Tag, ctx.state.iEnabled);
+	
+	Fault				: Tank_Fault(stateRepo, ctx);
+	A_Fault				: A_Tag(Fault.Tag, ctx.state.iFault);
+	
+	Fill				: Tank_Fill(stateRepo, ctx);
+	A_Fill				: A_Tag(Fill.Tag, ctx.state.iFill);
+	
+	SystemOff			: Tank_SystemOff(stateRepo, ctx);
+	A_SystemOff			: A_Tag(SystemOff.Tag, ctx.state.iSystemOff);
+	
+	// FLAGS
+	flagList		: FlagList<2>;
+	A_IsFillable	: A_Flag(flagList, ctx.priv.IsFillable);
+	A_IsEmpty		: A_Flag(flagList, ctx.priv.IsEmpty);
+	
+	// SIGNALS
+	signalList		: SignalList<0>;
+	A_SmgrChange	: A_Signal(signalList, stateMgr.GetOnChange());
+	A_Request		: A_Signal(signalList, ctx.priv.Request);
+	
+	// RECEIVERS
+	receiverList	: ReceiverList<0>;
+	
+	// HMI
+	statusText		: Tank_StatusText(ctx);
+	
+	// PRIV
+	bInit			: BOOL := TRUE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{ef7225f4-9ca0-4312-9418-cb00cb75b449}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInit THEN
+	IF IsErr(FindFlag(ctx.priv.iTankCtrl.Flags, 'IsSystemOn', iFlag => ctx.priv.iIsSystemOn)) THEN
+		DebugMsg(THIS^, 'Missing iIsSystemOn!');
+	END_IF
+	
+	IF IsErr(FindRec(ctx.priv.iTankCtrl.Recs, 'OnRequest', iRec => ctx.priv.iRequestReceiver)) THEN
+		DebugMsg(THIS^, 'Missing iRequestReceiver!');
+	END_IF
+
+	ctx.priv.smgr.Request(ctx.state.iDisabled);	
+
+	bInit := FALSE;
+END_IF
+
+IF fLevel <= ctx.hmi.fLowLevel.val THEN
+	ctx.priv.IsEmpty.Rise();
+ELSE
+	ctx.priv.IsEmpty.Lower();
+END_IF
+
+// INPUTS
+ctx.io.in.bEnable := bEnable;
+ctx.io.in.fLevel := fLevel;
+
+// OUTPUTS
+bInletValveOpen := ctx.io.out.bInletValveOpen;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{26ecba72-b5e5-47a7-8e25-327ca4a99a62}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iTankCtrlDom		: I_Domain;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[domTag.Option := UDINT_TO_STRING((nId := nId + 1));
+ctx.priv.iTankCtrl := iTankCtrlDom;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Flags" Id="{b797542f-79c7-4f97-90ef-c0e4ad10e674}">
+      <Declaration><![CDATA[PROPERTY Flags : Domains.Flags.I_FlagList
+]]></Declaration>
+      <Get Name="Get" Id="{11a6da6c-09f9-4bea-8a0f-4f011805818e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Flags := flagList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Recs" Id="{2c46d922-634c-4b5d-ad13-9652dd6b287c}">
+      <Declaration><![CDATA[PROPERTY Recs : Domains.Broadcast.I_ReceiverList
+]]></Declaration>
+      <Get Name="Get" Id="{14c8e575-5afd-4a3d-b739-802d2f5c791e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Recs := receiverList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Signals" Id="{2b6c7e42-0fef-4fc3-87e7-d7e1d8a92c82}">
+      <Declaration><![CDATA[PROPERTY Signals : Domains.Broadcast.I_SignalList
+]]></Declaration>
+      <Get Name="Get" Id="{c41b3a2c-b918-452b-93f2-0e88f812ebc4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Signals := signalList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Smgr" Id="{2ba05b8c-beba-4d32-b7c8-11d3af92314f}">
+      <Declaration><![CDATA[PROPERTY Smgr : Domains.States.I_StateManager
+]]></Declaration>
+      <Get Name="Get" Id="{0a2a2d58-c216-4c58-af7e-f1cb066c32b7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Smgr := stateMgr;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Tag" Id="{98ac75f8-e8ad-4fd8-8513-ffa86bdcf2fa}">
+      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag
+]]></Declaration>
+      <Get Name="Get" Id="{591d43d6-3408-4f73-8768-ab4de5af6ff3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := domTag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ToDebug" Id="{9c1b2447-c187-4a9e-adf9-f9f8c006ebf6}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

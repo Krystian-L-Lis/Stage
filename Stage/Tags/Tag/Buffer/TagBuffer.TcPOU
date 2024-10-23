@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TagBuffer" Id="{ab253d07-7d9e-4761-b7f9-975334d41320}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TagBuffer
+VAR_GENERIC CONSTANT
+	nMax			: UDINT := 0;
+END_VAR
+VAR
+	_iBuffer		: ARRAY[0..nMax] OF I_Tag;
+	_nHead			: UDINT := 0;
+	_nTail			: UDINT := 0;
+	_nLen			: UDINT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Clear" Id="{72c409f9-4bb7-4ea7-a001-5bc9c15c7046}">
+      <Declaration><![CDATA[METHOD Clear
+VAR
+	i	: UDINT := _nHead;
+	c	: UDINT	:= 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE c < _nLen DO
+	_iBuffer[i] := 0;
+
+	i := (i + 1) MOD nMax;
+	c := c + 1;
+END_WHILE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Has" Id="{e3bc43f2-c352-4209-8c3b-715cf13f62fb}">
+      <Declaration><![CDATA[METHOD Has : BOOL
+VAR_INPUT
+	iTag	: I_Tag;
+END_VAR
+VAR
+	i	: UDINT := _nHead;
+	c	: UDINT	:= 0;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iTag = 0 THEN
+	Has := FALSE;
+	RETURN;
+END_IF
+
+WHILE c < _nLen DO
+	IF _iBuffer[i] = iTag THEN
+		Has := TRUE;
+		EXIT;
+	END_IF;
+
+	i := (i + 1) MOD nMax;
+	c := c + 1;
+END_WHILE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{5a7f986e-2abe-4bb0-83ff-b2116aac3cfc}">
+      <Declaration><![CDATA[METHOD Pop : Results.Result
+VAR_OUTPUT
+	iTag		: I_Tag;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nHead = _nTail THEN
+    Pop := Results.None;
+    RETURN;
+END_IF
+
+iTag := _iBuffer[_nHead];
+_iBuffer[_nHead] := 0;
+
+_nHead := _nHead + 1;
+_nLen := _nLen - 1;
+
+IF _nHead > nMax THEN
+    _nHead := 0;
+END_IF
+
+Pop := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{64e3a23b-fdbe-4aca-be53-174d96117128}">
+      <Declaration><![CDATA[METHOD Push : Results.Result
+VAR_INPUT
+	iTag			: I_Tag;
+END_VAR
+VAR
+	_nNextTail 		: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iTag = 0 THEN
+	Push := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+_nNextTail := _nTail + 1;
+
+IF _nNextTail > nMax THEN
+    _nNextTail := 0;
+END_IF
+
+IF _nNextTail = _nHead THEN
+    Push := Results.Err.Ovf; 
+    RETURN;
+END_IF
+
+_nLen := _nLen + 1;
+_iBuffer[_nTail] := iTag;
+_nTail := _nNextTail;
+Push := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

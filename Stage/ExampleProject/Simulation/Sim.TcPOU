@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Sim" Id="{300c31fc-e8af-446a-b74a-925971d6780f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Sim IMPLEMENTS I_Execute
+VAR_INPUT
+	bAutoSimEnabled	: BOOL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_exe				: Execute(THIS^);
+	_tonTick			: TON;
+	
+	fDrainValue			: Real_Param := (val := 0.010);
+	fFillValue			: Real_Param := (val := 0.025);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{b6aca41f-422c-460c-8c24-a417d80734a5}">
+      <Declaration><![CDATA[METHOD Execute
+VAR
+	i		: UDINT;
+	
+	tank	: REFERENCE TO ARRAY[1..CST.MAX_TANK] OF Tank REF= MAIN.tank;
+	outlet	: REFERENCE TO ARRAY[1..CST.MAX_TANK] OF Outlet REF= MAIN.outlet;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_tonTick(IN := TRUE, PT := T#100MS);
+
+IF bAutoSimEnabled AND _tonTick.Q THEN
+	FOR i := 1 TO CST.MAX_TANK DO
+		IF tank[i].bInletValveOpen AND MAIN.tankCtrl.bRunPump THEN
+			tank[i].fLevel := tank[i].fLevel + 0.025;		
+		END_IF
+		IF outlet[i].bDrainValveOpen THEN
+			tank[i].fLevel := tank[i].fLevel - 0.005;			
+		END_IF
+		
+		IF outlet[i].bRequestButton THEN
+			outlet[i].bRequestButton := FALSE;
+		END_IF
+		
+		IF tank[i].fLevel > 2 THEN
+			tank[i].fLevel := 2;
+		ELSIF tank[i].fLevel < 0 THEN
+			tank[i].fLevel := 0;
+		END_IF
+	END_FOR		
+END_IF
+
+
+
+IF _tonTick.Q THEN
+	_tonTick(IN := FALSE);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToDebug" Id="{e0a74641-a27d-4e89-a476-4b17e12a282d}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

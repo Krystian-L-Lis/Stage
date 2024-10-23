@@ -105,8 +105,12 @@
   <ItemGroup>
     <Folder Include="Domain" />
     <Folder Include="Domain\Iter" />
+    <Folder Include="Domain\Buffer" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Buffer\DomainBuffer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Domain\Domain.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +130,11 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Domains.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
@@ -147,9 +156,19 @@
         <o>
           <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
           <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+          <d n="Values" t="Hashtable" ckt="String">
+            <v>ExtendedSettings</v>
+            <v>true</v>
+            <v>GeneralPropertySupport</v>
+            <v>false</v>
+            <v>GlobalTextListFilePath</v>
+            <v>""</v>
+            <v>GlobalVisuImageFilePath</v>
+            <v>"%APPLICATIONPATH%\"</v>
+            <v>ImplicitChecksForVisualizationPOUs</v>
+            <v>true</v>
             <v>UnicodeStrings</v>
-            <v>False</v>
+            <v>true</v>
           </d>
         </o>
         <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>

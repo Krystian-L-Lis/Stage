@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="AssignOutletToTank" Id="{7af64d98-5f84-4e04-8d7c-0657abab6c12}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION AssignOutletToTank : Result
+VAR_INPUT
+	refTank		: REFERENCE TO ARRAY[1..CST.MAX_TANK] OF Tank;
+	refOutlet	: REFERENCE TO ARRAY[1..CST.MAX_TANK] OF Outlet;
+END_VAR
+VAR
+	i			: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR i := 1 TO CST.MAX_TANK DO
+	IF IsErr(refOutlet[i].AssignTank(refTank[i]), eCarry => AssignOutletToTank) THEN
+		DebugMsg(0, CONCAT('Failed to assign tank to outlet at index ', UDINT_TO_STRING(i)));
+	END_IF	
+END_FOR]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

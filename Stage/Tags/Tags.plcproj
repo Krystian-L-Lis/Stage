@@ -84,35 +84,48 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tag" />
+    <Folder Include="Tag\Buffer" />
+    <Folder Include="Tag\Cmp" />
+    <Folder Include="Tag\Base" />
+    <Folder Include="Tag\Option" />
+    <Folder Include="Tag\Owner" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tag\A_Tag.TcPOU">
+    <Compile Include="Tag\Base\A_Tag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\I_Tag.TcIO">
+    <Compile Include="Tag\Base\I_Tag.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\I_TagCmp.TcIO">
+    <Compile Include="Tag\Base\I_Tagged.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\I_Tagged.TcIO">
+    <Compile Include="Tag\Base\Tag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\I_TagOwner.TcIO">
+    <Compile Include="Tag\Buffer\TagBuffer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\Tag.TcPOU">
+    <Compile Include="Tag\Cmp\I_TagCmp.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\TagCmp.TcPOU">
+    <Compile Include="Tag\Cmp\TagCmp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\TagOption.TcPOU">
+    <Compile Include="Tag\Option\TagOption.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tag\TagOwner.TcPOU">
+    <Compile Include="Tag\Owner\I_TagOwner.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tag\Owner\TagOwner.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tags.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
@@ -134,9 +147,19 @@
         <o>
           <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
           <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+          <d n="Values" t="Hashtable" ckt="String">
+            <v>ExtendedSettings</v>
+            <v>true</v>
+            <v>GeneralPropertySupport</v>
+            <v>false</v>
+            <v>GlobalTextListFilePath</v>
+            <v>""</v>
+            <v>GlobalVisuImageFilePath</v>
+            <v>"%APPLICATIONPATH%\"</v>
+            <v>ImplicitChecksForVisualizationPOUs</v>
+            <v>true</v>
             <v>UnicodeStrings</v>
-            <v>False</v>
+            <v>true</v>
           </d>
         </o>
         <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>

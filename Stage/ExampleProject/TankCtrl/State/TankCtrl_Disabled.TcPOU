@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TankCtrl_Disabled" Id="{427c8205-4cc9-476e-88c9-78dfc63362ce}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TankCtrl_Disabled EXTENDS _TankCtrl_State]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="OnExecute" Id="{0ffa6e9a-cfe8-4551-a6fc-51c65774b1c6}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bMultiButton THEN
+	_ctx.hmi.bMultiButton := FALSE;
+	
+	_ctx.priv.smgr.Request(_ctx.state.iEnabled);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{6c85ef7e-9de4-410f-979e-f08a56ae0eb6}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.hmi.bMultiButtonVis := TRUE;
+_ctx.hmi.nMultiButtonColor := COL.ORANGE.Raw;
+_ctx.hmi.nMultiButtonText := 'Press to  Enable';
+
+_ctx.priv.IsSystemOn.Lower();
+
+_ctx.io.out.bRunPump := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

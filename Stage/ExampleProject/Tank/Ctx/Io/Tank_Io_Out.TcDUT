@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Tank_Io_Out" Id="{f548bb91-b729-4956-a1c3-c2096a52c9f9}">
+    <Declaration><![CDATA[TYPE Tank_Io_Out :
+STRUCT
+	bInletValveOpen		: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

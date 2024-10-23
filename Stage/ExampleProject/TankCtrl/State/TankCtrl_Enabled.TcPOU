@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TankCtrl_Enabled" Id="{5cee1e32-2a64-48a5-b248-872a66806b16}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TankCtrl_Enabled EXTENDS _TankCtrl_State IMPLEMENTS I_Call]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="_GetTank" Id="{b9443d87-d18f-45de-8de0-feecd1e722fa}">
+      <Declaration><![CDATA[METHOD PRIVATE _GetTank : Result
+VAR_INPUT
+	iTag		: I_Tag;
+END_VAR
+VAR_OUTPUT
+	iTank		: I_Domain;
+END_VAR
+VAR
+	domIter		: DomainIter;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(domIter.Next(iDomain => iTank)) DO
+	IF iTag = iTank.Tag THEN
+		_GetTank := Ok;
+		RETURN;
+	END_IF	
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Call" Id="{15261221-0b6b-405c-ac53-e6f58082049a}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iTag	: Broadcast.Tags.I_Tag;
+END_VAR
+VAR
+	domIter	: DomainIter;
+	iDom	: I_Domain;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _ctx.priv.tankBuffer.Has(iTag) THEN
+	_ctx.priv.tankBuffer.Push(iTag);
+	_ctx.priv.sTankId := iTag.Option;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{2c71692e-4c78-496f-9720-ad58d64c5078}">
+      <Declaration><![CDATA[METHOD OnExecute
+VAR
+	iTag		: I_Tag;
+	domIter		: DomainIter;
+	iDom		: I_Domain;
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bMultiButton THEN
+	_ctx.hmi.bMultiButton := FALSE;
+	
+	_ctx.priv.smgr.Request(_ctx.state.iDisabled);
+	RETURN;
+END_IF
+
+IF IsOk(_ctx.priv.tankBuffer.Pop(iTag => iTag)) THEN
+	IF IsOk(_GetTank(iTag, iTank => _ctx.priv.iTank)) THEN
+		_ctx.priv.smgr.Request(_ctx.state.iFilling);
+	END_IF 
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{18fecd57-2df1-483b-a2df-58a0e2543e29}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.hmi.bMultiButtonVis := TRUE;
+_ctx.hmi.nMultiButtonColor := COL.WHITE.Raw;
+_ctx.hmi.nMultiButtonText := 'Press to Disable';
+
+_ctx.priv.IsSystemOn.Rise();
+
+_ctx.io.out.bRunPump := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

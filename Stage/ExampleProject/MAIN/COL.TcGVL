@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="COL" Id="{fff168c6-7115-4751-83c1-a6900469ca44}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+{warning disable C0228}	// Disable warning: No initial value for variable ...
+	RED			: Color(255, 0, 0, 255);
+	BLACK		: Color(0, 0, 0, 255);
+	ORANGE		: Color(255, 160, 0, 255);
+	WHITE		: Color(255, 255, 255, 255);
+{warning restore C0228}
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

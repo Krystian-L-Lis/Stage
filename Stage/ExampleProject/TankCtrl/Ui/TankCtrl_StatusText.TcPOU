@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TankCtrl_StatusText" Id="{f1f99b25-9f49-4820-a60d-12417ae52462}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TankCtrl_StatusText IMPLEMENTS I_Call
+VAR
+	_ctx			: REFERENCE TO TankCtrl_Ctx;
+	_fbRec			: Receiver(THIS^);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{5752a53d-8ebb-4801-96eb-ebb4b8e4838b}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iTag	: Broadcast.Tags.I_Tag;
+END_VAR
+VAR
+	cmp			: TagCmp;
+	strb		: Strb;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[cmp.Set(_ctx.priv.smgr.Current);			
+
+IF cmp.Match(_ctx.state.iDisabled).IsOk() THEN
+	_ctx.hmi.sStatusText := 'System is disabled!';
+	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iEStop).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Emergency Stop!';
+	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iFault).IsOk() THEN	
+	IF _ctx.io.in.bNoWater THEN
+		_ctx.hmi.sStatusText := 'Alarm: Caused by low water level!';	
+	ELSIF _ctx.io.in.bOverload THEN
+		_ctx.hmi.sStatusText := 'Alarm: Caused by motor overload!';	
+	ELSE 
+		strb.Set('Alarm: Filling(')
+			.Append(_ctx.priv.sTankId)
+			.Append(') - ');
+		
+		CASE _ctx.priv.nErrorCode OF
+			1:
+				_ctx.hmi.sStatusText := strb.Append('"Fill" state not found!').Read();
+			2:
+				_ctx.hmi.sStatusText := strb.Append('Failed to change state!').Read();
+			3:
+				_ctx.hmi.sStatusText := strb.Append('"IsFillable" flag not found!').Read();
+			4:
+				_ctx.hmi.sStatusText := strb.Append('Timeout!').Read();
+		END_CASE
+	END_IF
+	
+	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iFilling).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Fillinkg tank...';
+	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iEnabled).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Awaiting request...';
+	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Default() THEN
+	_ctx.hmi.sStatusText := 'Error: Unrecognized system state.';
+	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
+	RETURN;	
+END_IF
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{b759fe4c-9a0f-4641-b378-2b4b36fd2532}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	ctx			: REFERENCE TO TankCtrl_Ctx;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx REF= ctx;
+ctx.priv.smgr.GetOnChange().Pair(_fbRec);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToDebug" Id="{c3236082-fe70-4c29-82ba-2aadfacf72a4}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

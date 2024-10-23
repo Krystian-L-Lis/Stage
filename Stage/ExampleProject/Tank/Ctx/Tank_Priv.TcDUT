@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Tank_Priv" Id="{7aff86d2-3492-4509-bba9-b45a3fd0f63e}">
+    <Declaration><![CDATA[TYPE Tank_Priv :
+STRUCT
+	// State Machine
+	smgr					: I_StateManager;
+	
+	// Flags
+	IsFillable				: Flag;
+	IsEmpty					: Flag;
+	
+	// Signals
+	Request					: Signal;
+	
+	// Resources
+	iTankCtrl				: I_Domain;
+	iRequestReceiver		: I_Receiver;
+	iIsSystemOn				: I_Flag;
+	
+	// Priv
+	iDomTag					: I_Tag;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

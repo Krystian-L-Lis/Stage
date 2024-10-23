@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Safety_Hmi" Id="{93f4fa20-c4bf-4746-b884-94b70b3e4255}">
+    <Declaration><![CDATA[TYPE Safety_Hmi :
+STRUCT
+	sStatusText			: Str;
+	nStatusTextColor	: DWORD;
+	
+	bResetButton		: BOOL;
+	bResetButtonVis		: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

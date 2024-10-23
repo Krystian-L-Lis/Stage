@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Tank_StatusText" Id="{fbdca127-14b9-4b94-8dc0-8bbde88ae7f1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Tank_StatusText IMPLEMENTS I_Call
+VAR
+	_ctx			: REFERENCE TO Tank_Ctx;
+	_fbRec			: Receiver(THIS^);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{bc00e97c-e28d-4acb-88b7-451920d7a766}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iTag	: Broadcast.Tags.I_Tag;
+END_VAR
+VAR
+	cmp			: TagCmp;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[cmp.Set(_ctx.priv.smgr.Current);			
+
+IF cmp.Match(_ctx.state.iDisabled).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Tank disabled';
+	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iEnabled).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Tank enabled';
+	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iFault).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Alarm: Filling timeout!';
+	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iFill).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Filling in progress...';
+	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Match(_ctx.state.iSystemOff).IsOk() THEN
+	_ctx.hmi.sStatusText := 'Filling system is disabled!';
+	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
+	RETURN;
+END_IF
+
+IF cmp.Default() THEN
+	_ctx.hmi.sStatusText := 'Error: Unrecognized system state.';
+	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
+	RETURN;	
+END_IF
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{a9602e84-7aa2-4e0f-be51-20c49069a07b}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	ctx			: REFERENCE TO Tank_Ctx;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx REF= ctx;
+ctx.priv.smgr.GetOnChange().Pair(_fbRec);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToDebug" Id="{fd5b82b8-7e31-4600-bd43-1b0d6b9fa639}">
+      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToDebug := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

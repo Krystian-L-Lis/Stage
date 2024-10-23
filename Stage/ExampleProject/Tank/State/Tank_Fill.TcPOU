@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Tank_Fill" Id="{956f5945-3487-4195-8577-fbca0c7baef1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Tank_Fill EXTENDS _Tank_State
+VAR
+	_tonTimeout			: TON;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="CanActivate" Id="{a7eb6971-413b-4815-9fd0-5fa57c5fea70}">
+      <Declaration><![CDATA[METHOD CanActivate : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CanActivate := _ctx.priv.smgr.Current = _ctx.state.iEnabled;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{8e31315e-1c64-4547-9d14-8ff5304f8b20}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_tonTimeout(IN := TRUE, PT := UDINT_TO_TIME(_ctx.hmi.nTimeout.val * 1000));
+IF NOT _ctx.io.in.bEnable THEN
+	_ctx.priv.smgr.Request(_ctx.state.iDisabled);
+ELSIF _ctx.io.in.fLevel >= _ctx.hmi.fHighLevel.val THEN
+	_ctx.priv.smgr.Request(_ctx.state.iEnabled);
+ELSIF _tonTimeout.Q THEN
+	_ctx.priv.smgr.Request(_ctx.state.iFault);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{400aacc0-abfd-4552-9899-8f5a53b857ba}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.io.out.bInletValveOpen := TRUE;
+_ctx.hmi.bResetButtonVis := FALSE;
+_ctx.priv.IsFillable.Rise();
+_tonTimeout(IN := FALSE);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

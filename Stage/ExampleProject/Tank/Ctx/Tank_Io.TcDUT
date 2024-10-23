@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Tank_Io" Id="{bd29f8b0-6451-4caa-afdf-62ce3a6deee2}">
+    <Declaration><![CDATA[TYPE Tank_Io :
+STRUCT
+	in			: Tank_Io_In;
+	out			: Tank_Io_Out;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

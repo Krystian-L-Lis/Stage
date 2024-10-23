@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Tank_SystemOff" Id="{2f202dd8-f0b6-4b76-ae64-f34cbab5f204}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Tank_SystemOff EXTENDS _Tank_State IMPLEMENTS I_Execute
+VAR
+	_exe			: Execute(THIS^);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{321e3024-2b6e-4235-8d48-c94d4f0858d3}">
+      <Declaration><![CDATA[METHOD Execute]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.priv.iIsSystemOn.IsLowered() THEN
+	IF _ctx.priv.smgr.Current <> _ctx.state.iSystemOff THEN
+		_ctx.priv.smgr.Request(_ctx.state.iSystemOff);
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{10ccc01f-0593-48d1-ad6e-86730bf47ac1}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.priv.iIsSystemOn.IsRised() THEN
+	IF _ctx.priv.smgr.Current = _ctx.state.iSystemOff THEN
+		_ctx.priv.smgr.Request(_ctx.state.iDisabled);
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{56d030fd-7ae1-4166-b892-6183b53d27ee}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.io.out.bInletValveOpen := FALSE;
+_ctx.hmi.bResetButtonVis := FALSE;
+_ctx.priv.IsFillable.Rise();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
