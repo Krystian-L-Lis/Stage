@@ -11,6 +11,7 @@ VAR
 	sim			: Sim;
 	
 	eError		: Result;
+	bError		: BOOL;
 	dbgList		: DebugList;
 END_VAR
 ]]></Declaration>
@@ -20,9 +21,11 @@ END_VAR
 		eError := AssignOutletToTank(tank, outlet);
 	Ok:
 		Runtime();
-		
 	ELSE
-		DebugMsg(0, 'Failed to execute runtime!');
+		IF NOT bError THEN
+			DebugMsg(0, 'Failed to execute runtime!');
+			bError := TRUE;
+		END_IF
 END_CASE
 
 
