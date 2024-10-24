@@ -11,9 +11,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i := 1 TO CST.MAX_TANK DO
+      <ST><![CDATA[AssignOutletToTank := Ok;
+FOR i := 1 TO CST.MAX_TANK DO
 	IF IsErr(refOutlet[i].AssignTank(refTank[i]), eCarry => AssignOutletToTank) THEN
 		DebugMsg(0, CONCAT('Failed to assign tank to outlet at index ', UDINT_TO_STRING(i)));
+		RETURN;
 	END_IF	
 END_FOR]]></ST>
     </Implementation>
