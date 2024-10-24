@@ -1,5 +1,5 @@
 # Stage - A TwinCAT 3.1 Framework for Streamlined PLC Development
-**Stage** is a modular framework designed for managing complex PLC systems using state machines, interfaces, and tag-based communication. It emphasizes composition over inheritance, allowing function blocks to implement various behaviors by combining interfaces like `I_Execute`, `I_Call`, and `I_Domain`. Stage uses tags and signals for flexible, decoupled interaction between components, and leverages a simplified `Result` type for consistent error handling. The framework's design promotes clear state transitions, modular development, and scalability across different function blocks.
+**Stage** is a modular framework designed for managing complex PLC systems using state machines, interfaces, and tag-based communication. It emphasizes composition over inheritance, allowing function blocks to implement various behaviors by combining interfaces like `I_Execute`, `I_Call`, and `I_Domain`. Stage uses tags and signals for flexible, decoupled interaction between components, and leverages a simplified `Result` type for consistent error handling. The framework's design promotes clear state transitions, and modular development.
 
 ## Libraries Overview
 
