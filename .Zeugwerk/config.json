@@ -1,0 +1,608 @@
+{
+  "fileversion": 1,
+  "solution": "Stage.sln",
+  "projects": [
+    {
+      "name": "Stage",
+      "plcs": [
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Broadcast",
+          "title": "Broadcast",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc3_Module=*",
+              "Debug=*",
+              "Results=*",
+              "Strings=*",
+              "Tags=*",
+              "Utils=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Sub-pub com.",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Broadcast",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Dbg",
+          "title": "Debug",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc3_Module=*",
+              "Strings=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Code debugging helper.",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Debug",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Domains",
+          "title": "Domains",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc3_Module=*",
+              "Broadcast=*",
+              "Debug=*",
+              "Flags=*",
+              "Results=*",
+              "States=*",
+              "Tags=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Each Domain should have a number of standard browsable components.",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Domains",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Flags",
+          "title": "Flags",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc3_Module=*",
+              "Debug=*",
+              "Results=*",
+              "Strings=*",
+              "Tags=*",
+              "Utils=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Boolean flags to share between domains.",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Flags",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Parameters",
+          "title": "Parameters",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc3_Module=*",
+              "Strings=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "No more VAR PERSITANT",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Parameters",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Results",
+          "title": "Results",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc3_Module=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Basic result implementation.",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Results",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Rt",
+          "title": "Rt",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc3_Module=*",
+              "Debug=*",
+              "Results=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Basic runtime",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Rt",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "States",
+          "title": "States",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc3_Module=*",
+              "Broadcast=*",
+              "Debug=*",
+              "Results=*",
+              "Rt=*",
+              "Strings=*",
+              "Tags=*",
+              "Utils=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "State implementation.",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "States",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Strings",
+          "title": "Strings",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc2_Utilities=*",
+              "Tc3_Module=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "String ops",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Strings",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Tags",
+          "title": "Tags",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc3_Module=*",
+              "Debug=*",
+              "Results=*",
+              "Strings=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Universal identification.",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Tags",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0",
+          "distributor-name": "_",
+          "name": "Utils",
+          "title": "Utils",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc3_Module=*",
+              "Results=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "description": "Various utilities",
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "Utils",
+          "authors": "Krystian Lis et al.",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0.0",
+          "distributor-name": null,
+          "name": "DomainTemplate",
+          "title": "DomainTemplate",
+          "type": "Library",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc3_Module=*",
+              "Broadcast=*",
+              "Debug=*",
+              "Domains=*",
+              "Flags=*",
+              "Parameters=*",
+              "Results=*",
+              "Rt=*",
+              "States=*",
+              "Strings=*",
+              "Tags=*",
+              "Utils=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "DomainTemplate",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        },
+        {
+          "version": "1.0.0.0",
+          "distributor-name": null,
+          "name": "ExampleProject",
+          "title": "ExampleProject",
+          "type": "Application",
+          "frameworks": {
+            "zeugwerk": {
+              "version": "",
+              "references": [],
+              "repositories": [
+                "https://framework.zeugwerk.dev/Distribution"
+              ],
+              "hide": false,
+              "qualified-only": true
+            }
+          },
+          "packages": [],
+          "references": {
+            "*": [
+              "VisuElemMeter=4.5.0.0",
+              "VisuElems=4.5.0.0",
+              "VisuElemsSpecialControls=4.5.0.0",
+              "VisuElemsWinControls=4.5.0.0",
+              "VisuElemTextEditor=4.5.0.0",
+              "VisuElemXYChart=4.5.0.0",
+              "VisuInputs=4.5.0.0",
+              "VisuNativeControl=4.5.0.0",
+              "Tc2_Standard=*",
+              "Tc2_System=*",
+              "Tc3_Module=*",
+              "VisuDialogs=*",
+              "Broadcast=*",
+              "Debug=*",
+              "Domains=*",
+              "Flags=*",
+              "Parameters=*",
+              "Results=*",
+              "Rt=*",
+              "States=*",
+              "Strings=*",
+              "Tags=*",
+              "Utils=*"
+            ]
+          },
+          "repositories": [],
+          "bindings": {},
+          "patches": {
+            "platform": {},
+            "argument": {},
+            "license": {}
+          },
+          "icon-file": "",
+          "project-url": "",
+          "display-name": "ExampleProject",
+          "entitlement": "",
+          "license": "",
+          "license-file": "",
+          "license-tmc-file": ""
+        }
+      ]
+    }
+  ]
+}

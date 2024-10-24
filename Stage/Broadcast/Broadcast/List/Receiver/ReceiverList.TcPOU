@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ReceiverList" Id="{2c7fb1ae-695d-49e8-8419-2f56fc878238}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL ReceiverList
+    <Declaration><![CDATA[(*
+This function block can be used to store multiple I_Receiver instances.
+
+*)
+FUNCTION_BLOCK FINAL ReceiverList
 VAR_GENERIC CONSTANT
 	nMax				: UDINT(0..16#FFFFFFE) := 1;
 END_VAR

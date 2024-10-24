@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="FindSignal" Id="{003e8e27-fe4d-4de2-beb1-ed0e490fe6e7}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION FindSignal : Results.Result
+    <Declaration><![CDATA[(*
+Finds signal in iSignalList. 
+Example usage: 
+	iSignal	: I_Receiver;
+	SomeReceiver: Signal;
+	IF IsOk(FindSignal(iSomeRecList, 'SomeSignal'), iSignal => iSignal) THEN
+		SomeReceiver.Pair(iSignal);
+	END_IF
+*)
+FUNCTION FindSignal : Results.Result
 VAR_INPUT
 	iSignalList		: I_SignalList;
 	sToFind			: Strings.Str;

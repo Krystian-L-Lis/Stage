@@ -119,10 +119,10 @@
     <Compile Include="Broadcast\Find\FindSignal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Find\FindManySignals.TcPOU">
+    <Compile Include="Broadcast\Find\FindManyRecs.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Find\FindManyRecs.TcPOU">
+    <Compile Include="Broadcast\Find\FindManySignals.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\List\Receiver\I_ReceiverList.TcIO">

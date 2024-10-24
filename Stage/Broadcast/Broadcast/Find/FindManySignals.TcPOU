@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FindManySignals" Id="{d303f41a-762d-4e37-bb02-7c081d2677b4}" SpecialFunc="None">
+  <POU Name="FindManySignals" Id="{bfedf4fd-524e-43c4-90c1-01c67895e0ff}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION FindManySignals : Results.Result
 VAR_INPUT
-	iReceiverList	: I_ReceiverList;
+	iSignalList		: I_SignalList;
 	nResultPou		: ANY;
 END_VAR
 VAR_IN_OUT
@@ -13,7 +13,7 @@ VAR
 	i			: Utils.GenIter(0);
 	j			: UDINT;
 	cmp			: Tags.TagCmp;
-	_iRec		: I_Receiver;
+	_iSignal	: I_Signal;
 	_nLow		: UDINT := DINT_TO_UDINT(LOWER_BOUND(sToFind, 1));
 	_nUp		: UDINT := DINT_TO_UDINT(UPPER_BOUND(sToFind, 1));
 	_nResSize	: UDINT := DINT_TO_UDINT(nResultPou.diSize);
@@ -24,36 +24,36 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF iReceiverList = 0 THEN
-	FindManySignals := Results.Err.Itf0;
+      <ST><![CDATA[IF iSignalList = 0 THEN
+	this^.FindManySignals := Results.Err.Itf0;
 	RETURN;
 END_IF
 
 // Ensure lower bound starts at zero
 IF _nLow <> 0 THEN
-	FindManySignals := Results.Err.Ovf;
+	this^.FindManySignals := Results.Err.Ovf;
 	RETURN;
 END_IF
 
 // Ensure result size matches expected size
 IF _nResSize <> _nExpSize THEN
-	FindManySignals := Results.Err.NoMatch;
+	this^.FindManySignals := Results.Err.NoMatch;
 	RETURN;
 END_IF
 
 // Check if result pointer is null
 IF nResultPou.pValue = 0 THEN
-	FindManySignals := Results.Err.Ptr0;
+	this^.FindManySignals := Results.Err.Ptr0;
 	RETURN;
 END_IF
 
-// Iterate over the signal list
-WHILE Results.IsOk(iReceiverList.GetByPos(i.Next(), iRec => _iRec)) DO
-	cmp.Set(_iRec.Tag);
+// Iterate over the receiver list
+WHILE Results.IsOk(iSignalList.GetByPos(i.Next(), iSignal => _iSignal)) DO
+	cmp.Set(_iSignal.Tag);
 	FOR j := _nLow TO _nUp DO
 		// Match the string and copy if successful
 		IF cmp.MatchPrtId(sToFind[j]).IsOk() THEN
-			Tc2_System.MEMCPY(ADR(nResultPou.pValue) + SIZEOF(__UXINT) * j, ADR(_iRec), SIZEOF(__UXINT));
+			Tc2_System.MEMCPY(ADR(nResultPou.pValue) + SIZEOF(__UXINT) * j, ADR(_iSignal), SIZEOF(__UXINT));
 			_nFound := _nFound + 1;
 			sToFind[j] := '';  // Mark as found
 			EXIT;  // Break after first match (since there should be only one)
@@ -62,7 +62,7 @@ WHILE Results.IsOk(iReceiverList.GetByPos(i.Next(), iRec => _iRec)) DO
 	
 	// Early exit if all entries are found
 	IF _nFound = (_nUp - _nLow + 1) THEN
-		FindManySignals := Results.Ok;
+		this^.FindManySignals := Results.Ok;
 		RETURN;
 	END_IF 
 END_WHILE
@@ -70,13 +70,13 @@ END_WHILE
 // Final check to see if all entries were processed
 FOR j := _nLow TO _nUp DO
 	IF sToFind[j] <> '' THEN  // Check for unfound entries
-		FindManySignals := Results.Err.Udf;  // Error if any remain unfound (handled at higher level)
+		this^.FindManySignals := Results.Err.Udf;  // Error if any remain unfound (handled at higher level)
 		RETURN;
 	END_IF
 END_FOR
 
 // Return success if everything is found
-FindManySignals := Results.Ok;]]></ST>
+this^.FindManySignals := Results.Ok;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

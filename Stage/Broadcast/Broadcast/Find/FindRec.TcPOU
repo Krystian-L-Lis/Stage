@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="FindRec" Id="{2affe340-760b-4c8d-b411-03f5d4b69ee5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION FindRec : Results.Result
+    <Declaration><![CDATA[(*
+Finds receiver in iReceiverList. 
+Example usage: 
+	iRec	: I_Receiver;
+	SomeSignal: Signal;
+	IF IsOk(FindRec(iSomeRecList, 'SomeReceiver'), iRec => iRec) THEN
+		SomeSignal.Pair(iRec);
+	END_IF
+*)
+FUNCTION FindRec : Results.Result
 VAR_INPUT
 	iReceiverList	: I_ReceiverList;
 	sToFind			: Strings.Str;
