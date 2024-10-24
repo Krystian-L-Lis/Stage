@@ -12,6 +12,7 @@ VAR
 	
 	eResult		: Result;
 	bError		: BOOL;
+	
 	dbgList		: DebugList;
 END_VAR
 ]]></Declaration>

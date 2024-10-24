@@ -35,7 +35,11 @@ VAR
 	iDom	: I_Domain;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT _ctx.priv.tankBuffer.Has(iTag) THEN
+        <ST><![CDATA[IF _ctx.priv.iTank <> 0 AND_THEN _ctx.priv.iTank.Tag = iTag THEN
+	RETURN;
+END_IF
+
+IF NOT _ctx.priv.tankBuffer.Has(iTag) THEN
 	_ctx.priv.tankBuffer.Push(iTag);
 	_ctx.priv.sTankId := iTag.Option;
 END_IF]]></ST>
@@ -74,7 +78,9 @@ _ctx.hmi.nMultiButtonText := 'Press to Disable';
 
 _ctx.priv.IsSystemOn.Rise();
 
-_ctx.io.out.bRunPump := FALSE;]]></ST>
+_ctx.io.out.bRunPump := FALSE;
+
+_ctx.priv.iTank := 0;]]></ST>
       </Implementation>
     </Method>
   </POU>
