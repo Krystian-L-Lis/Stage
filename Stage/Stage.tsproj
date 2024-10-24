@@ -157,7 +157,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{55641B74-B2E9-428E-B2CD-6572D9010B47}" Name="ExampleProject" PrjFilePath="ExampleProject\ExampleProject.plcproj" TmcFilePath="ExampleProject\ExampleProject.tmc" ReloadTmc="true" AmsPort="865" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502380" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{E53B16DE-9314-A3E4-A70E-CA0A948DFA33}" TmcPath="ExampleProject\ExampleProject.tmc">
+				<Instance Id="#x08502380" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{8A5B63F0-55FE-D115-72E3-0ADE702302D1}" TmcPath="ExampleProject\ExampleProject.tmc">
 					<Name>ExampleProject Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
