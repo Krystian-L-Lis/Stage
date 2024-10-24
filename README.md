@@ -1,6 +1,6 @@
 # Stage - A TwinCAT 3.1 Framework for Streamlined PLC Development
 
-**Stage** is a framework for TwinCAT 3.1 (4026), designed to simplify and enhance the development of PLC projects. The framework consists of multiple libraries. The project aims for simplicity, ensuring that anyone can read the code and understand its functionality. The exception to this rule is the Broadcast library, where the signal table required an allocation mechanism, making it the most vulnerable point.
+**Stage** is a modular framework designed for managing complex PLC systems using state machines, interfaces, and tag-based communication. It emphasizes composition over inheritance, allowing function blocks to implement various behaviors by combining interfaces like I_Execute, I_Call, and I_Domain. Stage uses tags and signals for flexible, decoupled interaction between components, and leverages a simplified Result type for consistent error handling. The framework's design promotes clear state transitions, modular development, and scalability across different function blocks.
 
 ## Libraries Overview
 
