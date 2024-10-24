@@ -36,6 +36,7 @@ Provides:
 + `TagOwner` - Used by collections and other parent structures to identify their children. Ownership is transferable.
 + `A_Tag` - Assigns an interface value to an interface variable during `FB_Init`.
 + `I_Tagged` - This interface indicates that an FB has a Tag.
++ `TagBuffer` - Ring buffer of I_Tag interfaces.
 
 ### 5. Results
 The **Results** library offers a simple and intuitive result type, which is a wrapper around an `INT`. In this system:
@@ -68,6 +69,8 @@ Provides:
 + `I_ReceiverList` and `I_MutReceiverList` - Immutable and mutable interfaces implemented by `ReceiverList`.
 + `I_Receiver` - An interface used for pairing.
 + `A_Signal` and `A_Receiver` - Automatic insertion mechanism through `FB_Init`.
++ `FindSignal`, `FindRec` - Function used to find Signals and Receivers within their corresponding lists.
++ `FindManySignals`, `FindManyRecs` - Function used to find multiple Signals and Receivers within their corresponding lists. This is an experimental feature.
 
 > **Warning:** Lists will create a debug message upon overflow!
 
@@ -81,6 +84,8 @@ Provides:
 + `I_FlagList` and `I_MutFlagList` - Immutable and mutable interfaces implemented by `FlagList`.
 + `I_Flag` - An interface used for checking the state of a flag.
 + `A_Flag` - Automatic insertion mechanism through `FB_Init`.
++ `FindFlag` - Function used to find Flag within list.
++ `FindManyFlags` - Function used to find multiple Flags within list. This is an experimental feature.
 
 > **Warning:** Lists will create a debug message upon overflow!
 
@@ -100,6 +105,8 @@ Provides:
 + `I_StateMachine` - Interface implemented by `StateMachine`.
 + `StateManager` - Bundles `StateRepo`, `StateBuffer`, and `StateMachine` into one flow. Emits a signal on state change.
 + `I_StateManager` - Interface implemented by `StateManager`.
++ `FindState` - Function used to find state within state manager.
++ `FindManyStates` - Function used to find multiple states within state manager. This is an experimental feature.
 
 ### 9. Rt
 The **Rt** library provides runtime management, ensuring that objects implementing the `I_Execute` interface are automatically called through the runtime.
@@ -115,6 +122,7 @@ Provides:
 + `Domain` - Node within the global linked list of all nodes.
 + `I_Domain` - An FB identifier. Domain FBs contain `FlagList`, `SignalList`, `ReceiverList`, `StateManager`, and a `Tag`.
 + `DomainIter` - Allows browsing through the global domain list.
++ `DomainBuffer` - Ring buffer of I_Domain interfaces.
 
 ## Packages
 The solution provides two packages. One contains Stage libraries that require qualified access (`StageQ: x.x.x.1`), and the other does not (`Stage: x.x.x.0`).
