@@ -123,9 +123,6 @@ Provides:
 + `DomainIter` - Allows browsing through the global domain list.
 + `DomainBuffer` - Ring buffer of I_Domain interfaces.
 
-## Packages
-The solution provides two packages. One contains Stage libraries that require qualified access (`StageQ: x.x.x.1`), and the other does not (`Stage: x.x.x.0`).
-
 ## Contributing
 
 Contributions to the Stage framework are welcome! Feel free to fork the repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change. The framework is in its early *stage* and requires extensive testing!
