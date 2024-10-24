@@ -123,6 +123,20 @@ Provides:
 + `DomainIter` - Allows browsing through the global domain list.
 + `DomainBuffer` - Ring buffer of I_Domain interfaces.
 
+### 10. Utils
+Functionality that doesn't have their own separate library yet.
+
+Provides:
++ `GenIter` - A simple iterator over UDINT values. Used for iterating over collections in `WHILE` loops.
++ `UDINT_Array` - A fixed array of UDINTs with `Pop`, `Push`, `Get`, `Set`, `Has` methods. It uses generic for its size.
++ `Color` - RGB color.
++ `I_Color` - `Color` Interface.
++ `GetSystemTime()` - Wrapper over `Tc2_System.F_GetSystemTime()` that shifts the result value to 1970-01-01T00:00:00Z.
++ `Timer` - Universal timer FB with Keep and Pause functionality.
+
+## Example
+The repository contains an example project. The project showcases a scenario where a main tank fills several secondary tanks, and each secondary tank can be drained individually through separate outlets. This simple scenario provides basic application of Stage framework. The example project uses Twincat3 PLC HMI web(TF1810).
+
 ## Contributing
 
 Contributions to the Stage framework are welcome! Feel free to fork the repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change. The framework is in its early *stage* and requires extensive testing!
