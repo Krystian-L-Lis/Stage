@@ -132,30 +132,6 @@
 					</Contexts>
 				</Instance>
 			</Project>
-			<Project GUID="{C6ED1846-41AD-46E6-866E-4F472DAE2D11}" Name="QAccPackage" PrjFilePath="QAccPackage\QAccPackage.plcproj" TmcFilePath="QAccPackage\QAccPackage.tmc" ReloadTmc="true" AmsPort="861" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502280" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{81E023E9-2244-AF72-D959-85C1CA1909C1}" TmcPath="QAccPackage\QAccPackage.tmc">
-					<Name>QAccPackage Instance</Name>
-					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<Contexts>
-						<Context>
-							<Id>1</Id>
-							<Name>Default</Name>
-						</Context>
-					</Contexts>
-				</Instance>
-			</Project>
-			<Project GUID="{312B0C02-1C64-41BD-A486-7564258517B2}" Name="Package" PrjFilePath="Package\Package.plcproj" TmcFilePath="Package\Package.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{4F8B93B9-38A9-9F63-F291-D0659FC3999A}" TmcPath="Package\Package.tmc">
-					<Name>Package Instance</Name>
-					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<Contexts>
-						<Context>
-							<Id>1</Id>
-							<Name>Default</Name>
-						</Context>
-					</Contexts>
-				</Instance>
-			</Project>
 			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="Utils" PrjFilePath="Utils\Utils.plcproj" TmcFilePath="Utils\Utils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{259D7E0E-17EF-F58E-9A03-671A5662D80B}" TmcPath="Utils\Utils.tmc">
 					<Name>Utils Instance</Name>
