@@ -135,7 +135,7 @@ Provides:
 + `Timer` - Universal timer FB with Keep and Pause functionality.
 
 ## Example
-The repository contains an example project. The project showcases a scenario where a main tank fills several secondary tanks, and each secondary tank can be drained individually through separate outlets. This simple scenario provides basic application of Stage framework. The example project uses Twincat3 PLC HMI web(TF1810).
+The repository contains an example project within the solution. The project showcases a scenario where a main tank fills several secondary tanks, and each secondary tank can be drained individually through separate outlets. This simple scenario provides basic application of Stage framework. The example project uses Twincat3 PLC HMI web(TF1810).
 
 ## Contributing
 
