@@ -139,6 +139,10 @@ The repository contains an example project within the solution. The project show
 
 There is also a separate folder with examples, but this will later be moved into the wiki page.
 
+## Wiki
+
+Work in progress.
+
 ## Contributing
 
 Contributions to the Stage framework are welcome! Feel free to fork the repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change. The framework is in its early *stage* and requires extensive testing!
