@@ -25,25 +25,25 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iReceiverList = 0 THEN
-	FindManyRecs.FindManyRecs := Results.Err.Itf0;
+	FindManyRecs := Results.Err.Itf0;
 	RETURN;
 END_IF
 
 // Ensure lower bound starts at zero
 IF _nLow <> 0 THEN
-	FindManyRecs.FindManyRecs := Results.Err.Ovf;
+	FindManyRecs := Results.Err.Ovf;
 	RETURN;
 END_IF
 
 // Ensure result size matches expected size
 IF _nResSize <> _nExpSize THEN
-	FindManyRecs.FindManyRecs := Results.Err.NoMatch;
+	FindManyRecs := Results.Err.NoMatch;
 	RETURN;
 END_IF
 
 // Check if result pointer is null
 IF nResultPou.pValue = 0 THEN
-	FindManyRecs.FindManyRecs := Results.Err.Ptr0;
+	FindManyRecs := Results.Err.Ptr0;
 	RETURN;
 END_IF
 
@@ -62,7 +62,7 @@ WHILE Results.IsOk(iReceiverList.GetByPos(i.Next(), iRec => _iRec)) DO
 	
 	// Early exit if all entries are found
 	IF _nFound = (_nUp - _nLow + 1) THEN
-		FindManyRecs.FindManyRecs := Results.Ok;
+		FindManyRecs := Results.Ok;
 		RETURN;
 	END_IF 
 END_WHILE
@@ -70,13 +70,13 @@ END_WHILE
 // Final check to see if all entries were processed
 FOR j := _nLow TO _nUp DO
 	IF sToFind[j] <> '' THEN  // Check for unfound entries
-		FindManyRecs.FindManyRecs := Results.Err.Udf;  // Error if any remain unfound (handled at higher level)
+		FindManyRecs := Results.Err.Udf;  // Error if any remain unfound (handled at higher level)
 		RETURN;
 	END_IF
 END_FOR
 
 // Return success if everything is found
-FindManyRecs.FindManyRecs := Results.Ok;]]></ST>
+FindManyRecs := Results.Ok;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
