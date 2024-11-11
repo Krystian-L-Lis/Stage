@@ -131,6 +131,9 @@
     <Compile Include="Domain\I_Domain.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Domain\I_DomainProvider.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Domain\_Register.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

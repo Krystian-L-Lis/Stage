@@ -3,7 +3,7 @@
   <POU Name="Domain" Id="{d9e5aa36-819c-4fdc-9f7e-02ca56f488e3}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FINAL Domain IMPLEMENTS I_Domain
 VAR
-	_tag		: Tags.Tag;
+	_iTag		: Tags.I_Tag;
 	_iFlags		: Flags.I_FlagList;
 	_iSignals	: Broadcast.I_SignalList;
 	_iRecs		: Broadcast.I_ReceiverList;
@@ -26,6 +26,7 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 
+	iTag		: Tags.I_Tag;
 	iSmgr		: States.I_StateManager;
 	iFlags		: Flags.I_FlagList;
 	iSignals	: Broadcast.I_SignalList;
@@ -33,7 +34,13 @@ VAR_INPUT
 	
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF iFlags <> 0 THEN
+        <ST><![CDATA[IF iTag <> 0 THEN
+	_iTag := iTag;
+ELSE
+	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': iTag = 0!'));
+END_IF
+
+IF iFlags <> 0 THEN
 	_iFlags := iFlags;
 ELSE
 	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': iFlags = 0!'));
@@ -73,16 +80,6 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Option" Id="{f2819091-1208-4d00-94e3-94b5c44a855c}" FolderPath="Domain\Tagged\">
-      <Declaration><![CDATA[METHOD Option
-VAR_INPUT
-	sOption		: Strings.Str;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_tag.Option := sOption;]]></ST>
-      </Implementation>
-    </Method>
     <Property Name="Recs" Id="{99ac69fd-3346-4503-95b5-f606f0a3bdb0}" FolderPath="Domain\">
       <Declaration><![CDATA[PROPERTY Recs : Broadcast.I_ReceiverList]]></Declaration>
       <Get Name="Get" Id="{e0c7346d-f8eb-4fb7-b7b9-dd44e8eb82fb}">
@@ -123,7 +120,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Tag := _tag;]]></ST>
+          <ST><![CDATA[Tag := _iTag;]]></ST>
         </Implementation>
       </Get>
     </Property>
