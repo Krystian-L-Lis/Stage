@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="IterDom" Id="{5749d1c4-f472-4bc5-bb87-2e3c9703ee51}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IterDom : Results.Result
+VAR_INPUT
+	nPos		: UDINT := 0;
+END_VAR
+VAR_OUTPUT
+	iDomain		: I_Domain;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF nPos >= _Register.nSize THEN
+	IterDom := Results.None;
+	RETURN;
+END_IF
+
+iDomain := _Register.iDomain[nPos];
+IF iDomain <> 0 THEN
+	IterDom := Results.Ok;
+	RETURN;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

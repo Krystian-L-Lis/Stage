@@ -1,52 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Domain" Id="{d9e5aa36-819c-4fdc-9f7e-02ca56f488e3}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Domain IMPLEMENTS I_DomainNode;
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Domain IMPLEMENTS I_Domain
 VAR
-	_iDomain		: I_Domain;
-	_iNext			: I_DomainNode;
-	_iPrev			: I_DomainNode;
-	
-	_eState			: Results.Result;
-END_VAR
-]]></Declaration>
+	_tag		: Tags.Tag;
+	_iFlags		: Flags.I_FlagList;
+	_iSignals	: Broadcast.I_SignalList;
+	_iRecs		: Broadcast.I_ReceiverList;
+	_iSmgr		: States.I_StateManager;
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="_" Id="{a963050e-f546-4d5e-a9cf-d39cf89385fa}" />
-    <Folder Name="Domain" Id="{dab3fa05-7e60-4bd1-b186-079d182249eb}" />
-    <Method Name="Attach" Id="{65db634d-ea34-4ccc-92f0-1ff7f9af27dc}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD INTERNAL Attach : Results.Result
-VAR_INPUT
-	iNode			: I_DomainNode;
-END_VAR
-VAR
-	_iThis			: I_DomainNode := THIS^;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[
-
-IF iNode = 0 THEN
-	Debug.DebugMsg(0, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
-	RETURN;
-END_IF
-
-IF _iThis <> _Domain.iLast THEN
-	Debug.DebugMsg(ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Is not the last node!'));
-	RETURN;
-END_IF
-
-IF Results.IsSome(iNode.state) THEN
-	Debug.DebugMsg(iNode.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Has already been added!'));
-	RETURN;
-END_IF
-
-_Domain.iLast := iNode;
-_iNext := iNode;
-
-]]></ST>
-      </Implementation>
-    </Method>
+    <Folder Name="Domain" Id="{a537b9e7-6e64-476b-bb1a-dac2f9fbad70}">
+      <Folder Name="Tagged" Id="{e41d7582-6104-4365-bb44-8dbc0929be5d}" />
+    </Folder>
     <Method Name="FB_init" Id="{e701e657-5fcd-45af-83c6-820b10414a8b}" FolderPath="_\">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
 //The return value is not evaluated. For a specific influence, you can also declare the
@@ -57,134 +26,104 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 
-	iDomain			: I_Domain; 
+	iSmgr		: States.I_StateManager;
+	iFlags		: Flags.I_FlagList;
+	iSignals	: Broadcast.I_SignalList;
+	iRecs		: Broadcast.I_ReceiverList;
+	
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF Results.IsSome(_eState) THEN
-	RETURN;
-END_IF
-
-IF (_iDomain := iDomain) = 0 THEN
-	_eState := Results.Err.Itf0;
-	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
-	RETURN;
-END_IF
-
-
-
-IF _Domain.iLast <> 0 THEN
-	IF Results.IsErr(_Domain.iLast.Attach(THIS^), eCarry => _eState) THEN
-		Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Error Inside!'));
-	END_IF
+        <ST><![CDATA[IF iFlags <> 0 THEN
+	_iFlags := iFlags;
 ELSE
-	_Domain.iFirst := THIS^;
-	_Domain.iLast := THIS^;
-	_eState := Results.Ok;
+	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': iFlags = 0!'));
+END_IF
+
+IF iSignals <> 0 THEN
+	_iSignals := iSignals;
+ELSE
+	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': iSignals = 0!'));
+END_IF
+
+IF iRecs <> 0 THEN
+	_iRecs := iRecs;
+ELSE
+	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': iRecs = 0!'));
+END_IF
+
+IF iSmgr <> 0 THEN
+	_iSmgr := iSmgr;
+ELSE
+	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': iSmgr = 0!'));
+END_IF
+
+IF Results.IsErr(_PushToRegister(THIS^)) THEN
+	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Failed to register!'));
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Flags" Id="{71f025b9-4d9c-4921-b47f-a298621b5bf5}" FolderPath="Domain\">
-      <Declaration><![CDATA[PROPERTY Flags : Flags.I_FlagList
-]]></Declaration>
-      <Get Name="Get" Id="{4517949c-81ca-4be1-b128-a7f5f1c6acf6}">
+    <Property Name="Flags" Id="{8c913ba6-73ef-4aa2-810c-c033a2c09c56}" FolderPath="Domain\">
+      <Declaration><![CDATA[PROPERTY Flags : Flags.I_FlagList]]></Declaration>
+      <Get Name="Get" Id="{6cce3540-62b9-4e1e-b81b-a37b0ef23824}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Flags := _iDomain.Flags;]]></ST>
+          <ST><![CDATA[Flags := _iFlags;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Next" Id="{5bfab8cf-7117-4318-a0b2-6b6e20ce73ae}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL Next : I_DomainNode
+    <Method Name="Option" Id="{f2819091-1208-4d00-94e3-94b5c44a855c}" FolderPath="Domain\Tagged\">
+      <Declaration><![CDATA[METHOD Option
+VAR_INPUT
+	sOption		: Strings.Str;
+END_VAR
 ]]></Declaration>
-      <Get Name="Get" Id="{f1e70685-60e5-41e9-85ce-aa1a59a01cc0}">
+      <Implementation>
+        <ST><![CDATA[_tag.Option := sOption;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Recs" Id="{99ac69fd-3346-4503-95b5-f606f0a3bdb0}" FolderPath="Domain\">
+      <Declaration><![CDATA[PROPERTY Recs : Broadcast.I_ReceiverList]]></Declaration>
+      <Get Name="Get" Id="{e0c7346d-f8eb-4fb7-b7b9-dd44e8eb82fb}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Next := _iNext;]]></ST>
+          <ST><![CDATA[Recs := _iRecs;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Prev" Id="{ff083c61-4d33-46a2-b7b6-4f34adf81db1}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL Prev : I_DomainNode
-]]></Declaration>
-      <Get Name="Get" Id="{16055911-b0b0-4985-b312-c3bcd28407db}">
+    <Property Name="Signals" Id="{e6b10d76-32a4-47c9-a9f7-75becc349a34}" FolderPath="Domain\">
+      <Declaration><![CDATA[PROPERTY Signals : Broadcast.I_SignalList]]></Declaration>
+      <Get Name="Get" Id="{5cf9383e-966d-45c8-a213-b5419d06c8da}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Prev := _iPrev;]]></ST>
+          <ST><![CDATA[Signals := _iSignals;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Recs" Id="{fad274ff-b35e-4b03-ae15-0be6d19b69d0}" FolderPath="Domain\">
-      <Declaration><![CDATA[PROPERTY Recs : Broadcast.I_ReceiverList
-]]></Declaration>
-      <Get Name="Get" Id="{6e9c1e09-753b-433b-a921-7e624c4985ae}">
+    <Property Name="Smgr" Id="{78b0c2f3-3740-4028-b14d-9480451f200c}" FolderPath="Domain\">
+      <Declaration><![CDATA[PROPERTY Smgr : States.I_StateManager]]></Declaration>
+      <Get Name="Get" Id="{88d6ceb3-f008-4710-a7ec-d5db18425571}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Recs := _iDomain.Recs;]]></ST>
+          <ST><![CDATA[Smgr := _iSmgr;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Signals" Id="{445c3545-6599-4f0d-bd6d-87a44b8263ff}" FolderPath="Domain\">
-      <Declaration><![CDATA[PROPERTY Signals : Broadcast.I_SignalList
-]]></Declaration>
-      <Get Name="Get" Id="{75a22ba9-2085-4099-9aa4-649b6c671636}">
+    <Property Name="Tag" Id="{73662e00-ed1f-4b4a-b4a3-af783b1acf3c}" FolderPath="Domain\Tagged\">
+      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag]]></Declaration>
+      <Get Name="Get" Id="{80b04885-4cb5-4fdb-92b2-9f935585eb85}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Signals := _iDomain.Signals;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="Smgr" Id="{51c07d97-7014-4846-b65f-66efb55d7696}" FolderPath="Domain\">
-      <Declaration><![CDATA[PROPERTY Smgr : States.I_StateManager
-]]></Declaration>
-      <Get Name="Get" Id="{09860a5d-1d10-4ac1-8096-f0c403f68f5f}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Smgr := _iDomain.Smgr;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="state" Id="{2fa08086-b78e-4591-a300-9f2c4890cfc5}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL state : Results.Result]]></Declaration>
-      <Get Name="Get" Id="{f81b26d4-07ef-4d40-a85f-1c8877728f6d}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[state := _eState;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{fb97bcd2-3ece-410e-ac90-47126adc8a2e}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IF Results.IsNone(_eState) THEN
-	_eState := state;
-END_IF]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="Tag" Id="{711c4166-9174-4ffc-b64f-57981a0d10e6}" FolderPath="Domain\">
-      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag
-]]></Declaration>
-      <Get Name="Get" Id="{9e775e32-14d7-4b5f-9140-cfaaf7500ffe}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Tag := _iDomain.Tag;]]></ST>
+          <ST><![CDATA[Tag := _tag;]]></ST>
         </Implementation>
       </Get>
     </Property>

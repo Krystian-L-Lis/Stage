@@ -94,6 +94,13 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Strings">
+      <DefaultResolution>Strings, * (_)</DefaultResolution>
+      <Namespace>Strings</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
     <PlaceholderReference Include="_Tags">
       <DefaultResolution>Tags, * (_)</DefaultResolution>
       <Namespace>Tags</Namespace>
@@ -104,8 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain" />
-    <Folder Include="Domain\Iter" />
     <Folder Include="Domain\Buffer" />
+    <Folder Include="Domain\Functions" />
+    <Folder Include="Domain\_" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Buffer\DomainBuffer.TcPOU">
@@ -114,19 +122,23 @@
     <Compile Include="Domain\Domain.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\Iter\DomainIter.TcPOU">
+    <Compile Include="Domain\Functions\GetDom.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\Iter\I_DomainIter.TcIO">
+    <Compile Include="Domain\Functions\IterDom.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Domain\I_Domain.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\I_DomainNode.TcIO">
+    <Compile Include="Domain\_Register.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Domain\_\_PushToRegister.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\_Domain.TcGVL">
+    <Compile Include="Param.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
