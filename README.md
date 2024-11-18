@@ -118,8 +118,9 @@ Provides:
 The **Domain** library is a collection of tagged flags, signals, receivers, and a state manager under a common interface. It allows for browsing through domains using the tagging system.
 
 Provides:
-+ `Domain` - Node within the global linked list of all nodes.
++ `Domain` - Domain delegate that adds a given domain to the global list.
 + `I_Domain` - An FB identifier. Domain FBs contain `FlagList`, `SignalList`, `ReceiverList`, `StateManager`, and a `Tag`.
++ `I_DomainProvider` - Interface allowing access to the internal `Domain` instance outside the domain scope.
 + `DomainIter` - Allows browsing through the global domain list.
 + `DomainBuffer` - Ring buffer of I_Domain interfaces.
 
