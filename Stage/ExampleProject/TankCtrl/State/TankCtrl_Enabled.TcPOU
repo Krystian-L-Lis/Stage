@@ -14,25 +14,17 @@ VAR_OUTPUT
 	iTank		: I_Domain;
 END_VAR
 VAR
-	domIter		: DomainIter;
+	i			: GenIter(0);
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(domIter.Next(iDomain => iTank)) DO
-	IF iTag = iTank.Tag THEN
-		_GetTank := Ok;
-		RETURN;
-	END_IF	
-END_WHILE]]></ST>
+        <ST><![CDATA[_GetTank := GetDom(iTag, iDomain => iTank);
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Call" Id="{15261221-0b6b-405c-ac53-e6f58082049a}">
       <Declaration><![CDATA[METHOD Call
 VAR_INPUT
 	iTag	: Broadcast.Tags.I_Tag;
-END_VAR
-VAR
-	domIter	: DomainIter;
-	iDom	: I_Domain;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _ctx.priv.iTank <> 0 AND_THEN _ctx.priv.iTank.Tag = iTag THEN
@@ -49,9 +41,7 @@ END_IF]]></ST>
       <Declaration><![CDATA[METHOD OnExecute
 VAR
 	iTag		: I_Tag;
-	domIter		: DomainIter;
-	iDom		: I_Domain;
-	
+	eResult		: Result;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _ctx.hmi.bMultiButton THEN
@@ -62,8 +52,15 @@ END_VAR]]></Declaration>
 END_IF
 
 IF IsOk(_ctx.priv.tankBuffer.Pop(iTag => iTag)) THEN
-	IF IsOk(_GetTank(iTag, iTank => _ctx.priv.iTank)) THEN
+	IF IsOk(_GetTank(iTag, iTank => _ctx.priv.iTank), eCarry => eResult) THEN
 		_ctx.priv.smgr.Request(_ctx.state.iFilling);
+	ELSE
+		CASE eResult OF
+			None:
+				// This can be used for log a failed request
+			ELSE // Error
+				// This can be used for log an incorrect argument
+		END_CASE
 	END_IF 
 END_IF]]></ST>
       </Implementation>

@@ -37,7 +37,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{BBE1D57A-22A7-4B84-89CF-583E1AA95B7D}" Name="Domains" PrjFilePath="Domains\Domains.plcproj" TmcFilePath="Domains\Domains.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{5E277F64-0858-16D2-1C06-17BB0DF27C5C}" TmcPath="Domains\Domains.tmc">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{299A411A-E214-9A36-F428-1D5DF6B7D01D}" TmcPath="Domains\Domains.tmc">
 					<Name>Domains Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -145,7 +145,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{E8054928-9E85-4495-8B5F-7309D93A1365}" Name="DomainTemplate" PrjFilePath="DomainTemplate\DomainTemplate.plcproj" TmcFilePath="DomainTemplate\DomainTemplate.tmc" ReloadTmc="true" AmsPort="864" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502340" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{7F174CA8-EAA1-7549-52F9-DEB9E68AD942}" TmcPath="DomainTemplate\DomainTemplate.tmc">
+				<Instance Id="#x08502340" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{CF072DED-F095-0D98-543B-0ED7A3E5E4AB}" TmcPath="DomainTemplate\DomainTemplate.tmc">
 					<Name>DomainTemplate Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -157,7 +157,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{55641B74-B2E9-428E-B2CD-6572D9010B47}" Name="ExampleProject" PrjFilePath="ExampleProject\ExampleProject.plcproj" TmcFilePath="ExampleProject\ExampleProject.tmc" ReloadTmc="true" AmsPort="865" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502380" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{8A5B63F0-55FE-D115-72E3-0ADE702302D1}" TmcPath="ExampleProject\ExampleProject.tmc">
+				<Instance Id="#x08502380" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{54479002-598A-EC45-3535-B4BFE8AD98FC}" TmcPath="ExampleProject\ExampleProject.tmc">
 					<Name>ExampleProject Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

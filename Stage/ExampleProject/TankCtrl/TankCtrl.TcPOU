@@ -14,8 +14,6 @@ VAR CONSTANT
 END_VAR
 VAR
 	exe				: Execute(THIS^);
-	domTag			: Tag;
-	domain			: Domain(THIS^);
 
 	// Context
 	ctx				: TankCtrl_Ctx;
@@ -61,6 +59,10 @@ VAR
 	
 	// HMI
 	statusText		: TankCtrl_StatusText(ctx);
+	
+	// DOMAIN
+	domTag			: Tag;
+	domain			: Domain(domTag, stateMgr, flagList, signalList, receiverList);
 	
 	// PRIV
 	bInit			: BOOL := TRUE;

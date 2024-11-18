@@ -13,8 +13,6 @@ VAR CONSTANT
 END_VAR
 VAR
 	exe				: Execute(THIS^);
-	domTag			: Tag;
-	domain			: Domain(THIS^);
 
 	// Context
 	ctx				: Outlet_Ctx;
@@ -45,6 +43,10 @@ VAR
 	// RECEIVERS
 	receiverList	: ReceiverList<1>;
 	A_OnEStop		: A_Receiver(receiverList, OnEStop);
+	
+	// DOMAIN
+	domTag			: Tag;
+	domain			: Domain(domTag, stateMgr, flagList, signalList, receiverList);
 	
 	// PRIV
 	bInit			: BOOL := TRUE;

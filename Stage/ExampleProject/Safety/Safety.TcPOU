@@ -25,13 +25,13 @@ END_VAR
     <Method Name="_PairAllSafetyReceivers" Id="{4e9df51e-e3ef-4984-a35a-c8170e71f3d9}">
       <Declaration><![CDATA[METHOD PRIVATE _PairAllSafetyReceivers
 VAR
-	domIter		: DomainIter;
+	i			: GenIter(0);
 	iDom		: I_Domain;
 	iRec		: I_Receiver;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(domIter.Next(iDomain => iDom)) DO
+        <ST><![CDATA[WHILE IsOk(IterDom(i.Next(), iDomain => iDom)) DO
 	IF IsOk(FindRec(iDom.Recs, 'OnEStop', iRec => iRec)) THEN
 		SafetyStateChanged.Pair(iRec);
 	END_IF
