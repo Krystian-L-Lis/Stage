@@ -57,6 +57,9 @@
     <Compile Include="State\Find\FindState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="State\Find\FindStateWcd.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="State\List\StateRepo.TcPOU">
       <SubType>Code</SubType>
     </Compile>

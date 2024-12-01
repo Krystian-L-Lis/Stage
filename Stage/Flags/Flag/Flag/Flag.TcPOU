@@ -76,14 +76,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="ToDebug" Id="{659c854d-331c-40e5-b71a-6e348238db0d}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

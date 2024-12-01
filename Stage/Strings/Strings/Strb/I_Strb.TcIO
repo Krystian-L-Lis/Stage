@@ -36,6 +36,10 @@ END_VAR]]></Declaration>
 VAR_INPUT
 	sToFind		: Str;
 	nPosition	: INT := 0;
+END_VAR
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
 END_VAR]]></Declaration>
     </Method>
     <Method Name="HasBefore" Id="{b7b8682e-6d22-48e1-8967-184f637122bb}">
@@ -44,7 +48,10 @@ VAR_INPUT
 	sToFind		: Str;
 	nPosition	: INT := 256;
 END_VAR
-]]></Declaration>
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
+END_VAR]]></Declaration>
     </Method>
     <Method Name="Inject" Id="{6518b446-2be2-41a8-94b7-37ecc15088f9}">
       <Declaration><![CDATA[METHOD Inject : I_Strb

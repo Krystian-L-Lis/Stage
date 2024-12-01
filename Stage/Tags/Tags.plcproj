@@ -52,6 +52,13 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
@@ -87,7 +94,6 @@
     <Folder Include="Tag\Buffer" />
     <Folder Include="Tag\Cmp" />
     <Folder Include="Tag\Base" />
-    <Folder Include="Tag\Option" />
     <Folder Include="Tag\Owner" />
   </ItemGroup>
   <ItemGroup>
@@ -110,9 +116,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tag\Cmp\TagCmp.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tag\Option\TagOption.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tag\Owner\I_TagOwner.TcIO">

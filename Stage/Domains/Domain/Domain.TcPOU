@@ -124,12 +124,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="ToDebug" Id="{35c893bf-220f-470e-8f9c-8e3f0852e5fd}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

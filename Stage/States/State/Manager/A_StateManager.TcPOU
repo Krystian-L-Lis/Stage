@@ -44,12 +44,5 @@ END_IF
 refStateManager := iStateManager;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ToDebug" Id="{2a4db5d9-2b7a-4dd9-bd19-1d07d0802f7f}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

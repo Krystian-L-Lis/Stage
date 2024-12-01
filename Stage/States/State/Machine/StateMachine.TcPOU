@@ -3,8 +3,7 @@
   <POU Name="StateMachine" Id="{97b2de87-3917-4773-b314-ea0c1fbfae6e}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FINAL StateMachine IMPLEMENTS I_StateMachine, Rt.I_Execute
 VAR
-	_fbExe					: Rt.Execute(THIS^);
-	_fbTag					: Tags.Tag;
+	_exe					: Rt.Execute(THIS^);
 	_iCurrentState			: I_State;
 END_VAR
 ]]></Declaration>
@@ -21,25 +20,21 @@ VAR_OUTPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iNewState = 0 THEN
-	_fbTag.Option := CState.FAIL;
 	ChangeState := Results.Err.Itf0;
 	RETURN;
 END_IF
 
 IF iNewState = _iCurrentState THEN
-	_fbTag.Option := CState.SAME;
 	ChangeState := Results.None;
 	RETURN;
 END_IF
 
 IF NOT iNewState.CanActivate() THEN
-	_fbTag.Option := CState.FAIL;
 	ChangeState := Results.None;
 	RETURN;
 END_IF
 
 IF _iCurrentState <> 0 AND_THEN NOT _iCurrentState.CanDeactivate() THEN
-	_fbTag.Option := CState.FAIL;
 	ChangeState := Results.None;
 	RETURN;
 END_IF
@@ -51,7 +46,6 @@ END_IF
 iNewState.OnInit();
 iOldState := _iCurrentState;
 _iCurrentState := iNewState;
-_fbTag.Option := CState.SUCCESS;
 ChangeState := Results.Ok;]]></ST>
       </Implementation>
     </Method>
@@ -84,12 +78,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="ToDebug" Id="{5e787b93-7d10-4a5d-bf08-9890016e978d}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

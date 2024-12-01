@@ -25,12 +25,12 @@ END_VAR]]></Declaration>
 END_IF
 
 IF _iThis <> _Runtime.iLastCyclic THEN
-	Debug.DebugMsg(ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Is not the last node!'));
+	Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Is not the last node!'));
 	RETURN;
 END_IF
 
 IF Results.IsSome(iExecute.state) THEN
-	Debug.DebugMsg(iExecute.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Has already been added!'));
+	Debug.DebugMsg(iExecute, Tc2_Standard.CONCAT(__POUNAME(), ': Has already been added!'));
 	RETURN;
 END_IF
 
@@ -112,12 +112,5 @@ END_IF]]></ST>
         </Implementation>
       </Set>
     </Property>
-    <Method Name="ToDebug" Id="{40ac027c-b533-4135-a357-d72333fbd01c}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

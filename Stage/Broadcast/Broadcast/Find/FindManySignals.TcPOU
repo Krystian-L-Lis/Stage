@@ -52,7 +52,7 @@ WHILE Results.IsOk(iSignalList.GetByPos(i.Next(), iSignal => _iSignal)) DO
 	cmp.Set(_iSignal.Tag);
 	FOR j := _nLow TO _nUp DO
 		// Match the string and copy if successful
-		IF cmp.MatchPrtId(sToFind[j]).IsOk() THEN
+		IF cmp.MatchId(sToFind[j]).IsTrue() THEN
 			Tc2_System.MEMCPY(ADR(nResultPou.pValue) + SIZEOF(__UXINT) * j, ADR(_iSignal), SIZEOF(__UXINT));
 			_nFound := _nFound + 1;
 			sToFind[j] := '';  // Mark as found

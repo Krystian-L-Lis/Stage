@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FindWcdSignal" Id="{6a209067-ae28-4596-bafd-03fb07240fe3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION FindWcdSignal : Results.Result
+VAR_INPUT
+	iSignalList		: I_SignalList;
+	sToFind			: Strings.Str;
+END_VAR
+VAR_OUTPUT
+	iSignal			: I_Signal;
+END_VAR
+VAR
+	i			: Utils.GenIter(0);
+	cmp			: Tags.TagCmp;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSignalList = 0 THEN
+	FindWcdSignal := Results.Err.Itf0;
+	RETURN;
+END_IF
+
+WHILE Results.IsOk(iSignalList.GetByPos(i.Next(), iSignal => iSignal)) DO
+	IF cmp.Set(iSignal.Tag).MatchWcdId(sToFind).IsTrue() THEN
+		FindWcdSignal := Results.Ok;
+		RETURN;
+	END_IF
+END_WHILE
+
+FindWcdSignal := Results.Err.NoMatch;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

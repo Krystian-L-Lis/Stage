@@ -10,16 +10,23 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="Default" Id="{49b183b3-7ff3-4c1f-86ad-ab7ad18768ea}">
-      <Declaration><![CDATA[METHOD Default : BOOL
+    <Method Name="HasOption" Id="{b84f95c7-a356-49dc-93c9-34f52a63a0d6}">
+      <Declaration><![CDATA[METHOD HasOption : I_TagCmp
+VAR_INPUT
+	sOption		: Strings.Str;
+END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="IsErr" Id="{bdea08ea-65d7-4af4-a4f6-f3da4269e7d0}">
       <Declaration><![CDATA[METHOD IsErr : BOOL
 ]]></Declaration>
     </Method>
-    <Method Name="IsOk" Id="{9e31c3a1-a234-461e-97b6-7c042a50360a}">
-      <Declaration><![CDATA[METHOD IsOk : BOOL]]></Declaration>
+    <Method Name="IsFalse" Id="{49b183b3-7ff3-4c1f-86ad-ab7ad18768ea}">
+      <Declaration><![CDATA[METHOD IsFalse : BOOL
+]]></Declaration>
+    </Method>
+    <Method Name="IsTrue" Id="{9e31c3a1-a234-461e-97b6-7c042a50360a}">
+      <Declaration><![CDATA[METHOD IsTrue : BOOL]]></Declaration>
     </Method>
     <Method Name="Match" Id="{ff272183-aeae-424d-9c25-2144ef81905e}">
       <Declaration><![CDATA[METHOD Match : I_TagCmp
@@ -27,19 +34,18 @@ VAR_INPUT
 	iOther: I_Tag;
 END_VAR]]></Declaration>
     </Method>
-    <Method Name="MatchId" Id="{68b43ba9-4c50-40a8-b666-e36aaf6996e2}">
+    <Method Name="MatchId" Id="{5cba49aa-7253-4bc9-829c-d83e4b3c65d2}">
       <Declaration><![CDATA[METHOD MatchId : I_TagCmp
 VAR_INPUT
-	sOtherId	: Strings.Str;
+	sIdToMatch		: Strings.Str;
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="MatchPrtId" Id="{5cba49aa-7253-4bc9-829c-d83e4b3c65d2}">
-      <Declaration><![CDATA[METHOD MatchPrtId : I_TagCmp
+    <Method Name="MatchWcdId" Id="{babfa847-1376-48d8-8950-170aa75af813}">
+      <Declaration><![CDATA[METHOD MatchWcdId : I_TagCmp
 VAR_INPUT
-	sPartialId		: Strings.Str;
-END_VAR
-]]></Declaration>
+	sPattern 			: Strings.Str;  					// Pattern with wildcards
+END_VAR]]></Declaration>
     </Method>
     <Method Name="OrIf" Id="{43b0b3b9-ad9a-4aeb-88cb-22e31aac3fe8}">
       <Declaration><![CDATA[METHOD OrIf : I_TagCmp

@@ -116,6 +116,12 @@
     <Compile Include="Broadcast\Find\FindRec.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Broadcast\Find\FindWcdSignal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Find\FindWcdRec.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Broadcast\Find\FindSignal.TcPOU">
       <SubType>Code</SubType>
     </Compile>

@@ -105,6 +105,9 @@
     <Compile Include="Flag\Find\FindFlag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Flag\Find\FindWcdFlag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Flag\Flag\A_Flag.TcPOU">
       <SubType>Code</SubType>
     </Compile>

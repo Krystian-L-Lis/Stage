@@ -32,17 +32,17 @@ CASE iFlagList.Push(iFlag) OF
 	Results.Ok:
 		// No Error
 	Results.None:
-		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
-		Debug.DebugMsg(iFlag.ToDebug(), 'Im a double!');
+		Debug.DebugMsg(iFlagList, Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
+		Debug.DebugMsg(iFlag, 'Im a double!');
 	Results.Err.Ovf:
-		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
-		Debug.DebugMsg(iFlag.ToDebug(), 'Cause of overflow!');
+		Debug.DebugMsg(iFlagList, Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
+		Debug.DebugMsg(iFlag, 'Cause of overflow!');
 	Results.Err.NoMatch:
-		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
-		Debug.DebugMsg(iFlag.ToDebug(), 'This already have an owner!');
+		Debug.DebugMsg(iFlagList, Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
+		Debug.DebugMsg(iFlag, 'This already have an owner!');
 	ELSE
-		Debug.DebugMsg(iFlagList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
-		Debug.DebugMsg(iFlag.ToDebug(), 'Cause!');		
+		Debug.DebugMsg(iFlagList, Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
+		Debug.DebugMsg(iFlag, 'Cause!');		
 END_CASE
 
 
@@ -50,15 +50,6 @@ END_CASE
 
 
 ]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ToDebug" Id="{96c87b8f-6248-412a-bbeb-79d61e8b1a52}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
       </Implementation>
     </Method>
   </POU>

@@ -38,7 +38,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE Results.IsOk(_smgr.Get(i, iTag => _iTag)) DO
 	i := i + 1;
-	IF cmp.Set(_iTag).MatchPrtId(sPartialIdToRequest).IsOk() THEN
+	IF cmp.Set(_iTag).MatchId(sPartialIdToRequest).IsTrue() THEN
 		_smgr.Request(_iTag);
 		RETURN;			
 	END_IF

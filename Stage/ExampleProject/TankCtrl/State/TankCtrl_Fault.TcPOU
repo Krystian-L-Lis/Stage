@@ -20,7 +20,7 @@ IF NOT (_ctx.io.in.bNoWater OR _ctx.io.in.bOverload) THEN
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iEStop).Match(_ctx.state.iFault).IsOk() THEN
+IF cmp.Match(_ctx.state.iEStop).Match(_ctx.state.iFault).IsTrue() THEN
 	RETURN;
 END_IF
 

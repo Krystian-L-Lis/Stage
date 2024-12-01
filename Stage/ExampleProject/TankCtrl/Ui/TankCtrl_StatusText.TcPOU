@@ -22,19 +22,19 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[cmp.Set(_ctx.priv.smgr.Current);			
 
-IF cmp.Match(_ctx.state.iDisabled).IsOk() THEN
+IF cmp.Match(_ctx.state.iDisabled).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'System is disabled!';
 	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iEStop).IsOk() THEN
+IF cmp.Match(_ctx.state.iEStop).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Emergency Stop!';
 	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iFault).IsOk() THEN	
+IF cmp.Match(_ctx.state.iFault).IsTrue() THEN	
 	IF _ctx.io.in.bNoWater THEN
 		_ctx.hmi.sStatusText := 'Alarm: Caused by low water level!';	
 	ELSIF _ctx.io.in.bOverload THEN
@@ -60,19 +60,19 @@ IF cmp.Match(_ctx.state.iFault).IsOk() THEN
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iFilling).IsOk() THEN
+IF cmp.Match(_ctx.state.iFilling).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Fillinkg tank...';
 	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iEnabled).IsOk() THEN
+IF cmp.Match(_ctx.state.iEnabled).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Awaiting request...';
 	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Default() THEN
+IF cmp.IsFalse() THEN
 	_ctx.hmi.sStatusText := 'Error: Unrecognized system state.';
 	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
 	RETURN;	

@@ -30,7 +30,7 @@ END_VAR
 END_IF
 
 WHILE Results.IsOk(iSignalList.GetByPos(i.Next(), iSignal => iSignal)) DO
-	IF cmp.Set(iSignal.Tag).MatchPrtId(sToFind).IsOk() THEN
+	IF cmp.Set(iSignal.Tag).MatchId(sToFind).IsTrue() THEN
 		FindSignal := Results.Ok;
 		RETURN;
 	END_IF

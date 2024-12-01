@@ -52,16 +52,16 @@ CASE iStateList.Push(THIS^) OF
 	Results.Ok:
 		// No Error
 	Results.None:
-		Debug.DebugMsg(iStateList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
+		Debug.DebugMsg(iStateList, Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
 		Debug.DebugMsg(THIS^, 'Im a double!');
 	Results.Err.Ovf:
-		Debug.DebugMsg(iStateList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
+		Debug.DebugMsg(iStateList, Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
 		Debug.DebugMsg(THIS^, 'Cause of overflow!');
 	Results.Err.NoMatch:
-		Debug.DebugMsg(iStateList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
+		Debug.DebugMsg(iStateList, Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
 		Debug.DebugMsg(THIS^, 'This already have an owner!');
 	ELSE
-		Debug.DebugMsg(iStateList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
+		Debug.DebugMsg(iStateList, Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
 		Debug.DebugMsg(THIS^, 'Cause!');		
 END_CASE
 
@@ -109,12 +109,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="ToDebug" Id="{3c98f44b-b333-4418-bdda-8e6f68141f0f}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

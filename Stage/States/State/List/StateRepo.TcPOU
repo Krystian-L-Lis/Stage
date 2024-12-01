@@ -119,14 +119,5 @@ Push := Results.Ok;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ToDebug" Id="{ac26a614-9dd1-4777-a6b8-982a9f0c133c}" FolderPath="Other\">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

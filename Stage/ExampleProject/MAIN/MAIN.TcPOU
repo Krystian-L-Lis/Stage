@@ -13,7 +13,7 @@ VAR
 	eResult		: Result;
 	bError		: BOOL;
 	
-	dbgList		: DebugList;
+	dbgList		: DebugList;	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -27,10 +27,7 @@ END_VAR
 			DebugMsg(0, 'Failed to execute runtime!');
 			bError := TRUE;
 		END_IF
-END_CASE
-
-
-]]></ST>
+END_CASE]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

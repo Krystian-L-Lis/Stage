@@ -170,7 +170,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[FOR i := 0 TO _nLen - 1 DO
-	IF cmp.Set(iTag).Match(_iSignal[i].Tag).IsOk() THEN
+	IF cmp.Set(iTag).Match(_iSignal[i].Tag).IsTrue() THEN
 		_GetByTagIfUntagged := Results.Ok;
 		RETURN;
 	END_IF	

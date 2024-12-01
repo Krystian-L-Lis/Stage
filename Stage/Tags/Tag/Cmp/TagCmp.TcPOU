@@ -23,6 +23,29 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="AndHasOption" Id="{4178bf0f-757c-43e4-9bd6-0c41f2c398f4}">
+      <Declaration><![CDATA[METHOD AndHasOption : I_TagCmp
+VAR_INPUT
+	sOption		: Strings.Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AndHasOption := _self;
+sOption := Tc2_Utilities.F_ToLCase(sOption);
+
+IF _bLock THEN
+	RETURN;
+END_IF
+
+CASE _eResult OF
+	Results.Ok,
+	Results.None:
+		IF _eResult = Results.Ok AND_THEN sOption <> '' AND_THEN _iBaseTag.Option = sOption THEN
+			_eResult := Results.Ok;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AndIf" Id="{9223b46b-6be4-477a-9010-c0212fbeba73}">
       <Declaration><![CDATA[METHOD AndIf : I_TagCmp
 VAR_INPUT
@@ -43,25 +66,30 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Default" Id="{4388843a-3f13-4d13-9444-a6c347a1b77c}">
-      <Declaration><![CDATA[METHOD Default : BOOL
+    <Method Name="HasOption" Id="{c463345a-f124-40d6-b1f7-85e8eeaaf583}">
+      <Declaration><![CDATA[METHOD HasOption : I_TagCmp
+VAR_INPUT
+	sOption		: Strings.Str;
+END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _bLock THEN
+        <ST><![CDATA[HasOption := _self;
+sOption := Tc2_Utilities.F_ToLCase(sOption);
+
+IF _bLock THEN
 	RETURN;
 END_IF
 
-IF _eResult <> Results.None THEN
-	RETURN;
-END_IF
-
-_bLock := TRUE;
-Default := TRUE;
-
-]]></ST>
+CASE _eResult OF
+	Results.Ok,
+	Results.None:
+		IF sOption <> '' AND_THEN _iBaseTag.Option = sOption THEN
+			_eResult := Results.Ok;
+		END_IF
+END_CASE]]></ST>
       </Implementation>
     </Method>
-    <Method Name="IsErr" Id="{238cf0db-bccc-4190-9a10-55e053cafa94}">
+    <Method Name="IsErr" Id="{248d90f2-753e-444d-9c5b-49d2b4aa255c}">
       <Declaration><![CDATA[METHOD IsErr : BOOL
 ]]></Declaration>
       <Implementation>
@@ -78,8 +106,26 @@ IsErr := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="IsOk" Id="{1b9b036d-e9fe-45a3-8945-f3ba7babe854}">
-      <Declaration><![CDATA[METHOD IsOk : BOOL]]></Declaration>
+    <Method Name="IsFalse" Id="{4388843a-3f13-4d13-9444-a6c347a1b77c}">
+      <Declaration><![CDATA[METHOD IsFalse : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _bLock THEN
+	RETURN;
+END_IF
+
+IF _eResult <> Results.None THEN
+	RETURN;
+END_IF
+
+_bLock := TRUE;
+IsFalse := TRUE;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsTrue" Id="{866e2e11-40a2-444c-9771-a238b0485540}">
+      <Declaration><![CDATA[METHOD IsTrue : BOOL]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _bLock THEN
 	RETURN;
@@ -90,7 +136,7 @@ IF _eResult <> Results.Ok THEN
 END_IF
 
 _bLock := TRUE;
-IsOk := TRUE;
+IsTrue := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
@@ -117,14 +163,15 @@ END_CASE
 	]]></ST>
       </Implementation>
     </Method>
-    <Method Name="MatchId" Id="{4a9b5161-c30a-43ce-a366-efe275b3f2b8}">
+    <Method Name="MatchId" Id="{78d82c00-f656-4a95-b467-0eabd905f45b}">
       <Declaration><![CDATA[METHOD MatchId : I_TagCmp
 VAR_INPUT
-	sOtherId	: Strings.Str;
+	sIdToMatch		: Strings.Str;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[MatchId := _self;
+sIdToMatch := Tc2_Utilities.F_ToLCase(sIdToMatch);
 
 IF _bLock THEN
 	RETURN;
@@ -133,34 +180,78 @@ END_IF
 CASE _eResult OF
 	Results.Ok,
 	Results.None:
-		IF sOtherId <> '' AND_THEN _iBaseTag.GetId() = sOtherId THEN
-			_eResult := Results.Ok;
-		END_IF
-END_CASE
-
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="MatchPrtId" Id="{78d82c00-f656-4a95-b467-0eabd905f45b}">
-      <Declaration><![CDATA[METHOD MatchPrtId : I_TagCmp
-VAR_INPUT
-	sPartialId		: Strings.Str;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[MatchPrtId := _self;
-
-IF _bLock THEN
-	RETURN;
-END_IF
-
-CASE _eResult OF
-	Results.Ok,
-	Results.None:
-		IF sPartialId <> '' AND_THEN (Tc2_Standard.RIGHT(_iBaseTag.GetId(), Tc2_Standard.LEN(sPartialId)) = sPartialId) THEN
+		IF sIdToMatch <> '' AND_THEN (Tc2_Standard.RIGHT(_iBaseTag.GetId(), Tc2_Standard.LEN(sIdToMatch)) = sIdToMatch) THEN
 			_eResult := Results.Ok;
 		END_IF
 END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MatchWcdId" Id="{155a5479-46da-4d47-bd5a-a8dff579e9de}">
+      <Declaration><![CDATA[METHOD MatchWcdId : I_TagCmp
+VAR_INPUT
+	sPattern 			: Strings.Str;  					// Pattern with wildcards
+END_VAR
+VAR
+	pttPath				: Strings.SymbolPath;
+	pttSeg				: Strings.Str;
+	pttPeek				: Strings.Str;
+	addPath				: Strings.SymbolPath;
+	addSeg				: Strings.Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MatchWcdId := _self;
+
+// Check lock
+IF _bLock THEN
+	RETURN;
+END_IF
+
+// Check result state
+CASE _eResult OF
+	Results.Ok,
+	Results.None:
+		pttPath.Set(sPattern);
+		addPath.Set(_iBaseTag.GetId());
+		WHILE Results.IsOk(pttPath.Next(sSeg => pttSeg)) DO
+		
+			IF pttSeg = '*' THEN
+				IF Results.IsOk(pttPath.Peek(sSeg => pttPeek)) THEN
+					IF pttPeek = '*' THEN
+						CONTINUE; // Skip redundant wildcard
+					END_IF
+				ELSE
+					RETURN; // No more segments in the pattern, so it's a match
+				END_IF
+	
+			ELSIF pttSeg <> '*' THEN
+				pttPeek := '';
+			END_IF
+			
+			WHILE Results.IsOk(addPath.Next(sSeg => addSeg)) DO
+				IF pttPeek <> '' THEN
+					IF pttPeek = addSeg THEN
+						pttPath.Next();
+						EXIT;
+					ELSE
+						CONTINUE;
+					END_IF
+				ELSIF pttSeg = addSeg THEN
+					EXIT;
+				ELSE
+					RETURN;
+				END_IF
+			END_WHILE		
+		END_WHILE
+		
+		IF Results.IsOk(addPath.Peek()) THEN
+			RETURN;
+		END_IF
+		
+		_eResult := Results.Ok;
+END_CASE
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="OrIf" Id="{c9bdb97c-3eb5-4133-8ad4-a1531337cf33}">

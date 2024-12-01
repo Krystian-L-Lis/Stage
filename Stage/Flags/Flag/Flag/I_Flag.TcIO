@@ -21,11 +21,5 @@ END_VAR
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Method Name="ToDebug" Id="{5e441cd5-9a11-4a63-b28b-027cade9e75b}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-VAR_INPUT
-END_VAR
-]]></Declaration>
-    </Method>
   </Itf>
 </TcPlcObject>

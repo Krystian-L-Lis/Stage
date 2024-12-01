@@ -35,6 +35,8 @@ VAR_INPUT
 END_VAR
 VAR
 	i				: INT;
+	_sChar			: Strings.Ch;
+	
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Delete this name
@@ -59,7 +61,20 @@ FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
 		_sId := Tc2_Standard.DELETE(_sId, i, 1);
 		EXIT;
 	END_IF
-END_FOR]]></ST>
+END_FOR
+
+// Replace '[' with '.' and remove ']' 
+FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
+	_sChar := Tc2_Standard.MID(_sId, 1, i);
+	IF _sChar = '[' THEN
+		_sId := Tc2_Standard.REPLACE(_sId, '.', 1, i);
+	ELSIF _sChar = ']' THEN
+		_sId := Tc2_Standard.DELETE(_sId, 1, i);
+	END_IF
+END_FOR
+
+_sId := Tc2_Utilities.F_ToLCase(_sID);
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetId" Id="{1e7c2d46-85b3-4961-9ee8-452fbfd30f72}">
@@ -141,9 +156,7 @@ END_IF]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{711c7481-b132-44f6-9eb4-329138f9c5dc}">
-        <Declaration><![CDATA[VAR
-	nCase		: USINT;
-END_VAR
+        <Declaration><![CDATA[
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[IF Option <> '' THEN
@@ -187,12 +200,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="ToDebug" Id="{1014fb8c-cfa4-4693-b896-eb5151d05aa0}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

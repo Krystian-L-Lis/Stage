@@ -32,17 +32,17 @@ CASE iSignalList.Push(iSignal) OF
 	Results.Ok:
 		// No Error
 	Results.None:
-		Debug.DebugMsg(iSignalList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
-		Debug.DebugMsg(iSignal.ToDebug(), 'Im a double!');
+		Debug.DebugMsg(iSignalList, Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
+		Debug.DebugMsg(iSignal, 'Im a double!');
 	Results.Err.Ovf:
-		Debug.DebugMsg(iSignalList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
-		Debug.DebugMsg(iSignal.ToDebug(), 'Cause of overflow!');
+		Debug.DebugMsg(iSignalList, Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
+		Debug.DebugMsg(iSignal, 'Cause of overflow!');
 	Results.Err.NoMatch:
-		Debug.DebugMsg(iSignalList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
-		Debug.DebugMsg(iSignal.ToDebug(), 'This already have an owner!');
+		Debug.DebugMsg(iSignalList, Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
+		Debug.DebugMsg(iSignal, 'This already have an owner!');
 	ELSE
-		Debug.DebugMsg(iSignalList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
-		Debug.DebugMsg(iSignal.ToDebug(), 'Cause!');		
+		Debug.DebugMsg(iSignalList, Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
+		Debug.DebugMsg(iSignal, 'Cause!');		
 END_CASE
 
 

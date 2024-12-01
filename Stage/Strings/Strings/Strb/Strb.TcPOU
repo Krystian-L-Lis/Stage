@@ -129,12 +129,13 @@ VAR_INPUT
 	sToFind		: Str;
 	nPosition	: INT := 0;
 END_VAR
-VAR
-	_nResult		: INT;
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FindFirstAfter(sToFind, nPosition, nStart => _nResult);
-HasAfter := nPosition > 0;]]></ST>
+        <ST><![CDATA[FindFirstAfter(sToFind, nPosition, nStart => nStart, nEnd => nEnd);
+HasAfter := nStart > 0;]]></ST>
       </Implementation>
     </Method>
     <Method Name="HasBefore" Id="{ac4d6b5e-df2c-4e2c-9d4e-67b1bc75b248}" FolderPath="I_Build\">
@@ -143,8 +144,9 @@ VAR_INPUT
 	sToFind		: Str;
 	nPosition	: INT := 256;
 END_VAR
-VAR
-	_nResult		: INT;
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -152,8 +154,8 @@ END_VAR
 	nPosition := Tc2_Standard.LEN(_sString);
 END_IF
 
-FindLastBefore(sToFind, nPosition, nStart => _nResult);
-HasBefore := _nResult > 0;]]></ST>
+FindLastBefore(sToFind, nPosition, nStart => nStart, nEnd => nEnd);
+HasBefore := nStart > 0;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Inject" Id="{4c41e1ee-82d8-4ac8-b184-a35162ee532b}" FolderPath="I_Build\">

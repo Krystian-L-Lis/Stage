@@ -8,7 +8,7 @@ END_VAR
 IMPLEMENTS Rt.I_Execute, I_StateManager, Debug.I_Debug
 
 VAR
-	_fbExecute			: Rt.Execute(THIS^);
+	_exe				: Rt.Execute(THIS^);
 	_iMachine			: I_StateMachine;
 	_iRepo				: I_StateRepo;
 	_iBuffer			: I_StateBuffer;
@@ -169,13 +169,6 @@ END_IF
 _iBufferCached[iTag.Cache] := TRUE;
 
 Request := _iBuffer.Push(_iState);]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ToDebug" Id="{c2cbe9f6-89d4-4557-9c56-b260351c7b4d}" FolderPath="Other\">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
       </Implementation>
     </Method>
   </POU>

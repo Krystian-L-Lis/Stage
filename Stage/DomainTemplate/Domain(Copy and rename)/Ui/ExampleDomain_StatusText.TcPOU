@@ -21,13 +21,13 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[cmp.Set(_ctx.priv.smgr.Current);			
 
-IF cmp.Match(_ctx.state.iExample).IsOk() THEN
+IF cmp.Match(_ctx.state.iExample).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Example State!';
 	
 	RETURN;
 END_IF
 
-IF cmp.Default() THEN
+IF cmp.IsFalse() THEN
 	_ctx.hmi.sStatusText := 'Alarm: Internal Error!';
 	
 	RETURN;	

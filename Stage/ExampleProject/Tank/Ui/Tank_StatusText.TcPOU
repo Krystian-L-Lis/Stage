@@ -21,37 +21,37 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[cmp.Set(_ctx.priv.smgr.Current);			
 
-IF cmp.Match(_ctx.state.iDisabled).IsOk() THEN
+IF cmp.Match(_ctx.state.iDisabled).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Tank disabled';
 	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iEnabled).IsOk() THEN
+IF cmp.Match(_ctx.state.iEnabled).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Tank enabled';
 	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iFault).IsOk() THEN
+IF cmp.Match(_ctx.state.iFault).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Alarm: Filling timeout!';
 	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iFill).IsOk() THEN
+IF cmp.Match(_ctx.state.iFill).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Filling in progress...';
 	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Match(_ctx.state.iSystemOff).IsOk() THEN
+IF cmp.Match(_ctx.state.iSystemOff).IsTrue() THEN
 	_ctx.hmi.sStatusText := 'Filling system is disabled!';
 	_ctx.hmi.nStatusTextColor := COL.BLACK.Raw;
 	RETURN;
 END_IF
 
-IF cmp.Default() THEN
+IF cmp.IsFalse() THEN
 	_ctx.hmi.sStatusText := 'Error: Unrecognized system state.';
 	_ctx.hmi.nStatusTextColor := COL.RED.Raw;
 	RETURN;	

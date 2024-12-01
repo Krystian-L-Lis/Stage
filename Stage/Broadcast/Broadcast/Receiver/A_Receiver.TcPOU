@@ -32,17 +32,17 @@ CASE iReceiverList.Push(iReceiver) OF
 	Results.Ok:
 		// No Error
 	Results.None:
-		Debug.DebugMsg(iReceiverList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
-		Debug.DebugMsg(iReceiver.ToDebug(), 'Im a double!');
+		Debug.DebugMsg(iReceiverList, Tc2_Standard.CONCAT(__POUNAME(), ': Tried to insert a double!'));
+		Debug.DebugMsg(iReceiver, 'Im a double!');
 	Results.Err.Ovf:
-		Debug.DebugMsg(iReceiverList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
-		Debug.DebugMsg(iReceiver.ToDebug(), 'Cause of overflow!');
+		Debug.DebugMsg(iReceiverList, Tc2_Standard.CONCAT(__POUNAME(), ': Overflow!'));
+		Debug.DebugMsg(iReceiver, 'Cause of overflow!');
 	Results.Err.NoMatch:
-		Debug.DebugMsg(iReceiverList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
-		Debug.DebugMsg(iReceiver.ToDebug(), 'This already have an owner!');
+		Debug.DebugMsg(iReceiverList, Tc2_Standard.CONCAT(__POUNAME(), ': No Match!'));
+		Debug.DebugMsg(iReceiver, 'This already have an owner!');
 	ELSE
-		Debug.DebugMsg(iReceiverList.ToDebug(), Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
-		Debug.DebugMsg(iReceiver.ToDebug(), 'Cause!');		
+		Debug.DebugMsg(iReceiverList, Tc2_Standard.CONCAT(__POUNAME(), ': Unknown Error!'));
+		Debug.DebugMsg(iReceiver, 'Cause!');		
 END_CASE
 
 

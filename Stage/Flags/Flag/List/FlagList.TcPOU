@@ -171,7 +171,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[FOR i := 0 TO _nLen - 1 DO
-	IF cmp.Set(iTag).Match(_iFlag[i].Tag).IsOk() THEN
+	IF cmp.Set(iTag).Match(_iFlag[i].Tag).IsTrue() THEN
 		_GetByTagIfUntagged := Results.Ok;
 		RETURN;
 	END_IF	
@@ -388,15 +388,6 @@ END_VAR]]></Declaration>
 END_IF
 
 Release.List := THIS^;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ToDebug" Id="{1ec96f5d-5d6c-4fda-a3b1-92cf537384bc}" FolderPath="Other\">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
       </Implementation>
     </Method>
   </POU>

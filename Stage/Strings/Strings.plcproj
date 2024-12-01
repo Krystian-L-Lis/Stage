@@ -79,10 +79,18 @@
       <QualifiedOnly>true</QualifiedOnly>
       <Optional>true</Optional>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Results">
+      <DefaultResolution>Results, * (_)</DefaultResolution>
+      <Namespace>Results</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Strings" />
     <Folder Include="Strings\Alias" />
+    <Folder Include="Strings\SymbolPath" />
     <Folder Include="Strings\Strb" />
     <Folder Include="Strings\Strf" />
   </ItemGroup>
@@ -91,6 +99,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Strings\Alias\Str.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strings\SymbolPath\SymbolPath.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Strings\Strb\I_Strb.TcIO">

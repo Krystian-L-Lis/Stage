@@ -70,12 +70,5 @@ _nSize := _nSize - 1;
 Pop := Results.Ok;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ToDebug" Id="{cae6cbf7-4160-4419-9782-c5152e44ca6a}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>
