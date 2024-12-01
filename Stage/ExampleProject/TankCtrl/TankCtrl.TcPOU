@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TankCtrl" Id="{71dfe158-063e-4ac3-bf98-44fac6c2f0af}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK TankCtrl IMPLEMENTS I_Domain, I_Execute
+    <Declaration><![CDATA[FUNCTION_BLOCK TankCtrl IMPLEMENTS I_DomainProvider, I_Execute
 VAR_INPUT
 	bNoWater		: BOOL;
 	bOverload		: BOOL;
@@ -70,6 +70,17 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Property Name="Dom" Id="{fb966b25-919f-4b9a-83df-5518d01a5cc1}">
+      <Declaration><![CDATA[PROPERTY Dom : I_Domain]]></Declaration>
+      <Get Name="Get" Id="{214b0c32-68a9-4536-bde7-b2501e954141}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Dom := domain;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Execute" Id="{93d893b4-6efe-4ab4-94a5-1399cd89b222}">
       <Declaration><![CDATA[METHOD Execute
 ]]></Declaration>
@@ -86,73 +97,6 @@ ctx.io.in.bOverload := bOverload;
 
 // OUTPUTS
 bRunPump := ctx.io.out.bRunPump;]]></ST>
-      </Implementation>
-    </Method>
-    <Property Name="Flags" Id="{daf66693-a007-483b-8839-5471e7be9f40}">
-      <Declaration><![CDATA[PROPERTY Flags : Domains.Flags.I_FlagList
-]]></Declaration>
-      <Get Name="Get" Id="{0b3b47b4-7123-4393-b2fe-8438ae01be66}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Flags := flagList;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="Recs" Id="{6b826d4b-2a86-4d78-8b9b-deed25c411b1}">
-      <Declaration><![CDATA[PROPERTY Recs : Domains.Broadcast.I_ReceiverList
-]]></Declaration>
-      <Get Name="Get" Id="{2fd752c6-4e7a-4f6e-8be5-6abdf451a764}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Recs := receiverList;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="Signals" Id="{d105e1ef-7f07-4886-acbf-6c59b5817d87}">
-      <Declaration><![CDATA[PROPERTY Signals : Domains.Broadcast.I_SignalList
-]]></Declaration>
-      <Get Name="Get" Id="{0098bed3-4745-4ac4-a82f-6a07b4649e23}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Signals := signalList;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="Smgr" Id="{7c9ac3ef-c213-4a70-b242-4aa5a787835c}">
-      <Declaration><![CDATA[PROPERTY Smgr : Domains.States.I_StateManager
-]]></Declaration>
-      <Get Name="Get" Id="{7639a792-8ea8-4c60-ac61-9773a983d77d}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Smgr := stateMgr;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="Tag" Id="{515a06bf-72bb-407b-a993-161476064e14}">
-      <Declaration><![CDATA[PROPERTY Tag : Tags.I_Tag
-]]></Declaration>
-      <Get Name="Get" Id="{ba92eba2-b38b-4db5-8536-c654f0547753}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Tag := domTag;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Method Name="ToDebug" Id="{23787608-9066-4bff-8e91-0fe971cc4889}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
       </Implementation>
     </Method>
   </POU>

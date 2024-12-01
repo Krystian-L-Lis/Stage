@@ -65,12 +65,5 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ToDebug" Id="{16ff1ce0-9d29-4c22-be24-eb3a4d0ca553}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

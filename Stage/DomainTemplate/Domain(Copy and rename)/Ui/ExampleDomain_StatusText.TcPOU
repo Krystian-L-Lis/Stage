@@ -55,12 +55,5 @@ END_VAR]]></Declaration>
 ctx.priv.smgr.GetOnChange().Pair(_fbRec);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ToDebug" Id="{f633fa4d-9995-48df-9ef3-d15fca152da0}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>
