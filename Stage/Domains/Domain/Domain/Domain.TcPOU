@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Domain" Id="{9748d6bf-1e06-4b76-9ad8-69c897dd9fb9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Domain IMPLEMENTS I_Domain, I_DomainProvider, I_DomainInternal
+VAR
+	_iCTable		: I_CTable;
+	_bIsRegistered	: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="CTable" Id="{d806fbe9-f3bc-48d5-bef4-653d438eb27c}">
+      <Declaration><![CDATA[PROPERTY CTable : I_CTable]]></Declaration>
+      <Get Name="Get" Id="{91dfd266-402f-48e3-84be-b8bd9935e437}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CTable := _iCTable;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{22b8112f-e6a8-4bcb-b18a-23874a535c02}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iCTable		: I_CTable;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iCTable <> 0 THEN
+	_iCTable := iCTable;
+	_RegisterDomain(THIS^);
+ELSE
+	Debug.DebugMsg(THIS^, 'iCTable = 0!');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsRegistered" Id="{11a4f75f-aa64-4963-9808-c2b5e248b885}">
+      <Declaration><![CDATA[PROPERTY INTERNAL IsRegistered : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0d2bb1ea-75d9-45e5-bd99-c8a45c93a9b9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsRegistered := _bIsRegistered;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d47905fb-cdf7-41b1-b20b-da6c1f4b50a9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_bIsRegistered := IsRegistered;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Self" Id="{7072bc3b-dc24-4781-a2ab-cb8d0f49078a}">
+      <Declaration><![CDATA[PROPERTY Self : I_Domain]]></Declaration>
+      <Get Name="Get" Id="{f31e7ce2-f73f-4b70-91e1-913bf3588154}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Self := THIS^;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

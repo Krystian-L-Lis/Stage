@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_StateBuffer" Id="{e4996e01-4bb0-4cca-8ed9-42cbc3e1cae8}">
+    <Declaration><![CDATA[INTERFACE I_StateBuffer EXTENDS I_Debug
+]]></Declaration>
+    <Folder Name="Other" Id="{2a35d1ff-4340-401d-b1f1-820cc785d0e7}" />
+    <Folder Name="Push" Id="{781667c1-a493-4fe1-ba91-1460a4b83f35}" />
+    <Method Name="Cap" Id="{7613d1c0-0ea1-483e-9da6-c8b4687f63d7}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Cap : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Length" Id="{be401b9a-9296-417d-a340-6ceffe381267}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Length : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Pop" Id="{f773cc3c-50bd-4264-99cc-2646f43476b2}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Pop : Result
+VAR_OUTPUT
+	iState			: I_StateInternal;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Push" Id="{982ca47f-6adb-4ae3-8934-e5c875499181}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Push : Result
+VAR_INPUT
+	iState			: I_StateInternal;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

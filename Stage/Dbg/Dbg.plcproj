@@ -91,11 +91,6 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Dbg.tmc">
-      <SubType>Content</SubType>
-    </None>
-  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>

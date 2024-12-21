@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_FloatArg" Id="{7a9d8070-f2e7-4e82-9412-c14723403e71}">
+    <Declaration><![CDATA[INTERFACE I_FloatArg EXTENDS I_Arg
+]]></Declaration>
+    <Property Name="Val" Id="{75a1495a-cd7c-4507-a8a7-53186b9fe88f}">
+      <Declaration><![CDATA[PROPERTY Val : LREAL]]></Declaration>
+      <Get Name="Get" Id="{297213ed-995a-47b6-80ea-9224306c344b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Comp" Id="{3b4f07cd-ce06-44c8-8976-14381e17260e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Comp IMPLEMENTS I_Debug
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Fb_init" Id="{735d5726-36c2-48ac-a9f6-84bea416f22a}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+
+	iComponent	: I_Component;
+	iRegister	: I_MutCompRegister; 
+END_VAR
+VAR
+	_eResult	: Result;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iRegister = 0 THEN
+	DebugMsg(THIS^, 'iRegister = 0!');
+	RETURN;
+END_IF
+
+IF IsErr(iRegister.Insert(iComponent), eCarry => _eResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('I_MutCompRegister.Insert(iComponent) failed with code: ', TO_STRING(_eResult)));
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

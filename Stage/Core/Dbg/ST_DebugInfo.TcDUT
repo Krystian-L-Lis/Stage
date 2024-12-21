@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ST_DebugInfo" Id="{ff4f564d-74f0-4be1-895f-bc1505d9c37a}">
+    <Declaration><![CDATA[TYPE INTERNAL ST_DebugInfo :
+STRUCT
+	iDebug		: I_Debug;
+	sInfo		: Str;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

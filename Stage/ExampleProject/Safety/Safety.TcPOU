@@ -1,117 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Safety" Id="{b3e295d5-4f16-41d7-a844-f3b21702d931}" SpecialFunc="None">
+  <POU Name="Safety" Id="{9bcac193-d1e6-441d-8c8f-bf19e47f2525}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Safety IMPLEMENTS I_Execute
 VAR_INPUT
-	bFeedbackOk			: BOOL;
-	bOperational		: BOOL;
+	bOp		: BOOL;
+	bOk		: BOOL;
 END_VAR
 VAR_OUTPUT
-	bRun				: BOOL;
-	bReset				: BOOL;
+	bRun	: BOOL;
+	bErrAck	: BOOL;
+	bReset	: BOOL;
 END_VAR
 VAR
-	_hmi				: Safety_Hmi;
-	_exe				: Execute(THIS^);
-	_nState				: SINT;
-	_bInit				: BOOL := TRUE;
-	_tonTimeout			: TON;
-	SafetyStateChanged	: Signal;
+	_exe			: Execute(THIS^);
+
+	_register		: CompRegister<15>;
+	_self			: Entity(_register);
+	
+	_type			: Tag('Safety');
+	_rgType			: Comp(_type, _register);
+	
+	_safetyEvent	: Signal;
+	_rgSafetyEvent	: Comp(_safetyEvent, _register);
+
+	_nState			: USINT;	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="_PairAllSafetyReceivers" Id="{4e9df51e-e3ef-4984-a35a-c8170e71f3d9}">
-      <Declaration><![CDATA[METHOD PRIVATE _PairAllSafetyReceivers
+    <Method Name="_Init" Id="{b361c7a5-7c7a-4907-a649-fde8e61dbc17}">
+      <Declaration><![CDATA[METHOD PRIVATE _Init
 VAR
-	i			: GenIter(0);
-	iDom		: I_Domain;
+	i			: Iter(1);
+	iEntity		: I_Entity;
+	
+	c			: Iter(1);
+	iComp		: I_Component;
 	iRec		: I_Receiver;
+	
+	cmp			: TagCmp;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(IterDom(i.Next(), iDomain => iDom)) DO
-	IF IsOk(FindRec(iDom.Recs, 'OnEStop', iRec => iRec)) THEN
-		SafetyStateChanged.Pair(iRec);
-	END_IF
-END_WHILE]]></ST>
+        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => iEntity)) DO
+	WHILE IsOk(iEntity.Get(c.Next(), iComp => iComp)) DO
+		IF IsOk(AsRec(iComp, iDest => iRec) THEN
+			IF 
+		END_IF
+	END_WHILE
+END_WHILE
+
+]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Execute" Id="{0d4e5a12-faed-4f88-9050-d68ea5e4cc9f}">
+    <Method Name="Execute" Id="{3e8139ba-c1de-404f-ae26-7763cfbc2ad7}">
       <Declaration><![CDATA[METHOD Execute
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _bInit THEN
-	_PairAllSafetyReceivers();
-	_bInit := FALSE;
-END_IF
-
-CASE _nState OF
-	0:	// INIT SAFE
-		_hmi.sStatusText := 'Emergency Stop!';
-		_hmi.nStatusTextColor := COL.RED.Raw;
-		_hmi.bResetButtonVis := TRUE;
-		SafetyStateChanged.Option('SAFE').Emit();
+        <ST><![CDATA[CASE _nState OF
+	0:
+		_Init();
 		_nState := 1;
-		
-	1:	// SAFE
-		IF _hmi.bResetButton THEN
-			_hmi.bResetButton := FALSE;
-			IF bFeedbackOk THEN
-				_nState := 2;
-			END_IF
-		END_IF
-	2:
-		_hmi.sStatusText := 'Reset in progress...';
-		_hmi.bResetButtonVis := FALSE;
 	
-		bRun := FALSE;
-		bReset := FALSE;
-		_nState := 3;
+	1:
+	
+	
+	
+	2:
+	
+	
+	
 	3:
-		bRun := TRUE;
-		_nState := 4;	
-	4:
-		bReset := TRUE;
-		_nState := 5;
-	5:
-		bReset := FALSE;
-		_nState := 6;
-	6:	// Check if success
-		_tonTimeout(IN := TRUE, PT := T#2S);
-		IF _tonTimeout.Q THEN
-			_tonTimeout(IN := FALSE);
-			_nState := 7;
-		ELSIF bOperational THEN
-			_tonTimeout(IN := FALSE);
-			_nState := 8;
-		END_IF
-	7:
-		_hmi.sStatusText := 'Reset failed: System is not operational!';
-		_tonTimeout(IN := TRUE, PT := T#2S);
-		IF _tonTimeout.Q THEN
-			_tonTimeout(IN := FALSE);
-			_nState := 0;
-		END_IF
-		
-	8:	// INIT UNSAFE
-		_hmi.sStatusText := 'System Operational';
-		_hmi.nStatusTextColor := COL.BLACK.Raw;
-		SafetyStateChanged.Option('UNSAFE').Emit();
-		_nState := 9;
-	9:	// UNSAFE
-		IF NOT bFeedbackOk OR NOT bOperational THEN
-			_nState := 0;
-		END_IF		
+	
+
+
+
+
 END_CASE]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ToDebug" Id="{87a5d53b-cb96-4c5b-9462-707939772bf7}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
       </Implementation>
     </Method>
   </POU>

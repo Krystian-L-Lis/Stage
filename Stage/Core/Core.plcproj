@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{498e16f7-0664-4968-a44b-f00c4b4ba6aa}</ProjectGuid>
+    <SubObjectsSortedByName>true</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>false</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Core</Name>
+    <ProgramVersion>3.1.4026.9</ProgramVersion>
+    <Application>{fec3d0c7-471d-43f5-84d2-6083b5cf05d6}</Application>
+    <TypeSystem>{48aaa59b-78a5-43c8-9209-8584a2741719}</TypeSystem>
+    <Implicit_Task_Info>{79ea7876-d3f0-4635-a2b5-0ad959ac0d65}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{6785aa1d-1e78-4659-9a86-32d3563547eb}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{a8b598d9-903c-4920-b674-0bd0adc5d187}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{06a967b7-4bc3-42df-b6bd-73a4bc1f9b0a}</LibraryReferences>
+    <Company>_</Company>
+    <Released>false</Released>
+    <AllowChecksForLibrary>false</AllowChecksForLibrary>
+    <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
+    <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
+    <Title>Core</Title>
+    <ProjectVersion>1.0.0</ProjectVersion>
+    <LibraryCategories>
+      <LibraryCategory xmlns="">
+        <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>Stage</DefaultName>
+      </LibraryCategory>
+    </LibraryCategories>
+    <SelectedLibraryCategories>
+      <Id xmlns="">{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
+    </SelectedLibraryCategories>
+    <DefaultNamespace>Core</DefaultNamespace>
+    <Placeholder>_Core</Placeholder>
+    <Author>Krystian Lis et al.</Author>
+    <Description>
+    </Description>
+    <VirtualLibrary>true</VirtualLibrary>
+  </PropertyGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <QualifiedOnly>true</QualifiedOnly>
+      <Optional>true</Optional>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Arg\BOOL\BoolArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\BOOL\I_Bool.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\BOOL\I_MutBool.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LREAL\FloatArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LREAL\I_FloatArg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LREAL\I_MutFloatArg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\I_Arg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LWORD\I_BinArg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LWORD\I_MutBinArg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LWORD\BinArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Receiver\AsRec.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Receiver\I_Receiver.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Receiver\I_ReceiverNode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Receiver\Receiver.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Signal\AsSignal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Signal\SignalProxy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Signal\I_Emit.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Signal\I_Signal.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Signal\I_SignalNode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Signal\Signal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_ArePaired.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_Cleanup.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_Clear.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_Copy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_EmitSignal.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_FindBestChunk.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_FindChunkAfter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_NewPair.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_SoftCompress.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_Unpair.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Structs\ST_Entry.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\_Broadcast.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Callable\I_Callable.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dbg\DebugList.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dbg\DebugMsg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dbg\I_Debug.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dbg\ST_DebugInfo.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dbg\_Debug.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Ec\Core\CompRegister.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Core\I_Component.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Core\I_OwnedComp.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Core\I_CompRegister.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Core\I_Entity.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Core\I_MutCompRegister.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Core\GetEntity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Helpers\CachedComp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Helpers\CachedEntity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Helpers\Comp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Helpers\Entity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Sys\_Ec.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Ec\Sys\_RegisterEntity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iter\Iter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Result\Error\Err.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Result\Error\GenericResult.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Result\IsErr.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Result\IsNone.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Result\IsOk.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Result\IsSome.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Result\Result.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Execute\Execute.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Execute\I_Execute.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Execute\I_ExecuteNode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Runtime.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\_Runtime.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="State\Buffer\I_StateBuffer.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Buffer\StateBuffer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Machine\I_StateMachine.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Machine\StateMachine.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Manager\StateManagerProxy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Manager\I_StateManager.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Manager\StateManager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\State\I_State.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\State\I_StateInternal.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\State\State.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\State\StateProxy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\StrRequester\StateRequest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Trace\StateTrace.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Trace\StateTraceItem.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strings\Alias\Ch.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strings\Alias\Str.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strings\Strb\I_Strb.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strings\Strb\Strb.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strings\Strf\Strf.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strings\SymPath\SymPath.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\ArgAsTag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\AsTagged.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\AsTag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\I_Tag.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\I_Tagged.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\Tag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\TagProxy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_\Param.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Arg\BOOL" />
+    <Folder Include="Arg\LREAL" />
+    <Folder Include="Arg\LWORD" />
+    <Folder Include="Broadcast" />
+    <Folder Include="Broadcast\Receiver" />
+    <Folder Include="Broadcast\Signal" />
+    <Folder Include="Broadcast\Sys" />
+    <Folder Include="Broadcast\Sys\Helpers" />
+    <Folder Include="Broadcast\Sys\Structs" />
+    <Folder Include="Dbg" />
+    <Folder Include="Ec">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
+    <Folder Include="Ec\Core" />
+    <Folder Include="Ec\Helpers" />
+    <Folder Include="Ec\Sys" />
+    <Folder Include="Callable" />
+    <Folder Include="Iter" />
+    <Folder Include="Arg" />
+    <Folder Include="Runtime" />
+    <Folder Include="Result" />
+    <Folder Include="Result\Error" />
+    <Folder Include="Runtime\Execute" />
+    <Folder Include="State" />
+    <Folder Include="State\Buffer">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
+    <Folder Include="State\Machine">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
+    <Folder Include="State\Manager">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
+    <Folder Include="State\State" />
+    <Folder Include="State\StrRequester">
+      <ExcludeFromBuild>true</ExcludeFromBuild>
+    </Folder>
+    <Folder Include="State\Trace">
+      <ExcludeFromBuild>true</ExcludeFromBuild>
+    </Folder>
+    <Folder Include="Strings" />
+    <Folder Include="Strings\Alias" />
+    <Folder Include="Strings\Strb" />
+    <Folder Include="Strings\Strf" />
+    <Folder Include="Strings\SymPath" />
+    <Folder Include="_" />
+    <Folder Include="Tags">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <o>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>CurrentUmlCompilerVersion</v>
+            <v>4.2.1.0</v>
+          </d>
+        </o>
+        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
+        <o>
+          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String">
+            <v>ExtendedSettings</v>
+            <v>true</v>
+            <v>GeneralPropertySupport</v>
+            <v>false</v>
+            <v>GlobalTextListFilePath</v>
+            <v>""</v>
+            <v>GlobalVisuImageFilePath</v>
+            <v>"%APPLICATIONPATH%\"</v>
+            <v>ImplicitChecksForVisualizationPOUs</v>
+            <v>true</v>
+            <v>UnicodeStrings</v>
+            <v>true</v>
+          </d>
+        </o>
+        <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
+        <o>
+          <v n="Name">"{29BD8D0C-3586-4548-BB48-497B9A01693F}"</v>
+          <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+            <v>Rules</v>
+            <o>
+              <v n="Name">"Rules"</v>
+              <d n="SubKeys" t="Hashtable" />
+              <d n="Values" t="Hashtable" />
+            </o>
+          </d>
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
+        <o>
+          <v n="Name">"{40450F57-0AA3-4216-96F3-5444ECB29763}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String">
+            <v>ActiveVisuExtensionsLength</v>
+            <v>0</v>
+            <v>ActiveVisuProfile</v>
+            <v>"IR0whWr8bwcQCAAAY7rhNAAAAACAAgAAGMPQIgAAAAABAAAAAAAAAAEaUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwACTHsAZgA5ADUAYgBiADQAMgA2AC0ANQA1ADIANAAtADQAYgA0ADUALQA5ADQAMAAwAC0AZgBiADAAZgAyAGUANwA3AGUANQAxAGIAfQADCE4AYQBtAGUABDBUAHcAaQBuAEMAQQBUACAAMwAuADEAIABCAHUAaQBsAGQAIAA0ADAAMgA2AC4ANwAFFlAAcgBvAGYAaQBsAGUARABhAHQAYQAGTHsAMQA2AGUANQA1AGIANgAwAC0ANwAwADQAMwAtADQAYQA2ADMALQBiADYANQBiAC0ANgAxADQANwAxADMAOAA3ADgAZAA0ADIAfQAHEkwAaQBiAHIAYQByAGkAZQBzAAhMewAzAGIAZgBkADUANAA1ADkALQBiADAANwBmAC0ANABkADYAZQAtAGEAZQAxAGEALQBhADgAMwAzADUANgBhADUANQAxADQAMgB9AAlMewA5AGMAOQA1ADgAOQA2ADgALQAyAGMAOAA1AC0ANAAxAGIAYgAtADgAOAA3ADEALQA4ADkANQBmAGYAMQBmAGUAZABlADEAYQB9AAoOVgBlAHIAcwBpAG8AbgALBmkAbgB0AAwKVQBzAGEAZwBlAA0KVABpAHQAbABlAA4aVgBpAHMAdQBFAGwAZQBtAE0AZQB0AGUAcgAPDkMAbwBtAHAAYQBuAHkAEAxTAHkAcwB0AGUAbQARElYAaQBzAHUARQBsAGUAbQBzABIwVgBpAHMAdQBFAGwAZQBtAHMAUwBwAGUAYwBpAGEAbABDAG8AbgB0AHIAbwBsAHMAEyhWAGkAcwB1AEUAbABlAG0AcwBXAGkAbgBDAG8AbgB0AHIAbwBsAHMAFCRWAGkAcwB1AEUAbABlAG0AVABlAHgAdABFAGQAaQB0AG8AcgAVIlYAaQBzAHUATgBhAHQAaQB2AGUAQwBvAG4AdAByAG8AbAAWHlYAaQBzAHUARQBsAGUAbQBYAFkAQwBoAGEAcgB0ABcUVgBpAHMAdQBJAG4AcAB1AHQAcwAYGFYAaQBzAHUARQBsAGUAbQBCAGEAcwBlABkmRABlAHYAUABsAGEAYwBlAGgAbwBsAGQAZQByAHMAVQBzAGUAZAAaCGIAbwBvAGwAGyJQAGwAdQBnAGkAbgBDAG8AbgBzAHQAcgBhAGkAbgB0AHMAHEx7ADQAMwBkADUAMgBiAGMAZQAtADkANAAyAGMALQA0ADQAZAA3AC0AOQBlADkANAAtADEAYgBmAGQAZgAzADEAMABlADYAMwBjAH0AHRxBAHQATABlAGEAcwB0AFYAZQByAHMAaQBvAG4AHhRQAGwAdQBnAGkAbgBHAHUAaQBkAB8WUwB5AHMAdABlAG0ALgBHAHUAaQBkACBIYQBmAGMAZAA1ADQANAA2AC0ANAA5ADEANAAtADQAZgBlADcALQBiAGIANwA4AC0AOQBiAGYAZgBlAGIANwAwAGYAZAAxADcAIRRVAHAAZABhAHQAZQBJAG4AZgBvACJMewBiADAAMwAzADYANgBhADgALQBiADUAYwAwAC0ANABiADkAYQAtAGEAMAAwAGUALQBlAGIAOAA2ADAAMQAxADEAMAA0AGMAMwB9ACMOVQBwAGQAYQB0AGUAcwAkTHsAMQA4ADYAOABmAGYAYwA5AC0AZQA0AGYAYwAtADQANQAzADIALQBhAGMAMAA2AC0AMQBlADMAOQBiAGIANQA1ADcAYgA2ADkAfQAlTHsAYQA1AGIAZAA0ADgAYwAzAC0AMABkADEANwAtADQAMQBiADUALQBiADEANgA0AC0ANQBmAGMANgBhAGQAMgBiADkANgBiADcAfQAmFk8AYgBqAGUAYwB0AHMAVAB5AHAAZQAnVFUAcABkAGEAdABlAEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwARgBvAHIAQwBvAG4AdgBlAHIAdABpAGIAbABlAEwAaQBiAHIAYQByAGkAZQBzACgQTABpAGIAVABpAHQAbABlACkUTABpAGIAQwBvAG0AcABhAG4AeQAqHlUAcABkAGEAdABlAFAAcgBvAHYAaQBkAGUAcgBzACs4UwB5AHMAdABlAG0ALgBDAG8AbABsAGUAYwB0AGkAbwBuAHMALgBIAGEAcwBoAHQAYQBiAGwAZQAsEnYAaQBzAHUAZQBsAGUAbQBzAC0McwB5AHMAdABlAG0ALkg2AGMAYgAxAGMAZABlADEALQBkADUAZABjAC0ANABhADMAYgAtADkAMAA1ADQALQAyADEAZgBhADcANQA2AGEAMwBmAGEANAAvKEkAbgB0AGUAcgBmAGEAYwBlAFYAZQByAHMAaQBvAG4ASQBuAGYAbwAwTHsAYwA2ADEAMQBlADQAMAAwAC0ANwBmAGIAOQAtADQAYwAzADUALQBiADkAYQBjAC0ANABlADMAMQA0AGIANQA5ADkANgA0ADMAfQAxGE0AYQBqAG8AcgBWAGUAcgBzAGkAbwBuADIYTQBpAG4AbwByAFYAZQByAHMAaQBvAG4AMwxMAGUAZwBhAGMAeQA0MEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwAVgBlAHIAcwBpAG8AbgBJAG4AZgBvADUwTABvAGEAZABMAGkAYgByAGEAcgBpAGUAcwBJAG4AdABvAFAAcgBvAGoAZQBjAHQANhpDAG8AbQBwAGEAdABpAGIAaQBsAGkAdAB5ANAAAhoD0AMBLQTQBQYaB9AHCBoBRQcJCdAACRoERQoLBAQAAAAGAAAAAAAAAAAAAADQDAutAgAAANANAS0O0A8BLRDQAAkaBEUKCwQEAAAABgAAAAAAAAAAAAAA0AwLrQEAAADQDQEtEdAPAS0Q0AAJGgRFCgsEBAAAAAYAAAAAAAAAAAAAANAMC60CAAAA0A0BLRLQDwEtENAACRoERQoLBAQAAAAGAAAAAAAAAAAAAADQDAutAgAAANANAS0T0A8BLRDQAAkaBEUKCwQEAAAABgAAAAAAAAAAAAAA0AwLrQIAAADQDQEtFNAPAS0Q0AAJGgRFCgsEBAAAAAYAAAAAAAAAAAAAANAMC60CAAAA0A0BLRXQDwEtENAACRoERQoLBAQAAAAGAAAAAAAAAAAAAADQDAutAgAAANANAS0W0A8BLRDQAAkaBEUKCwQEAAAABgAAAAAAAAAAAAAA0AwLrQIAAADQDQEtF9APAS0Q0AAJGgRFCgsEBAAAAAYAAAAAAAAAAAAAANAMC60EAAAA0A0BLRjQDwEtENAZGq0BRRscAdAAHBoCRR0LBAQAAAACAAAAAAAAAAAAAADQHh8tINAhIhoCRSMkAtAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAAAAANADAS0n0CgBLRHQKQEtENAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAQAAANADAS0n0CgBLRHQKQEtEJoqKwFFAAEC0AABLSzQAAEtLdAAHy0u0C8wGgPQMQutAQAAANAyC60jAAAA0DMarQDQNDAaA9AxC60CAAAA0DILrQYAAADQMxqtANA1Gq0A0DYarQA="</v>
+          </d>
+        </o>
+        <v>{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}</v>
+        <o>
+          <v n="Name">"{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>WriteLineIDs</v>
+            <v>False</v>
+          </d>
+        </o>
+        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
+        <o>
+          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>DisabledWarningIds</v>
+            <v>410,5410</v>
+          </d>
+        </o>
+        <v>{E709B08B-B6E4-4966-8EED-D793A13114C6}</v>
+        <o>
+          <v n="Name">"{E709B08B-B6E4-4966-8EED-D793A13114C6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>ReplaceConstants</v>
+            <v>False</v>
+          </d>
+        </o>
+        <v>{F66C7017-BDD8-4114-926C-81D6D687E35F}</v>
+        <o>
+          <v n="Name">"{F66C7017-BDD8-4114-926C-81D6D687E35F}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>CalcActiveTransOnly</v>
+            <v>True</v>
+          </d>
+        </o>
+      </d>
+      <d n="Values" t="Hashtable" />
+    </o>
+  </Data>
+  <TypeList>
+    <Type n="Boolean">System.Boolean</Type>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="Int32">System.Int32</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>

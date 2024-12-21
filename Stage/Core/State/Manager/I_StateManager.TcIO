@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_StateManager" Id="{ec583bc5-9b8d-4fc4-91c2-534454363ae3}">
+    <Declaration><![CDATA[INTERFACE I_StateManager EXTENDS I_Debug, I_Tagged, I_OwnedComp
+]]></Declaration>
+    <Folder Name="Request" Id="{87840c05-c4d3-4f53-8cbe-0a9fd43b4889}" />
+    <Folder Name="State" Id="{1e4aeef3-5172-4853-a26a-6057d4b308ba}" />
+    <Property Name="Current" Id="{9e46e8e5-e078-4315-aaef-86ce15f9d553}" FolderPath="State\">
+      <Declaration><![CDATA[PROPERTY Current : I_State]]></Declaration>
+      <Get Name="Get" Id="{6d438f0f-7238-46a4-a0fd-45c0f7fea2b7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Pretender" Id="{7eee6298-11b0-46df-9f35-ba905e3faca3}" FolderPath="State\">
+      <Declaration><![CDATA[PROPERTY Pretender : I_State]]></Declaration>
+      <Get Name="Get" Id="{f565b10d-746e-4849-a907-af1498783778}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Previous" Id="{c2e1c3ef-1230-46cc-9227-0aa972552cdf}" FolderPath="State\">
+      <Declaration><![CDATA[PROPERTY Previous : I_State]]></Declaration>
+      <Get Name="Get" Id="{66a045e0-86b0-4b8b-b205-8eac7ef37dde}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Request" Id="{cbf2f16f-b719-4bef-889f-617ff3718c21}" FolderPath="Request\">
+      <Declaration><![CDATA[METHOD Request : Result
+VAR_INPUT
+	iState		: I_State;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

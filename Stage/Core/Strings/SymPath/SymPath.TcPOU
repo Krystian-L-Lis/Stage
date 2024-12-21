@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="SymPath" Id="{de08c266-82f2-43b6-8ef2-f01293adb92c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SymPath
+VAR
+	_sPath		: Str;
+	_nLen		: INT := 0;
+	_nSegStart	: INT := 0;
+	_nSegEnd	: INT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="_HasIncorrectSymbols" Id="{7921e82a-db38-44ae-a783-6bcceb0d9a9c}">
+      <Declaration><![CDATA[METHOD PRIVATE _HasIncorrectSymbols : BOOL
+VAR_INPUT
+	sToCheck		: Str;
+END_VAR
+VAR
+	i				: INT;
+	_nStrLen		: INT := Tc2_Standard.LEN(sToCheck);
+	_sChar			: Ch;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_sChar := Tc2_Standard.MID(sToCheck, 1, 1);
+IF (_sChar >= '0') AND (_sChar <= '9') THEN
+    _HasIncorrectSymbols := TRUE; // Cannot start with a number
+    RETURN;
+END_IF;
+
+// Loop through the rest of the string to validate each character
+FOR i := 1 TO _nStrLen DO
+    _sChar := Tc2_Utilities.F_ToLCase(Tc2_Standard.MID(sToCheck, 1, i));
+    
+    // Check for invalid characters
+    IF NOT ((_sChar >= 'a' AND _sChar <= 'z') OR 	// Lowercase letters
+            (_sChar >= '0' AND _sChar <= '9') OR 	// Numbers
+            (_sChar = '_') OR                 		// Underscore
+			(_sChar = '*')) THEN					// Wildcard
+        _HasIncorrectSymbols := TRUE; // Invalid character found
+        RETURN;
+    END_IF;
+END_FOR;
+
+// If no invalid characters are found, return FALSE
+_HasIncorrectSymbols := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddNext" Id="{5c98e624-d0b2-49a6-83ae-ef070e544a65}">
+      <Declaration><![CDATA[METHOD AddNext : Result
+VAR_INPUT
+	sToAdd		: Str;
+END_VAR
+VAR
+	_nNewLen	: INT := _nLen + Tc2_Standard.LEN(sToAdd) + 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _sPath = '' OR _nSegStart = 0 OR sToAdd = '' THEN
+    AddNext := None;
+    RETURN;
+END_IF;
+
+IF _HasIncorrectSymbols(sToAdd) THEN
+	AddNext := None;
+	RETURN;
+END_IF
+
+IF _nNewLen <= 255 THEN
+	_sPath := Tc2_Standard.INSERT(_sPath, '.', _nSegEnd);
+	_sPath := Tc2_Standard.INSERT(_sPath, sToAdd, _nSegEnd + 1);
+	_nLen := _nNewLen;
+	AddNext := Ok;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddPrev" Id="{f37fed9e-731e-4322-bff5-14304a710b2b}">
+      <Declaration><![CDATA[METHOD AddPrev : Result
+VAR_INPUT
+	sToAdd		: Str;
+END_VAR
+VAR
+	_nAddLen	: INT := Tc2_Standard.LEN(sToAdd);
+	_nNewLen	: INT := _nLen + _nAddLen + 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _sPath = '' OR _nSegStart = 0 OR sToAdd = '' THEN
+    AddPrev := None;
+    RETURN;
+END_IF;
+
+IF _HasIncorrectSymbols(sToAdd) THEN
+	AddPrev := None;
+	RETURN;
+END_IF
+
+IF _nNewLen <= 255 THEN
+	_sPath := Tc2_Standard.INSERT(_sPath, '.', _nSegStart - 1);
+	_sPath := Tc2_Standard.INSERT(_sPath, sToAdd, _nSegStart - 2);
+	_nLen := _nNewLen;
+	_nSegStart := _nSegStart + _nAddLen + 1;
+	_nSegEnd := _nSegEnd + _nAddLen + 1;
+	AddPrev := Ok;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Get" Id="{3e3a2b44-c68d-43c1-ba42-e4a27a76ea9b}">
+      <Declaration><![CDATA[METHOD Get : Result
+VAR_OUTPUT
+	sSeg		: Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nSegStart = 0 THEN
+	RETURN;
+END_IF
+
+sSeg := Tc2_Standard.MID(_sPath, _nSegEnd - _nSegStart + 1, _nSegStart);
+IF sSeg <> '' THEN
+	Get := Ok;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Next" Id="{c6cdf833-e7f8-4994-a776-e72dded77005}">
+      <Declaration><![CDATA[METHOD Next : Result
+VAR_OUTPUT
+	sSeg		: Str;
+END_VAR
+VAR
+	i			: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// If the path is invalid or already fully processed
+IF _sPath = '' OR _nSegEnd = _nLen THEN
+    Next := None;
+    RETURN;
+END_IF;
+
+// Initialize on the first call
+IF _nSegStart = 0 THEN
+    _nSegStart := 1;
+    FOR i := 1 TO _nLen DO
+        IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+            _nSegEnd := i - 1;
+            EXIT;
+        END_IF;
+    END_FOR;
+
+	IF _nSegEnd < _nSegStart THEN
+		_nSegEnd := _nLen;
+	END_IF;
+
+    sSeg := Tc2_Standard.MID(_sPath, _nSegEnd - _nSegStart + 1, _nSegStart);
+    Next := Ok;
+    RETURN;
+END_IF;
+
+_nSegStart := _nSegEnd + 2; // Skip the delimiter
+
+FOR i := _nSegStart TO _nLen DO
+    IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+        _nSegEnd := i - 1;
+        EXIT;
+    END_IF;
+END_FOR;
+
+// If no more delimiters, this is the last segment
+IF _nSegEnd < _nSegStart THEN
+    _nSegEnd := _nLen;
+END_IF;
+
+sSeg := Tc2_Standard.MID(_sPath, _nSegEnd - _nSegStart + 1, _nSegStart);
+Next := Ok;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Peek" Id="{644fd812-0eb6-44b1-9b5a-072d8067b266}">
+      <Declaration><![CDATA[METHOD Peek : Result
+VAR_OUTPUT
+	sSeg		: Str;
+END_VAR
+VAR
+	i			: INT;
+	_nPeekStart	: INT := 0;
+	_nPeekEnd	: INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// If the path is invalid or already fully processed
+IF _sPath = '' OR _nSegEnd = _nLen OR _nSegStart = 0 THEN
+    Peek := None;
+    RETURN;
+END_IF;
+
+_nPeekStart := _nSegEnd + 2; // Skip the delimiter
+
+FOR i := _nPeekStart TO _nLen DO
+    IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+        _nPeekEnd := i - 1;
+        EXIT;
+    END_IF;
+END_FOR;
+
+// If no more delimiters, this is the last segment
+IF _nPeekEnd = 0 THEN
+    _nPeekEnd := _nLen;
+END_IF;
+
+sSeg := Tc2_Standard.MID(_sPath, _nPeekEnd - _nPeekStart + 1, _nPeekStart);
+Peek := Ok;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PeekBack" Id="{f7303771-b30b-4296-89fd-270bf803a6c6}">
+      <Declaration><![CDATA[METHOD PeekBack : Result
+VAR_OUTPUT
+	sSeg		: Str;
+END_VAR
+VAR
+	i			: INT;
+	_nPeekStart	: INT := 0;
+	_nPeekEnd	: INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// If the path is invalid or already fully processed
+IF _sPath = '' OR _nSegEnd = 0 OR _nSegStart = 1 THEN
+    PeekBack := None;
+    RETURN;
+END_IF;
+
+_nPeekEnd := _nSegStart - 2; // Skip the delimiter
+
+FOR i := _nPeekEnd TO 1 BY -1 DO
+    IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+        _nPeekStart := i + 1;
+        EXIT;
+    END_IF;
+END_FOR;
+
+// If no more delimiters, this is the first segment
+IF _nPeekStart = 0 THEN
+    _nPeekStart := 1;
+END_IF;
+
+sSeg := Tc2_Standard.MID(_sPath, _nPeekEnd - _nPeekStart + 1, _nPeekStart);
+PeekBack := Ok;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prev" Id="{bb912db9-78e6-4226-9a9c-08a0cddabbba}">
+      <Declaration><![CDATA[METHOD Prev : Result
+VAR_OUTPUT
+	sSeg		: Str;
+END_VAR
+VAR
+	i			: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// If the path is invalid or already fully processed
+IF _sPath = '' OR _nSegStart = 1 THEN
+    Prev := None;
+    RETURN;
+END_IF;
+
+// Initialize on the first call
+IF _nSegEnd = 0 THEN
+    _nSegEnd := _nLen;
+    FOR i := _nSegEnd TO 1 BY -1 DO
+        IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+            _nSegStart := i + 1;
+            EXIT;
+        END_IF;
+    END_FOR;
+
+	// If no more delimiters, this is the first segment
+	IF _nSegEnd < _nSegStart THEN
+		_nSegStart := 1;
+	END_IF;
+
+    sSeg := Tc2_Standard.MID(_sPath, _nSegEnd - _nSegStart + 1, _nSegStart);
+    Prev := Ok;
+    RETURN;
+END_IF;
+
+_nSegEnd := _nSegStart - 2; // Skip the delimiter
+
+FOR i := _nSegEnd TO 1 BY -1 DO
+    IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+        _nSegStart := i + 1;
+        EXIT;
+    END_IF;
+END_FOR;
+
+// If no more delimiters, this is the first segment
+IF _nSegEnd < _nSegStart THEN
+    _nSegStart := 1;
+END_IF;
+
+sSeg := Tc2_Standard.MID(_sPath, _nSegEnd - _nSegStart + 1, _nSegStart);
+Prev := Ok;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Read" Id="{178f264a-e89a-4d3a-b8d2-3ca5f74b3ae7}">
+      <Declaration><![CDATA[METHOD Read : Str]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Read := _sPath;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveAndNext" Id="{0d255a40-6614-4f67-94dc-6238407c06a7}">
+      <Declaration><![CDATA[METHOD RemoveAndNext : Result
+VAR
+    _nSegLen		: INT := _nSegEnd - _nSegStart + 1; // Length of the segment to remove
+    _bIsFirstSeg	: BOOL := (_nSegStart = 1); // Check if the segment is the first segment
+    _bIsLastSeg		: BOOL := (_nSegEnd = _nLen); // Check if the segment is the last segment
+	i				: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Ensure the current path is valid
+IF _sPath = '' OR _nSegStart = 0 THEN
+    RemoveAndNext := None;
+    RETURN;
+END_IF;
+
+IF _bIsFirstSeg AND _bIsLastSeg THEN	
+	_sPath := '';
+    _nLen := 0;
+	_nSegStart := 0;
+	_nSegEnd := 0;
+	RemoveAndNext := Ok;
+ELSIF _bIsFirstSeg THEN
+	_sPath := Tc2_Standard.DELETE(_sPath, _nSegLen + 1, _nSegStart); // Also removes dot after first segment
+	_nLen := _nLen - _nSegLen;
+	_nSegStart := 0;
+	_nSegEnd := 0;
+	RemoveAndNext := Ok;
+ELSIF _bIsLastSeg THEN
+	_sPath := Tc2_Standard.DELETE(_sPath, _nSegLen + 1, _nSegStart - 1); // Also removes dot before last segment
+	_nLen := _nLen - _nSegLen;
+	_nSegStart := 0;
+	_nSegEnd := 0;
+	RemoveAndNext := Ok;
+ELSE
+	_sPath := Tc2_Standard.DELETE(_sPath, _nSegLen + 1, _nSegStart); // Also removes dot after segment
+	_nLen := _nLen - _nSegLen;
+	_nSegStart := _nSegEnd + 2; // Skip the delimiter
+	
+	FOR i := _nSegStart TO _nLen DO
+		IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+			_nSegEnd := i - 1;
+			EXIT;
+		END_IF;
+	END_FOR;
+	
+	// If no more delimiters, this is the last segment
+	IF _nSegEnd < _nSegStart THEN
+		_nSegEnd := _nLen;
+	END_IF;
+	RemoveAndNext := Ok;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveAndPrev" Id="{c1a28866-c26a-4715-bc3f-11af169f2834}">
+      <Declaration><![CDATA[METHOD RemoveAndPrev : Result
+VAR
+    _nSegLen		: INT := _nSegEnd - _nSegStart + 1; // Length of the segment to remove
+    _bIsFirstSeg	: BOOL := (_nSegStart = 1); // Check if the segment is the first segment
+    _bIsLastSeg		: BOOL := (_nSegEnd = _nLen); // Check if the segment is the last segment
+	i				: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Ensure the current path is valid
+IF _sPath = '' OR _nSegStart = 0 THEN
+    RemoveAndPrev := None;
+    RETURN;
+END_IF;
+
+IF _bIsFirstSeg AND _bIsLastSeg THEN	
+	_sPath := '';
+    _nLen := 0;
+	_nSegStart := 0;
+	_nSegEnd := 0;
+	RemoveAndPrev := Ok;
+ELSIF _bIsFirstSeg THEN
+	_sPath := Tc2_Standard.DELETE(_sPath, _nSegLen + 1, _nSegStart); // Also removes dot after first segment
+	_nLen := _nLen - _nSegLen;
+	_nSegStart := 0;
+	_nSegEnd := 0;
+	RemoveAndPrev := Ok;
+ELSIF _bIsLastSeg THEN
+	_sPath := Tc2_Standard.DELETE(_sPath, _nSegLen + 1, _nSegStart - 1); // Also removes dot before last segment
+	_nLen := _nLen - _nSegLen;
+	_nSegStart := 0;
+	_nSegEnd := 0;
+	RemoveAndPrev := Ok;
+ELSE
+	_sPath := Tc2_Standard.DELETE(_sPath, _nSegLen + 1, _nSegStart); // Also removes dot after segment
+	_nLen := _nLen - _nSegLen;
+	_nSegEnd := _nSegStart - 2; // Skip the delimiter
+	
+	FOR i := _nSegEnd TO 1 BY -1 DO
+		IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+			_nSegStart := i + 1;
+			EXIT;
+		END_IF;
+	END_FOR;
+	
+	// If no more delimiters, this is the first segment
+	IF _nSegEnd < _nSegStart THEN
+		_nSegStart := 1;
+	END_IF;
+	RemoveAndPrev := Ok;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Set" Id="{59eb7151-fecf-4492-8bf1-30025d8074fd}">
+      <Declaration><![CDATA[METHOD Set : Result
+VAR_INPUT
+	sNewPath		: Str;
+END_VAR
+VAR
+	i				: INT;
+	_nStrLen		: INT := Tc2_Standard.LEN(sNewPath);
+	_sChar			: Ch;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF sNewPath = '' THEN
+	Set := None;
+	RETURN;
+END_IF
+
+_sChar := Tc2_Standard.MID(sNewPath, 1, 1);
+IF (_sChar >= '0') AND (_sChar <= '9') THEN
+	Set := None;
+    RETURN;
+END_IF;
+
+FOR i := 1 TO _nStrLen DO
+    _sChar := Tc2_Utilities.F_ToLCase(Tc2_Standard.MID(sNewPath, 1, i));
+    
+    // Check for invalid characters
+    IF NOT ((_sChar >= 'a' AND _sChar <= 'z') OR 	// Lowercase letters
+            (_sChar >= '0' AND _sChar <= '9') OR 	// Numbers
+            (_sChar = '_') OR                 		// Underscore
+			(_sChar = '.') OR
+			(_sChar = '*')) THEN					// Wildcard
+		Set := None;
+        RETURN;
+    END_IF;
+END_FOR;
+
+IF Tc2_Standard.FIND(sNewPath, '..') <> 0 THEN
+	Set := None;
+	RETURN;
+END_IF
+
+IF Tc2_Standard.FIND(sNewPath, '**') <> 0 THEN
+	Set := None;
+	RETURN;
+END_IF
+
+_sPath := sNewPath;
+_nLen := _nStrLen;
+Set := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Swap" Id="{cc9e4235-2aed-4cdd-a813-c026de498a1d}">
+      <Declaration><![CDATA[METHOD Swap : Result
+VAR_INPUT
+	sToSwap		: Str;
+END_VAR
+VAR
+	_nSegLen	: INT := _nSegEnd - _nSegStart + 1;
+	_nSwapLen	: INT := Tc2_Standard.LEN(sToSwap);
+	_nNewLen	: INT := _nLen - _nSegLen + _nSwapLen;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _sPath = '' OR _nSegStart = 0 OR sToSwap = '' THEN
+    Swap := None;
+    RETURN;
+END_IF;
+
+IF _HasIncorrectSymbols(sToSwap) THEN
+	Swap := None;
+	RETURN;
+END_IF
+
+IF _nNewLen <= 255 THEN
+	_sPath := Tc2_Standard.REPLACE(_sPath, sToSwap, _nSegLen, _nSegStart);
+	_nSegEnd := _nSegStart + _nSwapLen - 1;
+	_nLen := _nNewLen;
+	Swap := Ok;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

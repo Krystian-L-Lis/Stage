@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="StateBuffer" Id="{711a25fc-792a-4435-9ccd-e8054980130d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StateBuffer
+VAR_GENERIC CONSTANT
+	STATE_CAP			: UDINT(1..16#7FFFFFFF) := 1;
+END_VAR
+IMPLEMENTS I_StateBuffer
+VAR
+	_iState				: ARRAY[1..STATE_CAP] OF I_StateInternal;
+	_nHead				: UDINT;
+	_nTail				: UDINT;
+	_nLen				: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Other" Id="{5d3df489-8735-43fe-a81c-03404c1c5f20}" />
+    <Folder Name="Push" Id="{4903ac7f-b709-435c-851d-d394b1e3ffec}" />
+    <Method Name="Cap" Id="{0d43e644-fff4-43e2-a039-01aede7b9e10}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Cap : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Cap := STATE_CAP;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Length" Id="{264889a2-4c66-4869-80d2-31916bbd4e00}" FolderPath="Other\">
+      <Declaration><![CDATA[METHOD Length : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Length := _nLen;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{d39e1d8e-6957-40eb-ad12-24d995eb484b}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Pop : Result
+VAR_OUTPUT
+	iState			: I_StateInternal;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nHead = _nTail THEN
+    Pop := None;
+    RETURN;
+END_IF
+
+iState := _iState[_nHead];
+_iState[_nHead] := 0;
+
+_nHead := _nHead + 1;
+_nLen := _nLen - 1;
+
+IF _nHead > STATE_CAP THEN
+    _nHead := 0;
+END_IF
+
+Pop := Ok;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{5955ea9d-3baf-4dfd-a5a1-a995221ac391}" FolderPath="Push\">
+      <Declaration><![CDATA[METHOD Push : Result
+VAR_INPUT
+	iState			: I_StateInternal;
+END_VAR
+VAR
+	_nNextTail 		: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iState = 0 THEN
+	Push := Err.Itf0;
+	RETURN;
+END_IF
+
+_nNextTail := _nTail + 1;
+
+IF _nNextTail > STATE_CAP THEN
+    _nNextTail := 0;
+END_IF
+
+IF _nNextTail = _nHead THEN
+    Push := Err.Ovf; 
+    RETURN;
+END_IF
+
+_nLen := _nLen + 1;
+_iState[_nTail] := iState;
+_nTail := _nNextTail;
+Push := Ok;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_ArePaired" Id="{085ba83a-36d2-43cc-953e-2b16e5bb319a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _ArePaired : BOOL
+VAR_INPUT
+	iSignal				: I_SignalNode;
+    iReceiver			: I_ReceiverNode;
+END_VAR
+VAR_OUTPUT
+	nPos				: UDINT;
+END_VAR
+VAR
+	i					: UDINT;
+	_nEnd				: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSignal.count = 0 THEN
+	_ArePaired := FALSE;
+	RETURN;	
+END_IF
+
+_nEnd := iSignal.id + iSignal.count - 1;
+FOR i := iSignal.id TO _nEnd DO
+	IF _Broadcast.stEntry[i].iReceiver = iReceiver THEN
+		_ArePaired := TRUE;
+		nPos := i;
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

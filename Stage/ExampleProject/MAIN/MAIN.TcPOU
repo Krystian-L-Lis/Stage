@@ -3,23 +3,23 @@
   <POU Name="MAIN" Id="{46c268e9-fb81-4ca2-9b53-e3c90b600c5e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	safety		: Safety;
-	tankCtrl	: TankCtrl;
-	tank		: ARRAY[1..CST.MAX_TANK] OF Tank(tankCtrl);
-	outlet		: ARRAY[1..CST.MAX_TANK] OF Outlet;
+	//safety		: Safety;
+	//tankCtrl		: TankCtrl;
+	//tank			: ARRAY[1..CST.MAX_TANK] OF Tank(tankCtrl);
+	//outlet		: ARRAY[1..CST.MAX_TANK] OF Outlet;
 	
-	sim			: Sim;
+	//sim			: Sim;
 	
 	eResult		: Result;
 	bError		: BOOL;
 	
-	dbgList		: DebugList;	
+	dbgList			: DebugList;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE eResult OF 
 	None:
-		eResult := AssignOutletToTank(tank, outlet);
+		eResult := Ok; //AssignOutletToTank(tank, outlet);
 	Ok:
 		Runtime();
 	ELSE

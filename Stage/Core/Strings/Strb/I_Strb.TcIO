@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Strb" Id="{ba21f907-2947-410b-a5fe-d31c0fb60621}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_Strb
+]]></Declaration>
+    <Method Name="Append" Id="{248d4e6a-1d63-4a88-a9ff-6f22af843738}">
+      <Declaration><![CDATA[METHOD Append : I_Strb;
+VAR_INPUT
+	sToAdd		: Str;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="FindFirstAfter" Id="{cbb45280-4d0a-46e0-9518-44d206a10b65}">
+      <Declaration><![CDATA[METHOD FindFirstAfter 	: I_Strb;
+VAR_INPUT
+	sToFind			: Str;
+	nPosition		: INT := 1;
+END_VAR
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="FindLastBefore" Id="{4605251b-2100-457a-9572-22dbfde23e5d}">
+      <Declaration><![CDATA[METHOD FindLastBefore 	: I_Strb;
+VAR_INPUT
+	sToFind			: Str;
+	nPosition		: INT := 256;
+END_VAR
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="HasAfter" Id="{f6606593-96a5-466f-bbd2-567dc49ba5e1}">
+      <Declaration><![CDATA[METHOD HasAfter : BOOL
+VAR_INPUT
+	sToFind		: Str;
+	nPosition	: INT := 0;
+END_VAR
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="HasBefore" Id="{3ba32025-a527-449a-a307-df9b66ed9eda}">
+      <Declaration><![CDATA[METHOD HasBefore : BOOL
+VAR_INPUT
+	sToFind		: Str;
+	nPosition	: INT := 256;
+END_VAR
+VAR_OUTPUT
+	nStart			: INT;
+	nEnd			: INT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Inject" Id="{42b4e730-2675-4489-9fe4-217e8e7d42d0}">
+      <Declaration><![CDATA[METHOD Inject : I_Strb
+VAR_INPUT
+	nPosition	: INT;
+	sToInject	: Str;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="IsEmpty" Id="{7ec358e7-cfb6-46dd-b47f-afbb755de3fa}">
+      <Declaration><![CDATA[METHOD IsEmpty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Length" Id="{e00aeb63-f167-4f31-942d-bc8a0b296d6c}">
+      <Declaration><![CDATA[METHOD Length : INT;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Prepend" Id="{5bc04033-c6a6-47d8-8c78-bbe521b9bc45}">
+      <Declaration><![CDATA[METHOD Prepend : I_Strb;
+VAR_INPUT
+	sToAdd		: Str;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Read" Id="{b4c48c9b-9942-42d6-a0c3-ad72a73e80c9}">
+      <Declaration><![CDATA[METHOD Read : Str;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Remove" Id="{38c87d18-4637-4049-b384-460f530c2152}">
+      <Declaration><![CDATA[METHOD Remove : I_Strb;
+VAR_INPUT
+	nLength		: INT;
+	nPosition	: INT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Set" Id="{cde054de-26e3-4022-b4ee-a7751f8859aa}">
+      <Declaration><![CDATA[METHOD Set : I_Strb;
+VAR_INPUT
+	sLiteral	: Str;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Slice" Id="{c5d2cbbd-cd3e-4818-966c-244420d51bcb}">
+      <Declaration><![CDATA[METHOD Slice : I_Strb
+VAR_INPUT
+	nPosition	: INT;
+	nLength		: INT;
+END_VAR
+VAR_OUTPUT
+	sSlice			: Strb;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Split" Id="{827c2322-1e1a-4752-891a-627fe8cdc2d1}">
+      <Declaration><![CDATA[METHOD Split : I_Strb;
+VAR_INPUT
+	nPosition	: INT;
+END_VAR
+VAR_OUTPUT
+	sLeft		: Strb;
+	sRight		: Strb;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

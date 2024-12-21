@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Tagged" Id="{b58edee9-4fde-44ef-8cdc-e705919fec86}">
-    <Declaration><![CDATA[INTERFACE I_Tagged
+    <Declaration><![CDATA[INTERFACE I_Tagged EXTENDS Domains.I_Component
 ]]></Declaration>
     <Property Name="Tag" Id="{44276dfe-612b-4762-b855-7fa4243cc2ba}">
       <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>

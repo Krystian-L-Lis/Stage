@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Callable" Id="{12666b7d-e29e-43ef-8ad6-3108c77eb213}">
+    <Declaration><![CDATA[INTERFACE I_Callable
+]]></Declaration>
+    <Method Name="Call" Id="{8832ca44-0762-4c0a-bb8a-499db047863a}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iArg		: I_Arg;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

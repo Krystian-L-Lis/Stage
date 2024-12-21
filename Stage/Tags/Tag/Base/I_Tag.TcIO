@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Tag" Id="{169b0aa9-3f7f-4d5f-86c3-0a839d1aeed2}">
-    <Declaration><![CDATA[INTERFACE I_Tag EXTENDS Debug.I_Debug
+    <Declaration><![CDATA[INTERFACE I_Tag EXTENDS Debug.I_Debug, Domains.I_Component
 ]]></Declaration>
     <Property Name="Cache" Id="{a7a9550e-d99f-4348-a33b-ef0f866499c2}">
       <Declaration><![CDATA[PROPERTY Cache : UDINT]]></Declaration>

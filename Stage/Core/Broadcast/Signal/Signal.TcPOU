@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Signal" Id="{f8e18ed7-1c52-42fc-a059-fb597dcc2816}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_Emit
+VAR
+	_tag			: Tag('');
+	_nCount			: UDINT;
+	_nSize			: UDINT;
+	_nId			: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Node" Id="{67b0e520-34fd-49c8-b1ba-61fc8c99d4e5}" />
+    <Property Name="count" Id="{747f76e2-80c1-4fe7-ac12-36b51ee62f7b}" FolderPath="Node\">
+      <Declaration><![CDATA[PROPERTY INTERNAL count : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{af4b6446-a198-46ee-956f-22c2e9ff3508}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[count := _nCount;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{18d5f4fe-e62e-4a04-9c83-538c70681da2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nCount := count;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Emit" Id="{4ad2ae5f-8061-46ee-9938-a79c2993fbad}">
+      <Declaration><![CDATA[METHOD Emit
+VAR_INPUT
+	iArg			: I_Arg := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iArg = 0 THEN
+	iArg := _tag;
+END_IF
+
+_EmitSignal(THIS^, iArg);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="EmitTo" Id="{01237bb5-eb33-4f6f-8303-4496429927bb}">
+      <Declaration><![CDATA[METHOD EmitTo : Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+	iArg			: I_Arg;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iReceiver = 0 THEN
+	EmitTo := Err.Itf0;
+	RETURN;
+END_IF
+
+IF iArg = 0 THEN
+	iArg := _tag;
+END_IF
+
+iReceiver.Receive(iArg);
+EmitTo := Ok;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="id" Id="{337b25f3-a662-46cb-a639-924df6db33a7}" FolderPath="Node\">
+      <Declaration><![CDATA[PROPERTY INTERNAL id : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{7b2bfffc-a197-41af-aa40-1c4075cd6ea1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[id := _nId;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5726210a-4f73-428b-a697-77cd8dcfa82c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nId := id;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Option" Id="{1843f7ed-dc01-49ec-bf6f-06b77ee6ae5f}">
+      <Declaration><![CDATA[METHOD Option : REFERENCE TO Signal
+VAR_INPUT
+	sOption		: Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Option REF= THIS^;
+_tag.Option := sOption;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pair" Id="{ffac2203-3a22-4d2d-be13-7d02d87566af}">
+      <Declaration><![CDATA[METHOD Pair : Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iReceiver = 0 THEN
+	Pair := Err.Itf0;
+ELSIF iReceiver.IsOk THEN
+	Pair := _NewPair(THIS^, iReceiver);
+ELSE
+	Pair := Error;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="size" Id="{0a91cfac-93c7-4387-861b-eadaf8ca6b39}" FolderPath="Node\">
+      <Declaration><![CDATA[PROPERTY INTERNAL size : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{a478b757-5e32-4c1d-b6de-43374fb4317b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[size := _nSize;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{21b4b107-67e7-4639-a795-cc4753c3293e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nSize := size;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Tag" Id="{276c9dc2-e1f1-4c44-b5b0-4b2a0ec67ff8}">
+      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{75779fa8-33cd-4bad-ac20-5c8ee6db9799}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := _tag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Unpair" Id="{c5a28d3d-8210-4c9d-a125-1a6761d00d0d}">
+      <Declaration><![CDATA[METHOD Unpair : Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iReceiver = 0 THEN
+	Unpair := Err.Itf0;
+ELSIF iReceiver.IsOk THEN
+	Unpair := _Unpair(THIS^, iReceiver);
+ELSE
+	Unpair := Error;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

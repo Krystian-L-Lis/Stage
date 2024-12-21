@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Tag" Id="{3b7d0464-054c-4855-8e00-e0918a18417d}">
+    <Declaration><![CDATA[INTERFACE I_Tag EXTENDS I_Debug, I_Component, I_Arg
+]]></Declaration>
+    <Property Name="Id" Id="{a68c541f-7bc5-477f-8c26-6a17d7eb2271}">
+      <Declaration><![CDATA[PROPERTY Id : Str]]></Declaration>
+      <Get Name="Get" Id="{8c83fc25-7b57-4b5d-9702-2e725bfd31a9}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Option" Id="{8c79c8bc-96ce-4254-84e1-a392e5aab50b}">
+      <Declaration><![CDATA[PROPERTY Option : Str]]></Declaration>
+      <Get Name="Get" Id="{f7fa3efc-e0ec-4365-b02f-31a1cbfcb7b8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Self" Id="{97b1dd7d-47d8-4c08-816a-78eb91b485e7}">
+      <Declaration><![CDATA[PROPERTY Self : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{80e9b48c-03c9-4822-abb0-9f7df58fb296}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

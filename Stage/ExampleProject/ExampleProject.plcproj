@@ -22,148 +22,14 @@
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MAIN\MAIN.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="Outlet\AssignOutletToTank.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Outlet\Outlet.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Outlet\Outlet_Ctx.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Outlet\State\Outlet_EStop.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Outlet\State\Outlet_Operational.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Outlet\State\Outlet_State.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Safety\Vi_Safety.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="Simulation\Sim.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Simulation\Vi_Sim_Tank.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="Simulation\Vi_Sim_TankCtrl.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="Simulation\Vi_Sim_Safety.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="TankCtrl\Ui\Visu\Vi_TankCtrl.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="Tank\Ctx\Tank_Hmi.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Ctx\Tank_Io.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Ctx\Tank_Priv.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Ctx\Tank_States.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Ctx\Io\Tank_Io_In.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Ctx\Io\Tank_Io_Out.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\State\Tank_Disabled.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\State\Tank_Fault.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\State\Tank_Fill.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\State\Tank_SystemOff.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Tank.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Tank_Ctx.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\State\Tank_Enabled.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\State\_Tank_State.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Ui\Tank_StatusText.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MAIN\CST.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="TankCtrl\Ctx\TankCtrl_Hmi.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\Ctx\TankCtrl_Io.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\Ctx\TankCtrl_Priv.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\Ctx\TankCtrl_States.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\Ctx\Io\TankCtrl_Io_In.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\Ctx\Io\TankCtrl_Io_Out.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\State\TankCtrl_Disabled.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\State\TankCtrl_Filling.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\State\TankCtrl_Enabled.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\State\TankCtrl_Fault.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\TankCtrl.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\TankCtrl_Ctx.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\State\TankCtrl_EStop.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\State\_TankCtrl_State.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TankCtrl\Ui\TankCtrl_StatusText.TcPOU">
-      <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="MAIN\COL.TcGVL">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
     <Compile Include="MAIN\MAIN.TcPOU">
       <SubType>Code</SubType>
@@ -174,69 +40,11 @@
     <Compile Include="Safety\Safety.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Safety\Safety_Hmi.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tank\Ui\Visu\Vi_Tank.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="Visualization Manager.TcVMO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VISU_TASK.TcTTO">
+    <Compile Include="Safety\Safety_Ctx.TcDUT">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="System_VisuElemMeter">
-      <DefaultResolution>VisuElemMeter, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuElemMeter</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
-    <PlaceholderReference Include="System_VisuElems">
-      <DefaultResolution>VisuElems, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuElems</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
-    <PlaceholderReference Include="System_VisuElemsSpecialControls">
-      <DefaultResolution>VisuElemsSpecialControls, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuElemsSpecialControls</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
-    <PlaceholderReference Include="System_VisuElemsWinControls">
-      <DefaultResolution>VisuElemsWinControls, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuElemsWinControls</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
-    <PlaceholderReference Include="System_VisuElemTextEditor">
-      <DefaultResolution>VisuElemTextEditor, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuElemTextEditor</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
-    <PlaceholderReference Include="System_VisuElemXYChart">
-      <DefaultResolution>VisuElemXYChart, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuElemXYChart</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
-    <PlaceholderReference Include="System_VisuInputs">
-      <DefaultResolution>VisuInputs, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuInputs</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
-    <PlaceholderReference Include="System_VisuNativeControl">
-      <DefaultResolution>VisuNativeControl, 4.6.0.0 (System)</DefaultResolution>
-      <Namespace>VisuNativeControl</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>2717eb6a-dd07-4c66-8d8d-cacebd7b18ae</ResolverGuid>
-    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -244,107 +52,47 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
+      <Parameters>
+        <Parameter ListName="PARAM">
+          <Key>STRING_LENGTH_ADDRESS</Key>
+          <Value>20</Value>
+        </Parameter>
+        <Parameter ListName="PARAM">
+          <Key>STRING_LENGTH_COMMENT</Key>
+          <Value>255</Value>
+        </Parameter>
+        <Parameter ListName="PARAM">
+          <Key>STRING_LENGTH_EXP</Key>
+          <Value>255</Value>
+        </Parameter>
+        <Parameter ListName="PARAM">
+          <Key>STRING_LENGTH_OUTSTRING</Key>
+          <Value>255</Value>
+        </Parameter>
+        <Parameter ListName="PARAM">
+          <Key>TABLE_SHOW_VALID_ITEMS</Key>
+          <Value>FALSE</Value>
+        </Parameter>
+        <Parameter ListName="PARAM">
+          <Key>TABLE_UPPER_BOUND</Key>
+          <Value>15</Value>
+        </Parameter>
+      </Parameters>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
       <SystemLibrary>true</SystemLibrary>
     </PlaceholderReference>
-    <PlaceholderReference Include="VisuDialogs">
-      <DefaultResolution>VisuDialogs, * (System)</DefaultResolution>
-      <Namespace>VisuDialogs</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Broadcast">
-      <DefaultResolution>Broadcast, * (_)</DefaultResolution>
-      <Namespace>Broadcast</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Debug">
-      <DefaultResolution>Debug, * (_)</DefaultResolution>
-      <Namespace>Debug</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Domains">
-      <DefaultResolution>Domains, * (_)</DefaultResolution>
-      <Namespace>Domains</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Flags">
-      <DefaultResolution>Flags, * (_)</DefaultResolution>
-      <Namespace>Flags</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Parameters">
-      <DefaultResolution>Parameters, * (_)</DefaultResolution>
-      <Namespace>Parameters</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Results">
-      <DefaultResolution>Results, * (_)</DefaultResolution>
-      <Namespace>Results</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Rt">
-      <DefaultResolution>Rt, * (_)</DefaultResolution>
-      <Namespace>Rt</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_States">
-      <DefaultResolution>States, * (_)</DefaultResolution>
-      <Namespace>States</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Strings">
-      <DefaultResolution>Strings, * (_)</DefaultResolution>
-      <Namespace>Strings</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Tags">
-      <DefaultResolution>Tags, * (_)</DefaultResolution>
-      <Namespace>Tags</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Utils">
-      <DefaultResolution>Utils, * (_)</DefaultResolution>
-      <Namespace>Utils</Namespace>
+    <PlaceholderReference Include="_Core">
+      <DefaultResolution>Core, * (_)</DefaultResolution>
+      <Namespace>Core</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Simulation" />
-    <Folder Include="Outlet" />
-    <Folder Include="Outlet\State" />
-    <Folder Include="Outlet\Ui" />
-    <Folder Include="Outlet\Ui\Visu" />
-    <Folder Include="Tank" />
-    <Folder Include="Tank\Ctx" />
-    <Folder Include="Tank\Ctx\Io" />
-    <Folder Include="Tank\State" />
-    <Folder Include="Tank\Ui" />
-    <Folder Include="Tank\Ui\Visu" />
-    <Folder Include="TankCtrl" />
-    <Folder Include="TankCtrl\Ctx" />
-    <Folder Include="TankCtrl\Ctx\Io" />
-    <Folder Include="TankCtrl\State" />
-    <Folder Include="TankCtrl\Ui" />
-    <Folder Include="TankCtrl\Ui\Visu" />
     <Folder Include="MAIN" />
     <Folder Include="Safety" />
-  </ItemGroup>
-  <ItemGroup>
-    <PlaceholderResolution Include="System_VisuElemMeter">
-      <Resolution>VisuElemMeter, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="System_VisuElems">
-      <Resolution>VisuElems, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="System_VisuElemsSpecialControls">
-      <Resolution>VisuElemsSpecialControls, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="System_VisuElemsWinControls">
-      <Resolution>VisuElemsWinControls, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="System_VisuElemTextEditor">
-      <Resolution>VisuElemTextEditor, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="System_VisuElemXYChart">
-      <Resolution>VisuElemXYChart, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="System_VisuInputs">
-      <Resolution>VisuInputs, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
-    <PlaceholderResolution Include="System_VisuNativeControl">
-      <Resolution>VisuNativeControl, 4.5.0.0 (System)</Resolution>
-    </PlaceholderResolution>
+    <Folder Include="Safety\Ctx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleProject.tmc">

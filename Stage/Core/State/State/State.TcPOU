@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="State" Id="{a3b28716-f684-494e-889b-84fe1781ad45}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT State IMPLEMENTS I_StateInternal, I_State
+VAR
+	{attribute 'hide'}
+	_tag						: Tag('');
+	{attribute 'hide'}
+	_bInQueue					: BOOL;
+	{attribute 'hide'}
+	_iOwner						: I_CompRegister;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="_" Id="{b2082cde-a72a-48d1-bf2b-bfe685440ba0}" />
+    <Folder Name="Can" Id="{012b303c-ee19-4d59-a8c5-29d7ee56e39c}" />
+    <Folder Name="On" Id="{5034b126-7af1-4e3e-aa65-10d454bc5f51}" />
+    <Property Name="_InQueue" Id="{7211bf2e-3f54-4127-8169-2b1f66f2bb49}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _InQueue : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f6028f30-7546-40bc-a7f1-f2d9bdc4c404}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_InQueue := _bInQueue;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{2b151194-8b26-4b93-a27d-8d175bcf9d22}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_bInQueue := _InQueue;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="AsIState" Id="{cad638c9-6284-409f-af0f-87aef14da223}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY AsIState : I_State]]></Declaration>
+      <Get Name="Get" Id="{6784ed83-5b06-43f4-bc32-50d46f2cec80}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AsIState := THIS^;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CanActivate" Id="{71c49a83-838e-4656-9fc2-ce8957b8e198}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD CanActivate : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CanActivate := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CanDeactivate" Id="{d9ac8857-b429-40a0-ae64-2f200213bb6e}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD CanDeactivate : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CanDeactivate := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{2842d681-0b8d-4523-860b-e4e2b7025ae0}" FolderPath="_\">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iCompReg					: I_MutCompRegister;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iCompReg = 0 THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+	RETURN;
+END_IF
+
+CASE iCompReg.Insert(THIS^) OF
+	Ok:
+		_iOwner := iCompReg;
+	Err.ItfEq:
+		DebugMsg(iCompReg, Tc2_Standard.CONCAT(__POUNAME(), 'Tried to insert a double!'));
+		DebugMsg(THIS^, 'Cause object');
+	Err.Ovf:
+		DebugMsg(iCompReg, Tc2_Standard.CONCAT(__POUNAME(), 'Overflow!'));
+		DebugMsg(THIS^, 'Cause object!');
+	ELSE
+		DebugMsg(iCompReg, Tc2_Standard.CONCAT(__POUNAME(), 'Unknown Error!'));
+		DebugMsg(THIS^, 'Cause object!');
+END_CASE
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{aabb82b9-2f5d-4e99-b353-6c10e3d6ce3d}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD OnExecute
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExit" Id="{25d7c89a-22df-4af1-9c2c-e2be2f3e48a9}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD OnExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{233f0cb7-a018-4a8e-a04c-cd20357f448f}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD OnInit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Owner" Id="{32b502a4-ba25-4a78-8e46-5a8b31e2a3e9}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Owner : I_CompRegister]]></Declaration>
+      <Get Name="Get" Id="{98a99666-df4c-40b9-abec-3c308e3cdead}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Owner := _iOwner;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Tag" Id="{0bbeba40-ec6e-4b6d-a33f-9c84eca9c89e}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{c1b1ddfd-4e01-4e44-9d81-1a59ffd92985}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := _tag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

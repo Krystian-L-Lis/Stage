@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="EmitProxy" Id="{5b8e5d82-fa75-4a5b-870b-e9c450ea1719}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK EmitProxy IMPLEMENTS Debug.I_Debug]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{385b5f65-8203-4893-94a5-e92208725324}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iEmit			: I_Emit;
+	refEmitProxy	: REFERENCE TO I_Emit;	
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iEmit = 0 THEN
+	Debug.DebugMsg(THIS^, 'iEmit = 0!');
+	RETURN;
+END_IF
+
+IF __ISVALIDREF(refEmitProxy) THEN
+	refEmitProxy := iEmit;
+ELSE
+	Debug.DebugMsg(THIS^, 'refEmitProxy ref invalid!');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

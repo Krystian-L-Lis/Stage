@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_FindChunkAfter" Id="{4a01fdf0-3fa9-4d00-995c-9809b5b537d1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _FindChunkAfter : Result
+VAR_INPUT
+	nId					: UDINT;
+    nRequestedSize     	: UDINT;
+END_VAR
+VAR_OUTPUT
+    nNewSize            : UDINT;
+END_VAR
+VAR
+	i					: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Loop from the starting index to the end of stEntry
+FOR i := nId TO Param.BROADCAST_CAP DO
+	IF nRequestedSize = nNewSize THEN
+		EXIT;
+	ELSIF _Broadcast.stEntry[i].iSignal = 0 THEN
+		nNewSize := nNewSize + 1;
+	ELSE
+		EXIT;
+	END_IF
+END_FOR
+
+// Check if the required size was found
+IF nNewSize = nRequestedSize THEN
+	_FindChunkAfter := Ok;
+ELSE
+	_FindChunkAfter := Error;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

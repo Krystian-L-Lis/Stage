@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_SignalNode" Id="{9986a83b-84ba-44f5-ada8-fdbfebb0d1eb}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_SignalNode EXTENDS I_Debug
+]]></Declaration>
+    <Folder Name="_" Id="{2c045e55-1443-473c-b9f7-83217e57ae9d}" />
+    <Property Name="count" Id="{3e24d41f-d222-4c9c-bf00-72565b4682aa}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL count : UDINT]]></Declaration>
+      <Get Name="Get" Id="{a849bc8e-3624-4b20-a478-b5ecdef96a27}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{f6497037-d1b8-4c02-aea9-dc377a107f68}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="id" Id="{30a15fd0-e880-4534-8545-dc470cc15d81}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL id : UDINT]]></Declaration>
+      <Get Name="Get" Id="{692bd17a-bf66-4c05-9a36-ebed70b02fe3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{9a03a416-271a-4300-ab9a-b087a7d84576}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="size" Id="{b6650d71-cbcf-43b0-88e5-bb4cde5396b4}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL size : UDINT]]></Declaration>
+      <Get Name="Get" Id="{babf9e29-0594-4bde-8bfe-731925a65630}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{dd2179e8-aeab-4379-b8dc-bfc944182c00}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_MutCTable" Id="{2cd7cdec-0286-4832-a950-30c990b9c773}">
+    <Declaration><![CDATA[INTERFACE I_MutCTable EXTENDS I_CTable
+]]></Declaration>
+    <Method Name="Insert" Id="{4c7ea171-4d2c-4d0a-84c7-27d6c43695f7}">
+      <Declaration><![CDATA[METHOD Insert : Results.Result
+VAR_INPUT
+	iComponent	: I_Component;
+END_VAR
+VAR_OUTPUT
+	nIndex		: UDINT;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TagProxy" Id="{c402a2d8-aa20-4784-8508-290c117834fa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TagProxy IMPLEMENTS I_Debug
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{30ca7a94-4f95-4528-bd9e-aac7f109a747}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iTag			: I_Tag;
+	refTag			: REFERENCE TO I_Tag;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT __ISVALIDREF(refTag) THEN
+	DebugMsg(THIS^, ': Ref = 0!');
+	RETURN;
+END_IF
+
+IF iTag = 0 THEN
+	DebugMsg(THIS^, ': Itf = 0!');
+	RETURN;
+END_IF
+
+IF refTag <> 0 THEN
+	DebugMsg(THIS^, ': Ref itf should be unassigned!');
+	RETURN;
+END_IF
+
+refTag := iTag;
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

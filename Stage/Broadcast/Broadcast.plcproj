@@ -74,6 +74,14 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Domains">
+      <DefaultResolution>Domains, * (_)</DefaultResolution>
+      <Namespace>Domains</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="_EC">
+      <DefaultResolution>EC, * (_)</DefaultResolution>
+      <Namespace>EC</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="_Results">
       <DefaultResolution>Results, * (_)</DefaultResolution>
       <Namespace>Results</Namespace>
@@ -102,68 +110,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Broadcast" />
-    <Folder Include="Broadcast\List" />
-    <Folder Include="Broadcast\List\Receiver" />
-    <Folder Include="Broadcast\List\Signal" />
-    <Folder Include="Broadcast\Find" />
-    <Folder Include="Broadcast\_" />
+    <Folder Include="Broadcast\Call" />
+    <Folder Include="Broadcast\Sys" />
     <Folder Include="Broadcast\Signal" />
     <Folder Include="Broadcast\Receiver" />
-    <Folder Include="Broadcast\_\Helpers" />
-    <Folder Include="Broadcast\_\Structs" />
+    <Folder Include="Broadcast\Sys\Helpers" />
+    <Folder Include="Broadcast\Sys\Structs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Broadcast\Find\FindRec.TcPOU">
+    <Compile Include="Broadcast\Call\I_Arg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Find\FindWcdSignal.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Find\FindWcdRec.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Find\FindSignal.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Find\FindManyRecs.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Find\FindManySignals.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Receiver\I_ReceiverList.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Receiver\I_MutReceiverList.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Receiver\ReceiverListExtender.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Receiver\ReceiverList.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Signal\I_SignalList.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Signal\I_MutSignalList.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Signal\SignalList.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\List\Signal\SignalListExtender.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Param.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-      <ExcludeFromBuild>false</ExcludeFromBuild>
-    </Compile>
-    <Compile Include="Broadcast\Receiver\A_Receiver.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Receiver\I_Call.TcIO">
+    <Compile Include="Broadcast\Call\I_Callable.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Receiver\I_Receiver.TcIO">
@@ -175,7 +133,10 @@
     <Compile Include="Broadcast\Receiver\Receiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Signal\A_Signal.TcPOU">
+    <Compile Include="Broadcast\Signal\EmitProxy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Signal\I_Emit.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Signal\I_Signal.TcIO">
@@ -187,56 +148,54 @@
     <Compile Include="Broadcast\Signal\Signal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\_Channel.TcGVL">
+    <Compile Include="Broadcast\Sys\Param.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Broadcast\Sys\_Channel.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_Cleanup.TcPOU">
+      <SubType>Code</SubType>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_Clear.TcPOU">
+      <SubType>Code</SubType>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_Copy.TcPOU">
+      <SubType>Code</SubType>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_EmitSignal.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
-    <Compile Include="Broadcast\_\Helpers\_Cleanup.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_FindBestChunk.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_ArePaired.TcPOU">
       <SubType>Code</SubType>
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
-    <Compile Include="Broadcast\_\Helpers\_Clear.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_FindChunkAfter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_NewPair.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Helpers\_SoftCompress.TcPOU">
       <SubType>Code</SubType>
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
-    <Compile Include="Broadcast\_\Helpers\_Copy.TcPOU">
-      <SubType>Code</SubType>
-      <ExcludeFromBuild>false</ExcludeFromBuild>
-    </Compile>
-    <Compile Include="Broadcast\_\Helpers\_EmitSignal.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-      <ExcludeFromBuild>false</ExcludeFromBuild>
-    </Compile>
-    <Compile Include="Broadcast\_\Helpers\_FindBestChunk.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_Unpair.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\_\Helpers\_ArePaired.TcPOU">
-      <SubType>Code</SubType>
-      <ExcludeFromBuild>false</ExcludeFromBuild>
-    </Compile>
-    <Compile Include="Broadcast\_\Helpers\_FindChunkAfter.TcPOU">
+    <Compile Include="Broadcast\Sys\Structs\ST_Entry.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\_\Helpers\_NewPair.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\_\Helpers\_SoftCompress.TcPOU">
-      <SubType>Code</SubType>
-      <ExcludeFromBuild>false</ExcludeFromBuild>
-    </Compile>
-    <Compile Include="Broadcast\_\Helpers\_Unpair.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\_\Structs\ST_Entry.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Broadcast.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

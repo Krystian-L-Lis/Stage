@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_OwnedComp" Id="{76d104c7-8c2d-456d-8e4c-3ee26ed6ed8c}">
+    <Declaration><![CDATA[INTERFACE I_OwnedComp EXTENDS I_Component
+]]></Declaration>
+    <Property Name="Owner" Id="{5ef96ad3-5959-4641-a1c9-55a440b9aad2}">
+      <Declaration><![CDATA[PROPERTY Owner : I_CompRegister]]></Declaration>
+      <Get Name="Get" Id="{83d3b527-0a7f-46eb-affa-ce3115ce7a7e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

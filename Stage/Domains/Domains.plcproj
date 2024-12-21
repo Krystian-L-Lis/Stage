@@ -59,9 +59,9 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
-    <PlaceholderReference Include="_Broadcast">
-      <DefaultResolution>Broadcast, * (_)</DefaultResolution>
-      <Namespace>Broadcast</Namespace>
+    <PlaceholderReference Include="_Calls">
+      <DefaultResolution>Calls, * (_)</DefaultResolution>
+      <Namespace>Calls</Namespace>
       <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
@@ -73,13 +73,6 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
-    <PlaceholderReference Include="_Flags">
-      <DefaultResolution>Flags, * (_)</DefaultResolution>
-      <Namespace>Flags</Namespace>
-      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
-      <Optional>true</Optional>
-      <QualifiedOnly>true</QualifiedOnly>
-    </PlaceholderReference>
     <PlaceholderReference Include="_Results">
       <DefaultResolution>Results, * (_)</DefaultResolution>
       <Namespace>Results</Namespace>
@@ -87,69 +80,52 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
-    <PlaceholderReference Include="_States">
-      <DefaultResolution>States, * (_)</DefaultResolution>
-      <Namespace>States</Namespace>
-      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
-      <Optional>true</Optional>
-      <QualifiedOnly>true</QualifiedOnly>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Strings">
-      <DefaultResolution>Strings, * (_)</DefaultResolution>
-      <Namespace>Strings</Namespace>
-      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
-      <Optional>true</Optional>
-      <QualifiedOnly>true</QualifiedOnly>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Tags">
-      <DefaultResolution>Tags, * (_)</DefaultResolution>
-      <Namespace>Tags</Namespace>
-      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
-      <Optional>true</Optional>
-      <QualifiedOnly>true</QualifiedOnly>
-    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain" />
-    <Folder Include="Domain\Buffer" />
-    <Folder Include="Domain\Functions" />
+    <Folder Include="Domain\Component" />
+    <Folder Include="Domain\Domain" />
     <Folder Include="Domain\_" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Buffer\DomainBuffer.TcPOU">
+    <Compile Include="Domain\Component\CTable.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\Domain.TcPOU">
+    <Compile Include="Domain\Component\I_Component.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\Functions\GetDom.TcPOU">
+    <Compile Include="Domain\Component\I_CTable.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\Functions\IterDom.TcPOU">
+    <Compile Include="Domain\Component\I_MutCTable.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\I_Domain.TcIO">
+    <Compile Include="Domain\Domain\Domain.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\I_DomainProvider.TcIO">
+    <Compile Include="Domain\Domain\GetDomain.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Domain\_Register.TcGVL">
+    <Compile Include="Domain\Domain\I_Domain.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\Domain\I_DomainProvider.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\_\I_DomainInternal.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\_\Param.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Domain\_\_PushToRegister.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Param.TcGVL">
+    <Compile Include="Domain\_\_Register.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Domains.tmc">
-      <SubType>Content</SubType>
-    </None>
+    <Compile Include="Domain\_\_RegisterDomain.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

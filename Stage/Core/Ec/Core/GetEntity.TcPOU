@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GetEntity" Id="{f364a793-1b08-4c02-b87e-c6952bc10b65}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetEntity : Result
+VAR_INPUT
+	nIndex		: UDINT;
+END_VAR
+VAR_OUTPUT
+	iEntity		: I_Entity;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF nIndex > _Ec.nLen OR nIndex = 0 THEN
+	GetEntity := None;
+	RETURN;
+END_IF
+
+iEntity := _Ec.iEntity[nIndex];
+GetEntity := Ok;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

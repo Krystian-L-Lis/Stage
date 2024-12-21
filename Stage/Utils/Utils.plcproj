@@ -40,16 +40,31 @@
     <VirtualLibrary>true</VirtualLibrary>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Collections\UDINT_Array.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Color\Itf\I_Color.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Color\Color.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Collections\GenIter.TcPOU">
+    <Compile Include="Persistant\BOOL_Param.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistant\DINT_Param.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistant\LREAL_Param.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistant\REAL_Param.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistant\STR_Param.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistant\TIME_Param.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistant\UDINT_Param.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Timer\GetSysTime.TcPOU">
@@ -93,7 +108,7 @@
   <ItemGroup>
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
-    <Folder Include="Collections" />
+    <Folder Include="Persistant" />
     <Folder Include="Timer" />
   </ItemGroup>
   <ItemGroup>

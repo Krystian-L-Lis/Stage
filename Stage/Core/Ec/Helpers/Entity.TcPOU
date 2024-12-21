@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Entity" Id="{a3fc4420-1b23-490b-958c-b8e82c07e80d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Entity IMPLEMENTS I_Entity, I_Debug;
+VAR
+	_nIdx		: UDINT;
+	_iRegister	: I_CompRegister;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Fb_init" Id="{8a1c93fc-56bb-463c-aa1e-e5009cf51636}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iRegister	: I_CompRegister;
+END_VAR
+VAR
+	_eResult	: Result;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iRegister = 0 THEN
+	DebugMsg(THIS^, 'iRegister = 0!');
+	RETURN;
+END_IF
+
+_iRegister := iRegister;
+
+IF IsErr(_RegisterEntity(THIS^, nIndex => _nIdx), eCarry => _eResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('_RegisterEntity(THIS^) failed with code: ', TO_STRING(_eResult)));
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Get" Id="{ab838f06-5bcf-409a-98b9-85b846f67e0d}">
+      <Declaration><![CDATA[METHOD Get : Result
+VAR_INPUT
+	nIndex		: UDINT;
+END_VAR
+VAR_OUTPUT
+	iComp		: I_Component;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Get := _iRegister.Get(nIndex, iComp => iComp);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Index" Id="{7352a221-5a84-4b85-8168-641e70625251}">
+      <Declaration><![CDATA[PROPERTY Index : UDINT]]></Declaration>
+      <Get Name="Get" Id="{5330a592-625e-400e-aba2-b6662dcf04cc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Index := _nIdx;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="RegCap" Id="{4edb66b0-0685-4534-b211-508ca988b999}">
+      <Declaration><![CDATA[PROPERTY RegCap : UDINT]]></Declaration>
+      <Get Name="Get" Id="{35dc1150-4d29-4323-a6e7-4e81d8017ce4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RegCap := _iRegister.Cap;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="RegLen" Id="{ea52af99-0d5a-4374-880c-a72e8c26241a}">
+      <Declaration><![CDATA[PROPERTY RegLen : UDINT]]></Declaration>
+      <Get Name="Get" Id="{86c9ddb0-7202-4873-a41a-73f9ab1a872a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RegLen := _iRegister.Length;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="UDINT_Param" Id="{ad9808ce-25ce-489a-8ce0-4c21fc2cde93}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK UDINT_Param
+VAR_INPUT PERSISTENT
+	val			: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1">
-  <GVL Name="Param" Id="{c531fecb-0b6a-43d9-880a-7990a47060a7}" ParameterList="True">
-    <Declaration><![CDATA[{attribute 'qualified_only'}
-VAR_GLOBAL CONSTANT
-	MAX_DOMAIN : UDINT := 100;
-END_VAR]]></Declaration>
-  </GVL>
-</TcPlcObject>

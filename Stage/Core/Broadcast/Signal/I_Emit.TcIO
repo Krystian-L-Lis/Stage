@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Emit" Id="{609e01a1-b6ea-4fea-abd9-80ec28843d94}">
+    <Declaration><![CDATA[INTERFACE I_Emit
+]]></Declaration>
+    <Method Name="Emit" Id="{92a7c3da-021c-46a2-9cd8-62f5dba6bf6c}">
+      <Declaration><![CDATA[METHOD Emit
+VAR_INPUT
+	iArg			: I_Arg;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="EmitTo" Id="{76b81514-dc0e-4ebc-aa38-74fb287e595a}">
+      <Declaration><![CDATA[METHOD EmitTo : Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+	iArg			: I_Arg;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Option" Id="{0f6d914b-8b06-423c-b5b9-166095e390b3}">
+      <Declaration><![CDATA[METHOD Option : REFERENCE TO Signal
+VAR_INPUT
+	sOption		: Str;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Pair" Id="{84e28503-3123-4a24-91ee-88e64b2e187b}">
+      <Declaration><![CDATA[METHOD Pair : Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+END_VAR]]></Declaration>
+    </Method>
+    <Property Name="Tag" Id="{3075fdb7-eb8c-4274-95ea-6ec5a2600afc}">
+      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{83c96f7e-bf2d-42c3-ab5d-b460d6ba2728}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Unpair" Id="{e8a625b4-f16a-4019-9c13-4f5291029ddb}">
+      <Declaration><![CDATA[METHOD Unpair : Result
+VAR_INPUT
+	iReceiver		: I_Receiver;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

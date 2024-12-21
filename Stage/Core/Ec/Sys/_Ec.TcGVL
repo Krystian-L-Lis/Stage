@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="_Ec" Id="{25f16a6e-7888-4e3e-877d-3b7e2fe9f871}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL INTERNAL
+	iEntity		: ARRAY[1..Param.ENTITY_CAP] OF I_Entity;
+	nLen			: UDINT;	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

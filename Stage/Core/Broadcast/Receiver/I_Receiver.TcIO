@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Receiver" Id="{26bebb84-dbdb-4b7c-84a5-919778575944}">
+    <Declaration><![CDATA[INTERFACE I_Receiver EXTENDS I_ReceiverNode, I_Tagged
+]]></Declaration>
+    <Method Name="Pair" Id="{39a40360-5f3c-44ca-9aab-172360fa56b4}">
+      <Declaration><![CDATA[METHOD Pair : Result
+VAR_INPUT
+	iSignal		: I_Signal;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Unpair" Id="{4ee8ebf1-2889-41c5-b5c7-1f7b4b734ce8}">
+      <Declaration><![CDATA[METHOD Unpair : Result
+VAR_INPUT
+	iSignal		: I_Signal;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

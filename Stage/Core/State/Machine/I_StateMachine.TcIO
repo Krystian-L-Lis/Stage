@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_StateMachine" Id="{9c44ba60-8196-4755-9ee3-5f232b421b4a}">
+    <Declaration><![CDATA[INTERFACE I_StateMachine EXTENDS I_Debug
+]]></Declaration>
+    <Method Name="Change" Id="{37759f66-045e-4326-b96d-cd069d93483c}">
+      <Declaration><![CDATA[METHOD Change : Result
+VAR_INPUT
+	iNewState	: I_StateInternal;
+END_VAR
+VAR_OUTPUT
+	iOldState	: I_StateInternal;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

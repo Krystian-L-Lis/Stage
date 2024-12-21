@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="Err" Id="{eeeb2f9f-a3e9-42a4-bf82-bcee2d1ba591}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	Itf0			: Result := -2;
+	Str0			: Result := -3;
+	ItfEq			: Result := -4;
+	NoMatch			: Result := -5;
+	Ptr0			: Result := -6;
+	InvRef			: Result := -7;
+	Ovf				: Result := -8;
+	Udf				: Result := -9;
+	Idx				: Result := -10;
+	TcLib			: Result := -11;
+	InfLoop			: Result := -12;
+	IncArg			: Result := -13;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

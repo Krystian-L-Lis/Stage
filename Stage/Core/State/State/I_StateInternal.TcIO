@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_StateInternal" Id="{b49468d8-74b2-4523-9a8e-300190600643}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_StateInternal]]></Declaration>
+    <Folder Name="_" Id="{ea11d2f9-a8d0-4b23-897a-d4e88ba71fee}" />
+    <Folder Name="Can" Id="{6780bbc3-1843-4271-8203-ac0040ac9e3c}" />
+    <Folder Name="On" Id="{e8f03b0b-d8dc-462c-b1a1-c35c1e2a61ed}" />
+    <Property Name="_InQueue" Id="{8550ca70-63f7-455b-b1b5-7891fcc34a1c}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _InQueue : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5dbe6b56-3c78-4259-9af1-bcc59ffac19a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{0fefd082-13d0-4ed6-b772-6e0ca0f9a7ef}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="AsIState" Id="{52bd4c23-9ae7-496f-9a61-1f8649bcd48d}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY AsIState : I_State]]></Declaration>
+      <Get Name="Get" Id="{e7e14f50-c152-447d-9b6a-d41ed0aaa332}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="CanActivate" Id="{f8f7be64-9c99-4fdf-81b1-a2add969bdf5}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD CanActivate : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="CanDeactivate" Id="{ab838055-e4d5-46d5-a42d-ccdc9271d26a}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD CanDeactivate : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="OnExecute" Id="{23860f66-3827-4c1c-aa60-c228bf755ba9}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD OnExecute
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="OnExit" Id="{387ee35a-ce91-409e-90a2-90039f63ee69}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD OnExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="OnInit" Id="{34f20feb-a6b8-476a-ac7d-107b73173ddd}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD OnInit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

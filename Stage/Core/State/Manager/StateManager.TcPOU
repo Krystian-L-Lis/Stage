@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="StateManager" Id="{9af5d38b-2c9a-4ad2-afd9-0321b459f566}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StateManager
+VAR_GENERIC CONSTANT
+	STATE_CAP			: UDINT := 1;
+END_VAR
+IMPLEMENTS I_Execute, I_StateManager, I_Debug
+
+VAR
+	_iOwner				: I_CompRegister;
+	
+	_tag				: Tag('');
+
+	_exe				: Execute(THIS^);
+	_sm					: StateMachine;
+	_buffer				: StateBuffer<STATE_CAP>;
+	
+	_stateChangeEvent	: Signal;
+	
+	_iPretender			: I_State;
+	_iCurrent			: I_State;
+	_iPrevious 			: I_State;
+	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="_" Id="{b9f442f7-4971-4185-be3d-d4d6b1569cc6}" />
+    <Folder Name="Request" Id="{81375855-59e4-4ae6-b079-7f9366b0efcb}" />
+    <Folder Name="State" Id="{3323aa43-3a83-405c-9127-b99e6e5b1777}" />
+    <Property Name="Current" Id="{56420e57-ba0a-40d3-a86e-12a2b1e27f6c}" FolderPath="State\">
+      <Declaration><![CDATA[PROPERTY Current : I_State]]></Declaration>
+      <Get Name="Get" Id="{6dfc2ef8-549f-4ef6-9ab0-969a1aced6b1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Current := _iCurrent;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Execute" Id="{f267a716-e453-4e52-a04a-1da93f557d85}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD Execute
+VAR
+	_iNewState		: I_StateInternal;
+	_iOldState		: I_StateInternal;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF IsOk(_buffer.Pop(iState => _iNewState)) THEN
+	_iPretender := _iNewState.AsIState;
+	IF IsOk(_sm.Change(_iNewState, iOldState => _iOldState)) THEN
+		_iPretender		:= 0;
+		_iCurrent		:= _iNewState.AsIState;
+		IF _iOldState <> 0 THEN
+			_iPrevious		:= _iOldState.AsIState;
+		END_IF
+		_stateChangeEvent.Emit(_iNewState.AsIState.Tag);
+	END_IF
+	
+	_iPretender._InQueue := FALSE;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{cace226d-9a3c-4318-b567-809402523510}" FolderPath="_\">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iCompReg		: I_MutCompRegister;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iCompReg = 0 THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), 'iCompReg = 0!'));
+	RETURN;
+END_IF
+
+_iOwner := iCompReg;
+iCompReg.Insert(THIS^);
+iCompReg.Insert(_stateChangeEvent);
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Owner" Id="{f4018121-2b1d-444e-9a31-6e2d9cde72f4}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Owner : I_CompRegister]]></Declaration>
+      <Get Name="Get" Id="{f50d6afe-6131-4b10-8754-fbb6797dbc8d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Owner := _iOwner;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Pretender" Id="{03d469e9-e5de-4b22-9ad6-7121be122863}" FolderPath="State\">
+      <Declaration><![CDATA[PROPERTY Pretender : I_State]]></Declaration>
+      <Get Name="Get" Id="{cd77ba45-868a-497f-86a5-d426aa5face8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Pretender := _iPretender;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Previous" Id="{506a1524-211d-46a2-a335-40f8e25eab3e}" FolderPath="State\">
+      <Declaration><![CDATA[PROPERTY Previous : I_State]]></Declaration>
+      <Get Name="Get" Id="{34c2f99f-f5d0-4f3c-a7e7-87b5355c4a6f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Previous := _iPrevious;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Request" Id="{12dc1eaf-0190-483f-ada2-8afa12a43cbf}" FolderPath="Request\">
+      <Declaration><![CDATA[METHOD Request : Result
+VAR_INPUT
+	iState		: I_State;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iState = 0 THEN
+	Request := Err.Itf0;
+	RETURN;
+END_IF
+
+IF iState.Owner <> _iOwner THEN
+	Request := Err.NoMatch;
+	RETURN;
+END_IF
+
+IF iState._InQueue THEN
+	Request := Err.IncArg;
+	RETURN;
+END_IF
+iState._InQueue := TRUE;
+Request := _buffer.Push(iState);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Tag" Id="{11bb85f9-72a5-4952-bb1c-c839a9cdd5bf}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{bf325ea3-4c01-482d-9007-2f7d5e3abc0b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := _tag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

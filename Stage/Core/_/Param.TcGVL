@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="Param" Id="{bc9b684f-96ba-4011-afc3-650f65d44b69}" ParameterList="True">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	ENTITY_CAP	: UDINT(1..16#7FFFFFFF) := 100;
+	DEBUG_CAP	: UDINT(1..16#7FFFFFFF) := 10;
+	
+	BROADCAST_CAP	: UDINT(1..16#7FFFFFFF) := 100;	
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

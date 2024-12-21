@@ -67,9 +67,23 @@
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Calls">
+      <DefaultResolution>Calls, * (_)</DefaultResolution>
+      <Namespace>Calls</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
     <PlaceholderReference Include="_Debug">
       <DefaultResolution>Debug, * (_)</DefaultResolution>
       <Namespace>Debug</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
+    <PlaceholderReference Include="_Domains">
+      <DefaultResolution>Domains, * (_)</DefaultResolution>
+      <Namespace>Domains</Namespace>
       <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
@@ -97,7 +111,7 @@
     <Folder Include="Tag\Owner" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tag\Base\A_Tag.TcPOU">
+    <Compile Include="Tag\Base\TagProxy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tag\Base\I_Tag.TcIO">
@@ -124,11 +138,6 @@
     <Compile Include="Tag\Owner\TagOwner.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Tags.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

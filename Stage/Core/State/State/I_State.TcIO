@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_State" Id="{8ee68e54-e03a-40c4-b9fd-28674c83f71b}">
+    <Declaration><![CDATA[INTERFACE I_State EXTENDS I_Tagged, I_Debug, I_StateInternal, I_OwnedComp
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Signal" Id="{7c9b617f-f7bd-442d-b8c9-34e8d7bdc353}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_Emit
 VAR
-	_fbTag			: Tags.Tag;
+	_tag			: Tags.Tag;
 	_nCount			: UDINT;
 	_nSize			: UDINT;
 	_nId			: UDINT;
@@ -36,22 +36,22 @@ END_VAR
     <Method Name="Emit" Id="{d0827b51-da6b-4d29-b0a4-e9daca3aa340}">
       <Declaration><![CDATA[METHOD Emit
 VAR_INPUT
-	iTag			: Tags.I_Tag := 0;
+	iArg			: I_Arg := 0;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF iTag = 0 THEN
-	iTag := _fbTag;
+        <ST><![CDATA[IF iArg = 0 THEN
+	iArg := _tag;
 END_IF
 
-_EmitSignal(THIS^, iTag);]]></ST>
+_EmitSignal(THIS^, iArg);]]></ST>
       </Implementation>
     </Method>
     <Method Name="EmitTo" Id="{7d1b0cf5-ddc0-4b02-8cd3-1b63ae2d2b2b}">
       <Declaration><![CDATA[METHOD EmitTo : Results.Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
-	iTag			: Tags.I_Tag := 0;
+	iArg			: Calls.I_Arg;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -60,13 +60,47 @@ END_VAR
 	RETURN;
 END_IF
 
-IF iTag = 0 THEN
-	iTag := _fbTag;
+IF iArg = 0 THEN
+	iArg := Calls.Arg.phantom;
 END_IF
 
-iReceiver.Receive(iTag);
+iReceiver.Receive(iArg);
 EmitTo := Results.Ok;
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{4d7de249-46c9-44b2-9417-57b8c7e9fb7a}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+
+	iCTable		: Domains.I_MutCTable;
+END_VAR
+VAR
+	_nResult		: Results.Result;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iCTable <> 0 THEN
+	CASE (_nResult := iCTable.Insert(THIS^)) OF
+		Results.Ok:	
+			// Do nothing
+		Results.Err.ItfEq:
+			Debug.DebugMsg(THIS^, 'Alredy exist within iCTable!');
+			Debug.DebugMsg(iCTable, '^');
+		Results.Err.Ovf:
+			Debug.DebugMsg(THIS^, 'iCTable overflow!');
+		ELSE
+			Debug.DebugMsg(THIS^, Tc2_Standard.CONCAT(TO_STRING(_nResult), ': Unknown error'));
+	END_CASE
+
+ELSE
+	Debug.DebugMsg(THIS^, 'iCTable = 0!');
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="id" Id="{819ef4a3-3ea7-4562-a22a-db3e51f6c5da}" FolderPath="Node\">
@@ -97,7 +131,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[Option REF= THIS^;
-_fbTag.Option := sOption;]]></ST>
+_tag.Option := sOption;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Pair" Id="{d45162d9-176c-4304-b03f-8a4e26d88ae6}">
@@ -144,17 +178,10 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Tag := _fbTag;]]></ST>
+          <ST><![CDATA[Tag := _tag;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="ToDebug" Id="{2366606e-7015-468b-a9e3-80d32e0b5814}">
-      <Declaration><![CDATA[METHOD ToDebug : Debug.I_Debug
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[ToDebug := THIS^;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Unpair" Id="{ae27d934-17a9-4eae-a002-1ba80dc83d65}">
       <Declaration><![CDATA[METHOD Unpair : Results.Result
 VAR_INPUT

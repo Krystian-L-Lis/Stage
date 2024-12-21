@@ -104,11 +104,6 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Rt.tmc">
-      <SubType>Content</SubType>
-    </None>
-  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>

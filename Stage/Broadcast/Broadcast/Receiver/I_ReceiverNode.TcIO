@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_ReceiverNode" Id="{a66ea0f3-4a91-4fa0-8d6e-872222a657a8}">
-    <Declaration><![CDATA[INTERFACE INTERNAL I_ReceiverNode EXTENDS Debug.I_Debug, Tags.I_Tagged
+    <Declaration><![CDATA[INTERFACE INTERNAL I_ReceiverNode EXTENDS Debug.I_Debug
 ]]></Declaration>
     <Property Name="IsOk" Id="{21845255-3d04-4d9a-a4c8-4a3125bc4b09}">
       <Declaration><![CDATA[PROPERTY INTERNAL IsOk : BOOL]]></Declaration>
@@ -12,7 +12,7 @@
     <Method Name="Receive" Id="{0ad5f0f9-72c2-4773-920a-c7c616371a13}">
       <Declaration><![CDATA[METHOD INTERNAL Receive
 VAR_INPUT
-	iTag			: Tags.I_Tag;
+	iArg			: I_Arg;
 END_VAR
 ]]></Declaration>
     </Method>

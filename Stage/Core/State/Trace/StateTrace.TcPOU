@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="StateTrace" Id="{d970dc92-ee53-4d2d-9f29-e8b2ae628f00}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StateTrace 
+VAR_GENERIC CONSTANT
+	MX			: UDINT := 10;
+END_VAR
+IMPLEMENTS Calls.I_Call
+VAR
+	_fbRec			: Broadcast.Receiver(0, THIS^);
+	_iSmgr			: I_StateManager;
+	_stBuffer		: ARRAY[0..MX] OF StateTraceItem;
+	
+	_nHead			: UDINT := 0;
+	_nTail			: UDINT := 0;
+	_nSize			: UDINT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{14f3303a-f57b-4a00-a118-a5e3212fd67d}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iTag	: Broadcast.Tags.I_Tag;
+END_VAR
+VAR
+	_stItem			: StateTraceItem;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iTag.Option = CState.SUCCESS THEN
+	_stItem.bSuccess := TRUE;
+ELSE
+	_stItem.bSuccess := FALSE;
+END_IF
+
+_stItem.iCurrent := _iSmgr.Current;
+_stItem.iPretender := _iSmgr.Pretender;
+_stItem.iPrevious := _iSmgr.Previous;
+_stItem.nTimestamp := Tc2_System.F_GetSystemTime() - 11644473600000000000;
+
+_stBuffer[_nHead] := _stItem;
+
+_nHead := (_nHead + 1) MOD (MX + 1);
+
+IF _nSize >= MX THEN
+	_nTail := (_nTail + 1) MOD (MX + 1);
+ELSE
+	_nSize := _nSize + 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{c9bfef7c-6bd7-4073-b7b1-c3bac55a3cba}">
+      <Declaration><![CDATA[METHOD Pop : Results.Result
+VAR_OUTPUT
+	stItem	: StateTraceItem;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nSize = 0 THEN
+	Pop := Results.Error;
+	RETURN;
+END_IF
+
+stItem := _stBuffer[_nTail];
+
+_nTail := (_nTail + 1) MOD (MX + 1);
+_nSize := _nSize - 1;
+
+Pop := Results.Ok;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="LREAL_Param" Id="{d6017903-1f79-4c2a-8e02-b33751064f9a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LREAL_Param
+VAR_INPUT PERSISTENT
+	val			: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

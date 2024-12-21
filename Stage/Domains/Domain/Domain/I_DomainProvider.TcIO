@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_DomainProvider" Id="{b881675a-bfcc-4bda-b695-fb9178a5dfb4}">
+    <Declaration><![CDATA[INTERFACE I_DomainProvider EXTENDS I_Component
+]]></Declaration>
+    <Property Name="Self" Id="{abe5ce9a-2b0c-48f6-b54d-ef5937aaea34}">
+      <Declaration><![CDATA[PROPERTY Self : I_Domain]]></Declaration>
+      <Get Name="Get" Id="{b7b695ba-9ec8-43ce-af64-3471a08cee94}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="StateManagerProxy" Id="{5b75e9b7-1e68-47ad-a910-43e605a726a6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StateManagerProxy IMPLEMENTS I_Debug
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{7e05ff57-b52b-4009-8ab7-ee6e20349c61}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+
+	iStateManager		: I_StateManager;
+	refStateManager		: REFERENCE TO I_StateManager;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT __ISVALIDREF(refStateManager) THEN
+	DebugMsg(THIS^, 'Ref = 0!');
+	RETURN;
+END_IF
+
+IF iStateManager = 0 THEN
+	DebugMsg(THIS^, 'Itf = 0!');
+	RETURN;
+END_IF
+
+IF refStateManager <> 0 THEN
+	DebugMsg(THIS^, 'Ref itf should be unassigned!');
+	RETURN;
+END_IF
+
+refStateManager := iStateManager;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

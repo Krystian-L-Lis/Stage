@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="DebugMsg" Id="{7c548072-7d6e-4388-b29f-e0cd2e001bbc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION DebugMsg
+VAR_INPUT
+	iDebug			: I_Debug;
+	sInfo			: Str;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _Debug.nDebugLen = Param.DEBUG_CAP THEN
+	RETURN;	
+ELSIF _Debug.nDebugLen = Param.DEBUG_CAP - 1 THEN
+	_Debug.stDebug[_Debug.nDebugLen].iDebug := 0;
+	_Debug.stDebug[_Debug.nDebugLen].sInfo := 'Debug overflow!';
+	RETURN;
+END_IF
+
+_Debug.stDebug[_Debug.nDebugLen].iDebug := iDebug;
+_Debug.stDebug[_Debug.nDebugLen].sInfo := sInfo;
+_Debug.nDebugLen := _Debug.nDebugLen + 1;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
