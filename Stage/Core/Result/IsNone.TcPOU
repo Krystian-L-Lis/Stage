@@ -3,14 +3,14 @@
   <POU Name="IsNone" Id="{45d926e7-4340-49c1-9630-09ea933bc1ee}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION IsNone : BOOL
 VAR_INPUT
-	eResult			: Result;
+	nIn				: Result;
 END_VAR
 VAR_OUTPUT
-	eCarry			: Result;
+	nOut			: Result;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IsNone := eResult = 0;
-eCarry := eResult;]]></ST>
+      <ST><![CDATA[IsNone := nIn = 0;
+nOut := nIn;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

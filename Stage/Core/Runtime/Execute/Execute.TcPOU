@@ -5,7 +5,7 @@
 VAR
 	_iExecute		: I_Execute;
 	_iNext			: I_ExecuteNode;
-	_eState			: Result;
+	_nState			: Result;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -67,12 +67,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsSome(_eState) THEN
+        <ST><![CDATA[IF IsSome(_nState) THEN
 	RETURN;
 END_IF
 
 IF (_iExecute := iExecute) = 0 THEN
-	_eState := Err.Itf0;
+	_nState := Err.Itf0;
 	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
 	RETURN;
 END_IF
@@ -80,13 +80,13 @@ END_IF
 
 
 IF _Runtime.iLastCyclic <> 0 THEN
-	IF IsErr(_Runtime.iLastCyclic.Attach(THIS^), eCarry => _eState) THEN
+	IF IsErr(_Runtime.iLastCyclic.Attach(THIS^), nOut => _nState) THEN
 		DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Error Inside!'));
 	END_IF
 ELSE
 	_Runtime.iFirstCyclic := THIS^;
 	_Runtime.iLastCyclic := THIS^;
-	_eState := Ok;
+	_nState := Ok;
 END_IF
 ]]></ST>
       </Implementation>
@@ -98,7 +98,7 @@ END_IF
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[State := _eState;]]></ST>
+          <ST><![CDATA[State := _nState;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{cdaef5bc-3e80-45aa-8a2d-58cc8bd11cfe}">
@@ -106,8 +106,8 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[IF IsNone(_eState) THEN
-	_eState := State;
+          <ST><![CDATA[IF IsNone(_nState) THEN
+	_nState := State;
 END_IF]]></ST>
         </Implementation>
       </Set>

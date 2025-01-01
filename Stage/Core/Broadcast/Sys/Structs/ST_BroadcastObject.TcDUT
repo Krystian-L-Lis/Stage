@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ST_BroadcastObject" Id="{c7a7d29f-efe7-4297-b94b-aa4eb559cb25}">
+    <Declaration><![CDATA[TYPE INTERNAL ST_BroadcastObject :
+STRUCT
+	iObj		: U_BroadcastObject;
+	nType		: USINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

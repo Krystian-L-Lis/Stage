@@ -3,15 +3,14 @@
   <POU Name="IsErr" Id="{52bb3ec0-2300-4aef-8f80-2640742ad572}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION IsErr : BOOL
 VAR_INPUT
-	eResult			: Result;
+	nIn				: Result;
 END_VAR
 VAR_OUTPUT
-	eCarry			: Result;
-END_VAR
-]]></Declaration>
+	nOut			: Result;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IsErr := eResult < 0;
-eCarry := eResult;]]></ST>
+      <ST><![CDATA[IsErr := nIn < 0;
+nOut := nIn;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CompAsITagged" Id="{037a1bf0-02fe-469d-a7f0-fdd83b19b2c8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION CompAsITagged : Result
+VAR_INPUT
+	iSource	: I_Component;
+END_VAR
+VAR_OUTPUT
+	iDest	: I_Tagged;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSource = 0 THEN
+	CompAsITagged := Err.Itf0;
+	RETURN;
+END_IF
+
+IF __QUERYINTERFACE(iSource, iDest) THEN
+	CompAsITagged := Ok;
+ELSE
+	CompAsITagged := Err.NoMatch;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

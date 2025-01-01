@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_MutArgList" Id="{a13a3abf-b20e-494a-a089-922a6c403ef2}">
+    <Declaration><![CDATA[INTERFACE I_MutArgList EXTENDS I_ArgList
+]]></Declaration>
+    <Method Name="Append" Id="{9cd928ff-dfb7-497d-a0a3-0685d1fb0111}">
+      <Declaration><![CDATA[METHOD Append : Result
+VAR_INPUT
+	iArg		: I_Arg;
+	nIndex		: UDINT;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

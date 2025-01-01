@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FetchOwner" Id="{a3b7220f-6050-4211-8801-8b108ece1681}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION FetchOwner : Result
+VAR_INPUT
+	iComponent	: I_Component;
+END_VAR
+VAR_OUTPUT
+	iEntity		: I_Entity;
+END_VAR
+VAR
+	i			: Iter(1);
+	j			: Iter(1);
+	_iComp		: I_Component;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => iEntity)) DO
+	j.Set(1);
+	WHILE IsOk(iEntity.Get(j.Next(), iComp => _iComp)) DO
+		IF _iComp = iComponent THEN
+			FetchOwner := Ok;
+			RETURN;
+		END_IF
+	END_WHILE
+END_WHILE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

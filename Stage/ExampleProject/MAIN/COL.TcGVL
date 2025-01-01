@@ -8,6 +8,7 @@ VAR_GLOBAL CONSTANT
 	BLACK		: Color(0, 0, 0, 255);
 	ORANGE		: Color(255, 160, 0, 255);
 	WHITE		: Color(255, 255, 255, 255);
+	INVISIBLE	: Color(0, 0, 0, 0);
 {warning restore C0228}
 END_VAR]]></Declaration>
   </GVL>

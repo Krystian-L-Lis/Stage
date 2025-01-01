@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CompAsIStateManager" Id="{74e3d0c6-57df-4b44-8bce-eaff7973637c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION CompAsIStateManager : Result
+VAR_INPUT
+	iSource	: I_Component;
+END_VAR
+VAR_OUTPUT
+	iDest	: I_Arg;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSource = 0 THEN
+	CompAsIStateManager := Err.Itf0;
+	RETURN;
+END_IF
+
+IF __QUERYINTERFACE(iSource, iDest) THEN
+	CompAsIStateManager := Ok;
+ELSE
+	CompAsIStateManager := Err.NoMatch;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

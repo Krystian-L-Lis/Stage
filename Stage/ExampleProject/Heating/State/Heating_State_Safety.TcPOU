@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Heating_State_Safety" Id="{b3c770ff-5618-4956-8c69-b75ebbd54c49}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_Safety EXTENDS Heating_State IMPLEMENTS I_Callable
+VAR
+	
+	_safetyRec		: Receiver(THIS^);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{ccf8c9ca-547d-4a52-a859-566cad5f3a9e}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iArg		: Core.I_Arg;
+END_VAR
+VAR
+	_iSafeModeOn: I_BoolArg;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF IsOk(ArgToIBoolArg(iArg, iVal => _iSafeModeOn)) THEN
+	IF _iSafeModeOn.Val THEN
+		_ctx.state.iMgr.Request(_ctx.state.iSafety);
+	ELSE
+		_ctx.state.iMgr.Request(_ctx.state.iDisable);
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{0a4bec46-cc4e-478c-bfe7-cac41e91db99}">
+      <Declaration><![CDATA[(*FB_Init is always available implicitly and it is used primarily for initialization.
+The return value is not evaluated. For a specific influence, you can also declare the
+methods explicitly and provide additional code there with the standard initialization
+code. You can evaluate the return value.*)
+METHOD FB_Init : BOOL
+VAR_INPUT
+	(* TRUE: the retain variables are initialized (reset warm / reset cold)*)
+	bInitRetains	: BOOL;
+	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
+	bInCopyCode	: BOOL;
+	iEntity	: I_Entity;
+	ctx		: REFERENCE TO Heating_Ctx;
+END_VAR
+VAR
+	_nResult		: Result;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF IsErr(RegComp(_safetyRec, iEntity), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{c5598497-5be7-45e4-ae85-b40aa632e5cb}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.hmi.sStatusText := 'Safety engaged! Check safety system...';
+_ctx.hmi.nStatusColor := COL.RED.Raw;
+
+_ctx.hmi.sButtonText := '';
+_ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;
+
+_ctx.io.out.bBurner := FALSE;
+_ctx.io.out.bPump := FALSE;
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ArgToIMutBoolArg" Id="{7283bb7c-f677-4522-97c0-8fc9d5ea7369}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ArgToIMutBoolArg : Result
+VAR_INPUT
+	iArg		: I_Arg;
+END_VAR
+VAR_OUTPUT
+	iVal		: I_MutBoolArg;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF __QUERYINTERFACE(iArg, iVal) THEN
+	ArgToIMutBoolArg := Ok;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -15,8 +15,8 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
-	iEmit			: I_Emit;
-	refEmitProxy	: REFERENCE TO I_Emit;	
+	iEmit			: I_SignalEmit;
+	refEmitProxy	: REFERENCE TO I_SignalEmit;	
 	
 END_VAR]]></Declaration>
       <Implementation>

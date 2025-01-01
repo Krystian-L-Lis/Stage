@@ -5,6 +5,12 @@
     <Folder Name="_" Id="{ea11d2f9-a8d0-4b23-897a-d4e88ba71fee}" />
     <Folder Name="Can" Id="{6780bbc3-1843-4271-8203-ac0040ac9e3c}" />
     <Folder Name="On" Id="{e8f03b0b-d8dc-462c-b1a1-c35c1e2a61ed}" />
+    <Property Name="_AsIState" Id="{3786d724-f559-45a9-9579-3952254ad765}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _AsIState : I_State]]></Declaration>
+      <Get Name="Get" Id="{70e8c9a6-ef24-4473-b26f-94fc097849a5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Property Name="_InQueue" Id="{8550ca70-63f7-455b-b1b5-7891fcc34a1c}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _InQueue : BOOL]]></Declaration>
       <Get Name="Get" Id="{5dbe6b56-3c78-4259-9af1-bcc59ffac19a}">
@@ -13,12 +19,6 @@
       <Set Name="Set" Id="{0fefd082-13d0-4ed6-b772-6e0ca0f9a7ef}">
         <Declaration><![CDATA[]]></Declaration>
       </Set>
-    </Property>
-    <Property Name="AsIState" Id="{52bd4c23-9ae7-496f-9a61-1f8649bcd48d}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY AsIState : I_State]]></Declaration>
-      <Get Name="Get" Id="{e7e14f50-c152-447d-9b6a-d41ed0aaa332}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
     </Property>
     <Method Name="CanActivate" Id="{f8f7be64-9c99-4fdf-81b1-a2add969bdf5}" FolderPath="Can\">
       <Declaration><![CDATA[METHOD CanActivate : BOOL
@@ -50,5 +50,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Property Name="Owner" Id="{d93a7a3f-73d8-4f22-af14-97d5aa90489a}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Owner : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{ada6f75c-eaf0-4d2e-ae8a-ddb0ab50f119}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
   </Itf>
 </TcPlcObject>

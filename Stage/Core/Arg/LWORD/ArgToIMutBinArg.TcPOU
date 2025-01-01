@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ArgToIMutBinArg" Id="{9a92db2b-255b-4bd9-8710-37254a569882}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ArgToIMutBinArg : Result
+VAR_INPUT
+	iArg		: I_Arg;
+END_VAR
+VAR_OUTPUT
+	iVal		: I_MutBinArg;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF __QUERYINTERFACE(iArg, iVal) THEN
+	ArgToIMutBinArg := Ok;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

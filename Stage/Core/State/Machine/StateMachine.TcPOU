@@ -65,7 +65,7 @@ END_IF]]></ST>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[State := _iCurrentState.AsIState;]]></ST>
+          <ST><![CDATA[State := _iCurrentState._AsIState;]]></ST>
         </Implementation>
       </Get>
     </Property>

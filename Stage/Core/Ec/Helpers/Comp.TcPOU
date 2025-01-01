@@ -23,19 +23,14 @@ VAR_INPUT
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 
 	iComponent	: I_Component;
-	iRegister	: I_MutCompRegister; 
+	iEntity		: I_Entity;
 END_VAR
 VAR
-	_eResult	: Result;
+	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF iRegister = 0 THEN
-	DebugMsg(THIS^, 'iRegister = 0!');
-	RETURN;
-END_IF
-
-IF IsErr(iRegister.Insert(iComponent), eCarry => _eResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('I_MutCompRegister.Insert(iComponent) failed with code: ', TO_STRING(_eResult)));
+        <ST><![CDATA[IF IsErr(_RegComp(iEntity, iComponent), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
 END_IF
 
 ]]></ST>

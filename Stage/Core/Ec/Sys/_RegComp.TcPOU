@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_RegComp" Id="{be259be1-86c2-4fc8-8f0b-0acafd7e70b5}" SpecialFunc="None">
+    <Declaration><![CDATA[// ---------------------------------------------------------------------------
+// FUNCTION:  _RegComp
+// PURPOSE:   Registers a new component (iComponent) to the given entity (iEntity).
+//            If the entity is new (_Start=0), attempts to allocate exactly 2 slots
+//            (one for the entity header nType=1, one for the component nType=2).
+//            If the entity already exists, tries to append a slot on the right
+//            or shift the boundary on the left if free. If neither is possible,
+//            it uses _EcGetBestFit to find a larger chunk, optionally coalescing
+//            first. Finally, updates _Ec.iFirst if this entity's _Start is now
+//            the leftmost among all entities.
+// ---------------------------------------------------------------------------
+FUNCTION INTERNAL _RegComp : Result
+VAR_INPUT
+    iEntity     : I_EntityNode;
+    iComponent  : I_Component;
+END_VAR
+VAR
+    i           : UDINT;
+    _nNextId    : UDINT;
+    _nNewSize   : UDINT;
+    
+    _nStart     : UDINT;
+    _nEnd       : UDINT;
+    
+    _nFirstId   : UDINT := Param.COMP_CAP;
+	_nNewStart	: UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Check if either iEntity or iComponent is invalid (0 indicates null).
+IF iEntity = 0 OR iComponent = 0 THEN
+    _RegComp := Err.Itf0;
+    RETURN;
+END_IF
+
+// Check if global capacity is already at maximum.
+IF _Ec.nCompLen = Param.COMP_CAP THEN
+    _RegComp := Err.Ovf;
+    RETURN;
+END_IF
+
+// Ensure this exact iComponent isn't already registered.
+FOR i := 1 TO _Ec.nCompLen DO
+    IF _Ec.comp[i].nType = 2 AND_THEN _Ec.comp[i].iObj.iComponent = iComponent THEN
+        _RegComp := Err.ItfEq;
+        RETURN;
+    END_IF
+END_FOR
+
+// If the entity is brand-new (_Start=0), try allocating exactly 2 slots.
+IF iEntity._Start = 0 THEN
+    CASE (_RegComp := _EcGetBestFit(2, nStart => _nStart, nEnd => _nEnd)) OF
+        Ok:
+            // Got a free chunk of size 2
+        None:
+            // No chunk found => coalesce and retry
+            IF IsErr(_EcCoalesce(), nOut => _RegComp) THEN
+                RETURN;
+            END_IF
+            
+            IF NOT IsOk(_EcGetBestFit(2, nStart => _nStart, nEnd => _nEnd), nOut => _RegComp) THEN
+                RETURN;
+            END_IF
+        ELSE
+            // If any other error, just return
+            RETURN;
+    END_CASE
+
+    IF IsOk(_RegComp) THEN
+        // Mark the first slot as entity header
+        _Ec.comp[_nStart].nType := 1;
+        _Ec.comp[_nStart].iObj.iEntity := iEntity;
+
+        // Mark the second slot as the component
+        _Ec.comp[_nEnd].nType := 2;
+        _Ec.comp[_nEnd].iObj.iComponent := iComponent;
+        
+        // Update the entity’s metadata
+        iEntity._Start := _nStart;
+        iEntity._End   := _nEnd;
+        iEntity._SetSize(2);
+        
+        // Increase global count of used slots
+        _Ec.nCompLen := _Ec.nCompLen + 2;
+        
+        // Update _Ec.iFirst if needed (i.e., if this is the first entity or if
+        // the new entity starts to the left of the current iFirst).
+        IF _Ec.iFirst = 0 THEN
+            _Ec.iFirst := iEntity;
+        ELSIF iEntity._Start < _Ec.iFirst._Start THEN
+            _Ec.iFirst := iEntity;
+        END_IF
+        
+        RETURN;
+    ELSE
+        RETURN;
+    END_IF
+END_IF
+
+// Otherwise, the entity already has slots. Try extending to the right by 1 slot.
+_nNextId := iEntity._End + 1;
+IF _nNextId <= Param.COMP_CAP AND_THEN _Ec.comp[_nNextId].nType = 0 THEN
+    // Mark that free slot as a new component
+    _Ec.comp[_nNextId].nType := 2;
+    _Ec.comp[_nNextId].iObj.iComponent := iComponent;
+    
+    // Update entity info
+    iEntity._End := _nNextId;
+    iEntity._SetSize(iEntity.Size + 1);
+    
+    // Increase global used-slot counter
+    _Ec.nCompLen := _Ec.nCompLen + 1;
+    
+    _RegComp := Ok;
+    RETURN;
+END_IF
+
+// Try expanding to the left by shifting the boundary marker left one slot.
+_nNextId := iEntity._Start - 1;
+IF _nNextId > 0 AND_THEN _Ec.comp[_nNextId].nType = 0 THEN
+    // Copy old boundary marker to new index
+    _Ec.comp[_nNextId] := _Ec.comp[iEntity._Start];
+
+    // Turn the old boundary marker slot into the new component
+    _Ec.comp[iEntity._Start].nType := 2;
+    _Ec.comp[iEntity._Start].iObj.iComponent := iComponent;
+    
+    // Update entity to reflect new _Start
+    iEntity._Start := _nNextId;
+    iEntity._SetSize(iEntity.Size + 1);
+    
+    // Increase global used-slot counter
+    _Ec.nCompLen := _Ec.nCompLen + 1;
+    
+    _RegComp := Ok;
+    RETURN;
+END_IF
+
+// If neither immediate left nor right expansions are possible, we need a new chunk
+_nNewSize := iEntity.Size + 1;
+CASE (_RegComp := _EcGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd)) OF
+    Ok:
+        // chunk found
+    None:
+        // coalesce + retry
+        IF IsErr(_EcCoalesce(), nOut => _RegComp) THEN
+            RETURN;
+        END_IF
+        
+        IF NOT IsOk(_EcGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd), nOut => _RegComp) THEN
+            RETURN;
+        END_IF
+    ELSE
+        // Other errors
+        RETURN;
+END_CASE
+
+IF IsOk(_RegComp) THEN
+    
+    // Move the entire existing block to the new chunk
+    Tc2_SYSTEM.MEMMOVE(
+        ADR(_Ec.comp[_nStart]),
+        ADR(_Ec.comp[iEntity._Start]),
+        SIZEOF(ST_EcObject) * iEntity.Size
+    );
+
+    // Clear out the old region
+    Tc2_SYSTEM.MEMSET(
+        ADR(_Ec.comp[iEntity._Start]),
+        0,
+        SIZEOF(ST_EcObject) * iEntity.Size
+    );
+    
+    // Mark the final slot in the new chunk as the new component
+    _Ec.comp[_nEnd].nType := 2;
+    _Ec.comp[_nEnd].iObj.iComponent := iComponent;
+    
+    // Update the entity to reflect the new block location
+    iEntity._Start := _nStart;
+    iEntity._End   := _nEnd;
+    iEntity._SetSize(iEntity.Size + 1);
+    
+    // One more slot used
+    _Ec.nCompLen := _Ec.nCompLen + 1;
+    
+    // If this entity was iFirst, re-scan for the new leftmost. Otherwise,
+    // if we are now to the left of iFirst, update iFirst to this entity.
+    IF _Ec.iFirst = iEntity THEN
+        FOR i := 1 TO _Ec.nEntityLen DO
+			_nNewStart := _Ec.iEntity[i]._Start;
+            IF _nNewStart <> 0 AND_THEN _nNewStart < _nFirstId THEN
+                _nFirstId := _Ec.iEntity[i]._Start;
+                _Ec.iFirst := _Ec.iEntity[i];
+            END_IF
+        END_FOR
+    ELSIF iEntity._Start < _Ec.iFirst._Start THEN
+        _Ec.iFirst := iEntity;
+    END_IF
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

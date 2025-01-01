@@ -1,35 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Entity" Id="{77224a92-9fcc-4a74-a8b9-35a817627826}">
-    <Declaration><![CDATA[INTERFACE I_Entity EXTENDS I_Debug
+    <Declaration><![CDATA[INTERFACE I_Entity EXTENDS I_Debug, I_EntityNode
 
 ]]></Declaration>
-    <Method Name="Get" Id="{2cb33447-4e7d-4fe2-8863-b78256fc89fd}">
-      <Declaration><![CDATA[METHOD Get : Result
-VAR_INPUT
-	nIndex		: UDINT;
-END_VAR
-VAR_OUTPUT
-	iComp		: I_Component;
-END_VAR]]></Declaration>
-    </Method>
-    <Property Name="Index" Id="{0ea95c4d-dc48-4752-a9e9-dacef230eba1}">
-      <Declaration><![CDATA[PROPERTY Index : UDINT]]></Declaration>
-      <Get Name="Get" Id="{78593422-1611-421f-9b7f-60cabf7e3d81}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
-    <Property Name="RegCap" Id="{a095b473-720f-4f58-a496-b05513906ca7}">
-      <Declaration><![CDATA[PROPERTY RegCap : UDINT]]></Declaration>
-      <Get Name="Get" Id="{d9c925a6-59f1-41e0-928b-6b7b1699e296}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
-    <Property Name="RegLen" Id="{ca7bea7f-1463-4410-829f-4d25182aa245}">
-      <Declaration><![CDATA[PROPERTY RegLen : UDINT]]></Declaration>
-      <Get Name="Get" Id="{c2f4f1ad-8a37-449c-a388-533da3d3f98c}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
   </Itf>
 </TcPlcObject>

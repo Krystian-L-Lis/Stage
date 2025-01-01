@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="BoolArg" Id="{e27e2f24-10ad-4112-bcdb-e1d34b1a5e15}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK BoolArg IMPLEMENTS I_MutBool
+    <Declaration><![CDATA[FUNCTION_BLOCK BoolArg IMPLEMENTS I_MutBoolArg
 VAR
 	_val			: BOOL;
 END_VAR

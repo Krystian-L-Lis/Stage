@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_MutArgQueue" Id="{3c319922-c4ac-4913-a5ff-e4204e65e323}">
+    <Declaration><![CDATA[INTERFACE I_MutArgQueue EXTENDS I_ArgQueue
+]]></Declaration>
+    <Method Name="Pop" Id="{be1b5892-95ee-403d-b9ca-f9025d7f85a9}">
+      <Declaration><![CDATA[METHOD Pop : Result
+VAR_OUTPUT
+	iArg	: I_Arg;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Push" Id="{1f80bd1a-a0b7-40b0-a5e7-7adf8b264e2c}">
+      <Declaration><![CDATA[METHOD Push : Result
+VAR_INPUT
+	iArg		: I_Arg;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

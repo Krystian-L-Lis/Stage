@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CompAsISignal" Id="{5f959340-f887-4136-afe4-e25a563d68c5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION CompAsISignal : Result
+VAR_INPUT
+	iSource	: I_Component;
+END_VAR
+VAR_OUTPUT
+	iDest	: I_Signal;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSource = 0 THEN
+	CompAsISignal := Err.Itf0;
+	RETURN;
+END_IF
+
+IF __QUERYINTERFACE(iSource, iDest) THEN
+	CompAsISignal := Ok;
+ELSE
+	CompAsISignal := Err.NoMatch;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

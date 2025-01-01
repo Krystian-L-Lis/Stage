@@ -22,25 +22,75 @@
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Heating\Ctx\Heating_Ctx_Hmi.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Ctx\Heating_Ctx_Io.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Ctx\Heating_Ctx_Priv.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Ctx\Heating_Ctx_States.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Ctx\Io\Heating_Ctx_Io_In.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Ctx\Io\Heating_Ctx_Io_Out.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Heating.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Heating_Ctx.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Receivers\Heating_PassiveCountRec.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\Receivers\Heating_RequestRec.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\State\Heating_State.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\State\Heating_State_Enabled.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\State\Heating_State_Disabled.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\State\Heating_State_Heatup.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\State\Heating_State_Pumping.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\State\Heating_State_Safety.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Heating\State\Heating_State_Fault.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MAIN\ArgAsIRoom.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MAIN\CST.TcGVL">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-      <ExcludeFromBuild>true</ExcludeFromBuild>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
     <Compile Include="MAIN\COL.TcGVL">
       <SubType>Code</SubType>
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
+    <Compile Include="MAIN\I_Room.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MAIN\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Safety\Safety.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Safety\Safety_Ctx.TcDUT">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -88,11 +138,18 @@
       <DefaultResolution>Core, * (_)</DefaultResolution>
       <Namespace>Core</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="_Utils">
+      <DefaultResolution>Utils, * (_)</DefaultResolution>
+      <Namespace>Utils</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Heating\Ctx" />
+    <Folder Include="Heating\Ctx\Io" />
+    <Folder Include="Heating\Receivers" />
+    <Folder Include="Heating\State" />
     <Folder Include="MAIN" />
-    <Folder Include="Safety" />
-    <Folder Include="Safety\Ctx" />
+    <Folder Include="Heating" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleProject.tmc">

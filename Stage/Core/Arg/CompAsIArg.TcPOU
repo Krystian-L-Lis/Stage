@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CompAsIArg" Id="{cea0c7a0-5752-446d-bb01-5581ac3b101a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION CompAsIArg : Result
+VAR_INPUT
+	iSource	: I_Component;
+END_VAR
+VAR_OUTPUT
+	iDest	: I_StateManager;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSource = 0 THEN
+	CompAsIArg := Err.Itf0;
+	RETURN;
+END_IF
+
+IF __QUERYINTERFACE(iSource, iDest) THEN
+	CompAsIArg := Ok;
+ELSE
+	CompAsIArg := Err.NoMatch;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

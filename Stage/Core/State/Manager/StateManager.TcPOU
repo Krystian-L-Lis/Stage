@@ -8,7 +8,7 @@ END_VAR
 IMPLEMENTS I_Execute, I_StateManager, I_Debug
 
 VAR
-	_iOwner				: I_CompRegister;
+	_iOwner				: I_Entity;
 	
 	_tag				: Tag('');
 
@@ -50,17 +50,17 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsOk(_buffer.Pop(iState => _iNewState)) THEN
-	_iPretender := _iNewState.AsIState;
+	_iPretender := _iNewState._AsIState;
 	IF IsOk(_sm.Change(_iNewState, iOldState => _iOldState)) THEN
 		_iPretender		:= 0;
-		_iCurrent		:= _iNewState.AsIState;
+		_iCurrent		:= _iNewState._AsIState;
 		IF _iOldState <> 0 THEN
-			_iPrevious		:= _iOldState.AsIState;
+			_iPrevious		:= _iOldState._AsIState;
 		END_IF
-		_stateChangeEvent.Emit(_iNewState.AsIState.Tag);
+		_stateChangeEvent.Emit(_iNewState._AsIState.Tag);
 	END_IF
 	
-	_iPretender._InQueue := FALSE;
+	_iPretender._AsIStateInternal._InQueue := FALSE;
 END_IF
 
 ]]></ST>
@@ -76,23 +76,32 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
-	iCompReg		: I_MutCompRegister;
+	iEntity		: I_Entity;
+END_VAR
+VAR
+	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF iCompReg = 0 THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), 'iCompReg = 0!'));
-	RETURN;
+        <ST><![CDATA[IF iEntity = 0 THEN
+	DebugMsg(THIS^, 'iEntity = 0!');
 END_IF
 
-_iOwner := iCompReg;
-iCompReg.Insert(THIS^);
-iCompReg.Insert(_stateChangeEvent);
+_iOwner := iEntity;
 
+IF IsErr(_RegComp(iEntity, THIS^), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
+	DebugMsg(THIS^, 'Could not be added!');
+END_IF
+
+IF IsErr(_RegComp(iEntity, _stateChangeEvent), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
+	DebugMsg(_stateChangeEvent, 'Could not be added!');
+END_IF
 ]]></ST>
       </Implementation>
     </Method>
     <Property Name="Owner" Id="{f4018121-2b1d-444e-9a31-6e2d9cde72f4}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY Owner : I_CompRegister]]></Declaration>
+      <Declaration><![CDATA[PROPERTY Owner : I_Entity]]></Declaration>
       <Get Name="Get" Id="{f50d6afe-6131-4b10-8754-fbb6797dbc8d}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -127,7 +136,10 @@ END_VAR
     <Method Name="Request" Id="{12dc1eaf-0190-483f-ada2-8afa12a43cbf}" FolderPath="Request\">
       <Declaration><![CDATA[METHOD Request : Result
 VAR_INPUT
-	iState		: I_State;
+	iState			: I_State;
+END_VAR
+VAR
+	iStateInternal	: I_StateInternal;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iState = 0 THEN
@@ -140,12 +152,12 @@ IF iState.Owner <> _iOwner THEN
 	RETURN;
 END_IF
 
-IF iState._InQueue THEN
+IF iState._AsIStateInternal._InQueue THEN
 	Request := Err.IncArg;
 	RETURN;
 END_IF
-iState._InQueue := TRUE;
-Request := _buffer.Push(iState);]]></ST>
+iState._AsIStateInternal._InQueue := TRUE;
+Request := _buffer.Push(iState._AsIStateInternal);]]></ST>
       </Implementation>
     </Method>
     <Property Name="Tag" Id="{11bb85f9-72a5-4952-bb1c-c839a9cdd5bf}" FolderPath="_\">

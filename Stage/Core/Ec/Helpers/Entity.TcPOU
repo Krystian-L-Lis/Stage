@@ -3,13 +3,85 @@
   <POU Name="Entity" Id="{a3fc4420-1b23-490b-958c-b8e82c07e80d}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Entity IMPLEMENTS I_Entity, I_Debug;
 VAR
-	_nIdx		: UDINT;
-	_iRegister	: I_CompRegister;
+	_nId		: UDINT;
+	_nStart		: UDINT;
+	_nEnd		: UDINT;
+	_nSize		: UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="_" Id="{e8077190-5b33-4c5b-91af-7b20957542bb}" />
+    <Property Name="_AsIEntity" Id="{60fc76fa-dd40-4521-93f5-29f3a0849bcf}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY _AsIEntity : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{5b7b9954-87f2-4bb7-9b69-46ae3bdefa15}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_AsIEntity := THIS^;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="_End" Id="{7ed5e455-fc58-494a-8dc6-0ca2573e5409}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _End : UDINT]]></Declaration>
+      <Get Name="Get" Id="{7db79da8-8058-4634-a09e-a01f1ca34087}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_End := _nEnd;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{77e2b638-de88-4a1a-b8f5-31e89a519e72}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nEnd := _End;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="_SetId" Id="{62c96274-5085-4c78-83ea-0940b75194d1}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _SetId
+VAR_INPUT
+	nId			: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_nId := nId;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_SetSize" Id="{341e7bbc-0303-483d-8f8d-69b5d7410f42}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _SetSize
+VAR_INPUT
+	nSize	: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_nSize := nSize;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="_Start" Id="{5d53a0dc-b463-4cf0-bcbc-720c698356a0}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Start : UDINT]]></Declaration>
+      <Get Name="Get" Id="{b451cf7c-ffda-4cbd-9831-246d8bce73bb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Start := _nStart;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7a9c4d16-2560-42af-ac22-20b3625b8918}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nStart := _Start;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="Fb_init" Id="{8a1c93fc-56bb-463c-aa1e-e5009cf51636}">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
 //The return value is not evaluated. For a specific influence, you can also declare the
@@ -19,69 +91,57 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
-	
-	iRegister	: I_CompRegister;
 END_VAR
 VAR
-	_eResult	: Result;
+	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF iRegister = 0 THEN
-	DebugMsg(THIS^, 'iRegister = 0!');
-	RETURN;
-END_IF
-
-_iRegister := iRegister;
-
-IF IsErr(_RegisterEntity(THIS^, nIndex => _nIdx), eCarry => _eResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('_RegisterEntity(THIS^) failed with code: ', TO_STRING(_eResult)));
+        <ST><![CDATA[IF IsErr(_RegEntity(THIS^, nIndex => _nId), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('_RegEntity(THIS^) failed with code: ', TO_STRING(_nResult)));
 END_IF
 
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Get" Id="{ab838f06-5bcf-409a-98b9-85b846f67e0d}">
+    <Method Name="Get" Id="{d850980f-263b-4ca3-bf68-c37b4aaa2580}">
       <Declaration><![CDATA[METHOD Get : Result
 VAR_INPUT
-	nIndex		: UDINT;
+	nIndex	: UDINT;
 END_VAR
 VAR_OUTPUT
-	iComp		: I_Component;
-END_VAR]]></Declaration>
+	iComp	: I_Component;
+END_VAR
+]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Get := _iRegister.Get(nIndex, iComp => iComp);]]></ST>
+        <ST><![CDATA[IF nIndex > _nSize - 1 OR nIndex = 0 THEN
+	Get := None;
+	RETURN;
+END_IF
+
+iComp := _Ec.comp[_nStart + nIndex].iObj.iComponent;
+
+]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Index" Id="{7352a221-5a84-4b85-8168-641e70625251}">
-      <Declaration><![CDATA[PROPERTY Index : UDINT]]></Declaration>
-      <Get Name="Get" Id="{5330a592-625e-400e-aba2-b6662dcf04cc}">
+    <Property Name="Id" Id="{4402c710-18d7-433c-9c5e-7e50ee140721}">
+      <Declaration><![CDATA[PROPERTY Id : UDINT]]></Declaration>
+      <Get Name="Get" Id="{a6b229f7-6688-455d-b326-4d6e21f10657}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Index := _nIdx;]]></ST>
+          <ST><![CDATA[Id := _nId;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="RegCap" Id="{4edb66b0-0685-4534-b211-508ca988b999}">
-      <Declaration><![CDATA[PROPERTY RegCap : UDINT]]></Declaration>
-      <Get Name="Get" Id="{35dc1150-4d29-4323-a6e7-4e81d8017ce4}">
+    <Property Name="Size" Id="{14d02e17-8a75-4f2f-aafd-191cc43b5896}">
+      <Declaration><![CDATA[PROPERTY Size : UDINT]]></Declaration>
+      <Get Name="Get" Id="{fd80484a-41ec-435a-93fd-cf4a1c9dc4b9}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[RegCap := _iRegister.Cap;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="RegLen" Id="{ea52af99-0d5a-4374-880c-a72e8c26241a}">
-      <Declaration><![CDATA[PROPERTY RegLen : UDINT]]></Declaration>
-      <Get Name="Get" Id="{86c9ddb0-7202-4873-a41a-73f9ab1a872a}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[RegLen := _iRegister.Length;]]></ST>
+          <ST><![CDATA[Size := _nSize;]]></ST>
         </Implementation>
       </Get>
     </Property>

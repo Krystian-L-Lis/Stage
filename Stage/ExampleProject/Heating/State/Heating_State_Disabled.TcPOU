@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Heating_State_Disabled" Id="{3b811875-1208-4731-9501-ae0d4edb08e7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_Disabled EXTENDS Heating_State
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="OnInit" Id="{969084cd-eabe-4f07-bb36-9264c638a3be}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.hmi.sStatusText := 'Heating disabled!';
+_ctx.hmi.nStatusColor := COL.BLACK.Raw;
+
+_ctx.hmi.sButtonText := 'Press to ENABLE!';
+_ctx.hmi.nButtonColor := COL.BLACK.Raw;
+
+_ctx.io.out.bBurner := FALSE;
+_ctx.io.out.bPump := FALSE;
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

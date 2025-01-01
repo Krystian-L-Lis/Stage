@@ -6,7 +6,7 @@
     <Method Name="Call" Id="{c7d88913-b4b8-4b49-bfda-281bb631abd0}">
       <Declaration><![CDATA[METHOD Call
 VAR_INPUT
-	I_Arg		: I_Arg;
+	iArg		: I_Arg;
 END_VAR
 ]]></Declaration>
     </Method>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Heating_Ctx_States" Id="{d1b97a9d-1ebe-4981-b744-6aed529f2610}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating_Ctx_States
+VAR_OUTPUT
+	iMgr			: I_StateManager;
+	
+	iSafety			: I_State;
+	iFault			: I_State;
+	iDisable		: I_State;
+	iEnable			: I_State;
+	iPump			: I_State;
+	iHeatup			: I_State;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -46,26 +46,19 @@
     <Compile Include="Color\Color.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Persistant\BOOL_Param.TcPOU">
+    <Compile Include="ECS\CompType.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Persistant\DINT_Param.TcPOU">
+    <Compile Include="ECS\Entity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Persistant\LREAL_Param.TcPOU">
+    <Compile Include="ECS\Param.TcGVL">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Persistant\REAL_Param.TcPOU">
+    <Compile Include="ECS\_ECS.TcGVL">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\STR_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\TIME_Param.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistant\UDINT_Param.TcPOU">
-      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Timer\GetSysTime.TcPOU">
       <SubType>Code</SubType>
@@ -108,7 +101,7 @@
   <ItemGroup>
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
-    <Folder Include="Persistant" />
+    <Folder Include="ECS" />
     <Folder Include="Timer" />
   </ItemGroup>
   <ItemGroup>

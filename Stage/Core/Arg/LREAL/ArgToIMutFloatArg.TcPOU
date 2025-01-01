@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ArgToIMutFloatArg" Id="{d7753613-5e7c-42f6-bd0a-1f5a10e5a6cc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ArgToIMutFloatArg : Result
+VAR_INPUT
+	iArg		: I_Arg;
+END_VAR
+VAR_OUTPUT
+	iVal		: I_MutFloatArg;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF __QUERYINTERFACE(iArg, iVal) THEN
+	ArgToIMutFloatArg := Ok;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

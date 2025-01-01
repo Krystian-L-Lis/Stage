@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="_ECS" Id="{d4183083-62ce-4b2b-bf20-40b7c5bdaf51}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	pCompType		: ARRAY[0..Param.COMP_CAP] OF POINTER TO CompType;
+	nCompTypeNo		: UDINT;
+	
+	pEntity			: POINTER TO BYTE;
+	nEntityNo		: UDINT;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

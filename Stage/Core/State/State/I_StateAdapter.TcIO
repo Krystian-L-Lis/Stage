@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_StateAdapter" Id="{fd9fce22-961d-496b-90f4-a68f24247074}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_StateAdapter
+]]></Declaration>
+    <Property Name="_AsIStateInternal" Id="{6ba7e1ce-ccfb-4966-b3ab-4e2927f81551}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _AsIStateInternal : I_StateInternal]]></Declaration>
+      <Get Name="Get" Id="{b2766e60-6c6f-4835-a2fa-4210a114d499}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

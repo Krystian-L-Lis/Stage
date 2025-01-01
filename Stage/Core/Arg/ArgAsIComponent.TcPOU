@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ArgAsIComponent" Id="{5c29e6e1-73d7-4b4a-82c7-dcd0d4c36bbf}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ArgAsIComponent : Result
+VAR_INPUT
+	iSource	: I_Component;
+END_VAR
+VAR_OUTPUT
+	iDest	: I_StateManager;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSource = 0 THEN
+	ArgAsIComponent := Err.Itf0;
+	RETURN;
+END_IF
+
+IF __QUERYINTERFACE(iSource, iDest) THEN
+	ArgAsIComponent := Ok;
+ELSE
+	ArgAsIComponent := Err.NoMatch;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_BroadcastCoalesce" Id="{6b94ce68-d371-4720-8bcb-203b2041576d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _BroadcastCoalesce : Result
+VAR
+    i             : UDINT;
+    _nStartIndex  : UDINT;      // Not used in this version, but declared
+    _nSlotsMoved  : UDINT;
+    _nNextMove    : UDINT := 1; // Destination pointer for the next block
+    _nChunkSize   : UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// 1) If we are at maximum capacity (all slots are allocated).
+IF _Broadcast.nRecLen = Param.ENTITY_CAP THEN
+	_BroadcastCoalesce := Err.Ovf;
+	RETURN;
+END_IF
+
+// 2) If there are no allocated slots at all, nothing to coalesce.
+IF _Broadcast.nRecLen = 0 THEN
+	_BroadcastCoalesce := Ok;
+	RETURN;
+END_IF
+
+// 3) Single pass from slot 1 to Param.ENTITY_CAP
+FOR i := 1 TO Param.ENTITY_CAP DO
+
+	// Stop early if we've already repositioned all allocated slots
+	IF _nSlotsMoved = _Broadcast.nRecLen THEN
+		EXIT;
+	END_IF
+
+	CASE _Broadcast.entry[i].nType OF
+
+		0:
+			// FREE slot => do nothing, just keep scanning.
+
+		1:
+			// Occupied block => treat this as the start of the block.
+			_nChunkSize := _Broadcast.entry[i].iObj.iSignal._Size;
+
+			// If the block is not already at _nNextMove, move it to that position.
+			IF i <> _nNextMove THEN
+				Tc2_System.MEMMOVE(
+					ADR(_Broadcast.entry[_nNextMove]),	// Destination
+					ADR(_Broadcast.entry[i]),			// Source
+					SIZEOF(ST_EcObject) * _nChunkSize	// Adjust type if needed
+				);
+
+				// Update the signal's _Start/_End in the new location.
+				_Broadcast.entry[_nNextMove].iObj.iSignal._Start := _nNextMove;
+				_Broadcast.entry[_nNextMove].iObj.iSignal._End   := _nNextMove + _nChunkSize - 1;
+
+				// Optionally, clear the old region if you want to.
+			END_IF
+
+			// Increase the “moved” counter by this block’s size.
+			_nSlotsMoved := _nSlotsMoved + _nChunkSize;
+
+			// Advance _nNextMove so the next block can be placed after this one.
+			_nNextMove := _nNextMove + _nChunkSize;
+
+			// Jump over the rest of this block in the FOR loop.
+			i := i + _nChunkSize - 1;  // next iteration => i + _nChunkSize
+
+		ELSE
+			// Invalid slot type => internal error or corrupted data
+			_BroadcastCoalesce := Err.IncArg;
+			RETURN;
+	END_CASE
+END_FOR
+
+// 4) By here, we've repositioned all occupied slots to the left side
+//    up to index (_nNextMove - 1). Everything from _nNextMove..Param.ENTITY_CAP
+//    can be set to FREE (nType=0 or zero out everything).
+Tc2_System.MEMSET(
+	ADR(_Broadcast.entry[_nNextMove]),
+	0,
+	SIZEOF(ST_EcObject) * (Param.ENTITY_CAP - (_nNextMove - 1))
+);
+
+// 5) Update _Broadcast.iFirst if we have at least one block.
+//    The leftmost block is now at index 1.
+IF _Broadcast.entry[1].nType = 1 THEN
+	_Broadcast.iFirst := _Broadcast.entry[1].iObj.iSignal;
+	_BroadcastCoalesce := Ok;
+ELSE
+	// If for some reason index 1 is still free, consider it an internal error
+	_BroadcastCoalesce := Err.IncArg;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

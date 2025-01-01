@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CompType" Id="{341a9d67-8b10-424d-940b-fe67581a8841}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CompType
+VAR_OUTPUT
+	nId			: UDINT;
+	nSize		: UDINT;
+END_VAR
+VAR_OUTPUT
+	_pData		: POINTER TO BYTE;
+	_nLen		: UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="_AddComponent" Id="{5368cc15-d0a8-4d35-9b00-debbb23d86a5}">
+      <Declaration><![CDATA[METHOD INTERNAL _AddComponent : BOOL
+VAR_INPUT
+	nEntityId		: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_GetComp" Id="{605f370f-500e-4de5-9b1b-e119849ec002}">
+      <Declaration><![CDATA[METHOD INTERNAL _GetComp : BOOL
+VAR_INPUT
+	nIdx	: UDINT;
+END_VAR
+VAR_OUTPUT
+	pHeader	: POINTER TO BYTE;
+	pData	: POINTER TO BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nLen = 0 THEN
+	RETURN;
+END_IF
+
+IF nId > _nLen - 1 THEN
+	RETURN;
+END_IF
+
+pHeader := _pData + nIdx * (SIZEOF(UDINT) + nSize);
+pData := pHeader + SIZEOF(UDINT);
+_GetComp := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Fb_init" Id="{ff7a1f33-933c-4078-9278-6d2d2dd7ca41}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+
+	nSize		: UDINT; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nSize = 0 THEN
+	RETURN;
+END_IF
+
+THIS^.nSize := nSize;
+nId := _ECS.nCompTypeNo;
+_ECS.pCompType[_ECS.nCompTypeNo] := THIS;
+_ECS.nCompTypeNo := _ECS.nCompTypeNo + 1;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

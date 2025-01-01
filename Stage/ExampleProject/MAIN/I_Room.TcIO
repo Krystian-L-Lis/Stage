@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Room" Id="{76a64c62-873b-4b19-9f71-81cd9ae5bd4a}">
+    <Declaration><![CDATA[INTERFACE I_Room EXTENDS I_Arg
+]]></Declaration>
+    <Property Name="IsCompleted" Id="{6e53a50f-6240-4e4a-b8a7-cae0628697cb}">
+      <Declaration><![CDATA[PROPERTY IsCompleted : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ac3cdbb9-8dea-4b2f-a2f3-7615f584568a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsReady" Id="{50c3e0ec-167d-4787-96ca-fe310c4f9f97}">
+      <Declaration><![CDATA[PROPERTY IsReady : BOOL]]></Declaration>
+      <Get Name="Get" Id="{778bad79-aa64-4466-94de-baac6b08b962}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Prepare" Id="{5a95de94-7557-4aa0-b324-b5fe346d2f7b}">
+      <Declaration><![CDATA[METHOD Prepare : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="U_BroadcastObject" Id="{5c7e35f6-1446-412c-affd-6d2f069720fe}">
+    <Declaration><![CDATA[TYPE U_BroadcastObject :
+UNION
+	iSignal		: I_SignalNode;
+	iReceiver	: I_ReceiverNode;
+END_UNION
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

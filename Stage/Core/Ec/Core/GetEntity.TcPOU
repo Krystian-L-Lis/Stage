@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="GetEntity" Id="{f364a793-1b08-4c02-b87e-c6952bc10b65}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION GetEntity : Result
+    <Declaration><![CDATA[// ---------------------------------------------------------------------------
+// FUNCTION:  GetEntity
+// PURPOSE:   Retrieves (via iEntity) the I_Entity instance at the given nIndex
+//            from the global _Ec.iEntity array, if valid. Returns an appropriate
+//            result code (e.g., Ok or None) depending on whether nIndex is
+//            in range.
+// ---------------------------------------------------------------------------
+FUNCTION GetEntity : Result
 VAR_INPUT
 	nIndex		: UDINT;
 END_VAR
@@ -9,12 +16,12 @@ VAR_OUTPUT
 	iEntity		: I_Entity;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF nIndex > _Ec.nLen OR nIndex = 0 THEN
+      <ST><![CDATA[IF nIndex > _Ec.nEntityLen OR nIndex = 0 THEN
 	GetEntity := None;
 	RETURN;
 END_IF
 
-iEntity := _Ec.iEntity[nIndex];
+iEntity := _Ec.iEntity[nIndex]._AsIEntity;
 GetEntity := Ok;
 ]]></ST>
     </Implementation>

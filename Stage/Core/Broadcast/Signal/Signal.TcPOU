@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Signal" Id="{f8e18ed7-1c52-42fc-a059-fb597dcc2816}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_Emit
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_SignalEmit
 VAR
 	_tag			: Tag('');
-	_nCount			: UDINT;
+	_nStart			: UDINT;
+	_nEnd			: UDINT;
 	_nSize			: UDINT;
-	_nId			: UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="Node" Id="{67b0e520-34fd-49c8-b1ba-61fc8c99d4e5}" />
-    <Property Name="count" Id="{747f76e2-80c1-4fe7-ac12-36b51ee62f7b}" FolderPath="Node\">
-      <Declaration><![CDATA[PROPERTY INTERNAL count : UDINT
+    <Property Name="_End" Id="{747f76e2-80c1-4fe7-ac12-36b51ee62f7b}" FolderPath="Node\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _End : UDINT
 ]]></Declaration>
       <Get Name="Get" Id="{af4b6446-a198-46ee-956f-22c2e9ff3508}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[count := _nCount;]]></ST>
+          <ST><![CDATA[_End := _nEnd;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{18d5f4fe-e62e-4a04-9c83-538c70681da2}">
@@ -29,7 +29,47 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_nCount := count;]]></ST>
+          <ST><![CDATA[_nEnd := _End;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Size" Id="{0a91cfac-93c7-4387-861b-eadaf8ca6b39}" FolderPath="Node\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Size : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{a478b757-5e32-4c1d-b6de-43374fb4317b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Size := _nSize;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{21b4b107-67e7-4639-a795-cc4753c3293e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nSize := _Size;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Start" Id="{337b25f3-a662-46cb-a639-924df6db33a7}" FolderPath="Node\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Start : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{7b2bfffc-a197-41af-aa40-1c4075cd6ea1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Start := _nStart;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5726210a-4f73-428b-a697-77cd8dcfa82c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nStart := _Start;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -44,7 +84,7 @@ END_VAR
 	iArg := _tag;
 END_IF
 
-_EmitSignal(THIS^, iArg);]]></ST>
+_Emit(THIS^, iArg);]]></ST>
       </Implementation>
     </Method>
     <Method Name="EmitTo" Id="{01237bb5-eb33-4f6f-8303-4496429927bb}">
@@ -69,26 +109,26 @@ EmitTo := Ok;
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="id" Id="{337b25f3-a662-46cb-a639-924df6db33a7}" FolderPath="Node\">
-      <Declaration><![CDATA[PROPERTY INTERNAL id : UDINT
-]]></Declaration>
-      <Get Name="Get" Id="{7b2bfffc-a197-41af-aa40-1c4075cd6ea1}">
-        <Declaration><![CDATA[VAR
+    <Method Name="FB_init" Id="{ce47a828-df52-4ce9-b420-965840dc0bdc}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
 END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[id := _nId;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{5726210a-4f73-428b-a697-77cd8dcfa82c}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_nId := id;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
+VAR
+	_eResult	: Result;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE _RegSignal(THIS^) OF
+	Err.Ovf:
+		DebugMsg(THIS^, '_Broadcast.iSignal table overflow!');
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Option" Id="{1843f7ed-dc01-49ec-bf6f-06b77ee6ae5f}">
       <Declaration><![CDATA[METHOD Option : REFERENCE TO Signal
 VAR_INPUT
@@ -109,7 +149,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[IF iReceiver = 0 THEN
 	Pair := Err.Itf0;
 ELSIF iReceiver.IsOk THEN
-	Pair := _NewPair(THIS^, iReceiver);
+	Pair := _Pair(THIS^, iReceiver);
 ELSE
 	Pair := Error;
 END_IF
@@ -117,26 +157,6 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="size" Id="{0a91cfac-93c7-4387-861b-eadaf8ca6b39}" FolderPath="Node\">
-      <Declaration><![CDATA[PROPERTY INTERNAL size : UDINT
-]]></Declaration>
-      <Get Name="Get" Id="{a478b757-5e32-4c1d-b6de-43374fb4317b}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[size := _nSize;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{21b4b107-67e7-4639-a795-cc4753c3293e}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_nSize := size;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Property Name="Tag" Id="{276c9dc2-e1f1-4c44-b5b0-4b2a0ec67ff8}">
       <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
       <Get Name="Get" Id="{75779fa8-33cd-4bad-ac20-5c8ee6db9799}">

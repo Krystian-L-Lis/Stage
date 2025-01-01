@@ -8,7 +8,7 @@ VAR
 	{attribute 'hide'}
 	_bInQueue					: BOOL;
 	{attribute 'hide'}
-	_iOwner						: I_CompRegister;
+	_iOwner						: I_Entity;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -17,8 +17,30 @@ END_VAR
     <Folder Name="_" Id="{b2082cde-a72a-48d1-bf2b-bfe685440ba0}" />
     <Folder Name="Can" Id="{012b303c-ee19-4d59-a8c5-29d7ee56e39c}" />
     <Folder Name="On" Id="{5034b126-7af1-4e3e-aa65-10d454bc5f51}" />
+    <Property Name="_AsIState" Id="{ae988e03-7493-46d9-85de-be6948de1d8e}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL FINAL _AsIState : I_State]]></Declaration>
+      <Get Name="Get" Id="{4c9d6b0d-006b-455b-828d-2ce5937584f8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_AsIState := THIS^;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="_AsIStateInternal" Id="{4fe75cff-cf53-4cef-a5a6-8ca77becdd1c}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL FINAL _AsIStateInternal : I_StateInternal]]></Declaration>
+      <Get Name="Get" Id="{d8d590d5-9436-40ea-add0-78eaf9a46d23}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_AsIStateInternal := THIS^;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="_InQueue" Id="{7211bf2e-3f54-4127-8169-2b1f66f2bb49}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _InQueue : BOOL]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL FINAL _InQueue : BOOL]]></Declaration>
       <Get Name="Get" Id="{f6028f30-7546-40bc-a7f1-f2d9bdc4c404}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -35,17 +57,6 @@ END_VAR
           <ST><![CDATA[_bInQueue := _InQueue;]]></ST>
         </Implementation>
       </Set>
-    </Property>
-    <Property Name="AsIState" Id="{cad638c9-6284-409f-af0f-87aef14da223}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY AsIState : I_State]]></Declaration>
-      <Get Name="Get" Id="{6784ed83-5b06-43f4-bc32-50d46f2cec80}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[AsIState := THIS^;]]></ST>
-        </Implementation>
-      </Get>
     </Property>
     <Method Name="CanActivate" Id="{71c49a83-838e-4656-9fc2-ce8957b8e198}" FolderPath="Can\">
       <Declaration><![CDATA[METHOD CanActivate : BOOL
@@ -75,29 +86,22 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
-	iCompReg					: I_MutCompRegister;
+	iEntity		: I_Entity;
+END_VAR
+VAR
+	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF iCompReg = 0 THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
-	RETURN;
+        <ST><![CDATA[IF iEntity = 0 THEN
+	DebugMsg(THIS^, 'iEntity = 0!');
 END_IF
 
-CASE iCompReg.Insert(THIS^) OF
-	Ok:
-		_iOwner := iCompReg;
-	Err.ItfEq:
-		DebugMsg(iCompReg, Tc2_Standard.CONCAT(__POUNAME(), 'Tried to insert a double!'));
-		DebugMsg(THIS^, 'Cause object');
-	Err.Ovf:
-		DebugMsg(iCompReg, Tc2_Standard.CONCAT(__POUNAME(), 'Overflow!'));
-		DebugMsg(THIS^, 'Cause object!');
-	ELSE
-		DebugMsg(iCompReg, Tc2_Standard.CONCAT(__POUNAME(), 'Unknown Error!'));
-		DebugMsg(THIS^, 'Cause object!');
-END_CASE
+_iOwner := iEntity;;
 
-]]></ST>
+IF IsErr(_RegComp(iEntity, THIS^), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
+	DebugMsg(THIS^, 'Could not be added!');
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{aabb82b9-2f5d-4e99-b353-6c10e3d6ce3d}" FolderPath="On\">
@@ -128,7 +132,7 @@ END_VAR
       </Implementation>
     </Method>
     <Property Name="Owner" Id="{32b502a4-ba25-4a78-8e46-5a8b31e2a3e9}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY Owner : I_CompRegister]]></Declaration>
+      <Declaration><![CDATA[PROPERTY FINAL Owner : I_Entity]]></Declaration>
       <Get Name="Get" Id="{98a99666-df4c-40b9-abec-3c308e3cdead}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -139,7 +143,7 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Tag" Id="{0bbeba40-ec6e-4b6d-a33f-9c84eca9c89e}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Declaration><![CDATA[PROPERTY FINAL Tag : I_Tag]]></Declaration>
       <Get Name="Get" Id="{c1b1ddfd-4e01-4e44-9d81-1a59ffd92985}">
         <Declaration><![CDATA[VAR
 END_VAR

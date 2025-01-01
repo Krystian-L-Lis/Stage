@@ -64,13 +64,40 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arg\BOOL\ArgToIBoolArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\BOOL\ArgToIMutBoolArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\CompAsIArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Arg\BOOL\BoolArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\BOOL\I_Bool.TcIO">
+    <Compile Include="Arg\BOOL\I_BoolArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\BOOL\I_MutBool.TcIO">
+    <Compile Include="Arg\BOOL\I_MutBoolArg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\ArgAsIComponent.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\List\ArgList.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\List\I_ArgList.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\List\I_MutArgList.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LREAL\ArgToIFloatArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LREAL\ArgToIMutFloatArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\LREAL\FloatArg.TcPOU">
@@ -85,6 +112,12 @@
     <Compile Include="Arg\I_Arg.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Arg\LWORD\ArgToIBinArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\LWORD\ArgToIMutBinArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Arg\LWORD\I_BinArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -94,7 +127,19 @@
     <Compile Include="Arg\LWORD\BinArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Receiver\AsRec.TcPOU">
+    <Compile Include="Arg\Queue\ArgQueue.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Queue\ArgQueueProxy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Queue\I_ArgQueue.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Queue\I_MutArgQueue.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Receiver\CompAsIReceiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Receiver\I_Receiver.TcIO">
@@ -106,13 +151,13 @@
     <Compile Include="Broadcast\Receiver\Receiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Signal\AsSignal.TcPOU">
+    <Compile Include="Broadcast\Signal\CompAsISignal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Signal\SignalProxy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Signal\I_Emit.TcIO">
+    <Compile Include="Broadcast\Signal\I_SignalEmit.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Signal\I_Signal.TcIO">
@@ -124,38 +169,28 @@
     <Compile Include="Broadcast\Signal\Signal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_ArePaired.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_BroadcastCoalesce.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_Cleanup.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_BroadcastGetBestFit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_Clear.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_Emit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_Copy.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_Pair.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_EmitSignal.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_FindBestChunk.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_FindChunkAfter.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_NewPair.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_SoftCompress.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_RegSignal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Sys\Helpers\_Unpair.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Structs\ST_Entry.TcDUT">
+    <Compile Include="Broadcast\Sys\Structs\ST_BroadcastObject.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Sys\Structs\U_BroadcastObject.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Sys\_Broadcast.TcGVL">
@@ -181,31 +216,19 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Ec\Core\CompRegister.TcPOU">
+    <Compile Include="Ec\Core\FetchOwner.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\Core\I_Component.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_OwnedComp.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Ec\Core\I_CompRegister.TcIO">
+    <Compile Include="Ec\Core\I_EntityNode.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\Core\I_Entity.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_MutCompRegister.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Ec\Core\GetEntity.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Ec\Helpers\CachedComp.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Ec\Helpers\CachedEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\Helpers\Comp.TcPOU">
@@ -214,11 +237,38 @@
     <Compile Include="Ec\Helpers\Entity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Ec\Helpers\RegComp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\List\CompList.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\List\I_CompList.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\List\I_MutCompList.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Sys\St_EcObject.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Sys\U_EcObject.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Ec\Sys\_Ec.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Ec\Sys\_RegisterEntity.TcPOU">
+    <Compile Include="Ec\Sys\_Helpers\_EcCoalesce.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Sys\_Helpers\_EcGetBestFit.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Sys\_RegComp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Sys\_RegEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Iter\Iter.TcPOU">
@@ -275,6 +325,9 @@
     <Compile Include="State\Machine\StateMachine.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="State\Manager\CompAsIStateManager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="State\Manager\StateManagerProxy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -284,10 +337,16 @@
     <Compile Include="State\Manager\StateManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="State\State\CompAsIState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="State\State\I_State.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\State\I_StateInternal.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\State\I_StateAdapter.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\State\State.TcPOU">
@@ -326,19 +385,25 @@
     <Compile Include="Tags\ArgAsTag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\AsTagged.TcPOU">
+    <Compile Include="Tags\CompAsITagged.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\AsTag.TcPOU">
+    <Compile Include="Tags\CompAsITag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\I_Tag.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\I_TagCmp.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\I_Tagged.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\Tag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\TagCmp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\TagProxy.TcPOU">
@@ -353,6 +418,8 @@
     <Folder Include="Arg\BOOL" />
     <Folder Include="Arg\LREAL" />
     <Folder Include="Arg\LWORD" />
+    <Folder Include="Arg\List" />
+    <Folder Include="Arg\Queue" />
     <Folder Include="Broadcast" />
     <Folder Include="Broadcast\Receiver" />
     <Folder Include="Broadcast\Signal" />
@@ -365,8 +432,10 @@
     </Folder>
     <Folder Include="Ec\Core" />
     <Folder Include="Ec\Helpers" />
+    <Folder Include="Ec\List" />
     <Folder Include="Ec\Sys" />
     <Folder Include="Callable" />
+    <Folder Include="Ec\Sys\_Helpers" />
     <Folder Include="Iter" />
     <Folder Include="Arg" />
     <Folder Include="Runtime" />

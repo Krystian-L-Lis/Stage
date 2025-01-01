@@ -1,10 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <GVL Name="_Ec" Id="{25f16a6e-7888-4e3e-877d-3b7e2fe9f871}">
-    <Declaration><![CDATA[{attribute 'qualified_only'}
+    <Declaration><![CDATA[// ---------------------------------------------------------------------------
+// GLOBAL DATA BLOCK: _Ec
+// PURPOSE:
+//   This global variable block stores the primary structures for the entity-
+//   component system. "iEntity" is an array of I_EntityNode, each describing
+//   an entity's allocated range and metadata. "comp" is an array of ST_EcObject,
+//   representing the actual slots for components or entity headers.
+//
+//   - iFirst:     Points to the leftmost (lowest _Start) entity in iEntity[],
+//                 or 0 if none exist.
+//   - nEntityLen: How many entities are currently in use out of ENTITY_CAP.
+//   - nCompLen:   How many slots in comp[] are occupied (sum of all allocated
+//                 blocks).
+//
+// ---------------------------------------------------------------------------
+{attribute 'qualified_only'}
 VAR_GLOBAL INTERNAL
-	iEntity		: ARRAY[1..Param.ENTITY_CAP] OF I_Entity;
-	nLen			: UDINT;	
-END_VAR]]></Declaration>
+    iEntity     : ARRAY[1..Param.ENTITY_CAP] OF I_EntityNode;   // All entity nodes
+    comp        : ARRAY[1..Param.COMP_CAP] OF ST_EcObject;      // Slots for components/entity headers
+    
+    iFirst      : I_EntityNode;  // Tracks the first (leftmost) allocated entity
+    
+    nEntityLen  : UDINT;         // Number of active entities
+    nCompLen    : UDINT;         // Number of allocated slots in 'comp' array
+END_VAR
+]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ArgQueue" Id="{5fefed48-7bae-45b6-a5e2-f3473e48d477}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ArgQueue
+VAR_GENERIC CONSTANT
+	nCap		: UDINT := 100;
+END_VAR
+VAR
+	_list		: ArgList<nCap>;
+	_nHead		: UDINT := 1;
+	_nTail		: UDINT := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Head" Id="{212475c4-e8c8-4d1b-a3ee-53654d6c7959}">
+      <Declaration><![CDATA[PROPERTY Head : UDINT]]></Declaration>
+      <Get Name="Get" Id="{a9358f8b-2ada-4118-b863-513c0b85c740}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Head := _nHead;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="List" Id="{7bb419a2-9a05-4640-9427-d39f30187a46}">
+      <Declaration><![CDATA[PROPERTY List : I_ArgList]]></Declaration>
+      <Get Name="Get" Id="{a822b4ee-ebcd-431d-bee5-1b2176157c94}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[List := _list;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Pop" Id="{c0e476b5-0312-468c-bd79-2e025a1976a9}">
+      <Declaration><![CDATA[METHOD Pop : Result
+VAR_OUTPUT
+	iArg	: I_Arg;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF IsOk(_list.Get(_nTail, iArg => iArg), nOut => Pop) THEN
+	_nTail := _nTail + 1;
+	IF _nTail = nCap THEN
+		_nTail := 1;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{4cffbac1-66d4-4260-a313-b7e0e1c784cf}">
+      <Declaration><![CDATA[METHOD Push : Result
+VAR_INPUT
+	iArg		: I_Arg;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nHead = _nTail THEN
+	Push := Err.Ovf;
+	RETURN;
+END_IF
+
+IF IsOk(_list.Append(iArg, _nHead), nOut => Push) THEN
+	_nHead := _nHead + 1;
+	IF _nHead = nCap THEN
+		_nHead := 1;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Tail" Id="{0030fa0d-2cec-40bb-9189-8d4288b9442f}">
+      <Declaration><![CDATA[PROPERTY Tail : UDINT]]></Declaration>
+      <Get Name="Get" Id="{09bdafc1-07ce-41b5-9418-66d1d38d8e89}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tail := _nTail;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

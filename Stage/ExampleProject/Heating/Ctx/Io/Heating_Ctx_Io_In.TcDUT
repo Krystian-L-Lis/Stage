@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Heating_Ctx_Io_In" Id="{f9ff3c65-e6c4-4ead-ae9e-44e73a199f11}">
+    <Declaration><![CDATA[TYPE Heating_Ctx_Io_In :
+STRUCT
+	bPumpOverload	: BOOL;
+	bBurnerOverload	: BOOL;
+	
+	rBoilerTemp		: REAL;
+	rBoilerPressure	: REAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

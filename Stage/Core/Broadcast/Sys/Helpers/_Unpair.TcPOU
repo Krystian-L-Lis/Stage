@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="_Unpair" Id="{b5d024d8-4329-41b6-bfa0-d5611a5f8f33}" SpecialFunc="None">
+  <POU Name="_Unpair" Id="{3e8ed14e-0639-4719-a148-506a7ab09ed4}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION INTERNAL _Unpair : Result
 VAR_INPUT
 	iSignal		: I_SignalNode;
@@ -10,41 +10,66 @@ VAR
 	i			: UDINT;
 	_nPos		: UDINT;
 	_nEnd		: UDINT;
-	_nCount		: UDINT;
+	_nFirstId	: UDINT := Param.RECEIVER_CAP;
+	_nNewStart	: UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF iSignal = 0 OR iReceiver = 0 THEN
+      <ST><![CDATA[// 1) Basic null check
+IF iSignal = 0 OR iReceiver = 0 THEN
 	_Unpair := Err.Itf0;
 	RETURN;
 END_IF
 
-IF NOT _ArePaired(iSignal, iReceiver, nPos => _nPos) THEN
-	_Unpair := None;
+// 2) Find iReceiver in [iSignal._Start+1 .. iSignal._End]
+_nEnd := iSignal._End;
+FOR i := iSignal._Start + 1 TO _nEnd DO
+	IF _Broadcast.entry[i].iObj.iReceiver = iReceiver THEN
+		_nPos := i;
+		EXIT;
+	END_IF
+END_FOR
+
+// 3) If not found, return an error
+IF _nPos = 0 THEN
+	_Unpair := Err.NoMatch;
 	RETURN;
 END_IF
 
-_nCount := iSignal.count;
-_nEnd := iSignal.id + _nCount - 1;
+// 4) Decrement the signal's size (removing one receiver)
+iSignal._Size := iSignal._Size - 1;
 
-// Swap with the last receiver if not already the last
-IF _nPos <> _nEnd THEN
-	_Broadcast.stEntry[_nPos] := _Broadcast.stEntry[_nEnd];
+// 5) If only the header slot remains, remove the signal entirely
+IF iSignal._Size = 1 THEN
+	// Clear the last receiver slot
+	_Broadcast.entry[_nEnd].nType := 0;
+	_Broadcast.entry[_nEnd].iObj.iReceiver := 0;
+	// Clear the signal header slot
+	_Broadcast.entry[_nEnd - 1].nType := 0;
+	_Broadcast.entry[_nEnd - 1].iObj.iSignal := 0;
+	// Reset iSignal metadata
+	iSignal._Size := 0;
+	iSignal._Start := 0;
+	iSignal._End := 0;
+
+	// If this was the leftmost signal, find a new one
+	IF _Broadcast.iFirst = iSignal THEN
+		FOR i := 1 TO _Broadcast.nSignalLen DO
+			_nNewStart := _Broadcast.iSignal[i]._Start;
+			IF _nNewStart <> 0 AND_THEN _nNewStart < _nFirstId THEN
+				_nFirstId := _Broadcast.iSignal[i]._Start;
+				_Broadcast.iFirst := _Broadcast.iSignal[i];
+			END_IF
+		END_FOR
+	END_IF
+
+ELSE
+	// 6) Otherwise, swap-remove from the last receiver slot
+	_Broadcast.entry[_nPos] := _Broadcast.entry[_nEnd];
+	iSignal._End := _nEnd - 1;
 END_IF
 
-// Clear the last entry
-_Broadcast.stEntry[_nEnd].iSignal := 0;
-_Broadcast.stEntry[_nEnd].iReceiver := 0;
-
-// Update counts
-iSignal.count := _nCount - 1;
-_Broadcast.nAssigned := _Broadcast.nAssigned - 1;
-
-// Shrink if needed
-IF iSignal.count < iSignal.size / 2 THEN
-	iSignal.size := iSignal.count;
-END_IF
-
+// 7) Return success code
 _Unpair := Ok;
 ]]></ST>
     </Implementation>

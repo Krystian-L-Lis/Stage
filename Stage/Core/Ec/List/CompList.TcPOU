@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CompList" Id="{ca518f37-6c05-4cf4-89d4-75c5e2201c82}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CompList
+VAR_GENERIC CONSTANT
+	nCap	: UDINT := 100;
+END_VAR
+
+IMPLEMENTS I_MutCompList
+
+VAR
+	_iList	: ARRAY[1..nCap] OF I_Component;
+	_nLen		: UDINT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Append" Id="{9fb06efd-ab03-4fa1-aa5f-6a55026b07b7}">
+      <Declaration><![CDATA[METHOD Append : Result
+VAR_INPUT
+	iComponent	: I_Component;
+	nIndex		: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
+	Append := Err.Ovf;
+	RETURN;	
+END_IF
+
+IF iComponent = 0 THEN
+	IF _iList[nIndex] = 0 THEN
+		// Do nothing
+		Append := None;
+	ELSE
+		// Remove
+		_iList[nIndex] := 0;
+		_nLen := _nLen - 1;
+		Append := Ok;
+	END_IF
+ELSE
+	IF _iList[nIndex] = 0 THEN
+		// Add
+		_iList[nIndex] := iComponent;
+		_nLen := _nLen + 1;
+		Append := Ok;		
+	ELSE
+		// Modify
+		_iList[nIndex] := iComponent;
+		Append := Ok;			
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Cap" Id="{50df78aa-587a-44e1-afbf-df9af1ffc7cc}">
+      <Declaration><![CDATA[PROPERTY Cap : UDINT]]></Declaration>
+      <Get Name="Get" Id="{dfda453b-d7cf-4f39-afd5-c17fcce041a4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Cap := nCap;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Get" Id="{54d36c41-e48b-4d94-a7f2-51e33876950d}">
+      <Declaration><![CDATA[METHOD Get : Result
+VAR_INPUT
+	nIndex		: UDINT;
+END_VAR
+VAR_OUTPUT
+	iComp	: I_Component;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nLen = 0 THEN
+	RETURN;
+END_IF
+
+IF nIndex > _nLen THEN
+	RETURN;
+END_IF
+
+IF nIndex > nCap OR_ELSE nIndex < 1 THEN
+	Get := Err.Ovf;
+	RETURN;
+END_IF
+
+iComp := _iList[nIndex];
+Get := Ok;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Length" Id="{6bac9759-9382-43e1-accb-7021bbfc1551}">
+      <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
+      <Get Name="Get" Id="{464d3f9b-7d83-4738-a4f1-48441410ea69}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Length := _nLen;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

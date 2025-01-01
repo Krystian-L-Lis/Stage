@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_Emit" Id="{646465f9-3e2f-4c22-aa94-18ebe360dfc5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _Emit : Result
+VAR_INPUT
+	iSignal		: I_SignalNode;
+	iArg		: I_Arg;
+END_VAR
+VAR
+	i			: UDINT;
+	_nEnd		: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iSignal = 0 THEN
+	RETURN;
+END_IF
+
+IF iSignal._Start = 0 THEN
+	RETURN;
+END_IF
+
+_nEnd := iSignal._End;
+// Assumes that the entry table is correctly constructed which is very likely
+FOR i := iSignal._Start + 1 TO _nEnd DO
+	_Broadcast.entry[i].iObj.iReceiver.Receive(iArg);
+END_FOR]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

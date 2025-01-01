@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Heating_Ctx_Hmi" Id="{73b31336-e86f-44f2-a942-2796c435ebeb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating_Ctx_Hmi
+VAR_INPUT
+	sStatusText				: Str;
+	nStatusColor			: LWORD;
+	
+	bButton					: BOOL;
+	sButtonText				: Str;
+	nButtonColor			: LWORD;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

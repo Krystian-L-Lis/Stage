@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_Pair" Id="{b9494b34-2fa0-4eac-9751-1b02a0502bfa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _Pair : Result
+VAR_INPUT
+	iSignal		: I_SignalNode;
+	iReceiver	: I_ReceiverNode;
+END_VAR
+VAR
+	i			: UDINT;
+	_nStart		: UDINT;
+	_nEnd		: UDINT;
+	_nFirstId	: UDINT;
+	_nNextId	: UDINT;
+	_nNewSize	: UDINT;
+	_nNewStart	: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// 1) Check if either iSignal or iReceiver is invalid (0 indicates null).
+IF iSignal = 0 OR iReceiver = 0 THEN
+	_Pair := Err.Itf0;
+	RETURN;
+END_IF
+
+// 2) Check if global capacity is already at maximum.
+IF _Broadcast.nRecLen = Param.RECEIVER_CAP THEN
+	_Pair := Err.Ovf;
+	RETURN;
+END_IF
+
+// 3) Ensure this exact iReceiver isn't already within the iSignal chunk
+FOR i := iSignal._Start + 1 TO iSignal._End DO
+	IF _Broadcast.entry[i].iObj.iReceiver = iReceiver THEN
+		_Pair := Err.ItfEq;
+		RETURN;
+	END_IF
+END_FOR
+
+// 4) If the signal is brand-new (_Start=0), try allocating exactly 2 slots.
+IF iSignal._Start = 0 THEN
+	CASE (_Pair := _BroadcastGetBestFit(2, nStart => _nStart, nEnd => _nEnd)) OF
+		Ok:
+			// Found a free chunk of size 2
+		None:
+			// No chunk found => coalesce and retry
+			IF IsErr(_BroadcastCoalesce(), nOut => _Pair) THEN
+				RETURN;
+			END_IF
+
+			IF NOT IsOk(_BroadcastGetBestFit(2, nStart => _nStart, nEnd => _nEnd), nOut => _Pair) THEN
+				RETURN;
+			END_IF
+		ELSE
+			// Any other error, just return
+			RETURN;
+	END_CASE
+
+	IF IsOk(_Pair) THEN
+		// Mark the first slot as signal header
+		_Broadcast.entry[_nStart].nType := 1;
+		_Broadcast.entry[_nStart].iObj.iSignal := iSignal;
+
+		// Mark the second slot as the receiver
+		_Broadcast.entry[_nEnd].nType := 2;
+		_Broadcast.entry[_nEnd].iObj.iReceiver := iReceiver;
+
+		// Update the signal's metadata
+		iSignal._Start := _nStart;
+		iSignal._End   := _nEnd;
+		iSignal._Size := 2;
+
+		// Increase global count of used slots
+		_Broadcast.nRecLen := _Broadcast.nRecLen + 2;
+
+		// Update _Broadcast.iFirst if needed
+		IF _Broadcast.iFirst = 0 THEN
+			_Broadcast.iFirst := iSignal;
+		ELSIF iSignal._Start < _Broadcast.iFirst._Start THEN
+			_Broadcast.iFirst := iSignal;
+		END_IF
+
+		RETURN;
+	ELSE
+		RETURN;
+	END_IF
+END_IF
+
+// 5) If the signal already has slots, try extending to the right by 1 slot.
+_nNextId := iSignal._End + 1;
+IF (_nNextId <= Param.COMP_CAP) AND_THEN (_Broadcast.entry[_nNextId].nType = 0) THEN
+	// Mark that free slot as a new receiver
+	_Broadcast.entry[_nNextId].nType := 2;
+	_Broadcast.entry[_nNextId].iObj.iReceiver := iReceiver;
+
+	// Update signal info
+	iSignal._End := _nNextId;
+	iSignal._Size := iSignal._Size + 1;
+
+	// Increase global used-slot counter
+	_Broadcast.nRecLen := _Broadcast.nRecLen + 1;
+
+	_Pair := Ok;
+	RETURN;
+END_IF
+
+// 6) Try expanding to the left by shifting the boundary marker left one slot.
+_nNextId := iSignal._Start - 1;
+IF (_nNextId > 0) AND_THEN (_Broadcast.entry[_nNextId].nType = 0) THEN
+	// Copy old boundary marker to new index
+	_Broadcast.entry[_nNextId] := _Broadcast.entry[iSignal._Start];
+
+	// Turn the old boundary marker slot into the new receiver
+	_Broadcast.entry[iSignal._Start].nType := 2;
+	_Broadcast.entry[iSignal._Start].iObj.iReceiver := iReceiver;
+
+	// Update signal to reflect new _Start
+	iSignal._Start := _nNextId;
+	iSignal._Size := iSignal._Size + 1;
+
+	// Increase global used-slot counter
+	_Broadcast.nRecLen := _Broadcast.nRecLen + 1;
+
+	_Pair := Ok;
+	RETURN;
+END_IF
+
+// 7) If neither immediate left nor right expansions are possible, we need a new chunk
+_nNewSize := iSignal._Size + 1;
+CASE (_Pair := _BroadcastGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd)) OF
+	Ok:
+		// Chunk found
+	None:
+		// Coalesce + retry
+		IF IsErr(_BroadcastCoalesce(), nOut => _Pair) THEN
+			RETURN;
+		END_IF
+
+		IF NOT IsOk(_BroadcastGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd), nOut => _Pair) THEN
+			RETURN;
+		END_IF
+	ELSE
+		// Other errors
+		RETURN;
+END_CASE
+
+IF IsOk(_Pair) THEN
+
+	// Move the entire existing block to the new chunk
+	Tc2_SYSTEM.MEMMOVE(
+		ADR(_Broadcast.entry[_nStart]),
+		ADR(_Broadcast.entry[iSignal._Start]),
+		SIZEOF(ST_BroadcastObject) * iSignal._Size
+	);
+
+	// Clear out the old region
+	Tc2_SYSTEM.MEMSET(
+		ADR(_Broadcast.entry[iSignal._Start]),
+		0,
+		SIZEOF(ST_BroadcastObject) * iSignal._Size
+	);
+
+	// Mark the final slot in the new chunk as the new receiver
+	_Broadcast.entry[_nEnd].nType := 2;
+	_Broadcast.entry[_nEnd].iObj.iReceiver := iReceiver;
+
+	// Update the signal to reflect the new block location
+	iSignal._Start := _nStart;
+	iSignal._End   := _nEnd;
+	iSignal._Size := iSignal._Size + 1;
+
+	// One more slot used
+	_Broadcast.nRecLen := _Broadcast.nRecLen + 1;
+
+	// If this signal was iFirst, re-scan for the new leftmost. 
+	// Otherwise, if we are now to the left of iFirst, update iFirst.
+	IF _Broadcast.iFirst = iSignal THEN
+		FOR i := 1 TO _Broadcast.nSignalLen DO
+			_nNewStart := _Broadcast.iSignal[i]._Start;
+			IF _nNewStart <> 0 AND_THEN _nNewStart < _nFirstId THEN
+				_nFirstId := _Broadcast.iSignal[i]._Start;
+				_Broadcast.iFirst := _Broadcast.iSignal[i];
+			END_IF
+		END_FOR
+	ELSIF iSignal._Start < _Broadcast.iFirst._Start THEN
+		_Broadcast.iFirst := iSignal;
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

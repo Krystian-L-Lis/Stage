@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_StateManager" Id="{ec583bc5-9b8d-4fc4-91c2-534454363ae3}">
-    <Declaration><![CDATA[INTERFACE I_StateManager EXTENDS I_Debug, I_Tagged, I_OwnedComp
+    <Declaration><![CDATA[INTERFACE I_StateManager EXTENDS I_Debug, I_Tagged
 ]]></Declaration>
     <Folder Name="Request" Id="{87840c05-c4d3-4f53-8cbe-0a9fd43b4889}" />
     <Folder Name="State" Id="{1e4aeef3-5172-4853-a26a-6057d4b308ba}" />

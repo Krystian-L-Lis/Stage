@@ -3,7 +3,7 @@
   <GVL Name="CST" Id="{6f97e508-fbf2-4606-b6a8-4e1cef309f6b}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
-	MAX_TANK		: UDINT := 3;
+	MAX_PASSIVE_ROOM		: UDINT := 3;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
