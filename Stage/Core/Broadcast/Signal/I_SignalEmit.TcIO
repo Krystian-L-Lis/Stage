@@ -6,7 +6,7 @@
     <Method Name="Emit" Id="{92a7c3da-021c-46a2-9cd8-62f5dba6bf6c}">
       <Declaration><![CDATA[METHOD Emit
 VAR_INPUT
-	iArg			: I_Arg;
+	iArg			: I_Arg := 0;
 END_VAR
 ]]></Declaration>
     </Method>
@@ -14,7 +14,7 @@ END_VAR
       <Declaration><![CDATA[METHOD EmitTo : Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
-	iArg			: I_Arg;
+	iArg			: I_Arg := 0;
 END_VAR
 ]]></Declaration>
     </Method>

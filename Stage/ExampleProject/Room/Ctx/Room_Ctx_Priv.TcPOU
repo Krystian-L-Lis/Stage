@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Heating_Ctx_Priv" Id="{a4dbf3bc-91dd-4988-bf90-c6d789fe1a17}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Heating_Ctx_Priv
+  <POU Name="Room_Ctx_Priv" Id="{f780ea0b-40f4-4a65-aec6-edfe7e6fb652}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx_Priv
 VAR_INPUT
 	iActiveRoom		: I_Room;
 	nPassiveRooms	: UDINT;

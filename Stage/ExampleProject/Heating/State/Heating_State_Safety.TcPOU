@@ -4,7 +4,8 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_Safety EXTENDS Heating_State IMPLEMENTS I_Callable
 VAR
 	
-	_safetyRec		: Receiver(THIS^);
+	_safetyRec				: Receiver(THIS^);
+	_bSafetyActive			: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -21,11 +22,20 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsOk(ArgToIBoolArg(iArg, iVal => _iSafeModeOn)) THEN
 	IF _iSafeModeOn.Val THEN
+		_bSafetyActive := TRUE;
 		_ctx.state.iMgr.Request(_ctx.state.iSafety);
 	ELSE
+		_bSafetyActive := FALSE;
 		_ctx.state.iMgr.Request(_ctx.state.iDisable);
 	END_IF
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CanDeactivate" Id="{fbb0ddd0-58f9-41c4-8e52-433fd6600485}">
+      <Declaration><![CDATA[METHOD CanDeactivate : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CanDeactivate := NOT _bSafetyActive;]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{0a4bec46-cc4e-478c-bfe7-cac41e91db99}">
@@ -64,7 +74,7 @@ _ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;
 _ctx.io.out.bBurner := FALSE;
 _ctx.io.out.bPump := FALSE;
 
-
+_ctx.priv.iOnDisable.Emit();
 
 ]]></ST>
       </Implementation>

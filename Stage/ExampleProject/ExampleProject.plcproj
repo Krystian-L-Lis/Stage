@@ -90,7 +90,39 @@
     <Compile Include="MAIN\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MAIN\State.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MAIN\VALVE.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="MAIN\VALVE_1.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Ctx\Room_Ctx_Hmi.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Ctx\Room_Ctx_Io.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Ctx\Room_Ctx_Priv.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Ctx\Room_Ctx_States.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Ctx\Io\Room_Ctx_Io_In.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Ctx\Io\Room_Ctx_Io_Out.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Room_Ctx.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -150,6 +182,9 @@
     <Folder Include="Heating\State" />
     <Folder Include="MAIN" />
     <Folder Include="Heating" />
+    <Folder Include="Room" />
+    <Folder Include="Room\Ctx" />
+    <Folder Include="Room\Ctx\Io" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleProject.tmc">

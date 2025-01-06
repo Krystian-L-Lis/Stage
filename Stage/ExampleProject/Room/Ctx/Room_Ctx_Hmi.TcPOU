@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Heating_Ctx_Hmi" Id="{73b31336-e86f-44f2-a942-2796c435ebeb}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Heating_Ctx_Hmi
+  <POU Name="Room_Ctx_Hmi" Id="{9536c277-9786-455b-b876-b447754e1a8d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx_Hmi
 VAR_INPUT
 	sStatusText				: Str;
 	sErrorText				: Str;

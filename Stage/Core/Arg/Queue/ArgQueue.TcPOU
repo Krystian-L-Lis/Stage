@@ -5,6 +5,9 @@
 VAR_GENERIC CONSTANT
 	nCap		: UDINT := 100;
 END_VAR
+
+IMPLEMENTS I_MutArgQueue
+
 VAR
 	_list		: ArgList<nCap>;
 	_nHead		: UDINT := 1;

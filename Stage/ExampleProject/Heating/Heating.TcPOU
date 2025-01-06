@@ -64,7 +64,7 @@ VAR
 	_requestRec					: Receiver(_request);
 	_compRequestRec				: Comp(_requestRec, _this);
 	
-	_queue						: ArgQueue;
+	_queue						: ArgQueue<CST.MAX_PASSIVE_ROOM>;
 	_queueProxy					: ArgQueueProxy(_queue, _ctx.priv.iQueue);
 	
 END_VAR

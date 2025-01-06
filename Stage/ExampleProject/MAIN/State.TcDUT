@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="State" Id="{86a61754-313b-4526-8db1-641aa67db79c}">
+    <Declaration><![CDATA[TYPE State : BOOL; END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

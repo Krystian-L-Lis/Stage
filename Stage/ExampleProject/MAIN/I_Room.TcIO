@@ -3,9 +3,25 @@
   <Itf Name="I_Room" Id="{76a64c62-873b-4b19-9f71-81cd9ae5bd4a}">
     <Declaration><![CDATA[INTERFACE I_Room EXTENDS I_Arg
 ]]></Declaration>
-    <Property Name="IsCompleted" Id="{6e53a50f-6240-4e4a-b8a7-cae0628697cb}">
-      <Declaration><![CDATA[PROPERTY IsCompleted : BOOL]]></Declaration>
-      <Get Name="Get" Id="{ac3cdbb9-8dea-4b2f-a2f3-7615f584568a}">
+    <Method Name="Close" Id="{58e7653f-e1ac-4385-b729-fcc12c30b43f}">
+      <Declaration><![CDATA[METHOD Close
+]]></Declaration>
+    </Method>
+    <Property Name="Id" Id="{f4e2640b-d8af-47d9-82c8-6c5680ee6808}">
+      <Declaration><![CDATA[PROPERTY Id : UDINT]]></Declaration>
+      <Get Name="Get" Id="{8d16b22d-5201-4bcd-a435-844623fe0306}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsClosed" Id="{53d44817-54c5-4213-9c59-bed5c2800bbd}">
+      <Declaration><![CDATA[PROPERTY IsClosed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{599e20a8-f14b-4911-9121-56f115edd3b3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsOpen" Id="{a80fed6d-ffd6-4cb9-9946-9a19a16beace}">
+      <Declaration><![CDATA[PROPERTY IsOpen : BOOL]]></Declaration>
+      <Get Name="Get" Id="{4a82a473-e1f4-4f1b-bffb-3644abf6cfaf}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
@@ -15,11 +31,15 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Method Name="Prepare" Id="{5a95de94-7557-4aa0-b324-b5fe346d2f7b}">
-      <Declaration><![CDATA[METHOD Prepare : Result
-VAR_INPUT
-END_VAR
+    <Method Name="Open" Id="{5a95de94-7557-4aa0-b324-b5fe346d2f7b}">
+      <Declaration><![CDATA[METHOD Open
 ]]></Declaration>
     </Method>
+    <Property Name="Timeout" Id="{823ffe10-9a79-49a6-bd9e-fd2178fd5d66}">
+      <Declaration><![CDATA[PROPERTY Timeout : TIME]]></Declaration>
+      <Get Name="Get" Id="{f1995043-f163-4a8a-bc8d-7b4ff2103cd7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
   </Itf>
 </TcPlcObject>
