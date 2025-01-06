@@ -7,17 +7,13 @@ VAR_INPUT
 	sErrorText				: Str;
 	nStatusColor			: LWORD;
 	
-	bButton					: BOOL;
-	sButtonText				: Str;
-	nButtonColor			: LWORD;	
+	bDisable				: BOOL;	
 END_VAR
 VAR_OUTPUT PERSISTENT
-	rMaxPressure			: REAL := 2.0; // bar
-	rMinPressure			: REAL := 0.2; // bar
-	
-	rMaxTemperature			: REAL := 65.0; // °C
-	rStdTemperature			: REAL := 60.0; // °C
-	rMinTemperature			: REAL := 55.0; // °C
+	nTimeout				: UDINT := TIME_TO_UDINT(T#60S);	
+
+	rMaxTemperature			: REAL := 19.5; // °C
+	rMinTemperature			: REAL := 19.0; // °C
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

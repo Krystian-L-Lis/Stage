@@ -3,8 +3,8 @@
   <DUT Name="Room_Ctx_Io_Out" Id="{1da64ebc-f5ae-4ace-8e69-a586f42746cc}">
     <Declaration><![CDATA[TYPE Room_Ctx_Io_Out :
 STRUCT
-	bPump			: BOOL;
-	bBurner			: BOOL;
+	bInletValve		: BOOL;
+	bOutletValve	: BOOL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

@@ -3,16 +3,11 @@
   <POU Name="Room_Ctx_Priv" Id="{f780ea0b-40f4-4a65-aec6-edfe7e6fb652}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx_Priv
 VAR_INPUT
-	iActiveRoom		: I_Room;
-	nPassiveRooms	: UDINT;
-END_VAR
-VAR_OUTPUT
-	iOnEnable		: I_SignalEmit;
-	iOnDisable		: I_SignalEmit;
-	iOnPause		: I_SignalEmit;
-	iOnResume		: I_SignalEmit;
-	
-	iQueue			: I_MutArgQueue;
+	bReady		: BOOL;
+	bOpen		: BOOL;
+	bClosed		: BOOL;
+	bPaused		: BOOL;
+	bAbort		: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>

@@ -2,9 +2,16 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Runtime" Id="{57f056fa-9062-499a-a7e4-db28982dc70c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION Runtime
-]]></Declaration>
+VAR_STAT
+	bInit	: BOOL := TRUE;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF _Runtime.iFirstCyclic <> 0 THEN
+      <ST><![CDATA[IF bInit THEN
+	_Runtime.iFirstInit.Init();
+	bInit := FALSE;
+END_IF
+
+IF _Runtime.iFirstCyclic <> 0 THEN
 	_Runtime.iFirstCyclic.Exe();
 END_IF]]></ST>
     </Implementation>

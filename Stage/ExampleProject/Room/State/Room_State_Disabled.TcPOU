@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Room_State_Disabled" Id="{233cb2a4-a188-4d83-a20b-e18c2158eca6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_Disabled EXTENDS Room_State
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -139,6 +139,12 @@
     <Compile Include="Arg\Queue\I_MutArgQueue.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Broadcast\Helpers\GetSignal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Helpers\GetReceiver.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Broadcast\Receiver\CompAsIReceiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -306,6 +312,15 @@
     <Compile Include="Runtime\Execute\I_ExecuteNode.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Runtime\Init\Init.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Init\I_InitNode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runtime\Init\I_Init.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Runtime\Runtime.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -317,6 +332,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\Buffer\StateBuffer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Helpers\GetStateManager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="State\Helpers\GetState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\Machine\I_StateMachine.TcIO">
@@ -355,15 +376,6 @@
     <Compile Include="State\State\StateProxy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="State\StrRequester\StateRequest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="State\Trace\StateTrace.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="State\Trace\StateTraceItem.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Strings\Alias\Ch.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -382,13 +394,19 @@
     <Compile Include="Strings\SymPath\SymPath.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\ArgAsTag.TcPOU">
+    <Compile Include="Tags\ArgAsITag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\CompAsITagged.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\CompAsITag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\Helpers\GetTag.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\Helpers\GetTagOpt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\I_Tag.TcIO">
@@ -421,6 +439,7 @@
     <Folder Include="Arg\List" />
     <Folder Include="Arg\Queue" />
     <Folder Include="Broadcast" />
+    <Folder Include="Broadcast\Helpers" />
     <Folder Include="Broadcast\Receiver" />
     <Folder Include="Broadcast\Signal" />
     <Folder Include="Broadcast\Sys" />
@@ -442,6 +461,7 @@
     <Folder Include="Result" />
     <Folder Include="Result\Error" />
     <Folder Include="Runtime\Execute" />
+    <Folder Include="Runtime\Init" />
     <Folder Include="State" />
     <Folder Include="State\Buffer">
       <ExcludeFromBuild>false</ExcludeFromBuild>
@@ -452,18 +472,14 @@
     <Folder Include="State\Manager">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
+    <Folder Include="State\Helpers" />
     <Folder Include="State\State" />
-    <Folder Include="State\StrRequester">
-      <ExcludeFromBuild>true</ExcludeFromBuild>
-    </Folder>
-    <Folder Include="State\Trace">
-      <ExcludeFromBuild>true</ExcludeFromBuild>
-    </Folder>
     <Folder Include="Strings" />
     <Folder Include="Strings\Alias" />
     <Folder Include="Strings\Strb" />
     <Folder Include="Strings\Strf" />
     <Folder Include="Strings\SymPath" />
+    <Folder Include="Tags\Helpers" />
     <Folder Include="_" />
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GetState" Id="{4a6ca9b6-95b3-4d02-9450-013f1847a076}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetState : Result
+VAR_INPUT
+	iEntity		: I_Entity;
+	sTagId		: Str;
+END_VAR
+VAR_OUTPUT
+	iState		: I_State;
+END_VAR
+VAR
+	i			: Iter(1);
+	_iComp		: I_Component;
+	cmp			: TagCmp;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iEntity = 0 THEN
+	GetState := Err.Itf0;
+	RETURN;
+END_IF
+
+WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
+	IF IsOk(CompAsIState(_iComp, iDest => iState)) THEN
+		IF cmp.Set(iState.Tag).MatchWcdId(sTagId).IsTrue() THEN
+			GetState := Ok;
+			RETURN;
+		ELSE
+			iState := 0;
+		END_IF
+	END_IF
+END_WHILE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

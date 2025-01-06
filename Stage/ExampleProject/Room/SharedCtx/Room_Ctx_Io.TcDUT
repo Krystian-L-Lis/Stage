@@ -3,8 +3,8 @@
   <DUT Name="Room_Ctx_Io" Id="{67371870-bd5d-49c5-aa16-53adf3c88038}">
     <Declaration><![CDATA[TYPE Room_Ctx_Io :
 STRUCT
-	in		: Heating_Ctx_Io_In;
-	out		: Heating_Ctx_Io_Out;
+	in		: Room_Ctx_Io_In;
+	out		: Room_Ctx_Io_Out;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

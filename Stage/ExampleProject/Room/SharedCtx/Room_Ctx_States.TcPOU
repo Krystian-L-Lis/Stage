@@ -5,13 +5,11 @@
 VAR_OUTPUT
 	iMgr			: I_StateManager;
 	
-	iSafety			: I_State;
+	iSystemOff		: I_State;
 	iFault			: I_State;
 	iDisable		: I_State;
-	iEnable			: I_State;
-	iPump			: I_State;
-	iHeatup			: I_State;
-	
+	iIdle			: I_State;
+	iHeat			: I_State;	
 END_VAR
 ]]></Declaration>
     <Implementation>

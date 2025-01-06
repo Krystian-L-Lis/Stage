@@ -3,6 +3,12 @@
   <Itf Name="I_Room" Id="{76a64c62-873b-4b19-9f71-81cd9ae5bd4a}">
     <Declaration><![CDATA[INTERFACE I_Room EXTENDS I_Arg
 ]]></Declaration>
+    <Property Name="Abort" Id="{5180e7d7-76b6-4027-9c3b-6d66e4b3dcda}">
+      <Declaration><![CDATA[PROPERTY Abort : BOOL]]></Declaration>
+      <Get Name="Get" Id="{bfc8ec5c-38b4-4ae4-af4d-8483d7a2571a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Method Name="Close" Id="{58e7653f-e1ac-4385-b729-fcc12c30b43f}">
       <Declaration><![CDATA[METHOD Close
 ]]></Declaration>

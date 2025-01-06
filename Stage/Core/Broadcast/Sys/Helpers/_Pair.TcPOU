@@ -49,6 +49,7 @@ IF iSignal._Start = 0 THEN
 			END_IF
 
 			IF NOT IsOk(_BroadcastGetBestFit(2, nStart => _nStart, nEnd => _nEnd), nOut => _Pair) THEN
+				_Pair := Err.Udf;
 				RETURN;
 			END_IF
 		ELSE

@@ -8,7 +8,7 @@
 //            _Start and _End accordingly, zeroes out remaining slots,
 //            and reassigns _Ec.iFirst to the new leftmost entity, if any.
 // ---------------------------------------------------------------------------
-FUNCTION _EcCoalesce : Result
+FUNCTION INTERNAL _EcCoalesce : Result
 VAR
     i             : UDINT;
     _nStartIndex  : UDINT;      // Not used in this version, but declared

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Room_State_SystemOff" Id="{7c3aebcd-399b-4bac-9540-75fee170c6b7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_SystemOff EXTENDS Room_State
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="OnInit" Id="{2165c4dc-33f4-4316-b0a7-0e9b5038a5aa}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.io.out.bInletValve := FALSE;
+_ctx.io.out.bOutletValve := FALSE;
+
+_ctx.priv.bAbort := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

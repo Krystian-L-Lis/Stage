@@ -84,45 +84,58 @@
       <SubType>Code</SubType>
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
-    <Compile Include="MAIN\I_Room.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MAIN\MAIN.TcPOU">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MAIN\State.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MAIN\VALVE.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="MAIN\VALVE_1.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Ctx\Room_Ctx_Hmi.TcPOU">
+    <Compile Include="Room\SharedCtx\Room_Ctx_Hmi.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Ctx\Room_Ctx_Io.TcDUT">
+    <Compile Include="Room\SharedCtx\Room_Ctx_Io.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Ctx\Room_Ctx_Priv.TcPOU">
+    <Compile Include="Room\SharedCtx\Room_Ctx_Priv.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Ctx\Room_Ctx_States.TcPOU">
+    <Compile Include="Room\SharedCtx\Room_Ctx_States.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Ctx\Io\Room_Ctx_Io_In.TcDUT">
+    <Compile Include="Room\SharedCtx\Io\Room_Ctx_Io_In.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Ctx\Io\Room_Ctx_Io_Out.TcDUT">
+    <Compile Include="Room\SharedCtx\Io\Room_Ctx_Io_Out.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Room_Ctx.TcPOU">
+    <Compile Include="Room\I_Room.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Receivers\Room_SystemStateRec.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\StandardRoom\StandardRoom_Ctx.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\StandardRoom\StandardRoom.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\State\Room_State.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\State\Room_State_Idle.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\State\Room_State_Fault.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\State\Room_State_Heating.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\State\Room_State_Disabled.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\State\Room_State_SystemOff.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -183,8 +196,11 @@
     <Folder Include="MAIN" />
     <Folder Include="Heating" />
     <Folder Include="Room" />
-    <Folder Include="Room\Ctx" />
-    <Folder Include="Room\Ctx\Io" />
+    <Folder Include="Room\SharedCtx" />
+    <Folder Include="Room\SharedCtx\Io" />
+    <Folder Include="Room\StandardRoom" />
+    <Folder Include="Room\Receivers" />
+    <Folder Include="Room\State" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleProject.tmc">

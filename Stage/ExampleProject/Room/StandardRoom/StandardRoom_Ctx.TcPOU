@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Room_Ctx" Id="{8aac3efc-2438-43bb-b2e7-024ad5e5c587}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx
+  <POU Name="StandardRoom_Ctx" Id="{8aac3efc-2438-43bb-b2e7-024ad5e5c587}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StandardRoom_Ctx
 VAR_INPUT
 	io		: Room_Ctx_Io;
 	hmi		: Room_Ctx_Hmi;

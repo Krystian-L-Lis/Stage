@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Heating IMPLEMENTS I_Execute
 VAR_INPUT
 	bPumpOverload	: BOOL;
-	bBoilerOverload	: BOOL;
+	bBurnerOverload	: BOOL;
 
 	rBoilerTemp		: REAL;
 	rBoilerPressure	: REAL;	
@@ -67,6 +67,10 @@ VAR
 	_queue						: ArgQueue<CST.MAX_PASSIVE_ROOM>;
 	_queueProxy					: ArgQueueProxy(_queue, _ctx.priv.iQueue);
 	
+	_bInit		: BOOL := TRUE;
+	_tonPump	: TON;
+	_tonBurner	: TON;
+		
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -76,7 +80,15 @@ END_VAR
       <Declaration><![CDATA[METHOD Execute
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[// Inputs
+_ctx.io.in.bBurnerOverload := bBurnerOverload;
+_ctx.io.in.bPumpOverload := bPumpOverload;
+_ctx.io.in.rBoilerPressure := rBoilerPressure;
+_ctx.io.in.rBoilerTemp := rBoilerTemp;
+
+// Outputs
+_tonPump(IN := _ctx.io.out.bPump, PT := T#2S, Q => bPump);
+_tonBurner(IN := _ctx.io.out.bBurner, PT := T#2S, Q => bBurner);]]></ST>
       </Implementation>
     </Method>
   </POU>

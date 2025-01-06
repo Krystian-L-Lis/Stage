@@ -37,6 +37,8 @@ IF _tonTimeout.Q THEN
 ELSIF _ctx.priv.iActiveRoom = 0 THEN
 	_nStep := ERROR_STEP;
 	_ctx.hmi.sErrorText := 'Pumping -Incorrect iActiveRoom value!';
+ELSIF _ctx.priv.iActiveRoom.Abort THEN
+	_nStep := 6;
 END_IF
 
 CASE _nStep OF

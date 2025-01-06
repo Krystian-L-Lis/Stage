@@ -3,6 +3,9 @@
   <GVL Name="_Runtime" Id="{a8108114-c7a2-455b-babd-f14b1e02d6df}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL INTERNAL
+	iFirstInit			: I_InitNode;
+	iLastInit			: I_InitNode;
+
 	iFirstCyclic		: I_ExecuteNode;
 	iLastCyclic			: I_ExecuteNode;
 END_VAR]]></Declaration>

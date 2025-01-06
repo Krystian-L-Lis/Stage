@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_InitNode" Id="{eb6f39a4-1275-41f6-915f-4d3b3248b024}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_InitNode EXTENDS I_Debug;
+]]></Declaration>
+    <Method Name="Attach" Id="{3d4a1ffc-48d1-4b8d-b0fd-53f3ea042d32}">
+      <Declaration><![CDATA[METHOD INTERNAL Attach : Result
+VAR_INPUT
+	iInit		: I_InitNode;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Init" Id="{efc19024-b584-4658-9536-3dfc6a2fb47f}">
+      <Declaration><![CDATA[METHOD INTERNAL Init
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="State" Id="{7fd1a2f9-a53e-487b-9a17-4f361344b4d4}">
+      <Declaration><![CDATA[PROPERTY INTERNAL State : Result]]></Declaration>
+      <Get Name="Get" Id="{dc22d531-07db-462f-ad00-3761dc7557d2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{c58fca51-7fe1-4371-a37b-fc6ba518a207}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

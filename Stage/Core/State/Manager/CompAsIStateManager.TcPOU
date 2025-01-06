@@ -6,7 +6,7 @@ VAR_INPUT
 	iSource	: I_Component;
 END_VAR
 VAR_OUTPUT
-	iDest	: I_Arg;
+	iDest	: I_StateManager;
 END_VAR
 
 ]]></Declaration>

@@ -4,8 +4,6 @@
     <Declaration><![CDATA[TYPE Room_Ctx_Io_In :
 STRUCT
 	rTemperature		: REAL;
-	
-	bValveState			: BOOL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

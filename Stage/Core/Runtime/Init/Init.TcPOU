@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Init" Id="{f6ff46b8-b91f-4756-bbc4-c1b623301543}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Init IMPLEMENTS I_InitNode, I_Debug
+VAR
+	_iInit			: I_Init;
+	_iNext			: I_InitNode;
+	_nState			: Result;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Attach" Id="{b570c3f9-4ba5-47de-92e9-c44911fd4d0b}">
+      <Declaration><![CDATA[METHOD INTERNAL Attach : Result
+VAR_INPUT
+	iInit			: I_InitNode;
+END_VAR
+VAR
+	_iThis			: I_InitNode := THIS^;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iInit = 0 THEN
+	DebugMsg(0, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+	RETURN;
+END_IF
+
+IF _iThis <> _Runtime.iLastInit THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Is not the last node!'));
+	RETURN;
+END_IF
+
+IF IsSome(iInit.state) THEN
+	DebugMsg(iInit, Tc2_Standard.CONCAT(__POUNAME(), ': Has already been added!'));
+	RETURN;
+END_IF
+
+_Runtime.iLastInit := iInit;
+_iNext := iInit;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{a2ebe92c-4282-41f0-8dea-bb65a3d430c8}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iInit			: I_Init;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF IsSome(_nState) THEN
+	RETURN;
+END_IF
+
+IF (_iInit := iInit) = 0 THEN
+	_nState := Err.Itf0;
+	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+	RETURN;
+END_IF
+
+
+
+IF _Runtime.iLastInit <> 0 THEN
+	IF IsErr(_Runtime.iLastInit.Attach(THIS^), nOut => _nState) THEN
+		DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Error Inside!'));
+	END_IF
+ELSE
+	_Runtime.iFirstInit := THIS^;
+	_Runtime.iLastInit := THIS^;
+	_nState := Ok;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{8876f358-5cbf-4b42-b262-c64dff58b017}">
+      <Declaration><![CDATA[METHOD INTERNAL Init
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iInit.Init();
+
+IF _iNext <> 0 THEN
+	_iNext.Init();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="State" Id="{f5ac33ac-0981-47a4-a9cd-9582eec70141}">
+      <Declaration><![CDATA[PROPERTY INTERNAL State : Result]]></Declaration>
+      <Get Name="Get" Id="{c6141bbd-407e-45af-a2fc-16001bb9949e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[State := _nState;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{04dbdaec-18c9-4eca-95ab-24d03a281356}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF IsNone(_nState) THEN
+	_nState := State;
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

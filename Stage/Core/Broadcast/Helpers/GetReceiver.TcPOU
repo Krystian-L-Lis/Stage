@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GetReceiver" Id="{7724b6ae-e8bc-4e18-87cf-f1d85e27fdd7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetReceiver : Result
+VAR_INPUT
+	iEntity		: I_Entity;
+	sTagId		: Str;
+END_VAR
+VAR_OUTPUT
+	iRec		: I_Receiver;
+END_VAR
+VAR
+	i			: Iter(1);
+	_iComp		: I_Component;
+	cmp			: TagCmp;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iEntity = 0 THEN
+	GetReceiver := Err.Itf0;
+	RETURN;
+END_IF
+
+WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
+	IF IsOk(CompAsIReceiver(_iComp, iDest => iRec)) THEN
+		IF cmp.Set(iRec.Tag).MatchWcdId(sTagId).IsTrue() THEN
+			GetReceiver := Ok;
+			RETURN;
+		ELSE
+			iRec := 0;
+		END_IF
+	END_IF
+END_WHILE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

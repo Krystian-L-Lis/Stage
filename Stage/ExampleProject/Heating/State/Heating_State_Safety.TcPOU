@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Heating_State_Safety" Id="{b3c770ff-5618-4956-8c69-b75ebbd54c49}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_Safety EXTENDS Heating_State IMPLEMENTS I_Callable
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_Safety EXTENDS Heating_State IMPLEMENTS I_Callable, I_Init
 VAR
-	
+	_init					: Init(THIS^);
 	_safetyRec				: Receiver(THIS^);
 	_bSafetyActive			: BOOL;
 END_VAR
@@ -38,26 +38,30 @@ END_IF]]></ST>
         <ST><![CDATA[CanDeactivate := NOT _bSafetyActive;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_init" Id="{0a4bec46-cc4e-478c-bfe7-cac41e91db99}">
-      <Declaration><![CDATA[(*FB_Init is always available implicitly and it is used primarily for initialization.
-The return value is not evaluated. For a specific influence, you can also declare the
-methods explicitly and provide additional code there with the standard initialization
-code. You can evaluate the return value.*)
-METHOD FB_Init : BOOL
-VAR_INPUT
-	(* TRUE: the retain variables are initialized (reset warm / reset cold)*)
-	bInitRetains	: BOOL;
-	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
-	bInCopyCode	: BOOL;
-	iEntity	: I_Entity;
-	ctx		: REFERENCE TO Heating_Ctx;
-END_VAR
+    <Method Name="Init" Id="{a22836c3-bdf1-4b4e-b4df-40ad1a1ec5d1}">
+      <Declaration><![CDATA[METHOD Init
 VAR
-	_nResult		: Result;
+	i			: Iter(1);
+	_r			: Result;
+	
+	_iEntity	: I_Entity;
+	_iSignal	: I_Signal;
+	
+	
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsErr(RegComp(_safetyRec, iEntity), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
+        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => _iEntity)) DO
+	IF IsOk(GetSignal(_iEntity, '*.onSafetyChange', iSignal => _iSignal)) THEN
+		IF IsErr(_iSignal.Pair(_safetyRec), nOut => _r) THEN
+			DebugMsg(_iSignal, CONCAT('Could not be paired! Error code: ', TO_STRING(_r)));
+		END_IF
+		
+		EXIT;
+	END_IF
+END_WHILE
+
+IF NOT IsOk(_r) THEN
+	DebugMsg(THIS^, CONCAT('_safetyRec not paired! Error code: ', TO_STRING(_r)));
 END_IF]]></ST>
       </Implementation>
     </Method>
