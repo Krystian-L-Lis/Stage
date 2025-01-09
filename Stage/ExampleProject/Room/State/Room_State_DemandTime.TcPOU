@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Room_State_DemandTime" Id="{0389a633-ce0e-45d1-8ffe-b5458804ca69}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_DemandTime EXTENDS Room_State IMPLEMENTS I_Execute
+VAR
+	_exe				: Execute(THIS^);
+	_refTimeSettings	: REFERENCE TO Room_Settings_TimeSettings;
+	_tonOff				: TON;
+	_tonOn				: TON;
+	
+	_onRequest				: Signal;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="CanActivate" Id="{86ff272b-9274-447f-85e5-14afab09edea}">
+      <Declaration><![CDATA[METHOD CanActivate : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CanActivate := _ctx.state.iMgr.Current = _ctx.state.iIdle;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{6db6c303-2883-4848-80bb-b716126fca0e}">
+      <Declaration><![CDATA[METHOD Execute
+VAR
+	_iSelf		: I_State := THIS^;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.state.iMgr.Current <> _ctx.state.iIdle THEN
+	RETURN;
+END_IF
+
+IF _ctx.state.iMgr.Current = _iSelf THEN
+	_tonOff(IN := FALSE);
+	RETURN;
+ELSE
+	_tonOff(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOff));
+END_IF
+
+IF _tonOff.Q THEN
+	_tonOff(IN := FALSE);
+	_ctx.state.iMgr.Request(THIS^);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{8fa04958-ceb0-4427-aa95-612a4923000a}">
+      <Declaration><![CDATA[(*FB_Init is always available implicitly and it is used primarily for initialization.
+The return value is not evaluated. For a specific influence, you can also declare the
+methods explicitly and provide additional code there with the standard initialization
+code. You can evaluate the return value.*)
+METHOD FB_Init : BOOL
+VAR_INPUT
+	(* TRUE: the retain variables are initialized (reset warm / reset cold)*)
+	bInitRetains	: BOOL;
+	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
+	bInCopyCode	: BOOL;
+	iEntity	: Core.I_Entity;
+	ctx			: REFERENCE TO Room_Ctx;
+	refSettings		: REFERENCE TO Room_Settings_TimeSettings;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_refTimeSettings REF= refSettings;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{5963c11d-cd15-4e87-a244-3534781c622c}">
+      <Declaration><![CDATA[METHOD Init
+VAR
+	i			: Iter(1);
+	_iEntity	: I_Entity;
+	_iRec		: I_Receiver;
+	_r			: Result;
+	strb		: Strb;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => _iEntity)) DO
+	IF IsNone(GetTagOpt(_iEntity, 'Heating')) THEN
+		CONTINUE;
+	END_IF
+	
+	IF IsOk(GetReceiver(_iEntity, '*._requestRec', iRec => _iRec)) THEN
+		IF IsErr(_onRequest.Pair(_iRec), nOut => _r) THEN
+			DebugMsg(_iRec, strb.Append('Cannot pair _onRequest with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
+		END_IF
+		
+		EXIT;
+	END_IF
+END_WHILE
+
+DebugMsg(THIS^, strb.Append('Cannot pair _systemRec with a ').Append('_requestRec').Append('!').Read());
+DebugMsg(_iEntity, strb.Append('_requestRec').Append(' not found!').Read());]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{1ac3585c-789d-4477-9aa9-784a9986c68a}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_tonOn(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOn));
+IF _ctx.hmi.bDisable THEN
+	_ctx.state.iMgr.Request(_ctx.state.iDisable);
+ELSIF _tonOn.Q THEN
+	_ctx.priv.bReady := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{6de24a63-b10e-46fa-b036-c1fc69237759}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.io.bOpenValves := FALSE;
+
+_ctx.priv.bActive := TRUE;
+_ctx.priv.bReady := FALSE;
+
+_ctx.hmi.sStatusText := 'Heating ON: Scheduled demand...';
+_ctx.hmi.nStatusColor := COL.BLACK.Raw;
+
+_ctx.hmi.bHideReset := TRUE;
+
+_tonOn(IN := FALSE);
+
+_onRequest.Emit(_ctx.priv.iThisRoom);
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

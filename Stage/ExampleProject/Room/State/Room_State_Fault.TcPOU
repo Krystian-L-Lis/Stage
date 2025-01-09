@@ -12,5 +12,38 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Method Name="OnExecute" Id="{f6c9b6aa-bf70-4df1-a873-0dcf2557902c}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bReset THEN
+	_ctx.hmi.bReset := FALSE;
+	
+	_ctx.state.iMgr.Request(_ctx.state.iIdle);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExit" Id="{9733460b-de5e-4bd7-ba80-0494bdfd5f66}">
+      <Declaration><![CDATA[METHOD OnExit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.hmi.sErrorText := 'Undefined';]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{cbcebeb3-12c0-4102-a8d1-f2f2ae32ad3f}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.io.bOpenValves := TRUE;
+
+_ctx.priv.bActive := FALSE;
+_ctx.priv.bReady := FALSE;
+
+_ctx.hmi.sStatusText := CONCAT('Fault: ', _ctx.hmi.sErrorText);
+_ctx.hmi.nStatusColor := COL.RED.Raw;
+
+_ctx.hmi.bHideReset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

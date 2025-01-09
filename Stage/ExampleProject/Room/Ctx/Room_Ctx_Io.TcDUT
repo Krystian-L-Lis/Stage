@@ -3,8 +3,7 @@
   <DUT Name="Room_Ctx_Io" Id="{67371870-bd5d-49c5-aa16-53adf3c88038}">
     <Declaration><![CDATA[TYPE Room_Ctx_Io :
 STRUCT
-	in		: Room_Ctx_Io_In;
-	out		: Room_Ctx_Io_Out;
+	bOpenValves			: BOOL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

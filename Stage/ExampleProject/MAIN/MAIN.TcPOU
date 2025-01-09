@@ -3,31 +3,48 @@
   <POU Name="MAIN" Id="{46c268e9-fb81-4ca2-9b53-e3c90b600c5e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	//safety		: Safety<5>;
-	//tankCtrl		: TankCtrl;
-	//tank			: ARRAY[1..CST.MAX_TANK] OF Tank(tankCtrl);
-	//outlet		: ARRAY[1..CST.MAX_TANK] OF Outlet;
+	safety				: Safety<2>;
+	heating				: Heating;
+	standardRoom		: ARRAY[1..5] OF TempTimeRoom;
+	receptionRoom		: PassiveRoom;
+	conferentionRoom01	: PassiveTempTimeRoom;
+	conferentionRoom02	: PassiveTempTimeRoomWithMultipleValves<3>;
+	storeRoom01			: TempRoom;
+	storeRoom02			: TempRoomWithMultipleSensors<3>;
 	
-	//sim			: Sim;
+	bSimulation			: BOOL;
 	
-	eResult		: Result;
-	bError		: BOOL;
+	dbgList				: DebugList;	
 	
-	dbgList			: DebugList;
+	
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE eResult OF 
-	None:
-		eResult := Ok; //AssignOutletToTank(tank, outlet);
-	Ok:
-		Runtime();
-	ELSE
-		IF NOT bError THEN
-			DebugMsg(0, 'Failed to execute runtime!');
-			bError := TRUE;
-		END_IF
-END_CASE]]></ST>
+      <ST><![CDATA[Runtime();
+
+IF bSimulation THEN
+	_Sim();
+ELSE
+	_IO();	
+END_IF
+
+]]></ST>
     </Implementation>
+    <Method Name="_IO" Id="{03b676de-555c-400e-bba5-4ba9784520ec}">
+      <Declaration><![CDATA[METHOD PRIVATE _IO
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_Sim" Id="{4a6d6c65-3b1e-4d7e-90e9-8d8aeae3f358}">
+      <Declaration><![CDATA[METHOD PRIVATE _Sim]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF safety.bErrAck THEN
+	safety.bSafetyOk := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

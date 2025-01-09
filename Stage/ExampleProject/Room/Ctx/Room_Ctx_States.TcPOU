@@ -9,7 +9,6 @@ VAR_OUTPUT
 	iFault			: I_State;
 	iDisable		: I_State;
 	iIdle			: I_State;
-	iHeat			: I_State;	
 END_VAR
 ]]></Declaration>
     <Implementation>

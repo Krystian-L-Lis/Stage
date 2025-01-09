@@ -3,8 +3,8 @@
   <Itf Name="I_Room" Id="{76a64c62-873b-4b19-9f71-81cd9ae5bd4a}">
     <Declaration><![CDATA[INTERFACE I_Room EXTENDS I_Arg
 ]]></Declaration>
-    <Property Name="Abort" Id="{5180e7d7-76b6-4027-9c3b-6d66e4b3dcda}">
-      <Declaration><![CDATA[PROPERTY Abort : BOOL]]></Declaration>
+    <Property Name="Active" Id="{5180e7d7-76b6-4027-9c3b-6d66e4b3dcda}">
+      <Declaration><![CDATA[PROPERTY Active : BOOL]]></Declaration>
       <Get Name="Get" Id="{bfc8ec5c-38b4-4ae4-af4d-8483d7a2571a}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
@@ -47,5 +47,12 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
+    <Method Name="TriggerFault" Id="{1713fcd6-0c02-4d9f-a5f9-4c020ec3bb1f}">
+      <Declaration><![CDATA[METHOD TriggerFault
+VAR_INPUT
+	sErrorText		: Str;
+END_VAR
+]]></Declaration>
+    </Method>
   </Itf>
 </TcPlcObject>

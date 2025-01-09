@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Room_State_DemandPassive" Id="{8dec1d61-1633-4baa-a126-868d87898e77}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_DemandPassive EXTENDS Room_State IMPLEMENTS I_Execute, I_Init
+VAR
+	_init					: Init(THIS^);
+	_exe					: Execute(THIS^);
+	_refEnable				: REFERENCE TO BOOL;
+	_onPassiveStateChange	: Signal;
+	_bIsPassive				: BoolArg;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="CanActivate" Id="{3ac80862-be31-4bb4-8a9b-f1c41333306f}">
+      <Declaration><![CDATA[METHOD CanActivate : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CanActivate := _ctx.state.iMgr.Current = _ctx.state.iIdle;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{cc254d76-bf2b-4272-8852-89afe0d91768}">
+      <Declaration><![CDATA[METHOD Execute
+VAR
+	_iSelf		: I_State := THIS^;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.state.iMgr.Current <> _ctx.state.iIdle THEN
+	RETURN;
+END_IF
+
+IF _ctx.state.iMgr.Current = _iSelf THEN
+	RETURN;
+END_IF
+
+IF _refEnable AND NOT _ctx.priv.bPaused THEN
+	_ctx.state.iMgr.Request(THIS^);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{e6215362-719e-432e-8624-4d4bc4df50b4}">
+      <Declaration><![CDATA[(*FB_Init is always available implicitly and it is used primarily for initialization.
+The return value is not evaluated. For a specific influence, you can also declare the
+methods explicitly and provide additional code there with the standard initialization
+code. You can evaluate the return value.*)
+METHOD FB_Init : BOOL
+VAR_INPUT
+	(* TRUE: the retain variables are initialized (reset warm / reset cold)*)
+	bInitRetains	: BOOL;
+	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
+	bInCopyCode	: BOOL;
+	iEntity	: Core.I_Entity;
+	ctx			: REFERENCE TO Room_Ctx;
+	refEnable	: REFERENCE TO BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_refEnable REF= refEnable;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{419a93a0-e5c6-47fd-a32e-82538cbb51a9}">
+      <Declaration><![CDATA[METHOD Init
+VAR
+	i			: Iter(1);
+	_iEntity	: I_Entity;
+	_iRec		: I_Receiver;
+	_r			: Result;
+	strb		: Strb;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => _iEntity)) DO
+	IF IsNone(GetTagOpt(_iEntity, 'Heating')) THEN
+		CONTINUE;
+	END_IF
+	
+	IF IsOk(GetReceiver(_iEntity, '*._passiveHeatingCountRec', iRec => _iRec)) THEN
+		IF IsErr(_onPassiveStateChange.Pair(_iRec), nOut => _r) THEN
+			DebugMsg(_iRec, strb.Append('Cannot pair _onPassiveStateChange with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
+		END_IF
+		
+		RETURN;
+	END_IF
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{3f050fb3-8211-4eb9-b971-e853c97945df}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bDisable THEN	
+	_ctx.state.iMgr.Request(_ctx.state.iDisable);
+ELSIF _refEnable THEN
+	_ctx.state.iMgr.Request(_ctx.state.iIdle);
+ELSIF _ctx.priv.bPaused THEN
+	_ctx.state.iMgr.Request(_ctx.state.iIdle);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExit" Id="{da63b55a-bd91-4b1e-8858-4ba85defc5c4}">
+      <Declaration><![CDATA[METHOD OnExit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_bIsPassive.Val := FALSE;
+_onPassiveStateChange.Emit(_bIsPassive);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnInit" Id="{466d5c45-8960-408f-8f4b-136ffcbbd099}">
+      <Declaration><![CDATA[METHOD OnInit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.io.bOpenValves := TRUE;
+
+_ctx.priv.bActive := TRUE;
+_ctx.priv.bReady := FALSE;
+
+_ctx.hmi.sStatusText := 'Heating ON: Passive mode...';
+_ctx.hmi.nStatusColor := COL.BLACK.Raw;
+
+_ctx.hmi.bHideReset := TRUE;
+
+_bIsPassive.Val := TRUE;
+_onPassiveStateChange.Emit(_bIsPassive);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

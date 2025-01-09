@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_Pumping EXTENDS Heating_State
 VAR CONSTANT
 	ERROR_STEP		: USINT := 8;
+	OK_STEP			: USINT := 7;
 	READY_STEP		: USINT := 9;
 END_VAR
 VAR
@@ -28,16 +29,17 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_tonTimeout(IN := TRUE);
-IF _tonTimeout.Q THEN
-	_nStep := ERROR_STEP;
-	_ctx.hmi.sErrorText := strb.Append('Pumping - Timeout at step ')
-								.Append(USINT_TO_STRING(_nStep))
-								.Append('!')
-								.Read();
-ELSIF _ctx.priv.iActiveRoom = 0 THEN
+
+IF _ctx.priv.iActiveRoom = 0 THEN
 	_nStep := ERROR_STEP;
 	_ctx.hmi.sErrorText := 'Pumping -Incorrect iActiveRoom value!';
-ELSIF _ctx.priv.iActiveRoom.Abort THEN
+ELSIF _tonTimeout.Q THEN
+	_nStep := OK_STEP;
+	_ctx.priv.iActiveRoom.TriggerFault(	strb.Append('Timeout at step ')
+												.Append(USINT_TO_STRING(_nStep))
+												.Append('!')
+												.Read());
+ELSIF _ctx.priv.iActiveRoom.Active THEN
 	_nStep := 6;
 END_IF
 

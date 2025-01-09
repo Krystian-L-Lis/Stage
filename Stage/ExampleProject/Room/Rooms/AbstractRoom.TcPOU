@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="AbstractRoom" Id="{2e0e75c6-de15-4761-ae40-14041f36bdf4}" SpecialFunc="None">
+    <Declaration><![CDATA[// THIS SHOULD BE COPIED AND NOT EXTENDED!!!
+FUNCTION_BLOCK ABSTRACT AbstractRoom IMPLEMENTS I_Execute
+VAR CONSTANT
+	STATE_CAP		: UDINT := 4;
+END_VAR
+VAR
+	_this			: Entity;
+	_ctx			: Room_Ctx;
+	_room			: RoomInterface(_ctx);
+	_tag			: Tag(CONCAT('Room_', UDINT_TO_STRING(_room.Id)));
+	_compTag		: Comp(_tag, _this);
+	_exe			: Execute(THIS^);
+	
+	_uiLogic		: Room_UiLogic(_ctx);
+	
+	_systemReceiver	: Room_SystemReceiver(_ctx);
+	
+	_smgr			: StateManager<STATE_CAP>(_this);
+	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
+	
+	_disable		: Room_State_Disabled(_this, _ctx);
+	_proxDisable	: StateProxy(_disable, _ctx.state.iDisable);
+	
+	_fault			: Room_State_Fault(_this,_ctx);
+	_proxFault		: StateProxy(_fault, _ctx.state.iFault);	
+	
+	_idle			: Room_State_Idle(_this,_ctx);
+	_proxIdle		: StateProxy(_idle, _ctx.state.iIdle);	
+	
+	_systemOff		: Room_State_SystemOff(_this,_ctx);
+	_proxSystemOff	: StateProxy(_systemOff, _ctx.state.iSystemOff);
+END_VAR
+
+	// Here add custom components]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{51b956d4-c76f-41de-a458-174fed593c72}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

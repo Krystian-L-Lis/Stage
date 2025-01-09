@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Room_Settings_PassiveTempTime" Id="{fa04fa4b-335f-4506-b254-d545b968b9df}">
+    <Declaration><![CDATA[TYPE Room_Settings_PassiveTempTime :
+STRUCT
+	timee			: Room_Settings_TimeSettings;
+	temp			: Room_Settings_TemperatureSettings;
+	bEnablePassive	: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

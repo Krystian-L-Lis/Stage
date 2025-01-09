@@ -17,6 +17,7 @@ VAR
 	_this			: Entity;
 	_ctx			: Heating_Ctx;
 	_tag			: Tag('Heating');
+	_compTag		: Comp(_tag, _this);
 	_exe			: Execute(THIS^);
 	
 	_onEnable		: Signal;
@@ -64,13 +65,11 @@ VAR
 	_requestRec					: Receiver(_request);
 	_compRequestRec				: Comp(_requestRec, _this);
 	
-	_queue						: ArgQueue<CST.MAX_PASSIVE_ROOM>;
+	_queue						: ArgQueue<CST.MAX_ROOM>;
 	_queueProxy					: ArgQueueProxy(_queue, _ctx.priv.iQueue);
 	
-	_bInit		: BOOL := TRUE;
 	_tonPump	: TON;
 	_tonBurner	: TON;
-		
 END_VAR
 ]]></Declaration>
     <Implementation>

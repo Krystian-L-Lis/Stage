@@ -7,13 +7,16 @@ VAR_INPUT
 	sErrorText				: Str;
 	nStatusColor			: LWORD;
 	
-	bDisable				: BOOL;	
+	sData					: Str;
+	
+	bDisable				: BOOL;
+	sDisableText			: Str;
+	
+	bReset					: BOOL;
+	bHideReset				: BOOL;
 END_VAR
 VAR_OUTPUT PERSISTENT
-	nTimeout				: UDINT := TIME_TO_UDINT(T#60S);	
-
-	rMaxTemperature			: REAL := 19.5; // °C
-	rMinTemperature			: REAL := 19.0; // °C
+	nTimeout				: UDINT := TIME_TO_UDINT(T#60S);
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

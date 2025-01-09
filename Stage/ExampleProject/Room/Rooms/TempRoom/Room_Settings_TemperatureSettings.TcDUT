@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Room_Settings_TemperatureSettings" Id="{76efe27a-7150-4202-917f-fcce9d8addeb}">
+    <Declaration><![CDATA[TYPE Room_Settings_TemperatureSettings :
+STRUCT
+	rLow	: REAL := 19.0;
+	rHigh	: REAL := 19.3;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -5,7 +5,7 @@
 VAR
 	_init					: Init(THIS^);
 	_safetyRec				: Receiver(THIS^);
-	_bSafetyActive			: BOOL;
+	_bSafetyStopActive			: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -22,10 +22,10 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsOk(ArgToIBoolArg(iArg, iVal => _iSafeModeOn)) THEN
 	IF _iSafeModeOn.Val THEN
-		_bSafetyActive := TRUE;
+		_bSafetyStopActive := TRUE;
 		_ctx.state.iMgr.Request(_ctx.state.iSafety);
 	ELSE
-		_bSafetyActive := FALSE;
+		_bSafetyStopActive := FALSE;
 		_ctx.state.iMgr.Request(_ctx.state.iDisable);
 	END_IF
 END_IF]]></ST>
@@ -35,7 +35,7 @@ END_IF]]></ST>
       <Declaration><![CDATA[METHOD CanDeactivate : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CanDeactivate := NOT _bSafetyActive;]]></ST>
+        <ST><![CDATA[CanDeactivate := NOT _bSafetyStopActive;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{a22836c3-bdf1-4b4e-b4df-40ad1a1ec5d1}">

@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="RoomInterface" Id="{6599786c-ba93-4fed-b30a-839e05cc02d4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RoomInterface IMPLEMENTS I_Room
+VAR_STAT
+	_nMaxRoom	: UDINT;
+END_VAR
+
+VAR
+	_ctx		: REFERENCE TO Room_Ctx;
+	_nId		: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Active" Id="{05099b11-7bf8-4c59-9cb6-a7bb7b3a2db4}">
+      <Declaration><![CDATA[PROPERTY Active : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9fda7680-eecb-4790-855c-e58914c1503a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Active := _ctx.priv.bActive;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Close" Id="{a7b9d657-00fa-45e9-baeb-af69e6018523}">
+      <Declaration><![CDATA[METHOD Close
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _ctx.priv.bActive THEN
+	RETURN;
+END_IF
+
+_ctx.io.bOpenValves := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{ca22bbab-be21-4373-9409-1f9b1007feee}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	ctx			: REFERENCE TO Room_Ctx;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx REF= ctx;
+_nMaxRoom := _nMaxRoom + 1;
+_nId := _nMaxRoom;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Id" Id="{cab61793-e91a-43d3-b4f1-43fa7063eb1d}">
+      <Declaration><![CDATA[PROPERTY Id : UDINT]]></Declaration>
+      <Get Name="Get" Id="{0db4bec7-83f4-40cb-a9f0-f42887b91727}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Id := _nId;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsClosed" Id="{8201ff4f-9b53-446e-b50e-9f3ccbca46fc}">
+      <Declaration><![CDATA[PROPERTY IsClosed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{860a5c51-d17a-487c-8cbf-c0e50bf3bb19}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsClosed := _ctx.priv.bClosed;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsOpen" Id="{363ee4e3-517b-4e8e-a8ef-3e40d440e3f6}">
+      <Declaration><![CDATA[PROPERTY IsOpen : BOOL]]></Declaration>
+      <Get Name="Get" Id="{19a270b5-a546-429e-9caa-5fce82d24831}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsOpen := _ctx.priv.bOpen;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsReady" Id="{faede1ff-4852-4edb-be53-dba65663064d}">
+      <Declaration><![CDATA[PROPERTY IsReady : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9ff15937-25cb-474e-b7f4-31a6db2c8096}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsReady := _ctx.priv.bReady;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Open" Id="{2ef519f7-2d21-4fe3-a50b-7c53dc7ef0e6}">
+      <Declaration><![CDATA[METHOD Open
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _ctx.priv.bActive THEN
+	RETURN;
+END_IF
+
+_ctx.io.bOpenValves := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Timeout" Id="{eecc649b-322a-4026-a5ac-c0aea4a056f0}">
+      <Declaration><![CDATA[PROPERTY Timeout : TIME]]></Declaration>
+      <Get Name="Get" Id="{2bf87570-2da5-4e3e-8bee-0d0856799639}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Timeout := UDINT_TO_TIME(_ctx.hmi.nTimeout);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="TriggerFault" Id="{58bcbc1a-fac3-413a-a2a2-69cf90b35fc2}">
+      <Declaration><![CDATA[METHOD TriggerFault
+VAR_INPUT
+	sErrorText		: Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.hmi.sErrorText := sErrorText;
+_ctx.state.iMgr.Request(_ctx.state.iFault);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

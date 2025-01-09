@@ -3,7 +3,7 @@
   <POU Name="Room_State" Id="{df0168ad-9f27-4512-92eb-a0e2e652ad32}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT Room_State EXTENDS State
 VAR
-	_ctx	: REFERENCE TO StandardRoom_Ctx;
+	_ctx	: REFERENCE TO Room_Ctx;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -21,7 +21,7 @@ VAR_INPUT
 	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
 	bInCopyCode	: BOOL;
 	iEntity	: Core.I_Entity;
-	ctx		: REFERENCE TO StandardRoom_Ctx;
+	ctx		: REFERENCE TO Room_Ctx;
 END_VAR
 ]]></Declaration>
       <Implementation>

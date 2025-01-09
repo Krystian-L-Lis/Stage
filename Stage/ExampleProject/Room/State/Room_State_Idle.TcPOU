@@ -12,14 +12,28 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Method Name="OnExecute" Id="{1f6e34fe-0771-4959-934b-53cc7be7116b}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bDisable THEN
+	_ctx.state.iMgr.Request(_ctx.state.iDisable);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="OnInit" Id="{d4b48581-1a4d-4829-a23f-cfc37a8808cd}">
       <Declaration><![CDATA[METHOD OnInit
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_ctx.io.out.bInletValve := FALSE;
-_ctx.io.out.bOutletValve := FALSE;
+        <ST><![CDATA[_ctx.io.bOpenValves := FALSE;
 
-_ctx.priv.bAbort := TRUE;]]></ST>
+_ctx.priv.bActive := FALSE;
+_ctx.priv.bReady := FALSE;
+
+_ctx.hmi.sStatusText := 'Heating ON: Idle';
+_ctx.hmi.nStatusColor := COL.BLACK.Raw;
+
+_ctx.hmi.bHideReset := FALSE;]]></ST>
       </Implementation>
     </Method>
   </POU>

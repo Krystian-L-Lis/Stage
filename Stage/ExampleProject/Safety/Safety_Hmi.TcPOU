@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Safety_Hmi" Id="{4d75a0c5-3298-465d-849c-fb6bf543b76a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Safety_Hmi
+VAR_GENERIC CONSTANT
+	ESTOP_CAP		: UDINT := 4;
+END_VAR
+
+VAR_INPUT
+	bEStopActive	: ARRAY[1..ESTOP_CAP] OF BOOL;
+	
+	sStatusText		: Str;
+	nStatusColor	: LWORD;
+	
+	bReset			: BOOL;
+	bHideReset		: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

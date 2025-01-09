@@ -6,8 +6,12 @@ VAR_INPUT
 	bReady		: BOOL;
 	bOpen		: BOOL;
 	bClosed		: BOOL;
+	bActive		: BOOL;
+	
 	bPaused		: BOOL;
-	bAbort		: BOOL;
+	bSysOff		: BOOL;
+	
+	iThisRoom	: I_Room;
 END_VAR
 ]]></Declaration>
     <Implementation>

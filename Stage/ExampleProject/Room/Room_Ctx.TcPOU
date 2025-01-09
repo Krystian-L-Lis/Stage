@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Room_Ctx" Id="{8aac3efc-2438-43bb-b2e7-024ad5e5c587}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx
+VAR_INPUT
+	io		: Room_Ctx_Io; // different
+	hmi		: Room_Ctx_Hmi; // the same
+	state	: Room_Ctx_States; // the same
+	priv	: Room_Ctx_Priv; // the same but different logic
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
