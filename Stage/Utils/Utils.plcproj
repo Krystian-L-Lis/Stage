@@ -46,20 +46,6 @@
     <Compile Include="Color\Color.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ECS\CompType.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ECS\Entity.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ECS\Param.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="ECS\_ECS.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
     <Compile Include="Timer\GetSysTime.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -101,7 +87,6 @@
   <ItemGroup>
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
-    <Folder Include="ECS" />
     <Folder Include="Timer" />
   </ItemGroup>
   <ItemGroup>

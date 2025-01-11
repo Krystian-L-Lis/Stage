@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TestCall" Id="{63bf87f7-0b4f-48aa-9c4a-68cb8ea6de73}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TestCall IMPLEMENTS I_Callable
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	nUdint		: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{15292887-d3e9-461d-a796-2836f6919931}">
+      <Declaration><![CDATA[METHOD Call
+VAR_INPUT
+	iArg	: Core.I_Arg;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nUdint := nUdint + 1;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

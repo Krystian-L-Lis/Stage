@@ -20,14 +20,7 @@
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
-    <Method Name="_SetId" Id="{87e57416-520d-4b39-a202-f7b278dc541f}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD INTERNAL _SetId
-VAR_INPUT
-	nId			: UDINT;
-END_VAR
-]]></Declaration>
-    </Method>
-    <Method Name="_SetSize" Id="{4701774f-e208-4563-b244-2fdf81dbd1a5}" FolderPath="_\">
+    <Method Name="_SetSize" Id="{4f2cfe96-e866-4ccb-ad69-0a3a5c406b8d}" FolderPath="_\">
       <Declaration><![CDATA[METHOD INTERNAL _SetSize
 VAR_INPUT
 	nSize	: UDINT;

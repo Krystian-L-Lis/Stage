@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Test_Ec_CompCast" Id="{c4f6c805-d819-4f20-a3bf-d8cdb00e1232}" SpecialFunc="None">
+    <Declaration><![CDATA[// ASSUME Param.COMP_CAP = 20
+// Fills _Ec.comp table with first batch of signals
+// Then fills _Ec.comp table with second batch of signals.
+// Entity 1 components need to be moved to the end, _Ec.iFirst is now Entity 2.
+// Entity 2 components expand towards the position 1.
+// Entity 3 components need to be moved to the end.
+
+// Fill _Ec.comp with 3rd batch of signals forcing table to coalesce
+
+// At the end the entity range should be number of compoennets plus header.
+FUNCTION_BLOCK Test_Ec_CompCast IMPLEMENTS I_Execute
+VAR_INPUT
+	bTest				: BOOL;
+END_VAR
+VAR_OUTPUT
+	iTag				: I_Tag;
+	iSignal				: I_Signal;
+	iState				: I_State;
+END_VAR
+VAR
+	exe					: Execute(THIS^);	
+	
+	tag					: Tag('Casting test');	
+	iComp				: I_Component := tag;
+	
+	
+	i, j				: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{a7bd9ad7-6966-430d-81a5-76f21ad5ed89}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bTest THEN
+	Core.CompAsITag(iComp, iDest => iTag);
+	Core.CompAsIState(iComp, iDest => iState);
+	Core.CompAsISignal(iComp, iDest => iSignal);
+
+	bTest := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

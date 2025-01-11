@@ -10,7 +10,7 @@
 // ---------------------------------------------------------------------------
 FUNCTION INTERNAL _EcGetBestFit : Result
 VAR_INPUT
-    nRequiredSize : UDINT;
+    nRequiredSize	: UDINT;
 END_VAR
 VAR_OUTPUT
     nStart : UDINT;
@@ -22,8 +22,8 @@ VAR
     _nChunkSize  : UDINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// 1) If we've already allocated the maximum number of slots, no space available.
-IF _Ec.nCompLen = Param.ENTITY_CAP THEN
+      <ST><![CDATA[// 1) Check if there is avaliable space for required size
+IF Param.COMP_CAP - _Ec.nCompLen < nRequiredSize THEN
     _EcGetBestFit := Err.Ovf;
     RETURN;
 END_IF
@@ -45,7 +45,7 @@ ELSE
 END_IF
 
 // 4) Scan from _nStartIndex to the end of the comp array for free slots
-FOR i := _nStartIndex TO Param.ENTITY_CAP DO
+FOR i := _nStartIndex TO Param.COMP_CAP DO
     
     CASE _Ec.comp[i].nType OF
 
@@ -62,7 +62,7 @@ FOR i := _nStartIndex TO Param.ENTITY_CAP DO
 
         1: // An entity header => skip the entire block of this entity
             _nChunkSize := 0;
-            i := _Ec.comp[i].iObj.iEntity._End;
+            i := _Ec.comp[i].variant.iEntity._End;
             // Next iteration in the FOR loop will proceed from i+1
 
         ELSE // Any other nType => unexpected internal state

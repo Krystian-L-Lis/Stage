@@ -23,7 +23,7 @@ END_IF
 _nEnd := iSignal._End;
 // Assumes that the entry table is correctly constructed which is very likely
 FOR i := iSignal._Start + 1 TO _nEnd DO
-	_Broadcast.entry[i].iObj.iReceiver.Receive(iArg);
+	_Broadcast.entry[i].variant.iReceiver.Receive(iArg);
 END_FOR]]></ST>
     </Implementation>
   </POU>

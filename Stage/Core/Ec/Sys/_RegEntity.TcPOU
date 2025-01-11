@@ -30,8 +30,7 @@ END_IF
 
 _Ec.nEntityLen := _Ec.nEntityLen + 1;
 _Ec.iEntity[_Ec.nEntityLen] := iEntity;
-
-iEntity._SetId(_Ec.nEntityLen);
+nIndex := _Ec.nEntityLen;
 
 _RegEntity := Ok;
 

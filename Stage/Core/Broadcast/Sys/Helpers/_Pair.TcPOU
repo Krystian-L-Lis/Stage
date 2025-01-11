@@ -31,7 +31,7 @@ END_IF
 
 // 3) Ensure this exact iReceiver isn't already within the iSignal chunk
 FOR i := iSignal._Start + 1 TO iSignal._End DO
-	IF _Broadcast.entry[i].iObj.iReceiver = iReceiver THEN
+	IF _Broadcast.entry[i].variant.iReceiver = iReceiver THEN
 		_Pair := Err.ItfEq;
 		RETURN;
 	END_IF
@@ -43,15 +43,16 @@ IF iSignal._Start = 0 THEN
 		Ok:
 			// Found a free chunk of size 2
 		None:
-			// No chunk found => coalesce and retry
-			IF IsErr(_BroadcastCoalesce(), nOut => _Pair) THEN
-				RETURN;
-			END_IF
-
-			IF NOT IsOk(_BroadcastGetBestFit(2, nStart => _nStart, nEnd => _nEnd), nOut => _Pair) THEN
-				_Pair := Err.Udf;
-				RETURN;
-			END_IF
+			CASE (_Pair := _BroadcastDefragment()) OF 
+				Ok:
+					// We can safely assume that if _BroadcastGetBestFit and _BroadcastDefragment didn't failed then _Broadcast.nRecLen + 1 is the next unoccupied slot.
+					// If _BroadcastGetBestFit failed then there is no avaliable space in the first place.
+					// If _BroadcastDefragment failed then this wouldn't be executed.
+					_nStart := _Broadcast.nRecLen + 1;
+					_nEnd := _Broadcast.nRecLen + 2;
+				ELSE
+					RETURN;
+			END_CASE
 		ELSE
 			// Any other error, just return
 			RETURN;
@@ -60,11 +61,11 @@ IF iSignal._Start = 0 THEN
 	IF IsOk(_Pair) THEN
 		// Mark the first slot as signal header
 		_Broadcast.entry[_nStart].nType := 1;
-		_Broadcast.entry[_nStart].iObj.iSignal := iSignal;
+		_Broadcast.entry[_nStart].variant.iSignal := iSignal;
 
 		// Mark the second slot as the receiver
 		_Broadcast.entry[_nEnd].nType := 2;
-		_Broadcast.entry[_nEnd].iObj.iReceiver := iReceiver;
+		_Broadcast.entry[_nEnd].variant.iReceiver := iReceiver;
 
 		// Update the signal's metadata
 		iSignal._Start := _nStart;
@@ -92,7 +93,7 @@ _nNextId := iSignal._End + 1;
 IF (_nNextId <= Param.COMP_CAP) AND_THEN (_Broadcast.entry[_nNextId].nType = 0) THEN
 	// Mark that free slot as a new receiver
 	_Broadcast.entry[_nNextId].nType := 2;
-	_Broadcast.entry[_nNextId].iObj.iReceiver := iReceiver;
+	_Broadcast.entry[_nNextId].variant.iReceiver := iReceiver;
 
 	// Update signal info
 	iSignal._End := _nNextId;
@@ -113,7 +114,7 @@ IF (_nNextId > 0) AND_THEN (_Broadcast.entry[_nNextId].nType = 0) THEN
 
 	// Turn the old boundary marker slot into the new receiver
 	_Broadcast.entry[iSignal._Start].nType := 2;
-	_Broadcast.entry[iSignal._Start].iObj.iReceiver := iReceiver;
+	_Broadcast.entry[iSignal._Start].variant.iReceiver := iReceiver;
 
 	// Update signal to reflect new _Start
 	iSignal._Start := _nNextId;
@@ -132,14 +133,15 @@ CASE (_Pair := _BroadcastGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd)
 	Ok:
 		// Chunk found
 	None:
-		// Coalesce + retry
-		IF IsErr(_BroadcastCoalesce(), nOut => _Pair) THEN
-			RETURN;
-		END_IF
-
-		IF NOT IsOk(_BroadcastGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd), nOut => _Pair) THEN
-			RETURN;
-		END_IF
+		// No chunk found => defragment.
+		CASE (_Pair := _BroadcastDefragment(iSignal)) OF 
+			Ok:
+				// As above
+				_nStart := _Broadcast.nRecLen + 1;
+				_nEnd := _Broadcast.nRecLen + _nNewSize;
+			ELSE
+				RETURN;
+		END_CASE
 	ELSE
 		// Other errors
 		RETURN;
@@ -151,19 +153,19 @@ IF IsOk(_Pair) THEN
 	Tc2_SYSTEM.MEMMOVE(
 		ADR(_Broadcast.entry[_nStart]),
 		ADR(_Broadcast.entry[iSignal._Start]),
-		SIZEOF(ST_BroadcastObject) * iSignal._Size
+		SIZEOF(_BroadcastStruct) * iSignal._Size
 	);
 
 	// Clear out the old region
 	Tc2_SYSTEM.MEMSET(
 		ADR(_Broadcast.entry[iSignal._Start]),
 		0,
-		SIZEOF(ST_BroadcastObject) * iSignal._Size
+		SIZEOF(_BroadcastStruct) * iSignal._Size
 	);
 
 	// Mark the final slot in the new chunk as the new receiver
 	_Broadcast.entry[_nEnd].nType := 2;
-	_Broadcast.entry[_nEnd].iObj.iReceiver := iReceiver;
+	_Broadcast.entry[_nEnd].variant.iReceiver := iReceiver;
 
 	// Update the signal to reflect the new block location
 	iSignal._Start := _nStart;

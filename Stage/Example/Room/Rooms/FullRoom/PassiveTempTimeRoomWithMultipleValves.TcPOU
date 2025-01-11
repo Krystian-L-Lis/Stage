@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PassiveTempTimeRoomWithMultipleValves" Id="{792c411b-36b8-4ec1-999d-023bca841d57}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PassiveTempTimeRoomWithMultipleValves 
+VAR_GENERIC CONSTANT
+	VALVE_CAP		: UDINT := 7;
+END_VAR
+
+IMPLEMENTS I_Execute, I_Init
+
+VAR CONSTANT
+	STATE_CAP		: UDINT := 7;
+END_VAR
+VAR
+	_this			: Entity;
+	_ctx			: Room_Ctx;
+	_room			: RoomInterface(_ctx);
+	_tag			: Tag(CONCAT('Room_', UDINT_TO_STRING(_room.Id)));
+	_compTag		: Comp(_tag, _this);
+	_init			: Init(THIS^);
+	_exe			: Execute(THIS^);
+	
+	_uiLogic		: Room_UiLogic(_ctx);
+	
+	_systemReceiver	: Room_SystemReceiver(_ctx);
+	
+	_smgr			: StateManager<STATE_CAP>(_this);
+	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
+	
+	_disable		: Room_State_Disabled(_this, _ctx);
+	_proxDisable	: StateProxy(_disable, _ctx.state.iDisable);
+	
+	_fault			: Room_State_Fault(_this,_ctx);
+	_proxFault		: StateProxy(_fault, _ctx.state.iFault);	
+	
+	_idle			: Room_State_Idle(_this,_ctx);
+	_proxIdle		: StateProxy(_idle, _ctx.state.iIdle);	
+	
+	_systemOff		: Room_State_SystemOff(_this,_ctx);
+	_proxSystemOff	: StateProxy(_systemOff, _ctx.state.iSystemOff);
+END_VAR
+
+// Here add custom components
+
+VAR PERSISTENT
+	_settings		: Room_Settings_PassiveTempTime;
+END_VAR
+VAR_INPUT
+	rTemperature	: REAL;
+
+	bInletValveIsOpen		: BOOL;
+	bInletValveIsClosed		: BOOL;
+	
+	bOutletValveIsOpen		: ARRAY[1..VALVE_CAP] OF BOOL;
+	bOutletValveIsClosed	: ARRAY[1..VALVE_CAP] OF BOOL;
+END_VAR
+VAR_OUTPUT
+	bInletValve			: ARRAY[1..VALVE_CAP] OF BOOL;
+	bOutletValve		: ARRAY[1..VALVE_CAP] OF BOOL;
+END_VAR
+VAR
+	_timeDemand		: Room_State_DemandTime(_this, _ctx, _settings.timee);
+	_tempDemand		: Room_State_DemandTemperature(_this, _ctx, _settings.temp, rTemperature);
+	_passiveDemand	: Room_State_DemandPassive(_this, _ctx, _settings.bEnablePassive);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{a5cbd3cc-f7e3-434c-bc84-95fee5f3bb62}">
+      <Declaration><![CDATA[METHOD Execute
+VAR
+	i			: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.priv.bClosed := TRUE;
+_ctx.priv.bOpen := TRUE;
+
+FOR i := 1 TO VALVE_CAP DO
+	bInletValve[i] :=  _ctx.io.bOpenValves;
+	bOutletValve[i] :=  _ctx.io.bOpenValves;	
+	
+	_ctx.priv.bClosed := _ctx.priv.bClosed AND bOutletValveIsClosed[i];
+	_ctx.priv.bOpen := _ctx.priv.bClosed AND bOutletValveIsOpen[i];	
+END_FOR
+
+_ctx.hmi.sData := '';]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{2026ee0e-2df3-49e4-b7e9-d8a0d08549a4}">
+      <Declaration><![CDATA[METHOD Init
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_smgr.Request(_idle);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

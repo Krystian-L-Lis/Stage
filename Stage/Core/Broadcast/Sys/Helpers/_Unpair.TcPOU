@@ -24,7 +24,7 @@ END_IF
 // 2) Find iReceiver in [iSignal._Start+1 .. iSignal._End]
 _nEnd := iSignal._End;
 FOR i := iSignal._Start + 1 TO _nEnd DO
-	IF _Broadcast.entry[i].iObj.iReceiver = iReceiver THEN
+	IF _Broadcast.entry[i].variant.iReceiver = iReceiver THEN
 		_nPos := i;
 		EXIT;
 	END_IF
@@ -43,10 +43,10 @@ iSignal._Size := iSignal._Size - 1;
 IF iSignal._Size = 1 THEN
 	// Clear the last receiver slot
 	_Broadcast.entry[_nEnd].nType := 0;
-	_Broadcast.entry[_nEnd].iObj.iReceiver := 0;
+	_Broadcast.entry[_nEnd].variant.iReceiver := 0;
 	// Clear the signal header slot
 	_Broadcast.entry[_nEnd - 1].nType := 0;
-	_Broadcast.entry[_nEnd - 1].iObj.iSignal := 0;
+	_Broadcast.entry[_nEnd - 1].variant.iSignal := 0;
 	// Reset iSignal metadata
 	iSignal._Size := 0;
 	iSignal._Start := 0;

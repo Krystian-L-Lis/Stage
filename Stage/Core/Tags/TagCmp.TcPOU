@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK TagCmp IMPLEMENTS I_TagCmp
 VAR
 	_iBaseTag		: I_Tag;
-	_eResult		: Result;
+	_nResult		: Result;
 	_bLock			: BOOL;
 END_VAR
 ]]></Declaration>
@@ -37,11 +37,11 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-CASE _eResult OF
+CASE _nResult OF
 	Ok,
 	None:
-		IF _eResult = Ok AND_THEN sOption <> '' AND_THEN _iBaseTag.Option = sOption THEN
-			_eResult := Ok;
+		IF _nResult = Ok AND_THEN sOption <> '' AND_THEN _iBaseTag.Option = sOption THEN
+			_nResult := Ok;
 		END_IF
 END_CASE]]></ST>
       </Implementation>
@@ -59,8 +59,8 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-IF _eResult = Ok AND_THEN bCondition THEN
-	_eResult := Ok;
+IF _nResult = Ok AND_THEN bCondition THEN
+	_nResult := Ok;
 END_IF
 
 ]]></ST>
@@ -80,11 +80,11 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-CASE _eResult OF
+CASE _nResult OF
 	Ok,
 	None:
 		IF sOption <> '' AND_THEN _iBaseTag.Option = sOption THEN
-			_eResult := Ok;
+			_nResult := Ok;
 		END_IF
 END_CASE]]></ST>
       </Implementation>
@@ -97,7 +97,7 @@ END_CASE]]></ST>
 	RETURN;
 END_IF
 
-IF _eResult >= 0 THEN
+IF _nResult >= 0 THEN
 	RETURN;
 END_IF
 
@@ -114,7 +114,7 @@ IsErr := TRUE;
 	RETURN;
 END_IF
 
-IF _eResult <> None THEN
+IF _nResult <> None THEN
 	RETURN;
 END_IF
 
@@ -131,7 +131,7 @@ IsFalse := TRUE;
 	RETURN;
 END_IF
 
-IF _eResult <> Ok THEN
+IF _nResult <> Ok THEN
 	RETURN;
 END_IF
 
@@ -152,11 +152,11 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-CASE _eResult OF
+CASE _nResult OF
 	Ok,
 	None:
 		IF iOther = _iBaseTag THEN
-			_eResult := Ok;
+			_nResult := Ok;
 		END_IF
 END_CASE
 
@@ -177,11 +177,11 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-CASE _eResult OF
+CASE _nResult OF
 	Ok,
 	None:
 		IF sIdToMatch <> '' AND_THEN (Tc2_Standard.RIGHT(_iBaseTag.Id, Tc2_Standard.LEN(sIdToMatch)) = sIdToMatch) THEN
-			_eResult := Ok;
+			_nResult := Ok;
 		END_IF
 END_CASE]]></ST>
       </Implementation>
@@ -197,6 +197,7 @@ VAR
 	pttPeek				: Str;
 	addPath				: SymPath;
 	addSeg				: Str;
+	bMatch				: BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -208,47 +209,10 @@ IF _bLock THEN
 END_IF
 
 // Check result state
-CASE _eResult OF
+CASE _nResult OF
 	Ok,
-	None:
-		pttPath.Set(sPattern);
-		addPath.Set(_iBaseTag.Id);
-		WHILE IsOk(pttPath.Next(sSeg => pttSeg)) DO
-		
-			IF pttSeg = '*' THEN
-				IF IsOk(pttPath.Peek(sSeg => pttPeek)) THEN
-					IF pttPeek = '*' THEN
-						CONTINUE; // Skip redundant wildcard
-					END_IF
-				ELSE
-					RETURN; // No more segments in the pattern, so it's a match
-				END_IF
-	
-			ELSIF pttSeg <> '*' THEN
-				pttPeek := '';
-			END_IF
-			
-			WHILE IsOk(addPath.Next(sSeg => addSeg)) DO
-				IF pttPeek <> '' THEN
-					IF pttPeek = addSeg THEN
-						pttPath.Next();
-						EXIT;
-					ELSE
-						CONTINUE;
-					END_IF
-				ELSIF pttSeg = addSeg THEN
-					EXIT;
-				ELSE
-					RETURN;
-				END_IF
-			END_WHILE		
-		END_WHILE
-		
-		IF IsOk(addPath.Peek()) THEN
-			RETURN;
-		END_IF
-		
-		_eResult := Ok;
+	None:		
+		_nResult := SymPathCompare(_iBaseTag.Id, sPattern);
 END_CASE
 
 ]]></ST>
@@ -267,8 +231,8 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-IF _eResult = Ok OR_ELSE bCondition THEN
-	_eResult := Ok;
+IF _nResult = Ok OR_ELSE bCondition THEN
+	_nResult := Ok;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -280,11 +244,11 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iBaseTag := iBaseTag;
-_eResult := None;
+_nResult := None;
 _bLock := FALSE;
 
 IF iBaseTag = 0 THEN
-	_eResult := Err.Itf0;
+	_nResult := Err.Itf0;
 END_IF
 
 Set := _self;]]></ST>
@@ -303,8 +267,8 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-IF _eResult = Ok XOR bCondition THEN
-	_eResult := Ok;
+IF _nResult = Ok XOR bCondition THEN
+	_nResult := Ok;
 END_IF
 ]]></ST>
       </Implementation>

@@ -42,8 +42,8 @@ IF _Ec.nCompLen = Param.COMP_CAP THEN
 END_IF
 
 // Ensure this exact iComponent isn't already registered.
-FOR i := 1 TO _Ec.nCompLen DO
-    IF _Ec.comp[i].nType = 2 AND_THEN _Ec.comp[i].iObj.iComponent = iComponent THEN
+FOR i := 1 TO Param.COMP_CAP DO
+    IF _Ec.comp[i].nType = 2 AND_THEN _Ec.comp[i].variant.iComponent = iComponent THEN
         _RegComp := Err.ItfEq;
         RETURN;
     END_IF
@@ -55,14 +55,17 @@ IF iEntity._Start = 0 THEN
         Ok:
             // Got a free chunk of size 2
         None:
-            // No chunk found => coalesce and retry
-            IF IsErr(_EcCoalesce(), nOut => _RegComp) THEN
-                RETURN;
-            END_IF
-            
-            IF NOT IsOk(_EcGetBestFit(2, nStart => _nStart, nEnd => _nEnd), nOut => _RegComp) THEN
-                RETURN;
-            END_IF
+            // No chunk found => defragment.
+            CASE (_RegComp := _EcDefragment()) OF 
+				Ok:
+					// We can safely assume that if _EcGetBestFit and _EcDefragment didn't failed then _Ec.nCompLen + 1 is the next unoccupied slot.
+					// If _EcGetBestFit failed then there is no avaliable space in the first place.
+					// If _EcDefragment failed then this wouldn't be executed.
+					_nStart := _Ec.nCompLen + 1;
+					_nEnd := _Ec.nCompLen + 2;
+				ELSE
+					RETURN;
+			END_CASE
         ELSE
             // If any other error, just return
             RETURN;
@@ -71,11 +74,11 @@ IF iEntity._Start = 0 THEN
     IF IsOk(_RegComp) THEN
         // Mark the first slot as entity header
         _Ec.comp[_nStart].nType := 1;
-        _Ec.comp[_nStart].iObj.iEntity := iEntity;
+        _Ec.comp[_nStart].variant.iEntity := iEntity;
 
         // Mark the second slot as the component
         _Ec.comp[_nEnd].nType := 2;
-        _Ec.comp[_nEnd].iObj.iComponent := iComponent;
+        _Ec.comp[_nEnd].variant.iComponent := iComponent;
         
         // Update the entity’s metadata
         iEntity._Start := _nStart;
@@ -104,7 +107,7 @@ _nNextId := iEntity._End + 1;
 IF _nNextId <= Param.COMP_CAP AND_THEN _Ec.comp[_nNextId].nType = 0 THEN
     // Mark that free slot as a new component
     _Ec.comp[_nNextId].nType := 2;
-    _Ec.comp[_nNextId].iObj.iComponent := iComponent;
+    _Ec.comp[_nNextId].variant.iComponent := iComponent;
     
     // Update entity info
     iEntity._End := _nNextId;
@@ -125,7 +128,7 @@ IF _nNextId > 0 AND_THEN _Ec.comp[_nNextId].nType = 0 THEN
 
     // Turn the old boundary marker slot into the new component
     _Ec.comp[iEntity._Start].nType := 2;
-    _Ec.comp[iEntity._Start].iObj.iComponent := iComponent;
+    _Ec.comp[iEntity._Start].variant.iComponent := iComponent;
     
     // Update entity to reflect new _Start
     iEntity._Start := _nNextId;
@@ -144,14 +147,30 @@ CASE (_RegComp := _EcGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd)) OF
     Ok:
         // chunk found
     None:
-        // coalesce + retry
-        IF IsErr(_EcCoalesce(), nOut => _RegComp) THEN
-            RETURN;
-        END_IF
-        
-        IF NOT IsOk(_EcGetBestFit(_nNewSize, nStart => _nStart, nEnd => _nEnd), nOut => _RegComp) THEN
-            RETURN;
-        END_IF
+		// No chunk found => defragment.
+		CASE (_RegComp := _EcDefragment(iEntity)) OF 
+			Ok:
+				// As above
+				_nStart := _Ec.nCompLen + 1;
+				_nEnd := _Ec.nCompLen + _nNewSize;
+			ELSE
+				RETURN;
+		END_CASE
+	Err.Ovf:
+		// Check if there is enough space excluding the size of this chunk. 
+		// We can do it this way as we alwyas increase chunk by 1.
+		IF Param.COMP_CAP = _Ec.nCompLen THEN
+			RETURN;
+		END_IF
+	
+		CASE (_RegComp := _EcDefragment(iEntity)) OF 
+			Ok:
+				// As above
+				_nStart := _Ec.nCompLen + 1;
+				_nEnd := _Ec.nCompLen + _nNewSize;
+			ELSE
+				RETURN;
+		END_CASE	
     ELSE
         // Other errors
         RETURN;
@@ -163,24 +182,24 @@ IF IsOk(_RegComp) THEN
     Tc2_SYSTEM.MEMMOVE(
         ADR(_Ec.comp[_nStart]),
         ADR(_Ec.comp[iEntity._Start]),
-        SIZEOF(ST_EcObject) * iEntity.Size
+        SIZEOF(_EcStruct) * iEntity.Size
     );
 
     // Clear out the old region
     Tc2_SYSTEM.MEMSET(
         ADR(_Ec.comp[iEntity._Start]),
         0,
-        SIZEOF(ST_EcObject) * iEntity.Size
+        SIZEOF(_EcStruct) * iEntity.Size
     );
     
     // Mark the final slot in the new chunk as the new component
     _Ec.comp[_nEnd].nType := 2;
-    _Ec.comp[_nEnd].iObj.iComponent := iComponent;
+    _Ec.comp[_nEnd].variant.iComponent := iComponent;
     
     // Update the entity to reflect the new block location
     iEntity._Start := _nStart;
     iEntity._End   := _nEnd;
-    iEntity._SetSize(iEntity.Size + 1);
+    iEntity._SetSize(_nNewSize);
     
     // One more slot used
     _Ec.nCompLen := _Ec.nCompLen + 1;

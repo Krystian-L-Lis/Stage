@@ -440,8 +440,10 @@ IF (_sChar >= '0') AND (_sChar <= '9') THEN
     RETURN;
 END_IF;
 
+sNewPath := Tc2_Utilities.F_ToLCase(sNewPath);
+
 FOR i := 1 TO _nStrLen DO
-    _sChar := Tc2_Utilities.F_ToLCase(Tc2_Standard.MID(sNewPath, 1, i));
+    _sChar := Tc2_Standard.MID(sNewPath, 1, i);
     
     // Check for invalid characters
     IF NOT ((_sChar >= 'a' AND _sChar <= 'z') OR 	// Lowercase letters

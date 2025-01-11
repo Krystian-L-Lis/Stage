@@ -19,7 +19,7 @@
 {attribute 'qualified_only'}
 VAR_GLOBAL INTERNAL
     iEntity     : ARRAY[1..Param.ENTITY_CAP] OF I_EntityNode;   // All entity nodes
-    comp        : ARRAY[1..Param.COMP_CAP] OF ST_EcObject;      // Slots for components/entity headers
+    comp        : ARRAY[1..Param.COMP_CAP] OF _EcStruct;      // Slots for components/entity headers
     
     iFirst      : I_EntityNode;  // Tracks the first (leftmost) allocated entity
     

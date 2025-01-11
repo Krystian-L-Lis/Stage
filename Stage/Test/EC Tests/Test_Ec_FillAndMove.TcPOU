@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Test_Ec_FillAndMove" Id="{11980bd3-91ed-4e5a-91e7-58fb265e9fe5}" SpecialFunc="None">
+    <Declaration><![CDATA[// ASSUME Param.COMP_CAP = 20
+// Fills _Ec.comp table with first batch of signals
+// Then fills _Ec.comp table with second batch of signals.
+// Entity 1 components need to be moved to the end, _Ec.iFirst is now Entity 2.
+// Entity 2 components expand towards the position 1.
+// Entity 3 components need to be moved to the end.
+// At the end the entity range should be number of compoennets plus header.
+FUNCTION_BLOCK Test_Ec_FillAndMove IMPLEMENTS I_Execute
+VAR_INPUT
+	bTest		: BOOL;
+END_VAR
+VAR_OUTPUT
+(*
+	Resulting _Ec.comp table:
+	1. EMPTY
+	2. Entity[2] - Header
+	3. batch02[2, 2]
+	4. batch02[2, 1]
+	5. batch01[2, 1]
+	6. batch01[2, 2]
+	7. EMPTY
+	8. EMPTY
+	9. EMPTY
+	10. Entity[1] - Header
+	11. batch01[1, 1]
+	12. batch01[1, 2]
+	13. batch02[1, 1]
+	14. batch02[1, 2]
+	15. Entity[3] - Header
+	16. batch01[3, 1]
+	17. batch01[3, 2]
+	18. batch02[3, 1]
+	19. batch02[3, 2]
+	20. EMPTY
+*)
+END_VAR
+VAR
+	exe					: Execute(THIS^);	
+
+	entity				: ARRAY[1..3] OF Entity; // 3 headers
+	
+	batch01				: ARRAY[1..3, 1..2] OF Signal; // 6 entries
+	batch02				: ARRAY[1..3, 1..2] OF Signal;	// another 6 entries
+	
+	i, j				: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{b55e4687-83a4-4d37-ae77-d8ab2671bf5b}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bTest THEN
+	FOR i := 1 TO 3 DO
+		FOR j := 1 TO 2 DO
+			RegComp(batch01[i, j], entity[i]);
+		END_FOR
+	END_FOR
+
+	FOR i := 1 TO 3 DO
+		FOR j := 1 TO 2 DO
+			RegComp(batch02[i, j], entity[i]);
+		END_FOR
+	END_FOR
+
+	bTest := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

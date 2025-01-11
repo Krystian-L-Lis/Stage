@@ -13,6 +13,12 @@
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
+    <Property Name="_Id" Id="{a9792a04-1aee-40d0-8866-c6ab68d00823}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Id : UDINT]]></Declaration>
+      <Get Name="Get" Id="{76d7e66f-9343-4a9b-8c42-82219155ae4d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Property Name="_Size" Id="{b6650d71-cbcf-43b0-88e5-bb4cde5396b4}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _Size : UDINT]]></Declaration>
       <Get Name="Get" Id="{babf9e29-0594-4bde-8bfe-731925a65630}">

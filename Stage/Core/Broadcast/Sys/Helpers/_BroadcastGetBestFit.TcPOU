@@ -17,7 +17,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// 1) If we've already allocated the maximum number of entities, there's no space.
-IF _Broadcast.nRecLen = Param.RECEIVER_CAP THEN
+IF Param.RECEIVER_CAP - _Broadcast.nRecLen < nRequiredSize THEN
 	_BroadcastGetBestFit := Err.Ovf;
 	RETURN;
 END_IF
@@ -41,7 +41,7 @@ ELSE
 END_IF
 
 // 4) Loop from _nStartIndex to the max capacity
-FOR i := _nStartIndex TO Param.ENTITY_CAP DO
+FOR i := _nStartIndex TO Param.RECEIVER_CAP DO
 
 	CASE _Broadcast.entry[i].nType OF
 
@@ -61,7 +61,7 @@ FOR i := _nStartIndex TO Param.ENTITY_CAP DO
 			_nChunkSize := 0;
 
 			// Jump 'i' to the last index used by this signal
-			i := _Broadcast.entry[i].iObj.iSignal._End;
+			i := _Broadcast.entry[i].variant.iSignal._End;
 			// The next iteration of FOR will increment 'i', continuing from (i+1)
 
 		ELSE // Invalid slot type => internal error

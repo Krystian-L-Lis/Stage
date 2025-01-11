@@ -7,7 +7,10 @@ VAR_STAT
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bInit THEN
-	_Runtime.iFirstInit.Init();
+	IF _Runtime.iFirstInit <> 0 THEN
+		_Runtime.iFirstInit.Init();
+	END_IF
+	
 	bInit := FALSE;
 END_IF
 

@@ -18,6 +18,7 @@ END_IF
 IF __QUERYINTERFACE(iSource, iDest) THEN
 	ArgAsITag := Ok;
 ELSE
+	iDest := 0;
 	ArgAsITag := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="DebugStr" Id="{34717bf4-9bf9-4a89-a482-5331f33a4582}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION DebugStr
+VAR_INPUT
+	sInfo			: Str;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _Debug.nLastStr < Param.DEBUGSTR_CAP THEN
+	_Debug.nLastStr := _Debug.nLastStr + 1;
+ELSE
+	_Debug.nLastStr := 1;
+END_IF
+
+_Debug.debugStr[_Debug.nLastStr] := sInfo;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

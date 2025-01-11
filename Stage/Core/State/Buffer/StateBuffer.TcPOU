@@ -8,8 +8,8 @@ END_VAR
 IMPLEMENTS I_StateBuffer
 VAR
 	_iState				: ARRAY[1..STATE_CAP] OF I_StateInternal;
-	_nHead				: UDINT;
-	_nTail				: UDINT;
+	_nHead				: UDINT := 1;
+	_nTail				: UDINT := 1;
 	_nLen				: UDINT;
 END_VAR
 ]]></Declaration>
@@ -54,7 +54,7 @@ _nHead := _nHead + 1;
 _nLen := _nLen - 1;
 
 IF _nHead > STATE_CAP THEN
-    _nHead := 0;
+    _nHead := 1;
 END_IF
 
 Pop := Ok;
@@ -79,7 +79,7 @@ END_IF
 _nNextTail := _nTail + 1;
 
 IF _nNextTail > STATE_CAP THEN
-    _nNextTail := 0;
+    _nNextTail := 1;
 END_IF
 
 IF _nNextTail = _nHead THEN

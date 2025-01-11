@@ -5,7 +5,9 @@
 VAR_INPUT
     iSignal : I_SignalNode;
 END_VAR
-]]></Declaration>
+VAR_OUTPUT
+	nIndex	: UDINT;
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iSignal = 0 THEN
 	_RegSignal := Err.Itf0;
@@ -19,7 +21,7 @@ END_IF
 
 _Broadcast.nSignalLen := _Broadcast.nSignalLen + 1;
 _Broadcast.iSignal[_Broadcast.nSignalLen] := iSignal;
-
+nIndex := _Broadcast.nSignalLen;
 _RegSignal := Ok;
 
 ]]></ST>

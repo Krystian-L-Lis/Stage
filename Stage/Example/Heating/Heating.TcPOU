@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Heating" Id="{62f0b3a1-a792-4ec1-b14a-c56d60b72dc9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating 
+VAR_GENERIC CONSTANT
+	ROOM_CAP		: UDINT := 20;
+END_VAR
+
+IMPLEMENTS I_Execute, I_Init
+VAR_INPUT
+	bPumpOverload	: BOOL;
+	bBurnerOverload	: BOOL;
+
+	rBoilerTemp		: REAL;
+	rBoilerPressure	: REAL;	
+END_VAR
+VAR_OUTPUT
+	bPump			: BOOL;
+	bBurner			: BOOL;
+END_VAR
+VAR
+	_this			: Entity;
+	_ctx			: Heating_Ctx;
+	_tag			: Tag('Heating');
+	_compTag		: Comp(_tag, _this);
+	_init			: Init(THIS^);
+	_exe			: Execute(THIS^);
+	
+	_onEnable		: Signal;
+	_compOnEnable	: Comp(_onEnable, _this);
+	_proxOnEnable	: SignalProxy(_onEnable, _ctx.priv.iOnEnable);
+	
+	_onDisable		: Signal;
+	_compOnDisable	: Comp(_onDisable, _this);
+	_proxOnDisable	: SignalProxy(_onDisable, _ctx.priv.iOnDisable);
+	
+	_onPause		: Signal;
+	_compOnPause	: Comp(_onPause, _this);
+	_proxOnPause	: SignalProxy(_onPause, _ctx.priv.iOnPause);
+	
+	_onResume		: Signal;
+	_compOnResume	: Comp(_onResume, _this);
+	_proxOnResume	: SignalProxy(_onResume, _ctx.priv.iOnResume);
+	
+	_smgr			: StateManager<6>(_this);
+	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
+	
+	_disabled		: Heating_State_Disabled(_this, _ctx);
+	_proxDisabled	: StateProxy(_disabled, _ctx.state.iDisable);
+	
+	_safety			: Heating_State_Safety(_this, _ctx);
+	_proxSafety		: StateProxy(_safety, _ctx.state.iSafety);
+	
+	_fault			: Heating_State_Fault(_this, _ctx);
+	_proxFault		: StateProxy(_fault, _ctx.state.iFault);
+	
+	_enabled		: Heating_State_Enabled(_this, _ctx);
+	_proxEnabled	: StateProxy(_enabled, _ctx.state.iEnable);
+	
+	_pumping		: Heating_State_Pumping(_this, _ctx);
+	_proxPumping	: StateProxy(_pumping, _ctx.state.iPump);
+	
+	_heatup			: Heating_State_Heatup(_this, _ctx);
+	_proxHeatup		: StateProxy(_heatup, _ctx.state.iHeatup);
+
+	_passiveHeatingCount		: Heating_PassiveCountRec(_ctx);
+	_passiveHeatingCountRec		: Receiver(_passiveHeatingCount);
+	_compPassiveHeatingCountRec	: Comp(_passiveHeatingCountRec, _this);
+	
+	_request					: Heating_RequestRec(_ctx);
+	_requestRec					: Receiver(_request);
+	_compRequestRec				: Comp(_requestRec, _this);
+	
+	_queue						: ArgQueue<ROOM_CAP>;
+	_queueProxy					: ArgQueueProxy(_queue, _ctx.priv.iQueue);
+	
+	_tonPump	: TON;
+	_tonBurner	: TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{2db28cf4-24c2-48ef-813b-53c66671dd1a}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Inputs
+_ctx.io.in.bBurnerOverload := bBurnerOverload;
+_ctx.io.in.bPumpOverload := bPumpOverload;
+_ctx.io.in.rBoilerPressure := rBoilerPressure;
+_ctx.io.in.rBoilerTemp := rBoilerTemp;
+
+// Outputs
+_tonPump(IN := _ctx.io.out.bPump, PT := T#2S, Q => bPump);
+_tonBurner(IN := _ctx.io.out.bBurner, PT := T#2S, Q => bBurner);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{cc8e1674-1a3f-478e-a1dc-45b6956a8d3e}">
+      <Declaration><![CDATA[METHOD Init
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_smgr.Request(_disabled);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

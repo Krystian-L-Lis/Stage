@@ -52,7 +52,6 @@ END_VAR]]></Declaration>
         <ST><![CDATA[IF IsOk(_buffer.Pop(iState => _iNewState)) THEN
 	_iPretender := _iNewState._AsIState;
 	IF IsOk(_sm.Change(_iNewState, iOldState => _iOldState)) THEN
-		_iPretender		:= 0;
 		_iCurrent		:= _iNewState._AsIState;
 		IF _iOldState <> 0 THEN
 			_iPrevious		:= _iOldState._AsIState;
@@ -61,6 +60,7 @@ END_VAR]]></Declaration>
 	END_IF
 	
 	_iPretender._AsIStateInternal._InQueue := FALSE;
+	_iPretender		:= 0;
 END_IF
 
 ]]></ST>

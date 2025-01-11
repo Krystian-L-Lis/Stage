@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Test_Ec_FillAndCoalesce" Id="{578e9fbc-ff30-4e5e-8a0c-da7d91296a40}" SpecialFunc="None">
+    <Declaration><![CDATA[// ASSUME Param.COMP_CAP = 20
+// Fills _Ec.comp table with first batch of signals
+// Then fills _Ec.comp table with second batch of signals.
+// Entity 1 components need to be moved to the end, _Ec.iFirst is now Entity 2.
+// Entity 2 components expand towards the position 1.
+// Entity 3 components need to be moved to the end.
+
+// Fill _Ec.comp with 3rd batch of signals forcing table to coalesce
+
+// At the end the entity range should be number of compoennets plus header.
+FUNCTION_BLOCK Test_Ec_FillAndCoalesce IMPLEMENTS I_Execute
+VAR_INPUT
+	bTest		: BOOL;
+END_VAR
+VAR_OUTPUT
+(*
+	Resulting _Ec.comp table:
+	1. Entity[1] - Header
+	2. batch01[1, 1]
+	3. batch01[1, 2]
+	4. batch02[1, 1]
+	5. batch02[1, 2]
+	6. Entity[2] - Header
+	7. batch02[2, 2]
+	8. batch02[2, 1]
+	9. batch01[2, 1]
+	10. batch01[2, 2]
+	11. Entity[3] - Header
+	12. batch01[3, 1]
+	13. batch02[3, 2]
+	14. batch02[3, 1]
+	15. batch01[3, 2]
+	16. CoalEntity - Header
+	17. coalBatch[1]
+	18. coalBatch[2]
+	19. coalBatch[3]
+	20. coalBatch[4]
+*)
+END_VAR
+VAR
+	exe					: Execute(THIS^);	
+
+	entity				: ARRAY[1..3] OF Entity; // 3 headers
+	dfgEntity			: Entity; // 1 header
+	
+	batch01				: ARRAY[1..3, 1..2] OF Signal; // 6 entries
+	batch02				: ARRAY[1..3, 1..2] OF Signal;	// another 6 entries
+	dfgBatch			: ARRAY[1..4] OF Signal; // 3 entries
+	
+	i, j				: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{0c8f96ab-313c-4dc3-ab02-a618e2ff1b00}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bTest THEN
+	FOR i := 1 TO 3 DO
+		FOR j := 1 TO 2 DO
+			RegComp(batch01[i, j], entity[i]);
+		END_FOR
+	END_FOR
+
+	FOR i := 1 TO 3 DO
+		FOR j := 1 TO 2 DO
+			RegComp(batch02[i, j], entity[i]);
+		END_FOR
+	END_FOR
+	
+	FOR i := 1 TO 4 DO
+		RegComp(dfgBatch[i], dfgEntity);
+	END_FOR
+
+	bTest := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

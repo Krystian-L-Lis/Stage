@@ -10,17 +10,15 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF _Debug.nDebugLen = Param.DEBUG_CAP THEN
-	RETURN;	
-ELSIF _Debug.nDebugLen = Param.DEBUG_CAP - 1 THEN
-	_Debug.stDebug[_Debug.nDebugLen].iDebug := 0;
-	_Debug.stDebug[_Debug.nDebugLen].sInfo := 'Debug overflow!';
-	RETURN;
+      <ST><![CDATA[IF _Debug.nLastMsg < Param.DEBUGMSG_CAP THEN
+	_Debug.nLastMsg := _Debug.nLastMsg + 1;
+ELSE
+	_Debug.nLastMsg := 1;
 END_IF
 
-_Debug.stDebug[_Debug.nDebugLen].iDebug := iDebug;
-_Debug.stDebug[_Debug.nDebugLen].sInfo := sInfo;
-_Debug.nDebugLen := _Debug.nDebugLen + 1;]]></ST>
+_Debug.debugMsg[_Debug.nLastMsg].iDebug := iDebug;
+_Debug.debugMsg[_Debug.nLastMsg].sInfo := sInfo;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

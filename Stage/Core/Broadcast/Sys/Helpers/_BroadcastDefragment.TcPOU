@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_BroadcastDefragment" Id="{6b94ce68-d371-4720-8bcb-203b2041576d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _BroadcastDefragment : Result
+VAR_INPUT
+	iLastSignal		: I_SignalNode := 0;
+END_VAR
+VAR
+	i				: UDINT;
+   _temp			: ARRAY[1..Param.RECEIVER_CAP] OF _BroadcastStruct;
+   _iSwappedSignal	: I_SignalNode;
+   _nNextCopyId		: UDINT := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// 1) If we are at maximum capacity (all slots are allocated).
+IF _Broadcast.nRecLen = Param.RECEIVER_CAP THEN
+    _BroadcastDefragment := Err.Ovf;
+    RETURN;
+END_IF
+
+// 2) If there are no allocated slots at all, nothing to defragment.
+IF _Broadcast.nRecLen = 0 THEN
+    _BroadcastDefragment := Ok;
+    RETURN;
+END_IF
+
+// 3) We want to ensure that entity that requires more space will get it, so we move it temporarly to the end.
+IF iLastSignal <> 0 THEN
+	_iSwappedSignal := _Broadcast.iSignal[_Broadcast.nSignalLen];
+	_Broadcast.iSignal[iLastSignal._Id] := _iSwappedSignal;
+	_Broadcast.iSignal[_Broadcast.nSignalLen] := iLastSignal;
+END_IF
+
+// 3) Copy all chunks to the temporary table
+FOR i := 1 TO _Broadcast.nSignalLen DO
+	IF _Broadcast.iSignal[i]._Start <> 0 THEN
+		Tc2_SYSTEM.MEMCPY(
+							ADR(_temp[_nNextCopyId]),
+							ADR(_Broadcast.entry[_Broadcast.iSignal[i]._Start]),
+							SIZEOF(_EcStruct) * _Broadcast.iSignal[i]._Size
+						);
+		_Broadcast.iSignal[i]._Start := _nNextCopyId;
+		_nNextCopyId := _Broadcast.iSignal[i]._Size + _nNextCopyId;
+		_Broadcast.iSignal[i]._End := _nNextCopyId - 1;	
+	END_IF
+END_FOR
+
+// 3) Move back the swapped entities, to preserve the Ids.
+IF iLastSignal <> 0 THEN
+	_Broadcast.iSignal[_iSwappedSignal._Id] := _iSwappedSignal;
+	_Broadcast.iSignal[iLastSignal._Id] := iLastSignal;
+END_IF
+
+// 4) Copy temporary table onto the _Ec.comp table
+Tc2_System.MEMCPY(
+	ADR(_Broadcast.entry),
+	ADR(_temp),
+	SIZEOF(_EcStruct) * _Broadcast.nRecLen
+);
+
+// 5) Clear the remainging area
+Tc2_System.MEMSET(
+	ADR(_Broadcast.entry[_Broadcast.nRecLen + 1]),
+	0,
+	SIZEOF(_EcStruct) * (Param.RECEIVER_CAP - _Broadcast.nRecLen)
+);
+
+// 6) First entry in _Ec.comp should always be iFirst
+CASE _Broadcast.entry[1].nType OF
+	1:
+		_BroadcastDefragment := Ok;
+		_Broadcast.iFirst := _Broadcast.entry[1].variant.iSignal;
+	ELSE
+		_BroadcastDefragment := Err.Udf;
+END_CASE
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

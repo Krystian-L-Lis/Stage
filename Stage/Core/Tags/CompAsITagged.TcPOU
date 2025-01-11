@@ -18,6 +18,7 @@ END_IF
 IF __QUERYINTERFACE(iSource, iDest) THEN
 	CompAsITagged := Ok;
 ELSE
+	iDest := 0;
 	CompAsITagged := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>

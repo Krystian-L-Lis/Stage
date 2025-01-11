@@ -19,6 +19,7 @@ END_IF
 IF __QUERYINTERFACE(iSource, iDest) THEN
 	CompAsIStateManager := Ok;
 ELSE
+	iDest := 0;
 	CompAsIStateManager := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>

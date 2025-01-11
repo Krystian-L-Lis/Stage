@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="_EcUnion" Id="{03758be6-2b89-43ee-b6ee-40fda7565e5b}">
+    <Declaration><![CDATA[TYPE INTERNAL _EcUnion :
+UNION
+	iComponent	: I_Component;
+	iEntity		: I_EntityNode;
+END_UNION
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

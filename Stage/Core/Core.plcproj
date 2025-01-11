@@ -175,7 +175,7 @@
     <Compile Include="Broadcast\Signal\Signal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Helpers\_BroadcastCoalesce.TcPOU">
+    <Compile Include="Broadcast\Sys\Helpers\_BroadcastDefragment.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Sys\Helpers\_BroadcastGetBestFit.TcPOU">
@@ -193,10 +193,10 @@
     <Compile Include="Broadcast\Sys\Helpers\_Unpair.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Structs\ST_BroadcastObject.TcDUT">
+    <Compile Include="Broadcast\Sys\Structs\_BroadcastStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Sys\Structs\U_BroadcastObject.TcDUT">
+    <Compile Include="Broadcast\Sys\Structs\_BroadcastUnion.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Sys\_Broadcast.TcGVL">
@@ -206,21 +206,30 @@
     <Compile Include="Callable\I_Callable.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dbg\DebugList.TcPOU">
+    <Compile Include="Dbg\DebugInfo.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dbg\DebugMsg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Dbg\DebugStr.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Dbg\I_Debug.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dbg\ST_DebugInfo.TcDUT">
+    <Compile Include="Dbg\_DebugInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dbg\_Debug.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Ec\Core\Comp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Core\Entity.TcPOU">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\Core\FetchOwner.TcPOU">
       <SubType>Code</SubType>
@@ -237,13 +246,7 @@
     <Compile Include="Ec\Core\GetEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Helpers\Comp.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Ec\Helpers\Entity.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Ec\Helpers\RegComp.TcPOU">
+    <Compile Include="Ec\Core\RegComp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\List\CompList.TcPOU">
@@ -255,17 +258,17 @@
     <Compile Include="Ec\List\I_MutCompList.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\St_EcObject.TcDUT">
+    <Compile Include="Ec\Sys\_EcStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\U_EcObject.TcDUT">
+    <Compile Include="Ec\Sys\_EcUnion.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\Sys\_Ec.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Ec\Sys\_Helpers\_EcCoalesce.TcPOU">
+    <Compile Include="Ec\Sys\_Helpers\_EcDefragment.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\Sys\_Helpers\_EcGetBestFit.TcPOU">
@@ -394,6 +397,9 @@
     <Compile Include="Strings\SymPath\SymPath.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Strings\SymPath\SymPathCompare.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tags\ArgAsITag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -450,7 +456,6 @@
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
     <Folder Include="Ec\Core" />
-    <Folder Include="Ec\Helpers" />
     <Folder Include="Ec\List" />
     <Folder Include="Ec\Sys" />
     <Folder Include="Callable" />
@@ -484,6 +489,11 @@
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

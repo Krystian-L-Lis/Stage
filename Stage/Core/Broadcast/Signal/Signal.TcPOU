@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_SignalEmit
 VAR
 	_tag			: Tag('');
+	_nId			: UDINT;
 	_nStart			: UDINT;
 	_nEnd			: UDINT;
 	_nSize			: UDINT;
@@ -32,6 +33,17 @@ END_VAR
           <ST><![CDATA[_nEnd := _End;]]></ST>
         </Implementation>
       </Set>
+    </Property>
+    <Property Name="_Id" Id="{68b651c3-b5d7-4533-b91f-63c64b0d192e}" FolderPath="Node\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Id : UDINT]]></Declaration>
+      <Get Name="Get" Id="{adac0f9e-5947-479e-be4b-8ea2d4f00b90}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Id := _nId;]]></ST>
+        </Implementation>
+      </Get>
     </Property>
     <Property Name="_Size" Id="{0a91cfac-93c7-4387-861b-eadaf8ca6b39}" FolderPath="Node\">
       <Declaration><![CDATA[PROPERTY INTERNAL _Size : UDINT
@@ -120,12 +132,16 @@ VAR_INPUT
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
 END_VAR
 VAR
-	_eResult	: Result;
+	_r	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE _RegSignal(THIS^) OF
+        <ST><![CDATA[CASE (_r := _RegSignal(THIS^, nIndex => _nId)) OF
+	Ok:
+		// Ignore
 	Err.Ovf:
 		DebugMsg(THIS^, '_Broadcast.iSignal table overflow!');
+	ELSE
+		DebugMsg(THIS^, TC2_Standard.CONCAT('_RefSignal(I_Signal): unknown error! Error code: ', TO_STRING(_r)));
 END_CASE]]></ST>
       </Implementation>
     </Method>

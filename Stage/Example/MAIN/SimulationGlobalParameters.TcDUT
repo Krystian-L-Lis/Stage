@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="SimulationGlobalParameters" Id="{386ea43b-69f1-4f4a-9d95-b5d52c941ed1}">
+    <Declaration><![CDATA[TYPE SimulationGlobalParameters :
+STRUCT
+	// Simulation parameter
+	nTick							: UDINT := 1000; // ms	
+
+	// Heating system parameters
+	rSystemTemperatureRisePerBurner	: REAL := 0.20;   // degC/tick
+	rSystemTemperatureDropPassive	: REAL := -0.01;  // degC/tick
+	rSystemTemperatureDropPerHeater	: REAL := -0.01;  // degC/tick per heater
+	
+	bToggleSystemPressureRise		: BOOL := FALSE;
+	rSystemPressureRise				: REAL := 0.10;   // bar/tick
+	
+	bToggleSystemPressureFall		: BOOL := FALSE;
+	rSystemPressureFall				: REAL := 0.10;   // bar/tick
+	
+	// Room parameters
+	rRoomTemperatureDropPerSize		: REAL := -0.50;  // degC/tick/m2
+	rRoomTemperatureRisePerHeater	: REAL := 10.5;   // degC/tick
+	
+	// Fault parameters
+	bToggleRandomFailChance			: BOOL := FALSE;
+	rPumpFailChance					: REAL := 0.0005; // chance/Tick
+	rBurnerFailChance				: REAL := 0.0005; // chance/Tick
+	rValveFailChance				: REAL := 0.0001; // chance/Tick
+	rSafetyFailChance				: REAL := 0.0001; // chance/Tick
+	
+	// Room sizes
+	rSmallRoom						: REAL := 20.0;  // m²
+	rMediumRoom						: REAL := 40.0;  // m²
+	rLargeRoom						: REAL := 80.0;  // m²
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
