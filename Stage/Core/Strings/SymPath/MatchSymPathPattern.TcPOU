@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="SymPathCompare" Id="{d88b0b61-1f65-4468-bff7-7ead93691118}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION SymPathCompare : Result
+  <POU Name="MatchSymPathPattern" Id="{d88b0b61-1f65-4468-bff7-7ead93691118}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Compares a symbolic path **sAddress** against a pattern **sPattern** to determine if they match.
+Supports wildcard '*' TO match ANY number OF segments, including zero.
+Example patterns:
+*.abc.def  -> Matches ANY path ending with ".abc.def"
+abc.*.xyz -> Matches ANY path where ANY number OF segments exist between "abc" AND "xyz"
+*          -> Matches ANY path
+*)
+FUNCTION MatchSymPathPattern : Result
 VAR_INPUT
-	sAddress		: Str;
-	sPattern		: Str;
+    sAddress : Str;  /// The symbolic path to evaluate
+    sPattern : Str;  /// The pattern to match against
 END_VAR
 VAR
 	pttPath				: SymPath;
@@ -34,7 +42,7 @@ WHILE IsOk(pttPath.Next(sSeg => pttSeg)) DO
 				CONTINUE; // Skip redundant wildcard if *.*.
 			END_IF
 		ELSE
-			SymPathCompare := Ok;
+			MatchSymPathPattern := Ok;
 			RETURN; // No more segments in the pattern, so it's a match as everything so far matched(.*)
 		END_IF
 
@@ -71,7 +79,7 @@ IF IsOk(addPath.Peek()) THEN
 	RETURN;
 END_IF
 
-SymPathCompare := Ok;
+MatchSymPathPattern := Ok;
 
 
 ]]></ST>

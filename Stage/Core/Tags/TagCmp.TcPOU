@@ -212,7 +212,7 @@ END_IF
 CASE _nResult OF
 	Ok,
 	None:		
-		_nResult := SymPathCompare(_iBaseTag.Id, sPattern);
+		_nResult := MatchSymPathPattern(_iBaseTag.Id, sPattern);
 END_CASE
 
 ]]></ST>

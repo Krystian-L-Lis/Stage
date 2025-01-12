@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="IsErr" Id="{52bb3ec0-2300-4aef-8f80-2640742ad572}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION IsErr : BOOL
+    <Declaration><![CDATA[// Return TRUE on any error value.
+// Optionally carries the value over to nOut for further processing.
+FUNCTION IsErr : BOOL
 VAR_INPUT
-	nIn				: Result;
+    nIn : Result; // Result variable to check for an error
 END_VAR
 VAR_OUTPUT
-	nOut			: Result;
+    nOut : Result; // Carries the input value for further use
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IsErr := nIn < 0;

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ResultToStr" Id="{7a8b1d9d-29aa-4e64-aec0-4d39e4475146}" SpecialFunc="None">
+    <Declaration><![CDATA[// Converts a Result value to its corresponding string representation.
+// Returns a string that describes the given Result value.
+FUNCTION ResultToStr : Str
+VAR_INPUT
+    nResult : Result; // Result variable to convert to a string
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nResult OF
+    1: ResultToStr := 'Ok';
+    0: ResultToStr := 'None';
+    -1: ResultToStr := 'Error';
+    -2: ResultToStr := 'Itf0';
+    -3: ResultToStr := 'Str0';
+    -4: ResultToStr := 'ItfEq';
+    -5: ResultToStr := 'NoMatch';
+    -6: ResultToStr := 'Ptr0';
+    -7: ResultToStr := 'InvRef';
+    -8: ResultToStr := 'Ovf';
+    -9: ResultToStr := 'Udf';
+    -10: ResultToStr := 'Idx';
+    -11: ResultToStr := 'TcLib';
+    -12: ResultToStr := 'InfLoop';
+    -13: ResultToStr := 'IncArg';
+    ELSE
+        ResultToStr := Tc2_Standard.CONCAT('Unknown result: ', INT_TO_STRING(nResult));
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

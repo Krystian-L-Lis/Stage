@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="IsNone" Id="{45d926e7-4340-49c1-9630-09ea933bc1ee}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION IsNone : BOOL
+    <Declaration><![CDATA[// Return TRUE if the value is None.
+// Optionally carries the value over to nOut for further processing.
+FUNCTION IsNone : BOOL
 VAR_INPUT
-	nIn				: Result;
+    nIn : Result; // Result variable to check for None
 END_VAR
 VAR_OUTPUT
-	nOut			: Result;
-END_VAR]]></Declaration>
+    nOut : Result; // Carries the input value for further use
+END_VAR
+]]></Declaration>
     <Implementation>
       <ST><![CDATA[IsNone := nIn = 0;
 nOut := nIn;]]></ST>

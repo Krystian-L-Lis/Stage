@@ -3,18 +3,18 @@
   <GVL Name="Err" Id="{eeeb2f9f-a3e9-42a4-bf82-bcee2d1ba591}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
-	Itf0			: Result := -2;
-	Str0			: Result := -3;
-	ItfEq			: Result := -4;
-	NoMatch			: Result := -5;
-	Ptr0			: Result := -6;
-	InvRef			: Result := -7;
-	Ovf				: Result := -8;
-	Udf				: Result := -9;
-	Idx				: Result := -10;
-	TcLib			: Result := -11;
-	InfLoop			: Result := -12;
-	IncArg			: Result := -13;
+	Itf0			: Result := -2; // Null Interface 
+	Str0			: Result := -3; // Empty String
+	ItfEq			: Result := -4; // Interfaces are equal
+	NoMatch			: Result := -5; // No match
+	Ptr0			: Result := -6; // Null Pointer
+	InvRef			: Result := -7; // Invalid reference
+	Ovf				: Result := -8; // Overflow/Out of bounds
+	Udf				: Result := -9; // Undefined
+	Idx				: Result := -10; // Index error
+	TcLib			: Result := -11; // Error caused by TwinCAT libraries
+	InfLoop			: Result := -12; // Potential infinity loop
+	IncArg			: Result := -13; // Incorrect input argument
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

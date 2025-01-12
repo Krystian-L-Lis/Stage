@@ -2,9 +2,9 @@
 <TcPlcObject Version="1.1.0.1">
   <GVL Name="GenericResult" Id="{b2eaa6d1-5578-4857-afc0-b7eb6736f054}">
     <Declaration><![CDATA[VAR_GLOBAL CONSTANT
-	None	: Result := 0;
-	Ok		: Result := 1;
-	Error	: Result := -1;
+	None	: Result := 0; // No result 
+	Ok		: Result := 1; // Generic Ok
+	Error	: Result := -1; // Generic Error
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

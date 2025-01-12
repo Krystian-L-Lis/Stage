@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="IsOk" Id="{a86826be-b52a-46f1-b35e-fa89d49ee7eb}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION IsOk : BOOL
+    <Declaration><![CDATA[// Return TRUE on a successful (Ok) result.
+// Optionally carries the value over to nOut for further processing.
+FUNCTION IsOk : BOOL
 VAR_INPUT
-	nIn				: Result;
+    nIn : Result; // Result variable to check for success
 END_VAR
 VAR_OUTPUT
-	nOut			: Result;
-END_VAR]]></Declaration>
+    nOut : Result; // Carries the input value for further use
+END_VAR
+]]></Declaration>
     <Implementation>
       <ST><![CDATA[IsOk := nIn > 0;
 nOut := nIn;]]></ST>

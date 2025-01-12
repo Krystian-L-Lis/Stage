@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="SymPath" Id="{de08c266-82f2-43b6-8ef2-f01293adb92c}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK SymPath
+    <Declaration><![CDATA[// The SymPath function block manages symbolic paths, supporting segment-based navigation, validation, and modification.
+FUNCTION_BLOCK SymPath
 VAR
 	_sPath		: Str;
 	_nLen		: INT := 0;
@@ -48,9 +49,11 @@ _HasIncorrectSymbols := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="AddNext" Id="{5c98e624-d0b2-49a6-83ae-ef070e544a65}">
-      <Declaration><![CDATA[METHOD AddNext : Result
+      <Declaration><![CDATA[// Adds a new segment to the path after the current segment.
+// Returns Ok if successful, None if invalid.
+METHOD AddNext : Result
 VAR_INPUT
-	sToAdd		: Str;
+    sToAdd : Str; // Segment to add
 END_VAR
 VAR
 	_nNewLen	: INT := _nLen + Tc2_Standard.LEN(sToAdd) + 1;
@@ -77,9 +80,11 @@ END_IF
       </Implementation>
     </Method>
     <Method Name="AddPrev" Id="{f37fed9e-731e-4322-bff5-14304a710b2b}">
-      <Declaration><![CDATA[METHOD AddPrev : Result
+      <Declaration><![CDATA[// Adds a new segment to the path before the current segment.
+// Returns Ok if successful, None if invalid.
+METHOD AddPrev : Result
 VAR_INPUT
-	sToAdd		: Str;
+    sToAdd : Str; // Segment to add
 END_VAR
 VAR
 	_nAddLen	: INT := Tc2_Standard.LEN(sToAdd);
@@ -109,10 +114,13 @@ END_IF
       </Implementation>
     </Method>
     <Method Name="Get" Id="{3e3a2b44-c68d-43c1-ba42-e4a27a76ea9b}">
-      <Declaration><![CDATA[METHOD Get : Result
+      <Declaration><![CDATA[// Retrieves the current segment from the path.
+// Returns Ok if successful, None if no segment is found.
+METHOD Get : Result
 VAR_OUTPUT
-	sSeg		: Str;
+    sSeg : Str; // Current segment
 END_VAR
+
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _nSegStart = 0 THEN
@@ -126,9 +134,11 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Next" Id="{c6cdf833-e7f8-4994-a776-e72dded77005}">
-      <Declaration><![CDATA[METHOD Next : Result
+      <Declaration><![CDATA[// Moves to the next segment in the path and retrieves it.
+// Returns Ok if successful, None if no next segment exists.
+METHOD Next : Result
 VAR_OUTPUT
-	sSeg		: Str;
+    sSeg : Str; // Next segment
 END_VAR
 VAR
 	i			: INT;
@@ -179,9 +189,11 @@ Next := Ok;
       </Implementation>
     </Method>
     <Method Name="Peek" Id="{644fd812-0eb6-44b1-9b5a-072d8067b266}">
-      <Declaration><![CDATA[METHOD Peek : Result
+      <Declaration><![CDATA[// Retrieves the next segment without moving the segment pointer.
+// Returns Ok if successful, None if no next segment exists.
+METHOD Peek : Result
 VAR_OUTPUT
-	sSeg		: Str;
+    sSeg : Str; // Next segment
 END_VAR
 VAR
 	i			: INT;
@@ -216,9 +228,11 @@ Peek := Ok;
       </Implementation>
     </Method>
     <Method Name="PeekBack" Id="{f7303771-b30b-4296-89fd-270bf803a6c6}">
-      <Declaration><![CDATA[METHOD PeekBack : Result
+      <Declaration><![CDATA[// Retrieves the previous segment without moving the segment pointer.
+// Returns Ok if successful, None if no previous segment exists.
+METHOD PeekBack : Result
 VAR_OUTPUT
-	sSeg		: Str;
+    sSeg : Str; // Previous segment
 END_VAR
 VAR
 	i			: INT;
@@ -253,9 +267,11 @@ PeekBack := Ok;
       </Implementation>
     </Method>
     <Method Name="Prev" Id="{bb912db9-78e6-4226-9a9c-08a0cddabbba}">
-      <Declaration><![CDATA[METHOD Prev : Result
+      <Declaration><![CDATA[// Moves to the previous segment in the path and retrieves it.
+// Returns Ok if successful, None if no previous segment exists.
+METHOD Prev : Result
 VAR_OUTPUT
-	sSeg		: Str;
+    sSeg : Str; // Previous segment
 END_VAR
 VAR
 	i			: INT;
@@ -307,13 +323,17 @@ Prev := Ok;
       </Implementation>
     </Method>
     <Method Name="Read" Id="{178f264a-e89a-4d3a-b8d2-3ca5f74b3ae7}">
-      <Declaration><![CDATA[METHOD Read : Str]]></Declaration>
+      <Declaration><![CDATA[// Reads and returns the entire symbolic path as a string.
+METHOD Read : Str
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[Read := _sPath;]]></ST>
       </Implementation>
     </Method>
     <Method Name="RemoveAndNext" Id="{0d255a40-6614-4f67-94dc-6238407c06a7}">
-      <Declaration><![CDATA[METHOD RemoveAndNext : Result
+      <Declaration><![CDATA[// Removes the current segment and moves to the next segment.
+// Returns Ok if successful, None if no segment to remove.
+METHOD RemoveAndNext : Result
 VAR
     _nSegLen		: INT := _nSegEnd - _nSegStart + 1; // Length of the segment to remove
     _bIsFirstSeg	: BOOL := (_nSegStart = 1); // Check if the segment is the first segment
@@ -366,7 +386,9 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="RemoveAndPrev" Id="{c1a28866-c26a-4715-bc3f-11af169f2834}">
-      <Declaration><![CDATA[METHOD RemoveAndPrev : Result
+      <Declaration><![CDATA[// Removes the current segment and moves to the previous segment.
+// Returns Ok if successful, None if no segment to remove.
+METHOD RemoveAndPrev : Result
 VAR
     _nSegLen		: INT := _nSegEnd - _nSegStart + 1; // Length of the segment to remove
     _bIsFirstSeg	: BOOL := (_nSegStart = 1); // Check if the segment is the first segment
@@ -419,10 +441,14 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Set" Id="{59eb7151-fecf-4492-8bf1-30025d8074fd}">
-      <Declaration><![CDATA[METHOD Set : Result
+      <Declaration><![CDATA[// Sets the symbolic path to a new value.
+// Validates the input path for correctness.
+// Returns Ok if successful, None if invalid.
+METHOD Set : Result
 VAR_INPUT
-	sNewPath		: Str;
+    sNewPath : Str; // New path to set
 END_VAR
+
 VAR
 	i				: INT;
 	_nStrLen		: INT := Tc2_Standard.LEN(sNewPath);
@@ -472,9 +498,11 @@ Set := Ok;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Swap" Id="{cc9e4235-2aed-4cdd-a813-c026de498a1d}">
-      <Declaration><![CDATA[METHOD Swap : Result
+      <Declaration><![CDATA[// Replaces the current segment with a new segment.
+// Returns Ok if successful, None if invalid.
+METHOD Swap : Result
 VAR_INPUT
-	sToSwap		: Str;
+    sToSwap : Str; // New segment to replace the current segment
 END_VAR
 VAR
 	_nSegLen	: INT := _nSegEnd - _nSegStart + 1;

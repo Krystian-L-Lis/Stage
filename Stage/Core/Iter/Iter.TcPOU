@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Iter" Id="{6e6052b3-52f3-4e20-af41-05a7fb850153}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Iter
+    <Declaration><![CDATA[// This function block provides iteration functionality over UDINT value.
+FUNCTION_BLOCK Iter
 VAR
 	_nIter		: UDINT;
 	_bFirstLoop	: BOOL := TRUE;
@@ -20,14 +21,15 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 
-	nInit		: UDINT;  
+	nInit		: UDINT; // Sets the initial iteration value to nInit.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_nIter := nInit;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Get" Id="{6cbdf049-35a0-4651-b09e-860b42e8ebbf}">
-      <Declaration><![CDATA[METHOD Get : UDINT
+      <Declaration><![CDATA[// Returns the current iteration value.
+METHOD Get : UDINT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -36,7 +38,9 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Next" Id="{14f3edfe-b094-4f2c-b215-2ae55a0c7ec9}">
-      <Declaration><![CDATA[METHOD Next : UDINT
+      <Declaration><![CDATA[// Increments the iteration value unless it's the first loop.
+// On the first loop, returns the initial value without incrementing.
+METHOD Next : UDINT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -52,7 +56,8 @@ Next := _nIter;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Peek" Id="{ce151484-05ec-4af8-aa1e-65827fcb3415}">
-      <Declaration><![CDATA[METHOD Peek : UDINT
+      <Declaration><![CDATA[// Returns the next iteration value without modifying the current state.
+METHOD Peek: UDINT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -61,7 +66,8 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="PeekBack" Id="{3b1ae5a1-134d-4bda-9724-ad7880e3bf37}">
-      <Declaration><![CDATA[METHOD PeekBack : UDINT
+      <Declaration><![CDATA[// Returns the previous iteration value without modifying the current state.
+METHOD PeekBack: UDINT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -70,10 +76,11 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Prev" Id="{4226f68a-b1f5-430f-ae1b-d68632fc6002}">
-      <Declaration><![CDATA[METHOD Prev : UDINT
+      <Declaration><![CDATA[// Decrements the iteration value unless it's the first loop.
+// On the first loop, returns the initial value without decrementing.
+METHOD Prev: UDINT
 VAR_INPUT
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _bFirstLoop THEN
 	_bFirstLoop := FALSE;
@@ -86,9 +93,11 @@ Prev := _nIter;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Set" Id="{3e15ac79-9132-4f58-b1de-a81f84ccd08d}">
-      <Declaration><![CDATA[METHOD Set : UDINT
+      <Declaration><![CDATA[// Sets the iteration to a new value and resets the first loop flag.
+// Returns the new value of the iteration.
+METHOD Set: UDINT
 VAR_INPUT
-	nNewValue	: UDINT;
+    nNewValue: UDINT; // New value to set for the iteration
 END_VAR
 ]]></Declaration>
       <Implementation>

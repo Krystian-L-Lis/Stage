@@ -20,7 +20,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[Runtime();
-]]></ST>
+Core.MatchSymPathPattern();]]></ST>
     </Implementation>
     <Method Name="_IO" Id="{03b676de-555c-400e-bba5-4ba9784520ec}">
       <Declaration><![CDATA[METHOD PRIVATE _IO

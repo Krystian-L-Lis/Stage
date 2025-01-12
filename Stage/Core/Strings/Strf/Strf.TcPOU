@@ -1,19 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Strf" Id="{1997d8f8-a3a3-412e-a9d9-e47c6d4dafb7}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Strf
+    <Declaration><![CDATA[// The Strf provides utilities for string formatting.
+PROGRAM Strf
 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Padding" Id="{7d05623e-05a9-49ee-b8ca-0efb8661641b}">
-      <Declaration><![CDATA[METHOD Padding				: Str;
+      <Declaration><![CDATA[// Adds left and/or right padding to a string with a specified fill character.
+// Returns the padded string.
+METHOD Padding : Str
 VAR_INPUT
-	sValue					: Str;
-	nLeftPadding			: USINT := 0;
-	nRightPadding			: USINT := 0;
-	sFillChar				: Ch	:= ' ';
+    sValue       : Str;  // The original string
+    nLeftPadding : USINT := 0; // Number of padding characters to add to the left
+    nRightPadding: USINT := 0; // Number of padding characters to add to the right
+    sFillChar    : Ch := ' ';  // Character used for padding
 END_VAR
 VAR
 	_sBase					: Strb;
@@ -48,11 +51,13 @@ Padding := _sBase.Read();
       </Implementation>
     </Method>
     <Method Name="SimpleTime" Id="{2c25983c-5b99-43fa-a5a9-faa93b5102ab}">
-      <Declaration><![CDATA[METHOD SimpleTime : Str
+      <Declaration><![CDATA[// Converts a TIME value to a human-readable string with specified minimum and maximum units.
+// Returns the formatted time string.
+METHOD SimpleTime : Str
 VAR_INPUT
-	tValue		: TIME;
-	sMinUnit	: Str := 'MS'; //Possible options: MS, S, M, H, D
-	sMaxUnit	: Str := 'S'; //Possible options: MS, S, M, H, D
+    tValue   : TIME;  // Time value to convert
+    sMinUnit : Str := 'MS'; // Minimum unit (e.g., MS, S, M, H, D)
+    sMaxUnit : Str := 'S';  // Maximum unit (e.g., MS, S, M, H, D)
 END_VAR
 VAR
 	_nMinUnit	: USINT;
