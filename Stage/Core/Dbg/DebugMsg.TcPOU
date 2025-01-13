@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="DebugMsg" Id="{7c548072-7d6e-4388-b29f-e0cd2e001bbc}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION DebugMsg
+    <Declaration><![CDATA[(*
+Logs a debug message as a string tied to a `I_Debug` interface for inspection and troubleshooting within the IDE.
+*)
+FUNCTION DebugMsg
 VAR_INPUT
 	iDebug			: I_Debug;
 	sInfo			: Str;
-END_VAR
-VAR
 END_VAR
 ]]></Declaration>
     <Implementation>

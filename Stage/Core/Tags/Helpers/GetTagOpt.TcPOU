@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="GetTagOpt" Id="{b48ed172-a791-460c-b58e-fd210c4dcaad}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION GetTagOpt : Result
+    <Declaration><![CDATA[(*
+Searches an `I_Entity` for a `I_Tag` component with provided `Option` value.
+Result:
+- Ok - Returns iTag.
+- None - Returns null.
+- Err.Itf0 - Returns null, incorrect interface.
+*)
+FUNCTION GetTagOpt : Result
 VAR_INPUT
 	iEntity		: I_Entity;
 	sOption		: Str;

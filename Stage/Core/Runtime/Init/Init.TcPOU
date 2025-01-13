@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Init" Id="{f6ff46b8-b91f-4756-bbc4-c1b623301543}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Init IMPLEMENTS I_InitNode, I_Debug
+    <Declaration><![CDATA[(*
+Allows registration of FB implementing `I_Init`. 
+*)
+FUNCTION_BLOCK FINAL Init IMPLEMENTS I_InitNode, I_Debug
 VAR
 	_iInit			: I_Init;
 	_iNext			: I_InitNode;

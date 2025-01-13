@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="CompAsITag" Id="{3feb1b07-c695-429c-b10c-285305651b80}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION CompAsITag : Result
+    <Declaration><![CDATA[(*
+Casts I_Component as I_Tag
+*)
+FUNCTION CompAsITag : Result
 VAR_INPUT
 	iSource	: I_Component;
 END_VAR

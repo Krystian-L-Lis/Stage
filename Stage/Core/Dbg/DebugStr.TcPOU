@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="DebugStr" Id="{34717bf4-9bf9-4a89-a482-5331f33a4582}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION DebugStr
+    <Declaration><![CDATA[(*
+Logs a debug message as a string without associating it with a specific component.
+*)
+FUNCTION DebugStr
 VAR_INPUT
 	sInfo			: Str;
 END_VAR

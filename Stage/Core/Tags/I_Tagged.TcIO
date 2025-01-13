@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Tagged" Id="{92a57a01-5096-46ab-961f-63d875b95829}">
-    <Declaration><![CDATA[INTERFACE I_Tagged EXTENDS I_Component
+    <Declaration><![CDATA[(*
+This component contains readable `I_Tag`.
+*)
+INTERFACE I_Tagged EXTENDS I_Component
 ]]></Declaration>
     <Property Name="Tag" Id="{89260ffc-7430-48a1-b2e1-4c0eefce60ad}">
       <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>

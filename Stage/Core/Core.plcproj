@@ -66,22 +66,34 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arg\BOOL\ArgToIBoolArg.TcPOU">
+    <Compile Include="Arg\Args\BOOL\ArgToIBoolArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\BOOL\ArgToIMutBoolArg.TcPOU">
+    <Compile Include="Arg\Args\BOOL\BoolArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Args\BOOL\I_BoolArg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Args\REAL\ArgToIRealtArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Args\REAL\RealArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Args\REAL\I_RealArg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Args\DWORD\ArgToIDwordArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Args\DWORD\DwordArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Arg\Args\DWORD\I_DwordArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\CompAsIArg.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\BOOL\BoolArg.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\BOOL\I_BoolArg.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\BOOL\I_MutBoolArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\ArgAsIComponent.TcPOU">
@@ -96,37 +108,7 @@
     <Compile Include="Arg\List\I_MutArgList.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\LREAL\ArgToIFloatArg.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LREAL\ArgToIMutFloatArg.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LREAL\FloatArg.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LREAL\I_FloatArg.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LREAL\I_MutFloatArg.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Arg\I_Arg.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LWORD\ArgToIBinArg.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LWORD\ArgToIMutBinArg.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LWORD\I_BinArg.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LWORD\I_MutBinArg.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Arg\LWORD\BinArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\Queue\ArgQueue.TcPOU">
@@ -442,12 +424,16 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="_\_ToDo.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Arg\BOOL" />
-    <Folder Include="Arg\LREAL" />
-    <Folder Include="Arg\LWORD" />
+    <Folder Include="Arg\Args\BOOL" />
+    <Folder Include="Arg\Args\REAL" />
+    <Folder Include="Arg\Args\DWORD" />
     <Folder Include="Arg\List" />
+    <Folder Include="Arg\Args" />
     <Folder Include="Arg\Queue" />
     <Folder Include="Broadcast" />
     <Folder Include="Broadcast\Helpers" />

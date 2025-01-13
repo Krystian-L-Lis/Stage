@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="DebugInfo" Id="{489c56af-ae27-4926-af44-96228e2f35be}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK DebugInfo
+    <Declaration><![CDATA[(*
+Provides access to registered debug information, enabling monitoring and troubleshooting of system components.
+*)
+FUNCTION_BLOCK DebugInfo
 VAR
 	_lastMsgIdx			: REFERENCE TO UDINT REF= _Debug.nLastMsg;
 	_msg				: REFERENCE TO ARRAY[1..Param.DEBUGMSG_CAP] OF _DebugInfo REF= _Debug.debugMsg;

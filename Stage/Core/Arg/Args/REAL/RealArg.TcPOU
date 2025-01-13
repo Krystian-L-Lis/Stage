@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="RealArg" Id="{38529bd9-c359-45c1-b5b2-c8912304cfc4}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+A broadcastable wrapper for a `REAL` value. 
+*)
+FUNCTION_BLOCK RealArg IMPLEMENTS I_RealArg
+VAR
+	_val			: REAL;
+	_bMut			: BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AllowMut" Id="{33cc2f5e-f55f-406c-b986-bda9e36cd320}">
+      <Declaration><![CDATA[(*
+Enables external modification of the internal value.
+*)
+METHOD AllowMut
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_bMut := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="BlockMut" Id="{e3c89fa0-d5d9-42e4-b929-3ef4f5ef6131}">
+      <Declaration><![CDATA[(*
+Disables external modification of the internal value.
+*)
+METHOD BlockMut
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_bMut := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Get" Id="{ae04f6bf-9d46-4e43-8f76-e74798a0f7a4}">
+      <Declaration><![CDATA[(*
+Reads the internal value.
+*)
+PROPERTY Get : REAL]]></Declaration>
+      <Get Name="Get" Id="{9d27641c-cc29-401f-be07-96a0943c27c6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Get := _val;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsMut" Id="{f5970024-1c3d-4917-8973-7bbd20b80745}">
+      <Declaration><![CDATA[(*
+Returns TRUE if the value is mutable.
+*)
+PROPERTY IsMut : BOOL]]></Declaration>
+      <Get Name="Get" Id="{71d859b1-dcc3-400c-876c-2f22313c376b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsMut := _bMut;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="OpSet" Id="{a019296d-a8e5-4ec4-9044-32d2ebfafdc0}">
+      <Declaration><![CDATA[(*
+Directly modifies the internal value, bypassing any mutability restrictions.
+*)
+METHOD OpSet : I_Arg
+VAR_INPUT
+	newVal		: REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_val := newVal;
+OpSet := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Set" Id="{a738a525-d9de-43b0-b302-91bcc30df04a}">
+      <Declaration><![CDATA[(*
+Modifies the internal value.  
+Returns:
+- `Ok` - Upon successful modification.
+- `Error` - If mutability is disabled.
+*)
+METHOD Set : Result
+VAR_INPUT
+	newVal		: REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _bMut THEN
+	_val := newVal;
+	Set := Ok;
+ELSE
+	Set := Error;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

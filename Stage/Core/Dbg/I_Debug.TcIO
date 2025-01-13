@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Debug" Id="{dd9af94b-653d-4389-8fe6-660d00f8293a}">
-    <Declaration><![CDATA[INTERFACE I_Debug
+    <Declaration><![CDATA[(*
+Enables a FB to be registered in the Debug table for visibility within the IDE.  
+Provides no additional functionality beyond this.
+*)
+INTERFACE I_Debug
 ]]></Declaration>
   </Itf>
 </TcPlcObject>

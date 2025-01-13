@@ -1,16 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_ArgList" Id="{e91fb910-5bc2-4619-a29f-96e93d2b0a10}">
-    <Declaration><![CDATA[INTERFACE I_ArgList EXTENDS I_Debug
+    <Declaration><![CDATA[(*
+A list implementation for managing `I_Arg`.  
+*)
+INTERFACE I_ArgList EXTENDS I_Debug
 ]]></Declaration>
     <Property Name="Cap" Id="{4edf4f66-c012-4092-a8bf-0f0119e455bf}">
-      <Declaration><![CDATA[PROPERTY Cap : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides the maximum capacity of the list.
+*)
+PROPERTY Cap : UDINT]]></Declaration>
       <Get Name="Get" Id="{815a00dc-b365-44b6-bb0a-997eb63d1d50}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
     <Method Name="Get" Id="{42042ace-be5b-46c2-98b0-007a36c24259}">
-      <Declaration><![CDATA[METHOD Get : Result
+      <Declaration><![CDATA[(*
+Retrieves the `I_Arg` at the specified index.  
+Returns:
+- `Ok` - Successfully retrieves the `I_Arg`.
+- `Err.Idx` - The list is empty.
+- `Err.Ovf` - The specified index is out of bounds.
+*)
+METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
 END_VAR
@@ -19,7 +32,10 @@ VAR_OUTPUT
 END_VAR]]></Declaration>
     </Method>
     <Property Name="Length" Id="{3405a074-7d0f-4436-8bfa-2cf6a1a1b0ee}">
-      <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the current number of elements in the list.
+*)
+PROPERTY Length : UDINT]]></Declaration>
       <Get Name="Get" Id="{7e0490c5-d846-48c8-8411-2ce39122c896}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Execute" Id="{fd30bbbf-c4e7-4255-aff2-259a2cee51d5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Execute IMPLEMENTS I_ExecuteNode, I_Debug
+    <Declaration><![CDATA[(*
+Allows registration of FB implementing `I_Execute`. 
+*)
+FUNCTION_BLOCK FINAL Execute IMPLEMENTS I_ExecuteNode, I_Debug
 VAR
 	_iExecute		: I_Execute;
 	_iNext			: I_ExecuteNode;

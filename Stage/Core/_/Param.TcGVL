@@ -2,15 +2,16 @@
 <TcPlcObject Version="1.1.0.1">
   <GVL Name="Param" Id="{bc9b684f-96ba-4011-afc3-650f65d44b69}" ParameterList="True">
     <Declaration><![CDATA[{attribute 'qualified_only'}
+// DO NOT SET ANY OF THE CAP PARAMETERS TO 0 OR LARGER THAN MAX DINT!!!
 VAR_GLOBAL CONSTANT
-	ENTITY_CAP		: UDINT(1..16#7FFFFFFF) := 20;
-	COMP_CAP		: UDINT(1..16#7FFFFFFF) := 100;
+	ENTITY_CAP		: UDINT(1..16#7FFFFFFF) := 20; // Max number of entities.
+	COMP_CAP		: UDINT(1..16#7FFFFFFF) := 100; // Max number of entity-component pairings.
 	
-	DEBUGMSG_CAP	: UDINT(1..16#7FFFFFFF) := 10;
-	DEBUGSTR_CAP	: UDINT(1..16#7FFFFFFF) := 500;
+	DEBUGMSG_CAP	: UDINT(1..16#7FFFFFFF) := 10; // Max number of debug messages.
+	DEBUGSTR_CAP	: UDINT(1..16#7FFFFFFF) := 500; // Max number of debug strings.
 	
-	SIGNAL_CAP		: UDINT(1..16#7FFFFFFF) := 20;
-	RECEIVER_CAP	: UDINT(1..16#7FFFFFFF) := 100;
+	SIGNAL_CAP		: UDINT(1..16#7FFFFFFF) := 20; // Max number of signals.
+	RECEIVER_CAP	: UDINT(1..16#7FFFFFFF) := 100; // Max number of signal-receiver pairings.
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

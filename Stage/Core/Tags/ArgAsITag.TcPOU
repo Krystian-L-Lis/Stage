@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ArgAsITag" Id="{eb6fc3c1-2221-44c0-9ffe-0c2aa2e4c73e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION ArgAsITag : Result
+    <Declaration><![CDATA[(*
+Casts I_Arg as I_Tag
+*)
+FUNCTION ArgAsITag : Result
 VAR_INPUT
 	iSource		: I_Arg;
 END_VAR

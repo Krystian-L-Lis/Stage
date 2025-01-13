@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ArgToIBoolArg" Id="{4a0d7bf2-7557-4fb6-a706-eb119ade3426}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION ArgToIBoolArg : Result
+    <Declaration><![CDATA[(*
+Casts I_Arg as I_BoolArg
+*)
+FUNCTION ArgToIBoolArg : Result
 VAR_INPUT
 	iArg		: I_Arg;
 END_VAR

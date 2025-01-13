@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Runtime" Id="{57f056fa-9062-499a-a7e4-db28982dc70c}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION Runtime
+    <Declaration><![CDATA[(*
+Manages the initialization and cyclic execution of registered function blocks.
+*)
+FUNCTION Runtime
 VAR_STAT
 	bInit	: BOOL := TRUE;
 END_VAR]]></Declaration>

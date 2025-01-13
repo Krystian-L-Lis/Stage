@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ArgQueue" Id="{5fefed48-7bae-45b6-a5e2-f3473e48d477}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK ArgQueue
+    <Declaration><![CDATA[(*
+A circular queue implementation for managing `I_Arg`.  
+*)
+FUNCTION_BLOCK ArgQueue
 VAR_GENERIC CONSTANT
 	nCap		: UDINT := 100;
 END_VAR
@@ -18,7 +21,10 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Property Name="Head" Id="{212475c4-e8c8-4d1b-a3ee-53654d6c7959}">
-      <Declaration><![CDATA[PROPERTY Head : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the current head index of the queue, indicating the next position for insertion.
+*)
+PROPERTY Head : UDINT]]></Declaration>
       <Get Name="Get" Id="{a9358f8b-2ada-4118-b863-513c0b85c740}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -29,7 +35,10 @@ END_VAR
       </Get>
     </Property>
     <Property Name="List" Id="{7bb419a2-9a05-4640-9427-d39f30187a46}">
-      <Declaration><![CDATA[PROPERTY List : I_ArgList]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides access to the underlying list structure that holds the queue's argument objects.
+*)
+PROPERTY List : I_ArgList]]></Declaration>
       <Get Name="Get" Id="{a822b4ee-ebcd-431d-bee5-1b2176157c94}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -40,7 +49,15 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Pop" Id="{c0e476b5-0312-468c-bd79-2e025a1976a9}">
-      <Declaration><![CDATA[METHOD Pop : Result
+      <Declaration><![CDATA[(*
+Retrieves and removes the next argument from the queue.  
+Advances the tail pointer, ensuring cyclic operation within the queue's capacity.
+Returns:
+- Ok - Returns I_Arg.
+- None - Returns null, queue empty.
+- Err.Idx - Returns null, the underlying list empty.
+*)
+METHOD Pop : Result
 VAR_OUTPUT
 	iArg	: I_Arg;
 END_VAR
@@ -55,7 +72,14 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Push" Id="{4cffbac1-66d4-4260-a313-b7e0e1c784cf}">
-      <Declaration><![CDATA[METHOD Push : Result
+      <Declaration><![CDATA[(*
+Adds a new argument to the queue.  
+Advances the head pointer while maintaining a cyclic structure, and returns an overflow error if the queue is full.
+Returns:
+- Ok - Successful insertion
+- Err.Ovf - Returns null, the queue is full
+*)
+METHOD Push : Result
 VAR_INPUT
 	iArg		: I_Arg;
 END_VAR
@@ -75,7 +99,10 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Tail" Id="{0030fa0d-2cec-40bb-9189-8d4288b9442f}">
-      <Declaration><![CDATA[PROPERTY Tail : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the current tail index of the queue, indicating the next position for retrieval.
+*)
+PROPERTY Tail : UDINT]]></Declaration>
       <Get Name="Get" Id="{09bdafc1-07ce-41b5-9418-66d1d38d8e89}">
         <Declaration><![CDATA[VAR
 END_VAR

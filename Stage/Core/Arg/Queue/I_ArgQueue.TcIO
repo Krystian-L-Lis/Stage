@@ -1,22 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_ArgQueue" Id="{479af9a2-73ee-4633-80f3-a7501838f2f1}">
-    <Declaration><![CDATA[INTERFACE I_ArgQueue EXTENDS I_Debug
+    <Declaration><![CDATA[(*
+A circular queue implementation for managing `I_Arg`.  
+*)
+INTERFACE I_ArgQueue EXTENDS I_Debug
 ]]></Declaration>
     <Property Name="Head" Id="{63cffb29-df17-41ec-a017-453383157af9}">
-      <Declaration><![CDATA[PROPERTY Head : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the current head index of the queue, indicating the next position for insertion.
+*)
+PROPERTY Head : UDINT]]></Declaration>
       <Get Name="Get" Id="{7b0919ac-80d0-4104-a8ee-5c8b397efa95}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
     <Property Name="List" Id="{22d13380-699e-45b5-956e-33b334fa798a}">
-      <Declaration><![CDATA[PROPERTY List : I_ArgList]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides access to the underlying list structure that holds the queue's argument objects.
+*)
+PROPERTY List : I_ArgList]]></Declaration>
       <Get Name="Get" Id="{8bd18bf7-b6ad-434a-927e-8b900b9a1b7d}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
     <Property Name="Tail" Id="{044d209c-e47e-44ea-85f2-0bbbbbf8c740}">
-      <Declaration><![CDATA[PROPERTY Tail : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the current tail index of the queue, indicating the next position for retrieval.
+*)
+PROPERTY Tail : UDINT]]></Declaration>
       <Get Name="Get" Id="{b2840707-759f-40f0-b9d2-b3d1e79747d1}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ArgList" Id="{2b96f983-70e4-40e0-8445-dead91093f2f}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK ArgList
+    <Declaration><![CDATA[(*
+A list implementation for managing `I_Arg`.  
+*)
+FUNCTION_BLOCK ArgList
 VAR_GENERIC CONSTANT
 	nCap	: UDINT := 100;
 END_VAR
@@ -17,7 +20,14 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Append" Id="{e43a485e-6cb6-45fe-b385-9a9421cc55b9}">
-      <Declaration><![CDATA[METHOD Append : Result
+      <Declaration><![CDATA[(*
+Adds, updates, or removes an argument in the list at the specified index.  
+Return:
+- `Ok` - Upon successfully adding, modifying, or removing an entry.
+- `None` - When replacing a null entry with another null entry.
+- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
+*)
+METHOD Append : Result
 VAR_INPUT
 	iArg		: I_Arg;
 	nIndex		: UDINT;
@@ -53,7 +63,10 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Cap" Id="{1048cc8b-e43e-4da9-a171-782c39431c37}">
-      <Declaration><![CDATA[PROPERTY Cap : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides the maximum capacity of the list.
+*)
+PROPERTY Cap : UDINT]]></Declaration>
       <Get Name="Get" Id="{c0c3415d-8c77-4181-aeea-f218ef2d28f8}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -64,7 +77,14 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Get" Id="{5c57983f-1819-44e3-afe2-2f589f56d44d}">
-      <Declaration><![CDATA[METHOD Get : Result
+      <Declaration><![CDATA[(*
+Retrieves the `I_Arg` at the specified index.  
+Returns:
+- `Ok` - Successfully retrieves the `I_Arg`.
+- `Err.Idx` - The list is empty.
+- `Err.Ovf` - The specified index is out of bounds.
+*)
+METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
 END_VAR
@@ -77,9 +97,9 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF nIndex > nCap THEN
+IF nIndex > nCap OR nIndex = 0 THEN
 	Get := Err.Ovf;
-	RETURN;
+	RETURN;	
 END_IF
 
 iArg := _iList[nIndex];
@@ -90,7 +110,10 @@ END_IF
       </Implementation>
     </Method>
     <Property Name="Length" Id="{64da98aa-17c6-48de-abec-0f8af739d3fd}">
-      <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the current number of elements in the list.
+*)
+PROPERTY Length : UDINT]]></Declaration>
       <Get Name="Get" Id="{068cf6fb-ea35-402b-b5df-5a4081492742}">
         <Declaration><![CDATA[VAR
 END_VAR

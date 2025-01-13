@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Strb" Id="{097a9ce5-fff4-459c-bf61-90e104e444f4}" SpecialFunc="None">
     <Declaration><![CDATA[// A string builder utility that allows for manipulation of a string up to 255 characters. It implements the I_Strb interface that allows for method chaining.
-FUNCTION_BLOCK Strb IMPLEMENTS I_Strb
+FUNCTION_BLOCK FINAL Strb IMPLEMENTS I_Strb
 VAR
 	_sString	: Str;
 	_nLength	: INT;

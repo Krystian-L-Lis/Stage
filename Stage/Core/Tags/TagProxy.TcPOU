@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TagProxy" Id="{c402a2d8-aa20-4784-8508-290c117834fa}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK TagProxy IMPLEMENTS I_Debug
+    <Declaration><![CDATA[(*
+Assigns interface pointer to interface variable upon FB_Init.
+*)
+FUNCTION_BLOCK FINAL TagProxy IMPLEMENTS I_Debug
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

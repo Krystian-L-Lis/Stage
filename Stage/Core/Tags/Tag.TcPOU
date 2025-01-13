@@ -1,8 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Tag" Id="{2e4b93ca-cf29-4297-8c18-30aee9f4dbcc}" SpecialFunc="None">
-    <Declaration><![CDATA[{attribute 'reflection'}
-FUNCTION_BLOCK Tag IMPLEMENTS I_Tag
+    <Declaration><![CDATA[(*
+An identifier that uses reflection to generate a unique symbol path.
+It simplifies the path by removing project, PLC, and tag segments.
+Example:
+- Reflection: proj.plc.MAIN.functionBlock[*]._tag
+- Path: MAIN.functionBlock.5
+*)
+{attribute 'reflection'}
+FUNCTION_BLOCK FINAL Tag IMPLEMENTS I_Tag
 VAR
 	{attribute 'instance-path'} 
     {attribute 'noinit'} 
@@ -20,7 +27,7 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	
-	sOptionInit		: Str;
+	sOptionInit		: Str; // Add optional segment upon initialization.
 END_VAR
 VAR
 	i				: INT;
@@ -66,7 +73,8 @@ Option := sOptionInit;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Id" Id="{b0dd2c0b-7dc9-43ce-98fa-e7469eee6720}">
-      <Declaration><![CDATA[PROPERTY Id : Str]]></Declaration>
+      <Declaration><![CDATA[// Read address path without Option segment.
+PROPERTY Id : Str]]></Declaration>
       <Get Name="Get" Id="{ef9dbdd5-51da-4e00-9df9-abd90d96465d}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -81,7 +89,8 @@ END_IF]]></ST>
       </Get>
     </Property>
     <Property Name="Option" Id="{66edb463-3b71-4c89-b966-006f5d753148}">
-      <Declaration><![CDATA[PROPERTY Option : Str]]></Declaration>
+      <Declaration><![CDATA[// Modify or read the optional segment.
+PROPERTY Option : Str]]></Declaration>
       <Get Name="Get" Id="{f548895c-1f6d-4c8a-932c-8d8c4861861c}">
         <Declaration><![CDATA[VAR
 	i				: INT;
@@ -119,7 +128,8 @@ END_IF
       </Set>
     </Property>
     <Property Name="Self" Id="{e153ed58-4e18-467d-9035-8a08187af0e1}">
-      <Declaration><![CDATA[PROPERTY Self : I_Tag]]></Declaration>
+      <Declaration><![CDATA[// Return interface pointer to THIS^.
+PROPERTY Self : I_Tag]]></Declaration>
       <Get Name="Get" Id="{206a24c8-8314-4d48-9be0-59b3e98c552f}">
         <Declaration><![CDATA[VAR
 END_VAR

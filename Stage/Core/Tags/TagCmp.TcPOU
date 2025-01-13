@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="TagCmp" Id="{fc472a51-95c8-4c63-b8c5-5dfa13d61d73}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK TagCmp IMPLEMENTS I_TagCmp
+    <Declaration><![CDATA[(*
+A tool for performing CASE OF-like evaluations on `I_Tag`.  
+It enables sequential evaluation of conditions and stops when `IsTrue`, `IsFalse`, or `IsErr` methods are invoked.
+Allows method chaining.
+*)
+FUNCTION_BLOCK FINAL TagCmp IMPLEMENTS I_TagCmp
 VAR
 	_iBaseTag		: I_Tag;
 	_nResult		: Result;
@@ -23,8 +28,13 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="AndHasOption" Id="{4178bf0f-757c-43e4-9bd6-0c41f2c398f4}">
-      <Declaration><![CDATA[METHOD AndHasOption : I_TagCmp
+    <Method Name="AndHasOption" Id="{0c6bde1e-a6f3-4a1d-a084-0540f59c88b8}">
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and option.  
+Sets the state to `Ok` if the base tag is `Ok` and has the specified Option; otherwise, sets the state to `None`.
+*)
+METHOD AndHasOption : I_TagCmp
+
 VAR_INPUT
 	sOption		: Str;
 END_VAR
@@ -37,17 +47,20 @@ IF _bLock THEN
 	RETURN;
 END_IF
 
-CASE _nResult OF
-	Ok,
-	None:
-		IF _nResult = Ok AND_THEN sOption <> '' AND_THEN _iBaseTag.Option = sOption THEN
-			_nResult := Ok;
-		END_IF
-END_CASE]]></ST>
+IF _nResult = Ok AND _iBaseTag.Option = sOption THEN
+	_nResult := Ok;
+ELSE
+	_nResult := None;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="AndIf" Id="{9223b46b-6be4-477a-9010-c0212fbeba73}">
-      <Declaration><![CDATA[METHOD AndIf : I_TagCmp
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and an external condition.  
+Sets the state to `Ok` if the base tag is `Ok` and the external condition is TRUE; otherwise, sets the state to `None`.
+*)
+METHOD AndIf : I_TagCmp
 VAR_INPUT
 	bCondition: BOOL;
 END_VAR
@@ -61,13 +74,19 @@ END_IF
 
 IF _nResult = Ok AND_THEN bCondition THEN
 	_nResult := Ok;
+ELSE
+	_nResult := None;
 END_IF
 
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="HasOption" Id="{c463345a-f124-40d6-b1f7-85e8eeaaf583}">
-      <Declaration><![CDATA[METHOD HasOption : I_TagCmp
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and option.  
+Sets the state to `Ok` if the base tag has the specified Option.
+*)
+METHOD HasOption : I_TagCmp
 VAR_INPUT
 	sOption		: Str;
 END_VAR
@@ -90,7 +109,11 @@ END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="IsErr" Id="{248d90f2-753e-444d-9c5b-49d2b4aa255c}">
-      <Declaration><![CDATA[METHOD IsErr : BOOL
+      <Declaration><![CDATA[(*
+Returns `TRUE` if any evaluated conditions resulted in `Error`.  
+Halts further evaluations by locking the current state.
+*)
+METHOD IsErr : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _bLock THEN
@@ -107,7 +130,11 @@ IsErr := TRUE;
       </Implementation>
     </Method>
     <Method Name="IsFalse" Id="{4388843a-3f13-4d13-9444-a6c347a1b77c}">
-      <Declaration><![CDATA[METHOD IsFalse : BOOL
+      <Declaration><![CDATA[(*
+Returns `TRUE` if all evaluated conditions resulted in `FALSE`.  
+Halts further evaluations by locking the current state.
+*)
+METHOD IsFalse : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _bLock THEN
@@ -125,7 +152,11 @@ IsFalse := TRUE;
       </Implementation>
     </Method>
     <Method Name="IsTrue" Id="{866e2e11-40a2-444c-9771-a238b0485540}">
-      <Declaration><![CDATA[METHOD IsTrue : BOOL]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns `TRUE` if any evaluated condition resulted in `TRUE`.  
+Halts further evaluations by locking the current state.
+*)
+METHOD IsTrue : BOOL]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _bLock THEN
 	RETURN;
@@ -141,7 +172,11 @@ IsTrue := TRUE;
       </Implementation>
     </Method>
     <Method Name="Match" Id="{5c938a28-c260-4bf1-adcc-c84d59421fa8}">
-      <Declaration><![CDATA[METHOD Match : I_TagCmp
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and external I_Tag.  
+Sets the state to `Ok` if the base tag matches the external tag.
+*)
+METHOD Match : I_TagCmp
 VAR_INPUT
 	iOther: I_Tag;
 END_VAR]]></Declaration>
@@ -164,7 +199,11 @@ END_CASE
       </Implementation>
     </Method>
     <Method Name="MatchId" Id="{78d82c00-f656-4a95-b467-0eabd905f45b}">
-      <Declaration><![CDATA[METHOD MatchId : I_TagCmp
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and a string value.  
+Sets the state to `Ok` if the base tag Id matches the provided string from right to left.
+*)
+METHOD MatchId : I_TagCmp
 VAR_INPUT
 	sIdToMatch		: Str;
 END_VAR
@@ -187,9 +226,14 @@ END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="MatchWcdId" Id="{155a5479-46da-4d47-bd5a-a8dff579e9de}">
-      <Declaration><![CDATA[METHOD MatchWcdId : I_TagCmp
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and a string value.  
+Sets the state to `Ok` if the base tag Id matches the provided string pattern.
+Allows wildcards.
+*)
+METHOD MatchWcdId : I_TagCmp
 VAR_INPUT
-	sPattern 			: Str;  					// Pattern with wildcards
+	sPattern 			: Str;
 END_VAR
 VAR
 	pttPath				: SymPath;
@@ -219,7 +263,11 @@ END_CASE
       </Implementation>
     </Method>
     <Method Name="OrIf" Id="{c9bdb97c-3eb5-4133-8ad4-a1531337cf33}">
-      <Declaration><![CDATA[METHOD OrIf : I_TagCmp
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and an external condition.  
+Sets the state to `Ok` if the base tag is `Ok` or the external condition is TRUE.
+*)
+METHOD OrIf : I_TagCmp
 VAR_INPUT
 	bCondition: BOOL;
 END_VAR
@@ -237,7 +285,11 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Set" Id="{2167daab-4164-44b9-93b7-a85c88a05ebd}">
-      <Declaration><![CDATA[METHOD Set : I_TagCmp
+      <Declaration><![CDATA[(*
+Sets a new base tag for comparison and resets the result and lock states.
+Fails if `iBaseTag` is `0`;
+*)
+METHOD Set : I_TagCmp
 VAR_INPUT
 	iBaseTag	: I_Tag;
 END_VAR
@@ -255,7 +307,11 @@ Set := _self;]]></ST>
       </Implementation>
     </Method>
     <Method Name="XorIf" Id="{ca9c46ad-c94a-433e-aeab-483b4c5ea474}">
-      <Declaration><![CDATA[METHOD XorIf : I_TagCmp
+      <Declaration><![CDATA[(*
+Updates its internal state based on the internal status and an external condition.  
+Sets the state to `Ok` if the base tag is `Ok` xor the external condition is TRUE.
+*)
+METHOD XorIf : I_TagCmp
 VAR_INPUT
 	bCondition: BOOL;
 END_VAR

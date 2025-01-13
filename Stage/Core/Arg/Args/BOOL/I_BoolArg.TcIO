@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_BoolArg" Id="{9d76ad8d-669f-4c52-a5c1-5fd937e33189}">
+    <Declaration><![CDATA[(*
+A broadcastable wrapper for a `BOOL` value. 
+*)
+INTERFACE I_BoolArg EXTENDS I_Arg
+]]></Declaration>
+    <Property Name="Get" Id="{d360dbc3-a5ed-481e-8c7d-c7681ec76bb3}">
+      <Declaration><![CDATA[(*
+Reads the internal value.
+*)
+PROPERTY Get : BOOL]]></Declaration>
+      <Get Name="Get" Id="{87bd3174-4297-4274-af27-33921f8ed0eb}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsMut" Id="{73297ce6-4a2f-4ad6-9d7a-082014973c25}">
+      <Declaration><![CDATA[(*
+Returns TRUE if the value is mutable.
+*)
+PROPERTY IsMut : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0da03f46-1e1d-4476-a665-eabaeee1e20c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Set" Id="{f8bd1ee5-5e13-4cfa-9bd9-124641f0eed9}">
+      <Declaration><![CDATA[(*
+Modifies the internal value.  
+Returns:
+- `Ok` - Upon successful modification.
+- `Error` - If mutability is disabled.
+*)
+METHOD Set : Result
+VAR_INPUT
+	newVal		: BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

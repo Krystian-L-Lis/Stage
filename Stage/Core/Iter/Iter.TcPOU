@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Iter" Id="{6e6052b3-52f3-4e20-af41-05a7fb850153}" SpecialFunc="None">
-    <Declaration><![CDATA[// This function block provides iteration functionality over UDINT value.
-FUNCTION_BLOCK Iter
+    <Declaration><![CDATA[// Provides iteration functionality over UDINT value.
+// Requires initialization value.
+FUNCTION_BLOCK FINAL Iter
 VAR
 	_nIter		: UDINT;
 	_bFirstLoop	: BOOL := TRUE;

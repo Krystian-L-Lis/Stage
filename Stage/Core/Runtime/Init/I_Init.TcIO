@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Init" Id="{4a2c0968-9644-42ff-9859-1d46f6462d6d}">
-    <Declaration><![CDATA[INTERFACE I_Init EXTENDS I_Debug
+    <Declaration><![CDATA[(*
+A `Init` method of FB implmenting this interface will be called once upon program startup.
+*)
+INTERFACE I_Init EXTENDS I_Debug
 ]]></Declaration>
     <Method Name="Init" Id="{91c58654-3ffc-4818-95da-e43400094954}">
-      <Declaration><![CDATA[METHOD Init
+      <Declaration><![CDATA[(*
+If registered, this method will be executed upon startup.
+*)
+METHOD Init
 VAR_INPUT
 END_VAR
 ]]></Declaration>
