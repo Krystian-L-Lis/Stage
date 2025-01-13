@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1">
-  <DUT Name="Result" Id="{0584450c-e377-4071-b6de-259ead2d47c1}">
-    <Declaration><![CDATA[TYPE Result : INT; END_TYPE
-]]></Declaration>
-  </DUT>
-</TcPlcObject>

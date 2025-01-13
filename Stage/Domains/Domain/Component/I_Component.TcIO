@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1">
-  <Itf Name="I_Component" Id="{a5dfd892-699d-492b-8b5f-c91d5ccba624}">
-    <Declaration><![CDATA[INTERFACE I_Component EXTENDS Calls.I_Arg
-]]></Declaration>
-  </Itf>
-</TcPlcObject>
