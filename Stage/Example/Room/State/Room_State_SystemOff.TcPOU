@@ -19,7 +19,7 @@ END_VAR
         <ST><![CDATA[CanDeactivate := NOT _ctx.priv.bSysOff;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnInit" Id="{2165c4dc-33f4-4316-b0a7-0e9b5038a5aa}">
+    <Method Name="OnEntry" Id="{2165c4dc-33f4-4316-b0a7-0e9b5038a5aa}">
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>

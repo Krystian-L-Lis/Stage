@@ -38,9 +38,9 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF bTest THEN
-	Core.CompAsITag(iComp, iDest => iTag);
-	Core.CompAsIState(iComp, iDest => iState);
-	Core.CompAsISignal(iComp, iDest => iSignal);
+	Core.ICompToITag(iComp, iDest => iTag);
+	Core.ICompToIState(iComp, iDest => iState);
+	Core.ICompToISignal(iComp, iDest => iSignal);
 
 	bTest := FALSE;
 END_IF]]></ST>

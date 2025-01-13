@@ -65,7 +65,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF IsErr(ArgAsITag(iArg, iDest => _iTag)) THEN
+IF IsErr(IArgToITag(iArg, iDest => _iTag)) THEN
 	_ctx.hmi.sErrorText := 'Incorrect call argument!';
 	_ctx.state.iMgr.Request(_ctx.state.iFault);
 	RETURN;

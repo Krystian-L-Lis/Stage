@@ -12,17 +12,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="OnExecute" Id="{264cc7d9-062e-4ab5-b525-d91c52a6ab27}">
-      <Declaration><![CDATA[METHOD OnExecute
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF _ctx.hmi.bButton THEN
-	_ctx.hmi.bButton := FALSE;
-	_ctx.state.iMgr.Request(_ctx.state.iEnable);
-END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="OnInit" Id="{969084cd-eabe-4f07-bb36-9264c638a3be}">
+    <Method Name="OnEntry" Id="{969084cd-eabe-4f07-bb36-9264c638a3be}">
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
@@ -37,6 +27,16 @@ _ctx.io.out.bPump := FALSE;
 
 _ctx.priv.iOnDisable.Emit();
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{264cc7d9-062e-4ab5-b525-d91c52a6ab27}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bButton THEN
+	_ctx.hmi.bButton := FALSE;
+	_ctx.state.iMgr.Request(_ctx.state.iEnable);
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

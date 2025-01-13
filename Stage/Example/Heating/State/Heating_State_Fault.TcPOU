@@ -42,6 +42,35 @@ END_IF
 _ctx.state.iMgr.Request(_ctx.state.iFault);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="OnEntry" Id="{1a485ee3-23cb-485d-a3aa-fbbe73930b2a}">
+      <Declaration><![CDATA[METHOD OnEntry
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _ctx.io.in.bBurnerOverload THEN
+	_ctx.hmi.sErrorText := 'Caused by burner overload!';
+ELSIF NOT _ctx.io.in.bPumpOverload THEN
+	_ctx.hmi.sErrorText := 'Caused by pump overload!';
+ELSIF _ctx.io.in.rBoilerPressure > _ctx.hmi.rMaxPressure THEN
+	_ctx.hmi.sErrorText := 'Caused by boiler overpressure!';
+ELSIF _ctx.io.in.rBoilerPressure < _ctx.hmi.rMinPressure THEN
+	_ctx.hmi.sErrorText := 'Caused by boiler underpressure!';
+ELSIF _ctx.io.in.rBoilerTemp > _ctx.hmi.rMaxTemperature THEN
+	_ctx.hmi.sErrorText := 'Caused by boiler overheat!';
+END_IF
+
+_ctx.hmi.sStatusText := CONCAT('Fault: ', _ctx.hmi.sErrorText);
+
+_ctx.hmi.nStatusColor := COL.RED.Raw;
+
+_ctx.hmi.sButtonText := '';
+_ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;
+
+_ctx.io.out.bBurner := FALSE;
+_ctx.io.out.bPump := FALSE;
+
+_ctx.priv.iOnDisable.Emit();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="OnExecute" Id="{47c8e274-11fa-47cf-8f15-91062de1a435}">
       <Declaration><![CDATA[METHOD OnExecute
 ]]></Declaration>
@@ -76,35 +105,6 @@ IF _ctx.hmi.bButton THEN
 	_ctx.hmi.bButton := FALSE;
 	_ctx.state.iMgr.Request(_ctx.state.iDisable);
 END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="OnInit" Id="{1a485ee3-23cb-485d-a3aa-fbbe73930b2a}">
-      <Declaration><![CDATA[METHOD OnEntry
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF NOT _ctx.io.in.bBurnerOverload THEN
-	_ctx.hmi.sErrorText := 'Caused by burner overload!';
-ELSIF NOT _ctx.io.in.bPumpOverload THEN
-	_ctx.hmi.sErrorText := 'Caused by pump overload!';
-ELSIF _ctx.io.in.rBoilerPressure > _ctx.hmi.rMaxPressure THEN
-	_ctx.hmi.sErrorText := 'Caused by boiler overpressure!';
-ELSIF _ctx.io.in.rBoilerPressure < _ctx.hmi.rMinPressure THEN
-	_ctx.hmi.sErrorText := 'Caused by boiler underpressure!';
-ELSIF _ctx.io.in.rBoilerTemp > _ctx.hmi.rMaxTemperature THEN
-	_ctx.hmi.sErrorText := 'Caused by boiler overheat!';
-END_IF
-
-_ctx.hmi.sStatusText := CONCAT('Fault: ', _ctx.hmi.sErrorText);
-
-_ctx.hmi.nStatusColor := COL.RED.Raw;
-
-_ctx.hmi.sButtonText := '';
-_ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;
-
-_ctx.io.out.bBurner := FALSE;
-_ctx.io.out.bPump := FALSE;
-
-_ctx.priv.iOnDisable.Emit();]]></ST>
       </Implementation>
     </Method>
   </POU>

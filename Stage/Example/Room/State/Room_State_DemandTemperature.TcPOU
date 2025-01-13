@@ -101,18 +101,7 @@ DebugMsg(_iEntity, strb.Append('_requestRec').Append(' not found!').Read());
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnExecute" Id="{cb6312a9-8ff8-4ec6-9559-0b72ff764e07}">
-      <Declaration><![CDATA[METHOD OnExecute
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF _ctx.hmi.bDisable THEN
-	_ctx.state.iMgr.Request(_ctx.state.iDisable);
-ELSIF _refTemperature >= _refTemperatureSettings.rHigh THEN
-	_ctx.priv.bReady := TRUE;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="OnInit" Id="{aa027ac0-d2d2-41a0-a2a1-be232fcb4334}">
+    <Method Name="OnEntry" Id="{aa027ac0-d2d2-41a0-a2a1-be232fcb4334}">
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
@@ -127,6 +116,17 @@ _ctx.hmi.nStatusColor := COL.BLACK.Raw;
 _ctx.hmi.bHideReset := TRUE;
 
 _onRequest.Emit(_ctx.priv.iThisRoom);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{cb6312a9-8ff8-4ec6-9559-0b72ff764e07}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bDisable THEN
+	_ctx.state.iMgr.Request(_ctx.state.iDisable);
+ELSIF _refTemperature >= _refTemperatureSettings.rHigh THEN
+	_ctx.priv.bReady := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

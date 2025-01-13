@@ -22,6 +22,31 @@ END_VAR
         <ST><![CDATA[CanActivate :=  _ctx.state.iMgr.Current = _ctx.state.iEnable;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="OnEntry" Id="{dc76118f-322c-4257-9d92-65205e9e8301}">
+      <Declaration><![CDATA[METHOD OnEntry
+VAR
+	strb			: Strb;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ctx.hmi.sStatusText := strb.Append('Heating enabled: Pumping to room ')
+							.Append(UDINT_TO_STRING(_ctx.priv.iActiveRoom.Id))
+							.Append('...')
+							.Read();
+							
+_ctx.hmi.nStatusColor := COL.BLACK.Raw;
+
+_ctx.hmi.sButtonText := 'Press to DISABLE!';
+_ctx.hmi.nButtonColor := COL.BLACK.Raw;
+
+_ctx.io.out.bBurner := FALSE;
+_ctx.io.out.bPump := FALSE;
+
+_ctx.priv.iOnPause.Emit();
+
+_nStep := 0;
+_tonTimeout(IN := FALSE);]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="OnExecute" Id="{bbc510df-aef5-44dc-9d86-57811004103f}">
       <Declaration><![CDATA[METHOD OnExecute
 VAR
@@ -80,31 +105,6 @@ CASE _nStep OF
 		_ctx.state.iMgr.Request(_ctx.state.iFault);
 		_nStep := READY_STEP;
 END_CASE]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="OnInit" Id="{dc76118f-322c-4257-9d92-65205e9e8301}">
-      <Declaration><![CDATA[METHOD OnEntry
-VAR
-	strb			: Strb;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_ctx.hmi.sStatusText := strb.Append('Heating enabled: Pumping to room ')
-							.Append(UDINT_TO_STRING(_ctx.priv.iActiveRoom.Id))
-							.Append('...')
-							.Read();
-							
-_ctx.hmi.nStatusColor := COL.BLACK.Raw;
-
-_ctx.hmi.sButtonText := 'Press to DISABLE!';
-_ctx.hmi.nButtonColor := COL.BLACK.Raw;
-
-_ctx.io.out.bBurner := FALSE;
-_ctx.io.out.bPump := FALSE;
-
-_ctx.priv.iOnPause.Emit();
-
-_nStep := 0;
-_tonTimeout(IN := FALSE);]]></ST>
       </Implementation>
     </Method>
   </POU>

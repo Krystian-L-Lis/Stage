@@ -5,7 +5,7 @@
 VAR_INPUT
 	sStatusText				: Str;
 	sErrorText				: Str;
-	nStatusColor			: LWORD;
+	nStatusColor			: Color;
 	
 	sData					: Str;
 	

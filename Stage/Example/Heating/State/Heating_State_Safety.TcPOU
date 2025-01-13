@@ -21,7 +21,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsOk(ArgToIBoolArg(iArg, iVal => _iSafeModeOn)) THEN
-	IF _iSafeModeOn.Val THEN
+	IF _iSafeModeOn.Get THEN
 		_bSafetyStopActive := TRUE;
 		_ctx.state.iMgr.Request(_ctx.state.iSafety);
 	ELSE
@@ -64,7 +64,7 @@ DebugMsg(THIS^, CONCAT('_safetyRec not paired! Error code: ', TO_STRING(_r)));
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnInit" Id="{c5598497-5be7-45e4-ae85-b40aa632e5cb}">
+    <Method Name="OnEntry" Id="{c5598497-5be7-45e4-ae85-b40aa632e5cb}">
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>

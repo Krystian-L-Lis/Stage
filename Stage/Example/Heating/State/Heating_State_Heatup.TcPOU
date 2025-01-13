@@ -19,20 +19,7 @@ END_VAR
         <ST><![CDATA[CanActivate :=  _ctx.state.iMgr.Current = _ctx.state.iEnable;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnExecute" Id="{1e385c1c-ab42-445b-8b2a-c386ab10b6e6}">
-      <Declaration><![CDATA[METHOD OnExecute
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF _ctx.hmi.bButton THEN
-	_ctx.hmi.bButton := FALSE;
-	_ctx.state.iMgr.Request(_ctx.state.iDisable);
-	
-ELSIF _ctx.io.in.rBoilerTemp >= _ctx.hmi.rStdTemperature THEN
-	_ctx.state.iMgr.Request(_ctx.state.iEnable);
-END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="OnInit" Id="{625eecf1-2f5e-4832-964f-a20b5cc15fa9}">
+    <Method Name="OnEntry" Id="{625eecf1-2f5e-4832-964f-a20b5cc15fa9}">
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
@@ -48,6 +35,19 @@ _ctx.io.out.bPump := TRUE;
 
 
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{1e385c1c-ab42-445b-8b2a-c386ab10b6e6}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.hmi.bButton THEN
+	_ctx.hmi.bButton := FALSE;
+	_ctx.state.iMgr.Request(_ctx.state.iDisable);
+	
+ELSIF _ctx.io.in.rBoilerTemp >= _ctx.hmi.rStdTemperature THEN
+	_ctx.state.iMgr.Request(_ctx.state.iEnable);
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

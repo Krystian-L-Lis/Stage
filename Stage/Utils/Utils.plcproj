@@ -40,10 +40,13 @@
     <VirtualLibrary>true</VirtualLibrary>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Color\Itf\I_Color.TcIO">
+    <Compile Include="Color\Color.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Color\Color.TcPOU">
+    <Compile Include="Color\Itf\I_RgbColor.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Color\RgbColor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Timer\GetSysTime.TcPOU">
@@ -88,11 +91,6 @@
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
     <Folder Include="Timer" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Utils.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

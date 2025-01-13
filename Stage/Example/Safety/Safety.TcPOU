@@ -47,7 +47,7 @@ END_FOR
 
 CASE _nStep OF
 	0: // Fault Init
-		_bSafetyStopActive.Val := TRUE;
+		_bSafetyStopActive.OpSet(TRUE);
 		_onSafetyChange.Emit(_bSafetyStopActive);
 		bSafetyRun	:= FALSE;
 		
@@ -90,7 +90,7 @@ CASE _nStep OF
 	4:	// Op Init
 		bErrAck		:= FALSE;
 	
-		_bSafetyStopActive.Val := FALSE;
+		_bSafetyStopActive.OpSet(FALSE);
 		_onSafetyChange.Emit(_bSafetyStopActive);
 		_nStep := 5;
 		

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Color" Id="{8a6bcbc4-7e62-43a0-b446-48bdd11ecd5a}">
+    <Declaration><![CDATA[TYPE Color : LWORD; END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

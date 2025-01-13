@@ -19,7 +19,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsOk(ArgToIBoolArg(iArg, iVal => _iPassiveHeatingOn)) THEN
-	IF _iPassiveHeatingOn.Val THEN
+	IF _iPassiveHeatingOn.Get THEN
 		IF _ctx.priv.nPassiveRooms > CST.MAX_ROOM THEN
 			_ctx.priv.nPassiveRooms := _ctx.priv.nPassiveRooms + 1;
 		END_IF 	

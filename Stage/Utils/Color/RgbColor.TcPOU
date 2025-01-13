@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Color" Id="{2722e4a4-8a93-411e-a3ea-39a44af2a9e8}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Color IMPLEMENTS I_Color
+  <POU Name="RgbColor" Id="{2722e4a4-8a93-411e-a3ea-39a44af2a9e8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RgbColor IMPLEMENTS I_RgbColor
 VAR
 	_r: BYTE;
 	_g: BYTE;
@@ -53,7 +53,7 @@ END_VAR
     <Method Name="Clone" Id="{924c2e5f-fff2-4c25-9bf1-439819cf4eda}">
       <Declaration><![CDATA[METHOD Clone
 VAR_INPUT
-	iColor	: I_Color;
+	iColor	: I_RgbColor;
 END_VAR
 ]]></Declaration>
       <Implementation>

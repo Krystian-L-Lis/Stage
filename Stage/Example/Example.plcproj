@@ -284,11 +284,6 @@
     <Folder Include="Room\State" />
     <Folder Include="Simulation" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Example.tmc">
-      <SubType>Content</SubType>
-    </None>
-  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>

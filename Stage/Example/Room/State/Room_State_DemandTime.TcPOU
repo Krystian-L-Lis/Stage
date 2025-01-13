@@ -99,19 +99,7 @@ DebugMsg(THIS^, strb.Append('Cannot pair _onRequest with a ').Append('_requestRe
 DebugMsg(_iEntity, strb.Append('_requestRec').Append(' not found!').Read());]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnExecute" Id="{1ac3585c-789d-4477-9aa9-784a9986c68a}">
-      <Declaration><![CDATA[METHOD OnExecute
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_tonOn(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOn));
-IF _ctx.hmi.bDisable THEN
-	_ctx.state.iMgr.Request(_ctx.state.iDisable);
-ELSIF _tonOn.Q THEN
-	_ctx.priv.bReady := TRUE;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="OnInit" Id="{6de24a63-b10e-46fa-b036-c1fc69237759}">
+    <Method Name="OnEntry" Id="{6de24a63-b10e-46fa-b036-c1fc69237759}">
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
@@ -129,6 +117,18 @@ _tonOn(IN := FALSE);
 
 _onRequest.Emit(_ctx.priv.iThisRoom);
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{1ac3585c-789d-4477-9aa9-784a9986c68a}">
+      <Declaration><![CDATA[METHOD OnExecute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_tonOn(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOn));
+IF _ctx.hmi.bDisable THEN
+	_ctx.state.iMgr.Request(_ctx.state.iDisable);
+ELSIF _tonOn.Q THEN
+	_ctx.priv.bReady := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

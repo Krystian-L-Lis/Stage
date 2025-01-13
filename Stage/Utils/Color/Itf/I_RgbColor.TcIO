@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <Itf Name="I_Color" Id="{c14a9189-f87c-457b-89d1-843d3ff3e927}">
-    <Declaration><![CDATA[INTERFACE I_Color
+  <Itf Name="I_RgbColor" Id="{c14a9189-f87c-457b-89d1-843d3ff3e927}">
+    <Declaration><![CDATA[INTERFACE I_RgbColor
 ]]></Declaration>
     <Property Name="Alpha" Id="{dbf4dd98-9843-49d4-a908-5b54536c0014}">
       <Declaration><![CDATA[PROPERTY Alpha : BYTE]]></Declaration>
@@ -24,7 +24,7 @@
     <Method Name="Clone" Id="{f4bbf03f-d112-42dc-9b12-ed0c9fde6c5b}">
       <Declaration><![CDATA[METHOD Clone
 VAR_INPUT
-	iColor	: I_Color;
+	iColor	: I_RgbColor;
 END_VAR
 ]]></Declaration>
     </Method>

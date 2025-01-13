@@ -10,7 +10,7 @@ VAR_INPUT
 	bEStopActive	: ARRAY[1..ESTOP_CAP] OF BOOL;
 	
 	sStatusText		: Str;
-	nStatusColor	: LWORD;
+	nStatusColor	: Color;
 	
 	bReset			: BOOL;
 	bHideReset		: BOOL;

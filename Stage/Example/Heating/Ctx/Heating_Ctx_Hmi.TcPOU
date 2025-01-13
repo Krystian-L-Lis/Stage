@@ -5,11 +5,11 @@
 VAR_INPUT
 	sStatusText				: Str;
 	sErrorText				: Str;
-	nStatusColor			: LWORD;
+	nStatusColor			: Color;
 	
 	bButton					: BOOL;
 	sButtonText				: Str;
-	nButtonColor			: LWORD;	
+	nButtonColor			: Color;	
 END_VAR
 VAR_OUTPUT PERSISTENT
 	rMaxPressure			: REAL := 2.0; // bar
