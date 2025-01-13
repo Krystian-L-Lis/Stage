@@ -18,7 +18,12 @@ VAR_OUTPUT
     nIndex  : UDINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF iEntity = 0 THEN
+      <ST><![CDATA[IF _Ec.bRegLock THEN
+	_RegEntity := Err.Init;
+	RETURN;
+END_IF
+
+IF iEntity = 0 THEN
 	_RegEntity := Err.Itf0;
 	RETURN;
 END_IF

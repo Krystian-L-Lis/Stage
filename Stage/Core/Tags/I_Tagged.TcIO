@@ -3,6 +3,7 @@
   <Itf Name="I_Tagged" Id="{92a57a01-5096-46ab-961f-63d875b95829}">
     <Declaration><![CDATA[(*
 This component contains readable `I_Tag`.
+Can be casted to `I_Component`.
 *)
 INTERFACE I_Tagged EXTENDS I_Component
 ]]></Declaration>

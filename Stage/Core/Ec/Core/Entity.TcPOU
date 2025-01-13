@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Entity" Id="{a3fc4420-1b23-490b-958c-b8e82c07e80d}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Entity IMPLEMENTS I_Entity, I_Debug;
+    <Declaration><![CDATA[(*
+Represents a registered entity in the Entity-Component system.
+*)
+FUNCTION_BLOCK Entity IMPLEMENTS I_Entity, I_Debug;
 VAR
 	_nId		: UDINT;
 	_nStart		: UDINT;
@@ -94,7 +97,12 @@ END_IF
       </Implementation>
     </Method>
     <Method Name="Get" Id="{d850980f-263b-4ca3-bf68-c37b4aaa2580}">
-      <Declaration><![CDATA[METHOD Get : Result
+      <Declaration><![CDATA[(*
+Retrieves a specific component from the entity based on the provided index.  
+Returns `None` if the index is out of range or the entity size is zero.
+Otherwise returns `Ok`.
+*)
+METHOD Get : Result
 VAR_INPUT
 	nIndex	: UDINT;
 END_VAR
@@ -113,7 +121,10 @@ Get := Ok;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Id" Id="{4402c710-18d7-433c-9c5e-7e50ee140721}">
-      <Declaration><![CDATA[PROPERTY Id : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the unique identifier of the entity, used for tracking and referencing within the EC system.
+*)
+PROPERTY Id : UDINT]]></Declaration>
       <Get Name="Get" Id="{a6b229f7-6688-455d-b326-4d6e21f10657}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -124,7 +135,11 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Size" Id="{14d02e17-8a75-4f2f-aafd-191cc43b5896}">
-      <Declaration><![CDATA[PROPERTY Size : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides the size of the entity, indicating the number of components it manages.  
+Note: For internal logic purposes, this value is incremented by one beyond the actual component count.
+*)
+PROPERTY Size : UDINT]]></Declaration>
       <Get Name="Get" Id="{fd80484a-41ec-435a-93fd-cf4a1c9dc4b9}">
         <Declaration><![CDATA[VAR
 END_VAR

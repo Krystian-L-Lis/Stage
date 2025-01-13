@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="CompList" Id="{ca518f37-6c05-4cf4-89d4-75c5e2201c82}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK CompList
+    <Declaration><![CDATA[(*
+A list implementation for managing `I_Component`.  
+*)
+FUNCTION_BLOCK CompList
 VAR_GENERIC CONSTANT
 	nCap	: UDINT := 100;
 END_VAR
@@ -17,7 +20,14 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Append" Id="{9fb06efd-ab03-4fa1-aa5f-6a55026b07b7}">
-      <Declaration><![CDATA[METHOD Append : Result
+      <Declaration><![CDATA[(*
+Adds, updates, or removes an argument in the list at the specified index.  
+Return:
+- `Ok` - Upon successfully adding, modifying, or removing an entry.
+- `None` - When replacing a null entry with another null entry.
+- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
+*)
+METHOD Append : Result
 VAR_INPUT
 	iComponent	: I_Component;
 	nIndex		: UDINT;
@@ -53,7 +63,10 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Cap" Id="{50df78aa-587a-44e1-afbf-df9af1ffc7cc}">
-      <Declaration><![CDATA[PROPERTY Cap : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides the maximum capacity of the list.
+*)
+PROPERTY Cap : UDINT]]></Declaration>
       <Get Name="Get" Id="{dfda453b-d7cf-4f39-afd5-c17fcce041a4}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -64,7 +77,14 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Get" Id="{54d36c41-e48b-4d94-a7f2-51e33876950d}">
-      <Declaration><![CDATA[METHOD Get : Result
+      <Declaration><![CDATA[(*
+Retrieves the `I_Component` at the specified index.  
+Returns:
+- `Ok` - Successfully retrieves the `I_Component`.
+- `Err.Idx` - The list is empty.
+- `Err.Ovf` - The specified index is out of bounds.
+*)
+METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
 END_VAR
@@ -91,7 +111,10 @@ Get := Ok;
       </Implementation>
     </Method>
     <Property Name="Length" Id="{6bac9759-9382-43e1-accb-7021bbfc1551}">
-      <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the current number of elements in the list.
+*)
+PROPERTY Length : UDINT]]></Declaration>
       <Get Name="Get" Id="{464d3f9b-7d83-4738-a4f1-48441410ea69}">
         <Declaration><![CDATA[VAR
 END_VAR

@@ -15,6 +15,7 @@ VAR_GLOBAL CONSTANT
 	TcLib			: Result := -11; // Error caused by TwinCAT libraries
 	InfLoop			: Result := -12; // Potential infinity loop
 	IncArg			: Result := -13; // Incorrect input argument
+	Init			: Result := -14; // Initialisation error
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -29,7 +29,7 @@ END_VAR
 END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(CompAsITag(_iComp, iDest => iTag)) THEN
+	IF IsOk(ICompToITag(_iComp, iDest => iTag)) THEN
 		IF cmp.Set(iTag).MatchWcdId(sIdPattern).IsTrue() THEN
 			GetTag := Ok;
 			RETURN;

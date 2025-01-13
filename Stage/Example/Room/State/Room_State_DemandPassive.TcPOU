@@ -108,7 +108,7 @@ _onPassiveStateChange.Emit(_bIsPassive);]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnInit" Id="{466d5c45-8960-408f-8f4b-136ffcbbd099}">
-      <Declaration><![CDATA[METHOD OnInit
+      <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.io.bOpenValves := TRUE;

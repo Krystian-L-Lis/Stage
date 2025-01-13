@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="RegComp" Id="{9d5059a5-7ec0-4c08-8587-3adfec1dbc46}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION RegComp : Result
+    <Declaration><![CDATA[(*
+Registers component. Alternative function block: `Comp`.
+*)
+FUNCTION RegComp : Result
 VAR_INPUT
 	iComponent	: I_Component;
 	iEntity		: I_Entity;

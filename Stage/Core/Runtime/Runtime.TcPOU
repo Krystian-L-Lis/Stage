@@ -5,16 +5,15 @@
 Manages the initialization and cyclic execution of registered function blocks.
 *)
 FUNCTION Runtime
-VAR_STAT
-	bInit	: BOOL := TRUE;
-END_VAR]]></Declaration>
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF bInit THEN
+      <ST><![CDATA[IF _Runtime.bInit THEN
 	IF _Runtime.iFirstInit <> 0 THEN
 		_Runtime.iFirstInit.Init();
 	END_IF
-	
-	bInit := FALSE;
+	_Ec.bRegLock := TRUE;
+	_Broadcast.bRegLock := TRUE;
+	_Runtime.bInit := FALSE;
 END_IF
 
 IF _Runtime.iFirstCyclic <> 0 THEN

@@ -8,14 +8,14 @@
 DESCRIPTION:
 - _				DONE
 - Arg			DONE 
-- Broadcast		
-- Callable		
+- Broadcast		DONE
+- Callable		DONE
 - Dbg			DONE
-- Ec
+- Ec			DONE
 - Iter			DONE
 - Result		DONE
 - Runtime		DONR
-- State
+- State			
 - Strings		DONE
 - Tags			DONE
 *)]]></ST>

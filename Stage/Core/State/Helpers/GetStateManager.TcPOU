@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="GetStateManager" Id="{cc9710d2-5f6d-4b85-a1d3-6aee9f41ddac}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION GetStateManager : Result
+    <Declaration><![CDATA[(*
+Searches an `I_Entity` for a `I_StateManager` component matching provided id pattern.
+Result:
+- Ok - Returns `I_StateManager`.
+- None - Returns null.
+- Err.Itf0 - Returns null, incorrect interface.
+*)
+FUNCTION GetStateManager : Result
 VAR_INPUT
 	iEntity		: I_Entity;
 END_VAR
@@ -21,7 +28,7 @@ END_VAR
 END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(CompAsIStateManager(_iComp, iDest => iSmgr)) THEN
+	IF IsOk(ICompToIStateMgr(_iComp, iDest => iSmgr)) THEN
 		GetStateManager := Ok;
 		RETURN;
 	END_IF

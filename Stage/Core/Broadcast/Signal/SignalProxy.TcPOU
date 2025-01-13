@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="SignalProxy" Id="{899e5dfa-7d46-4f46-8696-3d22a0759179}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK SignalProxy IMPLEMENTS I_Debug]]></Declaration>
+    <Declaration><![CDATA[(*
+Assigns interface pointer to interface variable upon FB_Init.
+*)
+FUNCTION_BLOCK SignalProxy IMPLEMENTS I_Debug]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>

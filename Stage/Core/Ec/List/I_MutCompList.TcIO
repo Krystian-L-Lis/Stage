@@ -1,10 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_MutCompList" Id="{c2d0d42a-2de4-4c5c-b38b-df90732b2bb6}">
-    <Declaration><![CDATA[INTERFACE I_MutCompList EXTENDS I_CompList
+    <Declaration><![CDATA[(*
+A list implementation for managing `I_Component`.  
+*)
+INTERFACE I_MutCompList EXTENDS I_CompList
 ]]></Declaration>
     <Method Name="Append" Id="{5c77e0e9-4c2a-4778-92ac-45cbb94f65af}">
-      <Declaration><![CDATA[METHOD Append : Result
+      <Declaration><![CDATA[(*
+Adds, updates, or removes an argument in the list at the specified index.  
+Return:
+- `Ok` - Upon successfully adding, modifying, or removing an entry.
+- `None` - When replacing a null entry with another null entry.
+- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
+*)
+METHOD Append : Result
 VAR_INPUT
 	iComponent	: I_Component;
 	nIndex		: UDINT;

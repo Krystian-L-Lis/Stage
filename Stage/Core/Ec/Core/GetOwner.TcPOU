@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FetchOwner" Id="{a3b7220f-6050-4211-8801-8b108ece1681}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION FetchOwner : Result
+  <POU Name="GetOwner" Id="{a3b7220f-6050-4211-8801-8b108ece1681}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Finds the owning entity of a given component in the Entity-Component system.  
+This function may involve a costly search operation, iterating through all components.
+Returns:
+- `Ok` - Successfully retrieves the `I_Entity` that owns the component.
+- `None` - No owning entity is found, returning null.
+*)
+FUNCTION GetOwner : Result
 VAR_INPUT
 	iComponent	: I_Component;
 END_VAR
@@ -18,11 +25,12 @@ END_VAR]]></Declaration>
 	j.Set(1);
 	WHILE IsOk(iEntity.Get(j.Next(), iComp => _iComp)) DO
 		IF _iComp = iComponent THEN
-			FetchOwner := Ok;
+			GetOwner := Ok;
 			RETURN;
 		END_IF
 	END_WHILE
-END_WHILE]]></ST>
+END_WHILE
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

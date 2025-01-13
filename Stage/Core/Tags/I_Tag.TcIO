@@ -4,6 +4,7 @@
     <Declaration><![CDATA[(*
 An identifier that uses reflection to generate a unique symbol path.
 It simplifies the path by removing project, PLC, and tag segments.
+Can be casted to `I_Arg` and `I_Component`.
 Example:
 - Reflection: proj.plc.MAIN.functionBlock[*]._tag
 - Path: MAIN.functionBlock.5

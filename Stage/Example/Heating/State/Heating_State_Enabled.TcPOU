@@ -45,7 +45,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnInit" Id="{ff2ff1ed-67cd-4bcc-bf07-4aeaf2a4bb97}">
-      <Declaration><![CDATA[METHOD OnInit
+      <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.hmi.sStatusText := 'Heating enabled: Waiting for requests...';

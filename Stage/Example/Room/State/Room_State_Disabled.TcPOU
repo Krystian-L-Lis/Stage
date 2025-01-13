@@ -22,7 +22,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnInit" Id="{f389e261-ef83-454d-a100-de95232fb4c4}">
-      <Declaration><![CDATA[METHOD OnInit
+      <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.io.bOpenValves := TRUE;

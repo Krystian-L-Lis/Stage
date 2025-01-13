@@ -39,7 +39,12 @@ END_VAR
       </Set>
     </Property>
     <Method Name="Get" Id="{afbd579f-fd8e-4b2e-abcf-16fd7b88f3d9}">
-      <Declaration><![CDATA[METHOD Get : Result
+      <Declaration><![CDATA[(*
+Retrieves a specific component from the entity based on the provided index.  
+Returns `None` if the index is out of range or the entity size is zero.
+Otherwise returns `Ok`.
+*)
+METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
 END_VAR
@@ -48,13 +53,20 @@ VAR_OUTPUT
 END_VAR]]></Declaration>
     </Method>
     <Property Name="Id" Id="{c3aa60be-0f8f-4a21-8b5a-adca79ca23b3}">
-      <Declaration><![CDATA[PROPERTY Id : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the unique identifier of the entity, used for tracking and referencing within the EC system.
+*)
+PROPERTY Id : UDINT]]></Declaration>
       <Get Name="Get" Id="{9bbff69b-c802-40f4-ac22-73fb3608c8da}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
     <Property Name="Size" Id="{566027c5-cdc2-4034-8eb4-a311c8741cd8}">
-      <Declaration><![CDATA[PROPERTY Size : UDINT]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides the size of the entity, indicating the number of components it manages.  
+Note: For internal logic purposes, this value is incremented by one beyond the actual component count.
+*)
+PROPERTY Size : UDINT]]></Declaration>
       <Get Name="Get" Id="{717b31d4-ecc7-4a6c-bc4d-7f7fd087a1fc}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

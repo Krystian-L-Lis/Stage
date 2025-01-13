@@ -32,6 +32,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="OnEntry" Id="{34f20feb-a6b8-476a-ac7d-107b73173ddd}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD OnEntry
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="OnExecute" Id="{23860f66-3827-4c1c-aa60-c228bf755ba9}" FolderPath="On\">
       <Declaration><![CDATA[METHOD OnExecute
 VAR_INPUT
@@ -44,14 +50,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnInit" Id="{34f20feb-a6b8-476a-ac7d-107b73173ddd}" FolderPath="On\">
-      <Declaration><![CDATA[METHOD OnInit
-VAR_INPUT
-END_VAR
-]]></Declaration>
-    </Method>
     <Property Name="Owner" Id="{d93a7a3f-73d8-4f22-af14-97d5aa90489a}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY Owner : I_Entity]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the entity that owns this state.
+*)
+PROPERTY Owner : I_Entity]]></Declaration>
       <Get Name="Get" Id="{ada6f75c-eaf0-4d2e-ae8a-ddb0ab50f119}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

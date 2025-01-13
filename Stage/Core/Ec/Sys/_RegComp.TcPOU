@@ -29,7 +29,12 @@ VAR
 	_nNewStart	: UDINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Check if either iEntity or iComponent is invalid (0 indicates null).
+      <ST><![CDATA[IF _Ec.bRegLock THEN
+	_RegComp := Err.Init;
+	RETURN;
+END_IF
+
+// Check if either iEntity or iComponent is invalid (0 indicates null).
 IF iEntity = 0 OR iComponent = 0 THEN
     _RegComp := Err.Itf0;
     RETURN;

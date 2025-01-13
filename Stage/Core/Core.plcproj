@@ -93,10 +93,10 @@
     <Compile Include="Arg\Args\DWORD\I_DwordArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\CompAsIArg.TcPOU">
+    <Compile Include="Arg\ICompToIArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\ArgAsIComponent.TcPOU">
+    <Compile Include="Arg\IArgAsIComp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\List\ArgList.TcPOU">
@@ -129,7 +129,7 @@
     <Compile Include="Broadcast\Helpers\GetReceiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Receiver\CompAsIReceiver.TcPOU">
+    <Compile Include="Broadcast\Receiver\ICompToIRec.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Receiver\I_Receiver.TcIO">
@@ -141,7 +141,7 @@
     <Compile Include="Broadcast\Receiver\Receiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Broadcast\Signal\CompAsISignal.TcPOU">
+    <Compile Include="Broadcast\Signal\ICompToISignal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Signal\SignalProxy.TcPOU">
@@ -215,7 +215,7 @@
     <Compile Include="Ec\Core\Entity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\FetchOwner.TcPOU">
+    <Compile Include="Ec\Core\GetOwner.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\Core\I_Component.TcIO">
@@ -318,10 +318,7 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="State\Buffer\I_StateBuffer.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="State\Buffer\StateBuffer.TcPOU">
+    <Compile Include="State\_Buffer\_StateBuffer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\Helpers\GetStateManager.TcPOU">
@@ -330,13 +327,10 @@
     <Compile Include="State\Helpers\GetState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="State\Machine\I_StateMachine.TcIO">
+    <Compile Include="State\_Machine\_StateMachine.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="State\Machine\StateMachine.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="State\Manager\CompAsIStateManager.TcPOU">
+    <Compile Include="State\Manager\ICompToIStateMgr.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\Manager\StateManagerProxy.TcPOU">
@@ -348,7 +342,7 @@
     <Compile Include="State\Manager\StateManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="State\State\CompAsIState.TcPOU">
+    <Compile Include="State\State\ICompToIState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\State\I_State.TcIO">
@@ -387,13 +381,13 @@
     <Compile Include="Strings\SymPath\MatchSymPathPattern.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\ArgAsITag.TcPOU">
+    <Compile Include="Tags\Casts\IArgToITag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\CompAsITagged.TcPOU">
+    <Compile Include="Tags\Casts\ICompToITag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\CompAsITag.TcPOU">
+    <Compile Include="Tags\Casts\ICompToITagged.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\Helpers\GetTag.TcPOU">
@@ -459,10 +453,10 @@
     <Folder Include="Runtime\Execute" />
     <Folder Include="Runtime\Init" />
     <Folder Include="State" />
-    <Folder Include="State\Buffer">
+    <Folder Include="State\_Buffer">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
-    <Folder Include="State\Machine">
+    <Folder Include="State\_Machine">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
     <Folder Include="State\Manager">
@@ -476,6 +470,7 @@
     <Folder Include="Strings\Strf" />
     <Folder Include="Strings\SymPath" />
     <Folder Include="Tags\Helpers" />
+    <Folder Include="Tags\Casts" />
     <Folder Include="_" />
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>

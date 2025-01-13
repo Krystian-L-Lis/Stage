@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Signal" Id="{f8e18ed7-1c52-42fc-a059-fb597dcc2816}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_SignalEmit
+    <Declaration><![CDATA[(*
+Represents a signal node within the Broadcast system.  
+Enables the emission of events and supports pairing with receivers.
+*)
+FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_SignalEmit
+
 VAR
 	_tag			: Tag('');
 	_nId			: UDINT;
@@ -86,7 +91,11 @@ END_VAR
       </Set>
     </Property>
     <Method Name="Emit" Id="{4ad2ae5f-8061-46ee-9938-a79c2993fbad}">
-      <Declaration><![CDATA[METHOD Emit
+      <Declaration><![CDATA[(*
+Emits an argument through the signal's broadcasting system.  
+If no argument is provided, it defaults to emitting the associated tag.
+*)
+METHOD Emit
 VAR_INPUT
 	iArg			: I_Arg := 0;
 END_VAR
@@ -100,7 +109,13 @@ _Emit(THIS^, iArg);]]></ST>
       </Implementation>
     </Method>
     <Method Name="EmitTo" Id="{01237bb5-eb33-4f6f-8303-4496429927bb}">
-      <Declaration><![CDATA[METHOD EmitTo : Result
+      <Declaration><![CDATA[(*
+Emits an argument to a specified receiver.
+Returns:
+- `Ok` - If the emission is successful.
+- `Err.Itf0` - If the receiver interface is invalid.
+*)
+METHOD EmitTo : Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
 	iArg			: I_Arg;
@@ -146,7 +161,10 @@ END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="Option" Id="{1843f7ed-dc01-49ec-bf6f-06b77ee6ae5f}">
-      <Declaration><![CDATA[METHOD Option : REFERENCE TO Signal
+      <Declaration><![CDATA[(*
+Sets an Tag.Option property of an internal Tag. Chainable.
+*)
+METHOD Option : REFERENCE TO Signal
 VAR_INPUT
 	sOption		: Str;
 END_VAR
@@ -157,7 +175,16 @@ _tag.Option := sOption;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Pair" Id="{ffac2203-3a22-4d2d-be13-7d02d87566af}">
-      <Declaration><![CDATA[METHOD Pair : Result
+      <Declaration><![CDATA[(*
+Pairs the signal with a receiver.  
+Returns:
+- `Ok` - If pairing is successful.
+- `Err.Itf0` - If the receiver interface is invalid.
+- `Err.IncArg` - If the `I_Receiver` is invalid.
+- `Err.ItfEq` - If the `I_Receiver` is already paired with this `I_Signal`.
+- `Err.Ovf` - If there is no space for another pairing.
+*)
+METHOD Pair : Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
 END_VAR]]></Declaration>
@@ -167,14 +194,17 @@ END_VAR]]></Declaration>
 ELSIF iReceiver.IsOk THEN
 	Pair := _Pair(THIS^, iReceiver);
 ELSE
-	Pair := Error;
+	Pair := Err.IncArg;
 END_IF
 
 ]]></ST>
       </Implementation>
     </Method>
     <Property Name="Tag" Id="{276c9dc2-e1f1-4c44-b5b0-4b2a0ec67ff8}">
-      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides access to the tag associated with the signal.
+*)
+PROPERTY Tag : I_Tag]]></Declaration>
       <Get Name="Get" Id="{75779fa8-33cd-4bad-ac20-5c8ee6db9799}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -185,7 +215,15 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Unpair" Id="{c5a28d3d-8210-4c9d-a125-1a6761d00d0d}">
-      <Declaration><![CDATA[METHOD Unpair : Result
+      <Declaration><![CDATA[(*
+Unpairs the signal from a specified receiver.
+Returns:
+- `Ok` - If unpairing is successful.
+- `Err.Itf0` - If the receiver interface is invalid.
+- `Err.IncArg` - If the `I_Receiver` is invalid.
+- `Err.NoMatch` - If `I_Signal` is not paired with this `I_Receiver`.
+*)
+METHOD Unpair : Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
 END_VAR
@@ -196,7 +234,7 @@ END_VAR
 ELSIF iReceiver.IsOk THEN
 	Unpair := _Unpair(THIS^, iReceiver);
 ELSE
-	Unpair := Error;
+	Unpair := Err.IncArg;
 END_IF]]></ST>
       </Implementation>
     </Method>

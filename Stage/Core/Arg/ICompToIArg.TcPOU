@@ -1,25 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="CompAsIReceiver" Id="{9a02776e-f8c4-45bc-8c18-325d7f2421cf}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION CompAsIReceiver : Result
+  <POU Name="ICompToIArg" Id="{cea0c7a0-5752-446d-bb01-5581ac3b101a}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Casts I_Component to I_Arg
+*)
+FUNCTION ICompToIArg : Result
 VAR_INPUT
 	iSource	: I_Component;
 END_VAR
 VAR_OUTPUT
-	iDest	: I_Receiver;
+	iDest	: I_Arg;
 END_VAR
+
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iSource = 0 THEN
-	CompAsIReceiver := Err.Itf0;
+	ICompToIArg := Err.Itf0;
 	RETURN;
 END_IF
 
 IF __QUERYINTERFACE(iSource, iDest) THEN
-	CompAsIReceiver := Ok;
+	ICompToIArg := Ok;
 ELSE
 	iDest := 0;
-	CompAsIReceiver := Err.NoMatch;
+	ICompToIArg := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>
   </POU>

@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="State" Id="{a3b28716-f684-494e-889b-84fe1781ad45}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT State IMPLEMENTS I_StateInternal, I_State
+    <Declaration><![CDATA[(*
+An abstract representation of a system state, providing the foundation for implementing state-specific behavior.  
+Manages its owner entity and supports state transitions within the system.  
+Offers default behavior for state lifecycle methods, allowing programmers to override only the relevant parts.
+*)
+FUNCTION_BLOCK ABSTRACT State IMPLEMENTS I_StateInternal, I_State
 VAR
 	{attribute 'hide'}
 	_tag						: Tag('');
@@ -59,18 +64,21 @@ END_VAR
       </Set>
     </Property>
     <Method Name="CanActivate" Id="{71c49a83-838e-4656-9fc2-ce8957b8e198}" FolderPath="Can\">
-      <Declaration><![CDATA[METHOD CanActivate : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
+      <Declaration><![CDATA[(*
+Determines whether the state can be activated.  
+Returns `TRUE` by default but can be overridden for specific activation conditions.
+*)
+METHOD CanActivate : BOOL]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanActivate := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="CanDeactivate" Id="{d9ac8857-b429-40a0-ae64-2f200213bb6e}" FolderPath="Can\">
-      <Declaration><![CDATA[METHOD CanDeactivate : BOOL
-VAR_INPUT
-END_VAR
+      <Declaration><![CDATA[(*
+Determines whether the state can be deactivated.  
+Returns `TRUE` by default but can be overridden for specific deactivation conditions.
+*)
+METHOD CanDeactivate : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanDeactivate := TRUE;]]></ST>
@@ -104,35 +112,43 @@ IF IsErr(_RegComp(iEntity, THIS^), nOut => _nResult) THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnExecute" Id="{aabb82b9-2f5d-4e99-b353-6c10e3d6ce3d}" FolderPath="On\">
-      <Declaration><![CDATA[METHOD OnExecute
-VAR_INPUT
-END_VAR
+    <Method Name="OnEntry" Id="{233f0cb7-a018-4a8e-a04c-cd20357f448f}" FolderPath="On\">
+      <Declaration><![CDATA[(*
+Executed when the state is entered.  
+Provides a hook for defining state-specific behavior to be performed during the transition into this state.
+*)
+METHOD OnEntry
 ]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExecute" Id="{aabb82b9-2f5d-4e99-b353-6c10e3d6ce3d}" FolderPath="On\">
+      <Declaration><![CDATA[(*
+Executed during the state's operation.  
+Used to define state-specific logic that runs while the state is active.
+*)
+METHOD OnExecute]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExit" Id="{25d7c89a-22df-4af1-9c2c-e2be2f3e48a9}" FolderPath="On\">
-      <Declaration><![CDATA[METHOD OnExit
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="OnInit" Id="{233f0cb7-a018-4a8e-a04c-cd20357f448f}" FolderPath="On\">
-      <Declaration><![CDATA[METHOD OnInit
-VAR_INPUT
-END_VAR
-]]></Declaration>
+      <Declaration><![CDATA[(*
+Executed when the state transitions to another state.  
+Provides a hook for defining cleanup or transition-specific behavior.
+*)
+METHOD OnExit]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Property Name="Owner" Id="{32b502a4-ba25-4a78-8e46-5a8b31e2a3e9}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY FINAL Owner : I_Entity]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the entity that owns this state.
+*)
+PROPERTY FINAL Owner : I_Entity
+]]></Declaration>
       <Get Name="Get" Id="{98a99666-df4c-40b9-abec-3c308e3cdead}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -143,7 +159,10 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Tag" Id="{0bbeba40-ec6e-4b6d-a33f-9c84eca9c89e}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY FINAL Tag : I_Tag]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides access to the `I_Tag` associated with the state.
+*)
+PROPERTY FINAL Tag : I_Tag]]></Declaration>
       <Get Name="Get" Id="{c1b1ddfd-4e01-4e44-9d81-1a59ffd92985}">
         <Declaration><![CDATA[VAR
 END_VAR

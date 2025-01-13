@@ -1,26 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="CompAsIState" Id="{4f07989d-6b80-4af7-8c3a-fc64f8e2cb2a}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION CompAsIState : Result
+  <POU Name="ICompToIStateMgr" Id="{74e3d0c6-57df-4b44-8bce-eaff7973637c}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Casts I_Component to I_StateManager
+*)
+FUNCTION ICompToIStateMgr : Result
 VAR_INPUT
 	iSource	: I_Component;
 END_VAR
 VAR_OUTPUT
-	iDest	: I_State;
+	iDest	: I_StateManager;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iSource = 0 THEN
-	CompAsIState := Err.Itf0;
+	ICompToIStateMgr := Err.Itf0;
 	RETURN;
 END_IF
 
 IF __QUERYINTERFACE(iSource, iDest) THEN
-	CompAsIState := Ok;
+	ICompToIStateMgr := Ok;
 ELSE
 	iDest := 0;
-	CompAsIState := Err.NoMatch;
+	ICompToIStateMgr := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>
   </POU>

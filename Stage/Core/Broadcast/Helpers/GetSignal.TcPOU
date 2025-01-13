@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="GetSignal" Id="{2eb03124-d4b7-4b59-aba1-5a6a945c2c58}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION GetSignal : Result
+    <Declaration><![CDATA[(*
+Searches an `I_Entity` for a `I_Signal` component matching provided id pattern.
+Result:
+- Ok - Returns `I_Signal`.
+- None - Returns null.
+- Err.Itf0 - Returns null, incorrect interface.
+*)
+FUNCTION GetSignal : Result
 VAR_INPUT
 	iEntity		: I_Entity;
 	sTagId		: Str;
@@ -22,7 +29,7 @@ END_VAR
 END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(CompAsISignal(_iComp, iDest => iSignal)) THEN
+	IF IsOk(ICompToISignal(_iComp, iDest => iSignal)) THEN
 		IF cmp.Set(iSignal.Tag).MatchWcdId(sTagId).IsTrue() THEN
 			GetSignal := Ok;
 			RETURN;

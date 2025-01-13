@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="StateManagerProxy" Id="{5b75e9b7-1e68-47ad-a910-43e605a726a6}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK StateManagerProxy IMPLEMENTS I_Debug
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
-VAR
-END_VAR
+    <Declaration><![CDATA[(*
+Assigns interface pointer to interface variable upon FB_Init.
+*)
+FUNCTION_BLOCK StateManagerProxy IMPLEMENTS I_Debug
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

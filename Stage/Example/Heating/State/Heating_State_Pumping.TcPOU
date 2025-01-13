@@ -83,7 +83,7 @@ END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnInit" Id="{dc76118f-322c-4257-9d92-65205e9e8301}">
-      <Declaration><![CDATA[METHOD OnInit
+      <Declaration><![CDATA[METHOD OnEntry
 VAR
 	strb			: Strb;
 END_VAR]]></Declaration>

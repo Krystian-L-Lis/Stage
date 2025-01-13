@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Receiver" Id="{09249f88-9a26-4648-82ad-ef06a2e8297b}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Receiver IMPLEMENTS I_ReceiverNode, I_Receiver
+    <Declaration><![CDATA[(*
+Represents a receiver in the Broadcast system. Implements the necessary methods for receiving events and pairing signals.
+*)
+FUNCTION_BLOCK FINAL Receiver IMPLEMENTS I_ReceiverNode, I_Receiver
 VAR
 	_iCallable		: I_Callable;
 	_tag			: Tag('');
@@ -32,7 +35,10 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsOk" Id="{f1f087c9-ce24-4a7a-9d2f-520cd51dc062}">
-      <Declaration><![CDATA[PROPERTY INTERNAL IsOk : BOOL]]></Declaration>
+      <Declaration><![CDATA[(*
+Checks if the receiver is properly initialized and ready to operate.
+*)
+PROPERTY INTERNAL IsOk : BOOL]]></Declaration>
       <Get Name="Get" Id="{01cfd46c-ea36-47ad-88cc-581ac680254f}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -43,7 +49,16 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Pair" Id="{6fffc843-9230-4d39-885d-576d2d6aa59f}">
-      <Declaration><![CDATA[METHOD Pair : Result
+      <Declaration><![CDATA[(*
+Pairs the receiver with a signal.  
+Returns:
+- `Ok` - If pairing is successful.
+- `Err.Itf0` - If the receiver interface is invalid.
+- `Err.IncArg` - If the `I_Receiver` is invalid.
+- `Err.ItfEq` - If the `I_Receiver` is already paired with this `I_Signal`.
+- `Err.Ovf` - If there is no space for another pairing.
+*)
+METHOD Pair : Result
 VAR_INPUT
 	iSignal		: I_Signal;
 END_VAR
@@ -67,7 +82,10 @@ END_VAR
       </Implementation>
     </Method>
     <Property Name="Tag" Id="{c4ff52e5-e8db-4834-b8d3-e55ed4dc8f91}">
-      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Declaration><![CDATA[(*
+Provides access to the tag associated with the signal.
+*)
+PROPERTY Tag : I_Tag]]></Declaration>
       <Get Name="Get" Id="{78444fd4-17bd-40e5-bca6-e460c617c742}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -78,7 +96,15 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Unpair" Id="{9cdd6e18-8337-45bf-81f7-8c24c8d9cdfa}">
-      <Declaration><![CDATA[METHOD Unpair : Result
+      <Declaration><![CDATA[(*
+Unpairs the signal from a specified receiver.
+Returns:
+- `Ok` - If unpairing is successful.
+- `Err.Itf0` - If the receiver interface is invalid.
+- `Err.IncArg` - If the `I_Receiver` is invalid.
+- `Err.NoMatch` - If `I_Signal` is not paired with this `I_Receiver`.
+*)
+METHOD Unpair : Result
 VAR_INPUT
 	iSignal		: I_Signal;
 END_VAR

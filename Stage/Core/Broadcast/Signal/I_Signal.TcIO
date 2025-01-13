@@ -1,17 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Signal" Id="{24f70e98-e98e-42d2-be1a-1b78aa21ba77}">
-    <Declaration><![CDATA[INTERFACE I_Signal EXTENDS I_Debug, I_Tagged
+    <Declaration><![CDATA[(*
+Enables pairing with receivers and casting to `I_Component`, but no emitting.
+*)
+INTERFACE I_Signal EXTENDS I_Debug, I_Tagged
 ]]></Declaration>
     <Method Name="Pair" Id="{ca87eecf-5514-49b6-9ee7-6f01e2786d2f}">
-      <Declaration><![CDATA[METHOD Pair : Result
+      <Declaration><![CDATA[(*
+Pairs the signal with a receiver.  
+Returns:
+- `Ok` - If pairing is successful.
+- `Err.Itf0` - If the receiver interface is invalid.
+- `Err.IncArg` - If the `I_Receiver` is invalid.
+- `Err.ItfEq` - If the `I_Receiver` is already paired with this `I_Signal`.
+- `Err.Ovf` - If there is no space for another pairing.
+*)
+METHOD Pair : Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Unpair" Id="{fa23d0f6-12ae-44be-a780-a181f4365fc2}">
-      <Declaration><![CDATA[METHOD Unpair : Result
+      <Declaration><![CDATA[(*
+Unpairs the signal from a specified receiver.
+Returns:
+- `Ok` - If unpairing is successful.
+- `Err.Itf0` - If the receiver interface is invalid.
+- `Err.IncArg` - If the `I_Receiver` is invalid.
+- `Err.NoMatch` - If `I_Signal` is not paired with this `I_Receiver`.
+*)
+METHOD Unpair : Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
 END_VAR

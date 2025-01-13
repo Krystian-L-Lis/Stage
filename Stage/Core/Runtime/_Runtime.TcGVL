@@ -8,6 +8,8 @@ VAR_GLOBAL INTERNAL
 
 	iFirstCyclic		: I_ExecuteNode;
 	iLastCyclic			: I_ExecuteNode;
+	
+	bInit				: BOOL := TRUE;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

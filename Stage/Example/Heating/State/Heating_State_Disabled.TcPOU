@@ -23,7 +23,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnInit" Id="{969084cd-eabe-4f07-bb36-9264c638a3be}">
-      <Declaration><![CDATA[METHOD OnInit
+      <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.hmi.sStatusText := 'Heating disabled!';

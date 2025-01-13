@@ -1,30 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_StateManager" Id="{ec583bc5-9b8d-4fc4-91c2-534454363ae3}">
-    <Declaration><![CDATA[INTERFACE I_StateManager EXTENDS I_Debug, I_Tagged
+    <Declaration><![CDATA[(*
+Can be casted to `I_Component`.
+Manages the lifecycle and transitions of states within an entity.  
+Supports queuing state change requests, triggering state transitions, and broadcasting state change events.  
+Adds a `_stateChangeEvent` Signal to the owning `I_Entity` during initialization, enabling external components to listen for state changes.
+*)
+INTERFACE I_StateManager EXTENDS I_Debug, I_Component
 ]]></Declaration>
+    <Folder Name="_" Id="{d37276ba-b4fd-4c01-85c1-b731864bfd31}" />
     <Folder Name="Request" Id="{87840c05-c4d3-4f53-8cbe-0a9fd43b4889}" />
     <Folder Name="State" Id="{1e4aeef3-5172-4853-a26a-6057d4b308ba}" />
     <Property Name="Current" Id="{9e46e8e5-e078-4315-aaef-86ce15f9d553}" FolderPath="State\">
-      <Declaration><![CDATA[PROPERTY Current : I_State]]></Declaration>
+      <Declaration><![CDATA[(*
+Retrieves the currently active state managed by the state manager.
+*)
+PROPERTY Current : I_State
+]]></Declaration>
       <Get Name="Get" Id="{6d438f0f-7238-46a4-a0fd-45c0f7fea2b7}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
+    <Property Name="Owner" Id="{775b232d-96d5-4dba-8db8-37b3c1178ab1}" FolderPath="_\">
+      <Declaration><![CDATA[(*
+Returns the entity that owns this state.
+*)
+PROPERTY Owner : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{142d250e-4864-422b-9c22-5a1d6408d89e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Property Name="Pretender" Id="{7eee6298-11b0-46df-9f35-ba905e3faca3}" FolderPath="State\">
-      <Declaration><![CDATA[PROPERTY Pretender : I_State]]></Declaration>
+      <Declaration><![CDATA[(*
+Retrieves the state that is queued to become active next, but has not yet transitioned.
+*)
+PROPERTY Pretender : I_State
+]]></Declaration>
       <Get Name="Get" Id="{f565b10d-746e-4849-a907-af1498783778}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
     <Property Name="Previous" Id="{c2e1c3ef-1230-46cc-9227-0aa972552cdf}" FolderPath="State\">
-      <Declaration><![CDATA[PROPERTY Previous : I_State]]></Declaration>
+      <Declaration><![CDATA[(*
+Retrieves the last active state prior to the current one.
+*)
+PROPERTY Previous : I_State
+]]></Declaration>
       <Get Name="Get" Id="{66a045e0-86b0-4b8b-b205-8eac7ef37dde}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
     <Method Name="Request" Id="{cbf2f16f-b719-4bef-889f-617ff3718c21}" FolderPath="Request\">
-      <Declaration><![CDATA[METHOD Request : Result
+      <Declaration><![CDATA[(*
+Queues a request to transition to a specified state.  
+
+Returns:
+- `Ok` - If the state change request is successfully queued.
+- `Err.Itf0` - If the provided state interface is invalid.
+- `Err.NoMatch` - If the state does not belong to the same entity.
+- `Err.IncArg` - If the state is already in the queue.
+*)
+METHOD Request : Result
 VAR_INPUT
 	iState		: I_State;
 END_VAR]]></Declaration>

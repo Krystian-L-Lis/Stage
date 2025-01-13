@@ -1,29 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="ArgAsIComponent" Id="{5c29e6e1-73d7-4b4a-82c7-dcd0d4c36bbf}" SpecialFunc="None">
+  <POU Name="IArgToITag" Id="{eb6fc3c1-2221-44c0-9ffe-0c2aa2e4c73e}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Casts I_Arg as I_Components
+Casts I_Arg to I_Tag
 *)
-FUNCTION ArgAsIComponent : Result
+FUNCTION IArgToITag : Result
 VAR_INPUT
-	iSource	: I_Component;
+	iSource		: I_Arg;
 END_VAR
 VAR_OUTPUT
-	iDest	: I_StateManager;
+	iDest		: I_Tag;
 END_VAR
-
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iSource = 0 THEN
-	ArgAsIComponent := Err.Itf0;
+	IArgToITag := Err.Itf0;
 	RETURN;
 END_IF
 
 IF __QUERYINTERFACE(iSource, iDest) THEN
-	ArgAsIComponent := Ok;
+	IArgToITag := Ok;
 ELSE
 	iDest := 0;
-	ArgAsIComponent := Err.NoMatch;
+	IArgToITag := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>
   </POU>

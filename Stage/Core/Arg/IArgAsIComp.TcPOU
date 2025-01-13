@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="CompAsIArg" Id="{cea0c7a0-5752-446d-bb01-5581ac3b101a}" SpecialFunc="None">
+  <POU Name="IArgAsIComp" Id="{5c29e6e1-73d7-4b4a-82c7-dcd0d4c36bbf}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Casts I_Component as I_Arg
+Casts I_Arg to I_Components
 *)
-FUNCTION CompAsIArg : Result
+FUNCTION IArgAsIComp : Result
 VAR_INPUT
-	iSource	: I_Component;
+	iSource	: I_Arg;
 END_VAR
 VAR_OUTPUT
-	iDest	: I_StateManager;
+	iDest	: I_Component;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iSource = 0 THEN
-	CompAsIArg := Err.Itf0;
+	IArgAsIComp := Err.Itf0;
 	RETURN;
 END_IF
 
 IF __QUERYINTERFACE(iSource, iDest) THEN
-	CompAsIArg := Ok;
+	IArgAsIComp := Ok;
 ELSE
 	iDest := 0;
-	CompAsIArg := Err.NoMatch;
+	IArgAsIComp := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>
   </POU>

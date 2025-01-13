@@ -8,13 +8,6 @@
 //   component system. "iEntity" is an array of I_EntityNode, each describing
 //   an entity's allocated range and metadata. "comp" is an array of ST_EcObject,
 //   representing the actual slots for components or entity headers.
-//
-//   - iFirst:     Points to the leftmost (lowest _Start) entity in iEntity[],
-//                 or 0 if none exist.
-//   - nEntityLen: How many entities are currently in use out of ENTITY_CAP.
-//   - nCompLen:   How many slots in comp[] are occupied (sum of all allocated
-//                 blocks).
-//
 // ---------------------------------------------------------------------------
 {attribute 'qualified_only'}
 VAR_GLOBAL INTERNAL
@@ -25,6 +18,8 @@ VAR_GLOBAL INTERNAL
     
     nEntityLen  : UDINT;         // Number of active entities
     nCompLen    : UDINT;         // Number of allocated slots in 'comp' array
+	
+	bRegLock	: BOOL;
 END_VAR
 ]]></Declaration>
   </GVL>

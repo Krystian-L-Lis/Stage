@@ -1,10 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_State" Id="{8ee68e54-e03a-40c4-b9fd-28674c83f71b}">
-    <Declaration><![CDATA[INTERFACE I_State EXTENDS I_Tagged, I_Debug, I_StateAdapter
-]]></Declaration>
+    <Declaration><![CDATA[(*
+Allows states to be cast to `I_Component`.
+*)
+INTERFACE I_State EXTENDS I_Tagged, I_Debug, I_StateAdapter]]></Declaration>
     <Property Name="Owner" Id="{0bc823ea-d1a3-4234-8eb6-66bbb0f8e330}">
-      <Declaration><![CDATA[PROPERTY Owner : I_Entity]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns the entity that owns this state.
+*)
+PROPERTY Owner : I_Entity]]></Declaration>
       <Get Name="Get" Id="{5525b7b9-1d3e-4516-9f77-c77dffb34dd8}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

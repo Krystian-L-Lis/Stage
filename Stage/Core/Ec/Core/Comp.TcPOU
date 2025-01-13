@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Comp" Id="{3b4f07cd-ce06-44c8-8976-14381e17260e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Comp IMPLEMENTS I_Debug
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
-VAR
-END_VAR
+    <Declaration><![CDATA[(*
+Registers component directly in declaration block. Alternative function: `RegComp`.
+*)
+FUNCTION_BLOCK Comp IMPLEMENTS I_Debug
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -22,15 +19,15 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 
-	iComponent	: I_Component;
-	iEntity		: I_Entity;
+	iComponent	: I_Component; // Component to register
+	iEntity		: I_Entity; // Component owner
 END_VAR
 VAR
 	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsErr(_RegComp(iEntity, iComponent), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', ResultToStr(_nResult)));
 END_IF
 
 ]]></ST>

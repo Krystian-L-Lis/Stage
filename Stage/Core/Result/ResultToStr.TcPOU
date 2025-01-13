@@ -24,6 +24,7 @@ END_VAR]]></Declaration>
     -11: ResultToStr := 'TcLib';
     -12: ResultToStr := 'InfLoop';
     -13: ResultToStr := 'IncArg';
+	-14: ResultToStr := 'Init';
     ELSE
         ResultToStr := Tc2_Standard.CONCAT('Unknown result: ', INT_TO_STRING(nResult));
 END_CASE]]></ST>

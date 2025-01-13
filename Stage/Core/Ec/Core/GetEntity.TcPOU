@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="GetEntity" Id="{f364a793-1b08-4c02-b87e-c6952bc10b65}" SpecialFunc="None">
-    <Declaration><![CDATA[// ---------------------------------------------------------------------------
-// FUNCTION:  GetEntity
-// PURPOSE:   Retrieves (via iEntity) the I_Entity instance at the given nIndex
-//            from the global _Ec.iEntity array, if valid. Returns an appropriate
-//            result code (e.g., Ok or None) depending on whether nIndex is
-//            in range.
-// ---------------------------------------------------------------------------
+    <Declaration><![CDATA[(*
+Retrieves the I_Entity instance at the given nIndex from the global entity list.
+Returns:
+- Ok - Returns I_Entity
+- None - Returns Null
+*)
 FUNCTION GetEntity : Result
 VAR_INPUT
 	nIndex		: UDINT;

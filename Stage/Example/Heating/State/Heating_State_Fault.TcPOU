@@ -79,7 +79,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnInit" Id="{1a485ee3-23cb-485d-a3aa-fbbe73930b2a}">
-      <Declaration><![CDATA[METHOD OnInit
+      <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT _ctx.io.in.bBurnerOverload THEN
