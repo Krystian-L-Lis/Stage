@@ -21,13 +21,43 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1000"</v>
+              <v n="TextDefault">"%2.2f min"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"388"</v>
+              <v n="TextDefault">"%2.2f s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"181"</v>
               <v n="TextDefault">"%2.2f °C"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"252"</v>
+              <v n="TextDefault">"%i"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"752"</v>
+              <v n="TextDefault">"%i min"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"296"</v>
+              <v n="TextDefault">"%i s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"862"</v>
               <v n="TextDefault">"%s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"231"</v>
+              <v n="TextDefault">"Active"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -121,6 +151,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"42"</v>
+              <v n="TextDefault">"High Temperature"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"254"</v>
               <v n="TextDefault">"hmi.sMultiButtonText"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -138,6 +173,11 @@
             <o>
               <v n="TextID">"234"</v>
               <v n="TextDefault">"Low Level: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"738"</v>
+              <v n="TextDefault">"Low Temperature"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -196,8 +236,23 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"848"</v>
+              <v n="TextDefault">"OFF Delay"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"934"</v>
+              <v n="TextDefault">"ON delay"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"998"</v>
               <v n="TextDefault">"Overload"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"728"</v>
+              <v n="TextDefault">"PASSIVE HEATING"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -341,6 +396,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"743"</v>
+              <v n="TextDefault">"Timeout"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"737"</v>
               <v n="TextDefault">"Timeout: %.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -352,9 +412,9 @@
             </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{6d70ee6d-c3a6-41d0-8406-8365772d0f10}</v>
-          <v n="GuidReInit">{02588e6c-74fb-4f1f-b788-d7cede62383b}</v>
-          <v n="GuidExitX">{c02f3dd8-1518-47c7-9f11-b7e6107b4dfb}</v>
+          <v n="GuidInit">{1f148670-3561-4c2e-8a8e-76bf40d21e00}</v>
+          <v n="GuidReInit">{880085f0-c1be-4b81-bd2f-35f08c1043f3}</v>
+          <v n="GuidExitX">{a2e6e455-4dcd-47b7-9bd6-488a94f03f2e}</v>
         </o>
       </Data>
       <TypeList>

@@ -113,6 +113,12 @@ END_IF
 
 FOR i := 1 TO SENSOR_CAP DO
 	rTemperature[i] := rTemperature[i] + sim.param.rRoomTemperaturePassiveDrop + Random();
+	
+	IF rTemperature[i] < 0 THEN
+		rTemperature[i] := 0;
+	ELSIF rTemperature[i] > 100 THEN
+		rTemperature[i] := 100;
+	END_IF
 END_FOR]]></ST>
       </Implementation>
     </Method>

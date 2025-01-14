@@ -4,6 +4,7 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
 	MAX_ROOM		: UDINT := 3;
+	MAX_ESTOP		: UDINT := 2;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

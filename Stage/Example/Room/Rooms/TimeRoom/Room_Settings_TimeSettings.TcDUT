@@ -3,8 +3,8 @@
   <DUT Name="Room_Settings_TimeSettings" Id="{a09af3f3-b6d2-4d22-a191-50ef57298cc4}">
     <Declaration><![CDATA[TYPE Room_Settings_TimeSettings :
 STRUCT
-	nOff		: UDINT := TIME_TO_UDINT(T#30S);
-	nOn			: UDINT := TIME_TO_UDINT(T#30S);
+	nOff		: UDINT := 600;
+	nOn			: UDINT := 30;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

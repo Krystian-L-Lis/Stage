@@ -3,6 +3,8 @@
   <POU Name="Room_Ctx_Hmi" Id="{9536c277-9786-455b-b876-b447754e1a8d}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx_Hmi
 VAR_INPUT
+	nId						: UDINT;	
+
 	sStatusText				: Str;
 	sErrorText				: Str;
 	nStatusColor			: Color;
@@ -16,7 +18,7 @@ VAR_INPUT
 	bHideReset				: BOOL;
 END_VAR
 VAR_OUTPUT PERSISTENT
-	nTimeout				: UDINT := TIME_TO_UDINT(T#60S);
+	nTimeout				: UDINT := 1;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

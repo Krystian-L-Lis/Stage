@@ -505,7 +505,7 @@
             <v>ExtendedSettings</v>
             <v>true</v>
             <v>GeneralPropertySupport</v>
-            <v>true</v>
+            <v>false</v>
             <v>GlobalTextListFilePath</v>
             <v>""</v>
             <v>GlobalVisuImageFilePath</v>

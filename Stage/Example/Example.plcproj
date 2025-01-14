@@ -88,6 +88,7 @@
     <Compile Include="MAIN\MAIN.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
     <Compile Include="MAIN\SIM.TcGVL">
       <SubType>Code</SubType>
@@ -207,6 +208,9 @@
     <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="VISU_TASK.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="_UI\UI_Heating.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
@@ -215,7 +219,15 @@
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="_UI\UI_StandardRoom.TcVIS">
+    <Compile Include="_UI\UI_Room.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="_UI\UI_Temp.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="_UI\UI_Time.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
@@ -376,6 +388,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderResolution Include="System_VisuElemBase">
+      <Resolution>VisuElemBase, * (System)</Resolution>
+    </PlaceholderResolution>
     <PlaceholderResolution Include="System_VisuElemMeter">
       <Resolution>VisuElemMeter, 4.5.0.0 (System)</Resolution>
     </PlaceholderResolution>
@@ -425,7 +440,7 @@
             <v>ExtendedSettings</v>
             <v>true</v>
             <v>GeneralPropertySupport</v>
-            <v>true</v>
+            <v>false</v>
             <v>GlobalTextListFilePath</v>
             <v>""</v>
             <v>GlobalVisuImageFilePath</v>

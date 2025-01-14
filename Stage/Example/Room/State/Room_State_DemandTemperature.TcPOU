@@ -31,9 +31,11 @@ END_VAR]]></Declaration>
         <ST><![CDATA[_strb.Set(_ctx.hmi.sData)
 		.Append(' ')
 		.Append(REAL_TO_STRING(_refTemperature))
-		.Append('degC');
+		.Append(' degC');
 
 _ctx.hmi.sData := _strb.Read();
+
+
 
 IF _ctx.state.iMgr.Current <> _ctx.state.iIdle THEN
 	RETURN;

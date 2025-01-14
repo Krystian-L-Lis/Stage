@@ -40,7 +40,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx REF= ctx;
 _nMaxRoom := _nMaxRoom + 1;
-_nId := _nMaxRoom;]]></ST>
+_nId := _nMaxRoom;
+_ctx.hmi.nId := _nMaxRoom;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Id" Id="{cab61793-e91a-43d3-b4f1-43fa7063eb1d}">
@@ -116,7 +117,7 @@ _ctx.io.bOpenValves := TRUE;]]></ST>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Timeout := UDINT_TO_TIME(_ctx.hmi.nTimeout);]]></ST>
+          <ST><![CDATA[Timeout := UDINT_TO_TIME(_ctx.hmi.nTimeout * 1000 * 60);]]></ST>
         </Implementation>
       </Get>
     </Property>

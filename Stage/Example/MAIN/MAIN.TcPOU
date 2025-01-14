@@ -3,8 +3,8 @@
   <POU Name="MAIN" Id="{46c268e9-fb81-4ca2-9b53-e3c90b600c5e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	safety				: Safety<2>;
-	heating				: Heating<40>;
+	safety				: Safety<CST.MAX_ESTOP>;
+	heating				: Heating<CST.MAX_ROOM>;
 	standardRoom		: ARRAY[1..5] OF TempTimeRoom;
 	receptionRoom		: PassiveRoom;
 	conferentionRoom01	: PassiveTempTimeRoom;

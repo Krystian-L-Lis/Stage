@@ -29,8 +29,12 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_strb.Set(_ctx.hmi.sData)
-		.Append(' Off: ').Append(TIME_TO_STRING(_tonOff.ET))
-		.Append(' On: ').Append(TIME_TO_STRING(_tonOn.ET));
+		.Append(' Off: ').Append(strf.SimpleTime(_tonOff.ET, 'S', 'M'))
+		.Append(' |')
+		.Append(' On: ').Append(strf.SimpleTime(_tonOn.ET, 'S', 'M'))
+		.Append(' |');
+
+
 
 _ctx.hmi.sData := _strb.Read();
 
@@ -42,7 +46,7 @@ IF _ctx.state.iMgr.Current = _iSelf THEN
 	_tonOff(IN := FALSE);
 	RETURN;
 ELSE
-	_tonOff(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOff));
+	_tonOff(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOff * 1000));
 END_IF
 
 IF _tonOff.Q THEN
@@ -123,7 +127,7 @@ _onRequest.Emit(_ctx.priv.iThisRoom);
       <Declaration><![CDATA[METHOD OnExecute
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_tonOn(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOn));
+        <ST><![CDATA[_tonOn(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOn * 1000));
 IF _ctx.hmi.bDisable THEN
 	_ctx.state.iMgr.Request(_ctx.state.iDisable);
 ELSIF _tonOn.Q THEN
