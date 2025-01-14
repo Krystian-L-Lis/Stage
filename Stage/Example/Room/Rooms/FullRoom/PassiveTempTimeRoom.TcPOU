@@ -57,6 +57,9 @@ VAR
 	_timeDemand		: Room_State_DemandTime(_this, _ctx, _settings.timee);
 	_tempDemand		: Room_State_DemandTemperature(_this, _ctx, _settings.temp, rTemperature);
 	_passiveDemand	: Room_State_DemandPassive(_this, _ctx, _settings.bEnablePassive);
+	
+	_simInlet		: ValveSim;
+	_simOutlet		: ValveSim;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -72,7 +75,29 @@ _ctx.priv.bOpen := bInletValveIsOpen AND bOutletValveIsOpen;
 bInletValve :=  _ctx.io.bOpenValves;
 bOutletValve :=  _ctx.io.bOpenValves;
 
-_ctx.hmi.sData := '';]]></ST>
+_ctx.hmi.sData := '';
+
+// SIMULATION
+
+_simInlet(bInput := bInletValve,
+			bFault := sim.param.bToggleValveFault,
+			bIsOpen := bInletValveIsOpen,
+			bIsClosed := bInletValveIsClosed);
+_simOutlet(bInput := bOutletValve,
+			bFault := sim.param.bToggleValveFault,
+			bIsOpen := bOutletValveIsOpen,
+			bIsClosed := bOutletValveIsClosed);
+
+IF NOT sim.bTick THEN
+	RETURN;
+END_IF
+
+IF bInletValve AND bOutletValve THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater;
+	rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater;
+END_IF
+
+rTemperature := rTemperature + sim.param.rRoomTemperaturePassiveDrop;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{8a535d87-ac6a-40ed-b9f2-9d3eef458165}">

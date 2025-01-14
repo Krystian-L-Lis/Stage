@@ -14,17 +14,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="Active" Id="{05099b11-7bf8-4c59-9cb6-a7bb7b3a2db4}">
-      <Declaration><![CDATA[PROPERTY Active : BOOL]]></Declaration>
-      <Get Name="Get" Id="{9fda7680-eecb-4790-855c-e58914c1503a}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Active := _ctx.priv.bActive;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Method Name="Close" Id="{a7b9d657-00fa-45e9-baeb-af69e6018523}">
       <Declaration><![CDATA[METHOD Close
 ]]></Declaration>
@@ -62,6 +51,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[Id := _nId;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsActive" Id="{05099b11-7bf8-4c59-9cb6-a7bb7b3a2db4}">
+      <Declaration><![CDATA[PROPERTY IsActive : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9fda7680-eecb-4790-855c-e58914c1503a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsActive := _ctx.priv.bActive;]]></ST>
         </Implementation>
       </Get>
     </Property>

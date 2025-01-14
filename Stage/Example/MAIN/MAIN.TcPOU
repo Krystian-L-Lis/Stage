@@ -11,15 +11,17 @@ VAR
 	conferentionRoom02	: PassiveTempTimeRoomWithMultipleValves<3>;
 	storeRoom01			: TempRoom;
 	storeRoom02			: TempRoomWithMultipleSensors<3>;
-	
-	bSimulation			: BOOL;
-	
-	dbgInfo				: DebugInfo;	
-	
+
+	dbgInfo				: DebugInfo;
+	rtTick				: R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Runtime();]]></ST>
+      <ST><![CDATA[rtTick(CLK :=  Tick(sim.param.nTick), Q => sim.bTick);
+Runtime();
+
+
+]]></ST>
     </Implementation>
     <Method Name="_IO" Id="{03b676de-555c-400e-bba5-4ba9784520ec}">
       <Declaration><![CDATA[METHOD PRIVATE _IO

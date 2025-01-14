@@ -102,10 +102,8 @@ CASE _nStep OF
 		IF NOT bSafetyOk THEN
 			_nStep := 0;
 		END_IF
-
-
-		
-END_CASE]]></ST>
+END_CASE
+]]></ST>
       </Implementation>
     </Method>
   </POU>

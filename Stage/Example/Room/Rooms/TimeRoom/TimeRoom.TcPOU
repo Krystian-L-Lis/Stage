@@ -52,6 +52,8 @@ VAR_OUTPUT
 END_VAR
 VAR
 	_timeDemand		: Room_State_DemandTime(_this, _ctx, _settings);
+	_simInlet		: ValveSim;
+	_simOutlet		: ValveSim;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -67,7 +69,28 @@ _ctx.priv.bOpen := bInletValveIsOpen AND bOutletValveIsOpen;
 bInletValve :=  _ctx.io.bOpenValves;
 bOutletValve :=  _ctx.io.bOpenValves;
 
-_ctx.hmi.sData := '';]]></ST>
+_ctx.hmi.sData := '';
+
+// SIMULATION
+
+_simInlet(bInput := bInletValve,
+			bFault := sim.param.bToggleValveFault,
+			bIsOpen := bInletValveIsOpen,
+			bIsClosed := bInletValveIsClosed);
+_simOutlet(bInput := bOutletValve,
+			bFault := sim.param.bToggleValveFault,
+			bIsOpen := bOutletValveIsOpen,
+			bIsClosed := bOutletValveIsClosed);
+
+IF NOT sim.bTick THEN
+	RETURN;
+END_IF
+
+IF bInletValve AND bOutletValve THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater;
+END_IF
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{96d3f449-ec0a-476b-badc-62d236c8bce2}">

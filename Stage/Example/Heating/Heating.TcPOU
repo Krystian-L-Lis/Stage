@@ -93,7 +93,51 @@ _ctx.io.in.rBoilerTemp := rBoilerTemp;
 
 // Outputs
 _tonPump(IN := _ctx.io.out.bPump, PT := T#2S, Q => bPump);
-_tonBurner(IN := _ctx.io.out.bBurner, PT := T#2S, Q => bBurner);]]></ST>
+_tonBurner(IN := _ctx.io.out.bBurner, PT := T#2S, Q => bBurner);
+
+// SIMULATION
+
+IF NOT sim.bTick THEN
+	RETURN;
+END_IF
+
+// System temperature
+IF bBurner THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRisePerBurner;
+END_IF
+sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureDropPassive;
+
+IF sim.param.bToggleSystemTemperatureRise THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRise;
+END_IF
+IF sim.param.bToggleSystemTemperatureFall THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureFall;
+END_IF
+
+IF sim.rSystemTemperature < 0 THEN
+	sim.rSystemTemperature := 0;
+ELSIF sim.rSystemTemperature > 100 THEN
+	sim.rSystemTemperature := 100;
+END_IF
+
+// System Pressure
+IF sim.param.bToggleSystemPressureRise THEN
+	sim.rSystemPressure := sim.rSystemPressure + Sim.param.rSystemPressureRise;
+END_IF
+IF sim.param.bToggleSystemPressureFall THEN
+	sim.rSystemPressure := sim.rSystemPressure + Sim.param.rSystemPressureFall;
+END_IF
+
+IF sim.rSystemPressure < 0 THEN
+	sim.rSystemPressure := 0;
+ELSIF sim.rSystemPressure > 10 THEN
+	sim.rSystemPressure := 10;
+END_IF
+
+// Write IO
+
+rBoilerTemp := sim.rSystemTemperature;
+rBoilerPressure := sim.rSystemPressure;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{cc8e1674-1a3f-478e-a1dc-45b6956a8d3e}">

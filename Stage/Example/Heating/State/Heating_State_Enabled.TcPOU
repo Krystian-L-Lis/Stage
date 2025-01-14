@@ -43,7 +43,7 @@ ELSIF _ctx.io.in.rBoilerTemp < _ctx.hmi.rMinTemperature THEN
 	_ctx.state.iMgr.Request(_ctx.state.iHeatup);
 	
 ELSIF IsOk(_ctx.priv.iQueue.Pop(iArg => _iRoomArg)) THEN
-	IF IsOk(ArgAsIRoom(_iRoomArg, iDest => _ctx.priv.iActiveRoom)) THEN
+	IF IsOk(IArgToIRoom(_iRoomArg, iDest => _ctx.priv.iActiveRoom)) THEN
 		_ctx.state.iMgr.Request(_ctx.state.iPump);
 	ELSE
 		_ctx.hmi.sErrorText := 'Room Queue - Incorrect iRoomArg!';

@@ -11,27 +11,24 @@ STRUCT
 	rSystemTemperatureDropPassive	: REAL := -0.01;  // degC/tick
 	rSystemTemperatureDropPerHeater	: REAL := -0.01;  // degC/tick per heater
 	
+	bToggleSystemTemperatureRise	: BOOL := FALSE;
+	rSystemTemperatureRise			: REAL := 0.2;
+	
+	bToggleSystemTemperatureFall		: BOOL := FALSE;
+	rSystemTemperatureFall			: REAL := 0.2;
+	
 	bToggleSystemPressureRise		: BOOL := FALSE;
 	rSystemPressureRise				: REAL := 0.10;   // bar/tick
 	
 	bToggleSystemPressureFall		: BOOL := FALSE;
-	rSystemPressureFall				: REAL := 0.10;   // bar/tick
+	rSystemPressureFall				: REAL := -0.10;   // bar/tick
 	
 	// Room parameters
-	rRoomTemperatureDropPerSize		: REAL := -0.50;  // degC/tick/m2
-	rRoomTemperatureRisePerHeater	: REAL := 10.5;   // degC/tick
+	rRoomTemperaturePassiveDrop		: REAL := -0.50;  // degC/tick/m2
+	rRoomTemperatureRisePerHeater	: REAL := 0.70;   // degC/tick
 	
-	// Fault parameters
-	bToggleRandomFailChance			: BOOL := FALSE;
-	rPumpFailChance					: REAL := 0.0005; // chance/Tick
-	rBurnerFailChance				: REAL := 0.0005; // chance/Tick
-	rValveFailChance				: REAL := 0.0001; // chance/Tick
-	rSafetyFailChance				: REAL := 0.0001; // chance/Tick
-	
-	// Room sizes
-	rSmallRoom						: REAL := 20.0;  // m²
-	rMediumRoom						: REAL := 40.0;  // m²
-	rLargeRoom						: REAL := 80.0;  // m²
+	// Valve fault
+	bToggleValveFault				: BOOL;
 	
 END_STRUCT
 END_TYPE

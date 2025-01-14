@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="ArgAsIRoom" Id="{d00b227c-37ec-41f5-802c-208b27ba6260}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION ArgAsIRoom : Result
+  <POU Name="IArgToIRoom" Id="{d00b227c-37ec-41f5-802c-208b27ba6260}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IArgToIRoom : Result
 VAR_INPUT
 	iSource	: I_Arg;
 END_VAR
@@ -12,15 +12,15 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iSource = 0 THEN
-	ArgAsIRoom := Err.Itf0;
+	IArgToIRoom := Err.Itf0;
 	RETURN;
 END_IF
 
 IF __QUERYINTERFACE(iSource, iDest) THEN
-	ArgAsIRoom := Ok;
+	IArgToIRoom := Ok;
 ELSE
 	iDest := 0;
-	ArgAsIRoom := Err.NoMatch;
+	IArgToIRoom := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>
   </POU>

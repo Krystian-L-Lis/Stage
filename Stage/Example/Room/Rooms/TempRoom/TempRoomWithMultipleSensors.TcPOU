@@ -61,6 +61,9 @@ VAR_OUTPUT
 END_VAR
 VAR
 	_tempDemand		: Room_State_DemandTemperature(_this, _ctx, _settings, _rTemperature);
+	
+	_simInlet		: ValveSim;
+	_simOutlet		: ValveSim;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -85,7 +88,32 @@ END_FOR
 
 _rTemperature := _rTempSum/UDINT_TO_REAL(SENSOR_CAP);
 
-_ctx.hmi.sData := '';]]></ST>
+_ctx.hmi.sData := '';
+
+_simInlet(bInput := bInletValve,
+			bFault := sim.param.bToggleValveFault,
+			bIsOpen := bInletValveIsOpen,
+			bIsClosed := bInletValveIsClosed);
+_simOutlet(bInput := bOutletValve,
+			bFault := sim.param.bToggleValveFault,
+			bIsOpen := bOutletValveIsOpen,
+			bIsClosed := bOutletValveIsClosed);
+
+IF NOT sim.bTick THEN
+	RETURN;
+END_IF
+
+IF bInletValve AND bOutletValve THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater;
+	
+	FOR i := 1 TO SENSOR_CAP DO
+		rTemperature[i] := rTemperature[i] + sim.param.rRoomTemperatureRisePerHeater + Random();
+	END_FOR
+END_IF
+
+FOR i := 1 TO SENSOR_CAP DO
+	rTemperature[i] := rTemperature[i] + sim.param.rRoomTemperaturePassiveDrop + Random();
+END_FOR]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{b390b409-07d8-4077-904f-545a73e6c2aa}">

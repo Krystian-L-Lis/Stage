@@ -18,7 +18,7 @@ VAR
 	_iRoom				: I_Room;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsOk(ArgAsIRoom(iArg, iDest => _iRoom)) THEN
+        <ST><![CDATA[IF IsOk(IArgToIRoom(iArg, iDest => _iRoom)) THEN
 	_ctx.priv.iQueue.Push(_iRoom);
 END_IF]]></ST>
       </Implementation>

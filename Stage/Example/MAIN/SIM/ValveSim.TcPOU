@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ValveSim" Id="{7a0226db-12d4-4d63-b4cb-376d783fd9c5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ValveSim
+VAR_INPUT
+	bInput			: BOOL;
+	bFault			: BOOL;
+	tReactionDelay	: TIME := LREAL_TO_TIME(Random() * 1000);
+	
+	bIsOpen			: REFERENCE TO BOOL;
+	bIsClosed		: REFERENCE TO BOOL;
+END_VAR
+VAR
+	_ton		: TON;
+	_rt			: R_TRIG;
+	_ft			: F_TRIG;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_rt(CLK := bInput);
+_ft(CLK := bInput);
+IF _rt.Q OR _ft.Q THEN
+	_ton.IN := TRUE;
+END_IF
+
+_ton();
+IF bFault THEN
+	_ton(IN := FALSE);
+	bIsClosed := FALSE;
+	bIsOpen := FALSE;
+ELSIF _ton.Q AND bInput THEN
+	_ton(IN := FALSE);
+	bIsOpen := TRUE;
+	bIsClosed := FALSE;
+ELSIF _ton.Q AND NOT bInput THEN
+	_ton(IN := FALSE);
+	bIsOpen := FALSE;
+	bIsClosed := TRUE;	
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

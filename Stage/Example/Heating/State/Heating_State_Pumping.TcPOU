@@ -64,7 +64,7 @@ ELSIF _tonTimeout.Q THEN
 												.Append(USINT_TO_STRING(_nStep))
 												.Append('!')
 												.Read());
-ELSIF _ctx.priv.iActiveRoom.Active THEN
+ELSIF NOT _ctx.priv.iActiveRoom.IsActive THEN
 	_nStep := 6;
 END_IF
 

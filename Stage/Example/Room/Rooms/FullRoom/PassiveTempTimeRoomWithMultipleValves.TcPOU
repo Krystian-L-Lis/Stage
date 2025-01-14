@@ -48,8 +48,8 @@ END_VAR
 VAR_INPUT
 	rTemperature	: REAL;
 
-	bInletValveIsOpen		: BOOL;
-	bInletValveIsClosed		: BOOL;
+	bInletValveIsOpen		: ARRAY[1..VALVE_CAP] OF BOOL;
+	bInletValveIsClosed		: ARRAY[1..VALVE_CAP] OF BOOL;
 	
 	bOutletValveIsOpen		: ARRAY[1..VALVE_CAP] OF BOOL;
 	bOutletValveIsClosed	: ARRAY[1..VALVE_CAP] OF BOOL;
@@ -62,6 +62,9 @@ VAR
 	_timeDemand		: Room_State_DemandTime(_this, _ctx, _settings.timee);
 	_tempDemand		: Room_State_DemandTemperature(_this, _ctx, _settings.temp, rTemperature);
 	_passiveDemand	: Room_State_DemandPassive(_this, _ctx, _settings.bEnablePassive);
+	
+	_simInlet		: ARRAY[1..VALVE_CAP] OF ValveSim;
+	_simOutlet		: ARRAY[1..VALVE_CAP] OF ValveSim;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -80,11 +83,37 @@ FOR i := 1 TO VALVE_CAP DO
 	bInletValve[i] :=  _ctx.io.bOpenValves;
 	bOutletValve[i] :=  _ctx.io.bOpenValves;	
 	
-	_ctx.priv.bClosed := _ctx.priv.bClosed AND bOutletValveIsClosed[i];
-	_ctx.priv.bOpen := _ctx.priv.bClosed AND bOutletValveIsOpen[i];	
+	_ctx.priv.bClosed := _ctx.priv.bClosed AND bInletValveIsClosed[i] AND bOutletValveIsClosed[i];
+	_ctx.priv.bOpen := _ctx.priv.bClosed AND bInletValveIsOpen[i] AND bOutletValveIsOpen[i];	
 END_FOR
 
-_ctx.hmi.sData := '';]]></ST>
+_ctx.hmi.sData := '';
+
+// SIMULATION
+FOR i := 1 TO VALVE_CAP DO
+	_simInlet[i](bInput := bInletValve[i],
+				bFault := sim.param.bToggleValveFault,
+				bIsOpen := bInletValveIsOpen[i],
+				bIsClosed := bInletValveIsClosed[i]);
+	_simOutlet[i](bInput := bOutletValve[i],
+				bFault := sim.param.bToggleValveFault,
+				bIsOpen := bOutletValveIsOpen[i],
+				bIsClosed := bOutletValveIsClosed[i]);
+END_FOR
+
+
+IF NOT sim.bTick THEN
+	RETURN;
+END_IF
+
+FOR i := 1 TO VALVE_CAP DO
+	IF bInletValve[i] AND bOutletValve[i] THEN
+		sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater;
+		rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater;
+	END_IF
+END_FOR
+
+rTemperature := rTemperature + sim.param.rRoomTemperaturePassiveDrop;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{2026ee0e-2df3-49e4-b7e9-d8a0d08549a4}">

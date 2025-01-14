@@ -147,7 +147,7 @@
             <v>ExtendedSettings</v>
             <v>true</v>
             <v>GeneralPropertySupport</v>
-            <v>false</v>
+            <v>true</v>
             <v>GlobalTextListFilePath</v>
             <v>""</v>
             <v>GlobalVisuImageFilePath</v>
@@ -155,7 +155,7 @@
             <v>ImplicitChecksForVisualizationPOUs</v>
             <v>true</v>
             <v>UnicodeStrings</v>
-            <v>true</v>
+            <v>false</v>
           </d>
         </o>
         <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
@@ -208,7 +208,7 @@
                   <d n="SubKeys" t="Hashtable" />
                   <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
                     <v>bActive</v>
-                    <v>True</v>
+                    <v>False</v>
                   </d>
                 </o>
                 <v>4</v>
