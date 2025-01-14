@@ -26,21 +26,21 @@ VAR
 	_init			: Init(THIS^);
 	_exe			: Execute(THIS^);
 	
-	_onEnable		: Signal;
-	_compOnEnable	: Comp(_onEnable, _this);
-	_proxOnEnable	: SignalProxy(_onEnable, _ctx.priv.iOnEnable);
+	_enableEvent		: Signal;
+	_compEnableEvent	: Comp(_enableEvent, _this);
+	_proxEnableEvent	: SignalProxy(_enableEvent, _ctx.priv.iOnEnable);
 	
-	_onDisable		: Signal;
-	_compOnDisable	: Comp(_onDisable, _this);
-	_proxOnDisable	: SignalProxy(_onDisable, _ctx.priv.iOnDisable);
+	_disableEvent		: Signal;
+	_compDisableEvent	: Comp(_disableEvent, _this);
+	_proxDisableEvent	: SignalProxy(_disableEvent, _ctx.priv.iOnDisable);
 	
-	_onPause		: Signal;
-	_compOnPause	: Comp(_onPause, _this);
-	_proxOnPause	: SignalProxy(_onPause, _ctx.priv.iOnPause);
+	_pauseEvent			: Signal;
+	_compPauseEvent		: Comp(_pauseEvent, _this);
+	_proxPauseEvent		: SignalProxy(_pauseEvent, _ctx.priv.iOnPause);
 	
-	_onResume		: Signal;
-	_compOnResume	: Comp(_onResume, _this);
-	_proxOnResume	: SignalProxy(_onResume, _ctx.priv.iOnResume);
+	_resumeEvent		: Signal;
+	_compResumeEvent	: Comp(_resumeEvent, _this);
+	_proxResumeEvent	: SignalProxy(_resumeEvent, _ctx.priv.iOnResume);
 	
 	_smgr			: StateManager<6>(_this);
 	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
@@ -63,16 +63,16 @@ VAR
 	_heatup			: Heating_State_Heatup(_this, _ctx);
 	_proxHeatup		: StateProxy(_heatup, _ctx.state.iHeatup);
 
-	_passiveHeatingCount		: Heating_PassiveCountRec(_ctx);
-	_passiveHeatingCountRec		: Receiver(_passiveHeatingCount);
-	_compPassiveHeatingCountRec	: Comp(_passiveHeatingCountRec, _this);
+	_passiveRequestCall		: Heating_OnPassiveRequest(_ctx);
+	_onPassiveRequest		: Receiver(_passiveRequestCall);
+	_compOnPassiveRequest	: Comp(_onPassiveRequest, _this);
 	
-	_request					: Heating_RequestRec(_ctx);
-	_requestRec					: Receiver(_request);
-	_compRequestRec				: Comp(_requestRec, _this);
+	_requestCall			: Heating_OnRequest(_ctx);
+	_onRequest				: Receiver(_requestCall);
+	_compOnRequest			: Comp(_onRequest, _this);
 	
-	_queue						: ArgQueue<ROOM_CAP>;
-	_queueProxy					: ArgQueueProxy(_queue, _ctx.priv.iQueue);
+	_queue					: ArgQueue<ROOM_CAP>;
+	_queueProxy				: ArgQueueProxy(_queue, _ctx.priv.iQueue);
 	
 	_tonPump	: TON;
 	_tonBurner	: TON;

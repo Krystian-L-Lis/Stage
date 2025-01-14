@@ -6,6 +6,13 @@ A circular queue implementation for managing `I_Arg`.
 *)
 INTERFACE I_MutArgQueue EXTENDS I_ArgQueue
 ]]></Declaration>
+    <Method Name="Clear" Id="{41345009-58c3-4603-a1dd-71a3de823a25}">
+      <Declaration><![CDATA[(*
+Clears the queue.
+*)
+METHOD Clear
+]]></Declaration>
+    </Method>
     <Method Name="Pop" Id="{be1b5892-95ee-403d-b9ca-f9025d7f85a9}">
       <Declaration><![CDATA[(*
 Retrieves and removes the next argument from the queue.  

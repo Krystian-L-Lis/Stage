@@ -20,8 +20,8 @@ VAR
 	_compTag		: Comp(_tag, _this);
 	_exe			: Execute(THIS^);
 	
-	_onSafetyChange		: Signal;
-	_compOnSafetyChange	: Comp(_onSafetyChange, _this);
+	_safetyEvent		: Signal;
+	_compOnSafetyChange	: Comp(_safetyEvent, _this);
 	
 	_bSafetyStopActive	: BoolArg;
 	
@@ -48,16 +48,17 @@ END_FOR
 CASE _nStep OF
 	0: // Fault Init
 		_bSafetyStopActive.OpSet(TRUE);
-		_onSafetyChange.Emit(_bSafetyStopActive);
+		_safetyEvent.Emit(_bSafetyStopActive);
 		bSafetyRun	:= FALSE;
 		
 		_nStep := 1;
 		
-		_hmi.bHideReset := FALSE;
+		_hmi.bHideReset := TRUE;
 		_hmi.nStatusColor := COL.RED.Raw;
 		_hmi.sStatusText := 'Safety Stop Activated!';
 
 	1: // Fault
+		_hmi.bHideReset := NOT bSafetyOk;
 		IF bSafetyOk AND _hmi.bReset THEN
 			_hmi.bReset := FALSE;
 			
@@ -69,7 +70,7 @@ CASE _nStep OF
 		
 		_nStep		:= 3;
 		
-		_hmi.bHideReset := FALSE;
+		_hmi.bHideReset := TRUE;
 		_hmi.nStatusColor := COL.RED.Raw;
 		_hmi.sStatusText := 'Reset in progress...';
 		
@@ -91,10 +92,10 @@ CASE _nStep OF
 		bErrAck		:= FALSE;
 	
 		_bSafetyStopActive.OpSet(FALSE);
-		_onSafetyChange.Emit(_bSafetyStopActive);
+		_safetyEvent.Emit(_bSafetyStopActive);
 		_nStep := 5;
 		
-		_hmi.bHideReset := FALSE;
+		_hmi.bHideReset := TRUE;
 		_hmi.nStatusColor := COL.BLACK.Raw;
 		_hmi.sStatusText := 'Safety OK!';
 

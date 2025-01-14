@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <Visu Name="MAIN" Id="{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}">
+  <Visu Name="MAIN" Id="{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}">
     <XmlArchive>
       <Data>
         <o xml:space="preserve" t="VisualObject">
           <n n="LastVisuLanguageModelEntry" />
-          <v n="UniqueIdGenerator">"63"</v>
+          <v n="UniqueIdGenerator">"32"</v>
           <o n="VisualElemList" t="VisualElemList">
             <l n="VisualElementList" t="VisualElemCollection" cet="GenericVisualElem">
               <o>
@@ -122,7 +122,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -482,6 +482,10 @@
                       <v n="Id">934938808L</v>
                       <v n="Value">"MAIN.safety"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -497,11 +501,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{57b3ac98-17ce-4321-ae66-45cdbe5b343a}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{4091f33d-b936-443c-b510-3d59fe83e573}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">0</v>
+                <v n="VisualElementId">1</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -622,7 +626,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -982,6 +986,10 @@
                       <v n="Id">934938808L</v>
                       <v n="Value">"MAIN.heating"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -997,11 +1005,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{d89a8c2b-1f47-4a1f-bfc9-a35ceae56daf}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{0acc9039-9b1a-454e-af7b-e9aa91052b1a}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">1</v>
+                <v n="VisualElementId">3</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -1122,7 +1130,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -1501,11 +1509,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{8c0b7ddc-3790-408b-a857-bcf480193434}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{bda65db9-839b-40d7-a210-70289700a7b7}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">2</v>
+                <v n="VisualElementId">5</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -1626,7 +1634,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -2005,11 +2013,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{0a70fef4-c663-4dc0-8622-def60791308c}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{f7dad579-f928-4cf2-82e3-2579872fab42}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">5</v>
+                <v n="VisualElementId">7</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -2130,7 +2138,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -2509,11 +2517,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{d35f87cd-735b-4a39-b6f2-1d64f7257c45}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{3475904c-4271-4f04-a819-e088c0df9b05}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">7</v>
+                <v n="VisualElementId">9</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -2634,7 +2642,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -3013,11 +3021,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{c4958b0e-17da-4343-9fa5-e933152af215}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{a14b88d2-37d8-4d0a-9b2b-208d84c9f2e8}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">9</v>
+                <v n="VisualElementId">11</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -3138,7 +3146,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -3517,11 +3525,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{47bfde95-cd1a-44b7-b193-6f44265bef62}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{697a2f81-9771-4a7d-b2e3-b8b80ea4da91}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">11</v>
+                <v n="VisualElementId">13</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -3642,7 +3650,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -4002,6 +4010,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.standardRoom[1]._settings.temp"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -4017,11 +4029,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{89aca82a-c797-42f4-8c1f-22c669371393}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{ba398c0a-4fb0-4fbb-8228-c56e1e66c6af}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">12</v>
+                <v n="VisualElementId">15</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -4142,7 +4154,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -4502,6 +4514,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.standardRoom[2]._settings.temp"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -4517,11 +4533,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{9d7551f3-b335-4413-bc3e-19a000b418af}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{41ef0cf9-660b-44d2-8561-0f0ff7c6f805}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">14</v>
+                <v n="VisualElementId">17</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -4642,7 +4658,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -5002,6 +5018,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.standardRoom[3]._settings.temp"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -5017,11 +5037,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{b0747aac-5de5-42e6-bccc-d931491a7ea1}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{d83fb1a7-c314-40f3-b6fb-61e44f7b55aa}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">16</v>
+                <v n="VisualElementId">19</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -5142,7 +5162,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -5502,6 +5522,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.standardRoom[4]._settings.temp"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -5517,11 +5541,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{4ec885e4-2edd-4c7a-a2fb-8b7bd90f9494}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{f226c544-4e93-4562-81fd-fba04ceec26e}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">18</v>
+                <v n="VisualElementId">21</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -5642,7 +5666,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -6002,6 +6026,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.standardRoom[5]._settings.temp"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -6017,11 +6045,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{a9bf0f9f-b7d3-496b-8ff9-237888ddbaeb}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{2819568c-4130-42ed-9dbc-23cc8a72f693}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">20</v>
+                <v n="VisualElementId">23</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -6142,7 +6170,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -6521,11 +6549,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{47e22470-71b6-4687-8c0d-0385cbba46c9}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{145c55c7-e318-4bf9-b56f-0ec3e96bf77b}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">22</v>
+                <v n="VisualElementId">25</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -6646,7 +6674,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"ISOTROPIC"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -7025,11 +7053,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{ca359f76-790d-4222-81d8-62ac3cf9bec6}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{892b4200-cfaa-4a3e-b80d-0d6b1d3bcb6f}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">24</v>
+                <v n="VisualElementId">27</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -7150,7 +7178,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -7529,11 +7557,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{118f0bf7-a55c-43a8-870c-6fff7c145798}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{9149c44c-ae98-4969-b2da-b4fedd384f19}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">26</v>
+                <v n="VisualElementId">29</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -7654,7 +7682,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -8033,11 +8061,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{e2221e3b-281f-4f4a-a583-b2256e6c8cf8}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{bbacf4b5-422a-40a4-bff1-d922de77cf02}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">28</v>
+                <v n="VisualElementId">31</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -8158,7 +8186,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -8522,6 +8550,10 @@
                       <v n="Id">4267549366L</v>
                       <v n="Value">"MAIN.storeRoom02._ctx"</v>
                     </o>
+                    <o>
+                      <v n="Id">1165035537L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -8537,11 +8569,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{8773de79-af39-45f5-b079-417ee41bd3b0}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{5c925b43-c5a1-4bd8-a89d-5fa373016855}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">30</v>
+                <v n="VisualElementId">33</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -8662,7 +8694,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -9022,6 +9054,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.conferentionRoom01._settings.temp"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -9037,11 +9073,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{8ececd9c-a411-426a-9b22-d755ef725b41}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{d92f873e-5382-4b65-a932-02f7d332bcce}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">32</v>
+                <v n="VisualElementId">35</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -9162,7 +9198,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -9522,6 +9558,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.conferentionRoom02._settings.temp"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -9537,11 +9577,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{392c55f1-e0fc-40e9-b06e-908b2900ee73}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{c9c65ce0-fbcf-4095-90a0-808f2434d950}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">34</v>
+                <v n="VisualElementId">37</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -9662,7 +9702,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -10022,6 +10062,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.storeRoom01._settings"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -10037,11 +10081,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{be2431f1-86cf-45fd-a3ea-1059bf2495c0}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{9e263483-1598-48cb-9de6-9fffe53bc8bd}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">36</v>
+                <v n="VisualElementId">39</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -10162,7 +10206,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -10522,6 +10566,10 @@
                       <v n="Id">2011590161L</v>
                       <v n="Value">"MAIN.storeRoom02._settings"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -10537,11 +10585,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{29918e80-0101-430e-93d3-0d26edee8682}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{ad1f9473-930a-46cb-a1bb-fbd3b8829d40}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">38</v>
+                <v n="VisualElementId">41</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -10650,7 +10698,7 @@
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
-                      <v n="Value">81</v>
+                      <v n="Value" t="Int16">80</v>
                     </o>
                     <o>
                       <v n="Id">394923068L</v>
@@ -10662,7 +10710,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -11022,6 +11070,10 @@
                       <v n="Id">1909000599L</v>
                       <v n="Value">"MAIN.conferentionRoom01._settings.timee"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -11037,11 +11089,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{bee87721-cdd6-4692-880e-5c27eccd5612}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{2ccf1ac0-9b43-43ff-b0b2-b17b294891a2}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">39</v>
+                <v n="VisualElementId">43</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -11162,7 +11214,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -11522,6 +11574,10 @@
                       <v n="Id">1909000599L</v>
                       <v n="Value">"MAIN.standardRoom[1]._settings.timee"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -11537,11 +11593,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{e3acd27e-1e10-4f5c-9c30-35269f420641}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{dd047bbe-a2f5-469f-b1ac-3554692d281c}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">41</v>
+                <v n="VisualElementId">45</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -11662,7 +11718,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -12022,6 +12078,10 @@
                       <v n="Id">1909000599L</v>
                       <v n="Value">"MAIN.standardRoom[2]._settings.timee"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -12037,11 +12097,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{d8b2a090-b0ec-404b-ba54-92392a4e20f0}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{a2dbbce8-f949-4478-bff9-efe4e75a75c7}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">43</v>
+                <v n="VisualElementId">47</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -12162,7 +12222,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -12522,6 +12582,10 @@
                       <v n="Id">1909000599L</v>
                       <v n="Value">"MAIN.standardRoom[3]._settings.timee"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -12537,11 +12601,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{8a478e9e-f03b-444e-9610-835138d09d59}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{6dcfc090-bc49-459c-9bb4-802301bfa97f}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">45</v>
+                <v n="VisualElementId">49</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -12662,7 +12726,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -13022,6 +13086,10 @@
                       <v n="Id">1909000599L</v>
                       <v n="Value">"MAIN.standardRoom[5]._settings.timee"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -13037,11 +13105,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{5ed35b4c-8a18-4c16-8c37-82e6253ec74e}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{7bf19e0c-dd83-4b40-b28e-9769e10541d3}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">47</v>
+                <v n="VisualElementId">51</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -13162,7 +13230,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -13522,6 +13590,10 @@
                       <v n="Id">1909000599L</v>
                       <v n="Value">"MAIN.standardRoom[4]._settings.timee"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -13537,11 +13609,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{5d6d7561-fc0a-4c79-bf6a-c4ae4c029028}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{b063662f-ce11-4b94-8c82-77e6f6481cbf}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">49</v>
+                <v n="VisualElementId">53</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -13650,7 +13722,7 @@
                     </o>
                     <o>
                       <v n="Id">2134141914L</v>
-                      <v n="Value">81</v>
+                      <v n="Value" t="Int16">80</v>
                     </o>
                     <o>
                       <v n="Id">394923068L</v>
@@ -13662,7 +13734,7 @@
                     </o>
                     <o>
                       <v n="Id">3549563837L</v>
-                      <v n="Value">"ANISOTROPIC"</v>
+                      <v n="Value">"FIXED"</v>
                     </o>
                     <o>
                       <v n="Id">363316305L</v>
@@ -14022,6 +14094,10 @@
                       <v n="Id">1909000599L</v>
                       <v n="Value">"MAIN.conferentionRoom02._settings.timee"</v>
                     </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
                   </l>
                 </o>
                 <v n="VisualElementName">"Frame"</v>
@@ -14037,11 +14113,11 @@
                   </a>
                 </o>
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{8e66b4ef-e766-4bc9-b140-617271c3d9e7}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{74499ffe-01a1-42c7-855f-9386623a9278}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">51</v>
+                <v n="VisualElementId">55</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -14239,11 +14315,11 @@
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{c2490852-7851-48bf-9bfd-5c0659ba5d86}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{3b7bfaf0-fb26-4e44-96df-0a96ac74970d}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">52</v>
+                <v n="VisualElementId">57</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -14441,11 +14517,11 @@
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{495781e0-8053-4ded-aeeb-a0120e082421}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{900af9a2-91c6-420c-8cfd-c1e5e226140c}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">54</v>
+                <v n="VisualElementId">59</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -14643,11 +14719,515 @@
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" />
-                <v n="VisualElementIdentification">{8f387b17-a35a-467e-9db7-26552b2c7f92}</v>
-                <v n="VisualElementOwningObjectGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+                <v n="VisualElementIdentification">{c4666e48-294d-45ae-809b-c84555c6834a}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
                 <a n="LMGuids" et="Guid" />
                 <d n="SubElements" t="Hashtable" />
-                <v n="VisualElementId">56</v>
+                <v n="VisualElementId">61</v>
+                <l n="UserManagementAccessRights" t="ArrayList" />
+                <v n="AnimationDuration">"0"</v>
+                <v n="BringToForeground">""</v>
+                <v n="ElementVersion" t="Byte">1</v>
+                <n n="TabOrder" />
+              </o>
+              <o>
+                <a n="ConfiguredComplexInputs" et="ComplexInput" />
+                <l n="Elements" t="ArrayList" />
+                <n n="VisualElementDescription" />
+                <o n="VisualElemMemberList" t="VisualElemMemberList">
+                  <l n="VisualElemMemberList" t="VisualElemMemberCollection" cet="VisualElemMember">
+                    <o>
+                      <v n="Id">571893170L</v>
+                      <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">2341735680L</v>
+                      <l n="Value" t="ArrayList" cet="NamedStyleColor">
+                        <o>
+                          <v n="Color">-2830136</v>
+                          <v n="CanonicalName">"Element-Frame-Color"</v>
+                        </o>
+                      </l>
+                    </o>
+                    <o>
+                      <v n="Id">438423234L</v>
+                      <l n="Value" t="ArrayList" cet="NamedStyleColor">
+                        <o>
+                          <v n="Color">-65536</v>
+                          <v n="CanonicalName">"Element-Alarm-Frame-Color"</v>
+                        </o>
+                      </l>
+                    </o>
+                    <o>
+                      <v n="Id">2678395525L</v>
+                      <v n="Value" t="Int16">1</v>
+                    </o>
+                    <o>
+                      <v n="Id">2340015797L</v>
+                      <v n="Value">"HCENTER"</v>
+                    </o>
+                    <o>
+                      <v n="Id">2565699834L</v>
+                      <v n="Value">"VCENTER"</v>
+                    </o>
+                    <o>
+                      <v n="Id">4134387352L</v>
+                      <v n="Value">"NONE"</v>
+                    </o>
+                    <o>
+                      <v n="Id">1603690730L</v>
+                      <v n="Value">"Arial"</v>
+                    </o>
+                    <o>
+                      <v n="Id">4253639993L</v>
+                      <v n="Value" t="Int16">12</v>
+                    </o>
+                    <o>
+                      <v n="Id">2729990903L</v>
+                      <v n="Value">0U</v>
+                    </o>
+                    <o>
+                      <v n="Id">1213979116L</v>
+                      <v n="Value">0U</v>
+                    </o>
+                    <o>
+                      <v n="Id">3488306084L</v>
+                      <v n="Value">4278190080U</v>
+                    </o>
+                    <o>
+                      <v n="Id">663104332L</v>
+                      <v n="Value">4278190080U</v>
+                    </o>
+                    <o>
+                      <v n="Id">1999528970L</v>
+                      <v n="Value">"&lt;toggle/tap variable&gt;"</v>
+                    </o>
+                    <o>
+                      <v n="Id">1831690182L</v>
+                      <v n="Value" t="Int16">-1</v>
+                    </o>
+                    <o>
+                      <v n="Id">2812299069L</v>
+                      <v n="Value">4294967295U</v>
+                    </o>
+                    <o>
+                      <v n="Id">494569607L</v>
+                      <v n="Value">4278190080U</v>
+                    </o>
+                    <o>
+                      <v n="Id">3719097617L</v>
+                      <v n="Value">0</v>
+                    </o>
+                    <o>
+                      <v n="Id">1649127785L</v>
+                      <v n="Value">1070</v>
+                    </o>
+                    <o>
+                      <v n="Id">357335551L</v>
+                      <v n="Value">760</v>
+                    </o>
+                    <o>
+                      <v n="Id">2422045748L</v>
+                      <v n="Value" t="Int16">370</v>
+                    </o>
+                    <o>
+                      <v n="Id">2134141914L</v>
+                      <v n="Value" t="Int16">200</v>
+                    </o>
+                    <o>
+                      <v n="Id">394923068L</v>
+                      <v n="Value">false</v>
+                    </o>
+                    <o>
+                      <v n="Id">2322377816L</v>
+                      <v n="Value">"NO_FRAME"</v>
+                    </o>
+                    <o>
+                      <v n="Id">3549563837L</v>
+                      <v n="Value">"FIXED"</v>
+                    </o>
+                    <o>
+                      <v n="Id">363316305L</v>
+                      <o n="Value" t="StructuredTypeNode">
+                        <v n="StructuredTypeNodeIsAnimation">false</v>
+                        <l n="TypeNodeChildren" t="ArrayList">
+                          <o t="DynamicArrayNode">
+                            <o n="DynamicArrayNodeCounterNode" t="BasicTypeNode">
+                              <v n="Flags">0L</v>
+                              <v n="BasicTypeNodeValue" t="Int16">1</v>
+                              <v n="BasicTypeNodeAcceptsExpression">false</v>
+                              <n n="BasicTypeNodeFastAccess" />
+                              <a n="BasicTypeNodeEnumValues" et="String" />
+                              <n n="EnumValueDisplayTextIds" />
+                              <n n="EnumValueVisibilityAttributeValues" />
+                              <n n="EnumValueLibraryId" />
+                              <n n="DynamicEnumMemberVisibilityCheckerTypeGuid" />
+                              <n n="EnumValueDisplayName" />
+                              <l n="TypeNodeChildren" t="ArrayList" />
+                              <o n="TypeNodeType" t="TypeNodeType">
+                                <v n="TypeClass" t="TypeClass">Int</v>
+                                <v n="QualifiedName">"INT"</v>
+                                <v n="Name">"INT"</v>
+                              </o>
+                              <v n="TypeNodeName">"iCount"</v>
+                              <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                                <v n="AttrFlags">1UL</v>
+                                <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                                  <v>Visible</v>
+                                  <v>False</v>
+                                </d>
+                                <v n="ConvDone">true</v>
+                              </o>
+                              <v n="TypeNodeId" t="Int16">104</v>
+                              <v n="TypeNodeIdLong">87295452L</v>
+                              <v n="LibraryId">"visuelembase, 4.6.0.0 (system)"</v>
+                              <n n="ElementId" />
+                              <n n="DisplayTextId" />
+                              <n n="DescriptionTextID" />
+                              <v n="DescriptionUseParent">false</v>
+                            </o>
+                            <n n="DynamicArrayNodeFastAccess" />
+                            <o n="ChildTemplate" t="VisualizationNode">
+                              <v n="VisuNodeReferenceGuid">{00000000-0000-0000-0000-000000000000}</v>
+                              <n n="VisuNodeReference" />
+                              <n n="VisNodeRefs33" />
+                              <l n="TypeNodeChildren" t="ArrayList" />
+                              <o n="TypeNodeType" t="TypeNodeType">
+                                <v n="TypeClass" t="TypeClass">Userdef</v>
+                                <v n="QualifiedName">"IVisualisation"</v>
+                                <v n="Name">"IVisualisation"</v>
+                              </o>
+                              <v n="TypeNodeName">""</v>
+                              <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                                <v n="AttrFlags">0UL</v>
+                                <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                                  <v>conditionalshow</v>
+                                  <v>visu_elemdev</v>
+                                  <v>ieccodeconversion_useexistinginterface</v>
+                                  <v>_3S.CoDeSys.VisuGenerated.IVisualisationIEC</v>
+                                  <v>''NORMAL__COMMENT</v>
+                                  <v> interface contains additional methods to IVisualElement</v>
+                                </d>
+                                <v n="ConvDone">true</v>
+                              </o>
+                              <v n="TypeNodeId" t="Int16">1</v>
+                              <v n="TypeNodeIdLong">3861935604L</v>
+                              <n n="LibraryId" />
+                              <n n="ElementId" />
+                              <n n="DisplayTextId" />
+                              <n n="DescriptionTextID" />
+                              <v n="DescriptionUseParent">false</v>
+                            </o>
+                            <l n="TypeNodeChildren" t="ArrayList" cet="VisualizationNode">
+                              <o>
+                                <v n="VisuNodeReferenceGuid">{00000000-0000-0000-0000-000000000000}</v>
+                                <n n="VisuNodeReference" />
+                                <v n="VisNodeRefs33">"UI_Sim"</v>
+                                <l n="TypeNodeChildren" t="ArrayList" cet="BasicTypeNode">
+                                  <o>
+                                    <v n="Flags">2L</v>
+                                    <n n="BasicTypeNodeValue" />
+                                    <v n="BasicTypeNodeAcceptsExpression">true</v>
+                                    <n n="BasicTypeNodeFastAccess" />
+                                    <a n="BasicTypeNodeEnumValues" et="String" />
+                                    <n n="EnumValueDisplayTextIds" />
+                                    <n n="EnumValueVisibilityAttributeValues" />
+                                    <n n="EnumValueLibraryId" />
+                                    <n n="DynamicEnumMemberVisibilityCheckerTypeGuid" />
+                                    <n n="EnumValueDisplayName" />
+                                    <l n="TypeNodeChildren" t="ArrayList" />
+                                    <o n="TypeNodeType" t="TypeNodeType">
+                                      <v n="TypeClass" t="TypeClass">Reference</v>
+                                      <v n="QualifiedName">"SimulationGlobalParameters"</v>
+                                      <v n="Name">"SimulationGlobalParameters"</v>
+                                    </o>
+                                    <v n="TypeNodeName">"param"</v>
+                                    <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                                      <v n="AttrFlags">0UL</v>
+                                      <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" />
+                                      <v n="ConvDone">true</v>
+                                    </o>
+                                    <v n="TypeNodeId" t="Int16">255</v>
+                                    <v n="TypeNodeIdLong">3379277682L</v>
+                                    <n n="LibraryId" />
+                                    <n n="ElementId" />
+                                    <n n="DisplayTextId" />
+                                    <n n="DescriptionTextID" />
+                                    <v n="DescriptionUseParent">false</v>
+                                  </o>
+                                </l>
+                                <o n="TypeNodeType" t="TypeNodeType">
+                                  <v n="TypeClass" t="TypeClass">Userdef</v>
+                                  <v n="QualifiedName">"IVisualisation"</v>
+                                  <v n="Name">"IVisualisation"</v>
+                                </o>
+                                <v n="TypeNodeName">"[0]"</v>
+                                <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                                  <v n="AttrFlags">0UL</v>
+                                  <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                                    <v>conditionalshow</v>
+                                    <v>visu_elemdev</v>
+                                    <v>ieccodeconversion_useexistinginterface</v>
+                                    <v>_3S.CoDeSys.VisuGenerated.IVisualisationIEC</v>
+                                    <v>''NORMAL__COMMENT</v>
+                                    <v> interface contains additional methods to IVisualElement</v>
+                                  </d>
+                                  <v n="ConvDone">true</v>
+                                </o>
+                                <v n="TypeNodeId" t="Int16">1</v>
+                                <v n="TypeNodeIdLong">2473092364L</v>
+                                <n n="LibraryId" />
+                                <n n="ElementId" />
+                                <n n="DisplayTextId" />
+                                <n n="DescriptionTextID" />
+                                <v n="DescriptionUseParent">false</v>
+                              </o>
+                            </l>
+                            <o n="TypeNodeType" t="TypeNodeType">
+                              <v n="TypeClass" t="TypeClass">Userdef</v>
+                              <v n="QualifiedName">"IVisualisation"</v>
+                              <v n="Name">"IVisualisation"</v>
+                            </o>
+                            <v n="TypeNodeName">"pReferences"</v>
+                            <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                              <v n="AttrFlags">1048577UL</v>
+                              <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                                <v>DefaultArraySize</v>
+                                <v>5</v>
+                                <v>ieccodeconversion_array</v>
+                                <v></v>
+                                <v>''NORMAL__COMMENT</v>
+                                <v> We hide this node to prevent having two References nodes
+ Nevertheless we want to make sure that the children are displayed</v>
+                                <v>Visible</v>
+                                <v>False</v>
+                                <v>VisibleChildren</v>
+                                <v>True</v>
+                              </d>
+                              <v n="ConvDone">true</v>
+                            </o>
+                            <v n="TypeNodeId" t="Int16">103</v>
+                            <v n="TypeNodeIdLong">1547928903L</v>
+                            <v n="LibraryId">"visuelembase, 4.6.0.0 (system)"</v>
+                            <n n="ElementId" />
+                            <n n="DisplayTextId" />
+                            <n n="DescriptionTextID" />
+                            <v n="DescriptionUseParent">false</v>
+                          </o>
+                          <o t="BasicTypeNode">
+                            <v n="Flags">0L</v>
+                            <v n="BasicTypeNodeValue" t="Int16">1</v>
+                            <v n="BasicTypeNodeAcceptsExpression">false</v>
+                            <n n="BasicTypeNodeFastAccess" />
+                            <a n="BasicTypeNodeEnumValues" et="String" />
+                            <n n="EnumValueDisplayTextIds" />
+                            <n n="EnumValueVisibilityAttributeValues" />
+                            <n n="EnumValueLibraryId" />
+                            <n n="DynamicEnumMemberVisibilityCheckerTypeGuid" />
+                            <n n="EnumValueDisplayName" />
+                            <l n="TypeNodeChildren" t="ArrayList" />
+                            <o n="TypeNodeType" t="TypeNodeType">
+                              <v n="TypeClass" t="TypeClass">Int</v>
+                              <v n="QualifiedName">"INT"</v>
+                              <v n="Name">"INT"</v>
+                            </o>
+                            <v n="TypeNodeName">"iCount"</v>
+                            <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                              <v n="AttrFlags">1UL</v>
+                              <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                                <v>Visible</v>
+                                <v>False</v>
+                              </d>
+                              <v n="ConvDone">true</v>
+                            </o>
+                            <v n="TypeNodeId" t="Int16">104</v>
+                            <v n="TypeNodeIdLong">87295452L</v>
+                            <v n="LibraryId">"visuelembase, 4.6.0.0 (system)"</v>
+                            <n n="ElementId" />
+                            <n n="DisplayTextId" />
+                            <n n="DescriptionTextID" />
+                            <v n="DescriptionUseParent">false</v>
+                          </o>
+                        </l>
+                        <o n="TypeNodeType" t="TypeNodeType">
+                          <v n="TypeClass" t="TypeClass">Userdef</v>
+                          <v n="QualifiedName">"VisuStructReferenceList"</v>
+                          <v n="Name">"VisuStructReferenceList"</v>
+                        </o>
+                        <v n="TypeNodeName">"m_References"</v>
+                        <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                          <v n="AttrFlags">81920UL</v>
+                          <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                            <v>AssignDestination</v>
+                            <v>Init</v>
+                            <v>Category</v>
+                            <v>Simple|Standard</v>
+                            <v>conditionalshow</v>
+                            <v>visu_elemdev</v>
+                            <v>DescriptionTextId</v>
+                            <v>TL_ElementProperties.Desc_ReferencedVisus</v>
+                            <v>DisplayFrameReferencesConfiguration</v>
+                            <v></v>
+                            <v>DisplayTextId</v>
+                            <v>TL_ElementProperties.References</v>
+                            <v>DynamicArray</v>
+                            <v></v>
+                            <v>FrameReferences</v>
+                            <v></v>
+                            <v>SortFlag</v>
+                            <v>80</v>
+                            <v>Storable</v>
+                            <v>True</v>
+                          </d>
+                          <v n="ConvDone">true</v>
+                        </o>
+                        <v n="TypeNodeId" t="Int16">102</v>
+                        <v n="TypeNodeIdLong">363316305L</v>
+                        <v n="LibraryId">"visuelems, 4.6.0.0 (system)"</v>
+                        <n n="ElementId" />
+                        <v n="DisplayTextId">"TL_ElementProperties.References"</v>
+                        <v n="DescriptionTextID">"TL_ElementProperties.Desc_ReferencedVisus"</v>
+                        <v n="DescriptionUseParent">false</v>
+                      </o>
+                    </o>
+                    <o>
+                      <v n="Id">3729828405L</v>
+                      <l n="Value" t="ArrayList" cet="NamedStyleFont">
+                        <o>
+                          <v n="FontStyle">0</v>
+                          <v n="AdditionalFontStyle" t="UInt16">0</v>
+                          <v n="ExplicitColor">-16777216</v>
+                          <v n="CanonicalName">"Font-Standard"</v>
+                          <v n="FontName">"Arial"</v>
+                          <v n="DisplayName">""</v>
+                          <v n="FontSize">12</v>
+                          <v n="ScriptIdentification">0</v>
+                          <v n="DoubleFontSize" t="Double">0</v>
+                          <o n="NamedColor" t="NamedStyleColor">
+                            <v n="Color">-16777216</v>
+                            <v n="CanonicalName">"Font-Default-Color"</v>
+                          </o>
+                        </o>
+                      </l>
+                    </o>
+                    <o>
+                      <v n="Id">550940142L</v>
+                      <v n="Value">1145</v>
+                    </o>
+                    <o>
+                      <v n="Id">1473355128L</v>
+                      <v n="Value">775</v>
+                    </o>
+                    <o>
+                      <v n="Id">493260384L</v>
+                      <v n="Value">4294967295U</v>
+                    </o>
+                    <o>
+                      <v n="Id">135947015L</v>
+                      <v n="Value">4278190080U</v>
+                    </o>
+                    <o>
+                      <v n="Id">390574330L</v>
+                      <v n="Value">""</v>
+                    </o>
+                    <o>
+                      <v n="Id">2473092364L</v>
+                      <o n="Value" t="VisualizationNode">
+                        <v n="VisuNodeReferenceGuid">{00000000-0000-0000-0000-000000000000}</v>
+                        <n n="VisuNodeReference" />
+                        <v n="VisNodeRefs33">"UI_Sim"</v>
+                        <l n="TypeNodeChildren" t="ArrayList" cet="BasicTypeNode">
+                          <o>
+                            <v n="Flags">2L</v>
+                            <v n="BasicTypeNodeValue">"SIM.param"</v>
+                            <v n="BasicTypeNodeAcceptsExpression">true</v>
+                            <n n="BasicTypeNodeFastAccess" />
+                            <a n="BasicTypeNodeEnumValues" et="String" />
+                            <n n="EnumValueDisplayTextIds" />
+                            <n n="EnumValueVisibilityAttributeValues" />
+                            <n n="EnumValueLibraryId" />
+                            <n n="DynamicEnumMemberVisibilityCheckerTypeGuid" />
+                            <n n="EnumValueDisplayName" />
+                            <l n="TypeNodeChildren" t="ArrayList" />
+                            <o n="TypeNodeType" t="TypeNodeType">
+                              <v n="TypeClass" t="TypeClass">Reference</v>
+                              <v n="QualifiedName">"SimulationGlobalParameters"</v>
+                              <v n="Name">"SimulationGlobalParameters"</v>
+                            </o>
+                            <v n="TypeNodeName">"param"</v>
+                            <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                              <v n="AttrFlags">0UL</v>
+                              <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" />
+                              <v n="ConvDone">true</v>
+                            </o>
+                            <v n="TypeNodeId" t="Int16">255</v>
+                            <v n="TypeNodeIdLong">3379277682L</v>
+                            <n n="LibraryId" />
+                            <n n="ElementId" />
+                            <n n="DisplayTextId" />
+                            <n n="DescriptionTextID" />
+                            <v n="DescriptionUseParent">false</v>
+                          </o>
+                        </l>
+                        <o n="TypeNodeType" t="TypeNodeType">
+                          <v n="TypeClass" t="TypeClass">Userdef</v>
+                          <v n="QualifiedName">"IVisualisation"</v>
+                          <v n="Name">"IVisualisation"</v>
+                        </o>
+                        <v n="TypeNodeName">"[0]"</v>
+                        <o n="TypeNodeAttributes" t="TypeNodeAttributes2">
+                          <v n="AttrFlags">0UL</v>
+                          <d n="TypeNodeAttributesData" t="CaseInsensitiveHashtable" ckt="String" cvt="String">
+                            <v>conditionalshow</v>
+                            <v>visu_elemdev</v>
+                            <v>ieccodeconversion_useexistinginterface</v>
+                            <v>_3S.CoDeSys.VisuGenerated.IVisualisationIEC</v>
+                            <v>''NORMAL__COMMENT</v>
+                            <v> interface contains additional methods to IVisualElement</v>
+                          </d>
+                          <v n="ConvDone">true</v>
+                        </o>
+                        <v n="TypeNodeId" t="Int16">1</v>
+                        <v n="TypeNodeIdLong">2473092364L</v>
+                        <n n="LibraryId" />
+                        <n n="ElementId" />
+                        <n n="DisplayTextId" />
+                        <n n="DescriptionTextID" />
+                        <v n="DescriptionUseParent">false</v>
+                      </o>
+                    </o>
+                    <o>
+                      <v n="Id">2597686782L</v>
+                      <v n="Value">true</v>
+                    </o>
+                    <o>
+                      <v n="Id">3379277682L</v>
+                      <v n="Value">"SIM.param"</v>
+                    </o>
+                    <o>
+                      <v n="Id">1013868361L</v>
+                      <v n="Value">false</v>
+                    </o>
+                  </l>
+                </o>
+                <v n="VisualElementName">"Frame"</v>
+                <v n="VisualElementTypeName">"VisuFbFrame"</v>
+                <v n="VisualElementIsRectangle">true</v>
+                <v n="VisualElementIdentifier">"GenElemInst_32"</v>
+                <n n="VisualElementOfflinePaintCommands" />
+                <o n="VisualElementFrameInformation" t="VisualFrameInfo">
+                  <l n="ContainedGuids" t="ArrayList" />
+                  <l n="ContainedVisualizations" t="ArrayList" />
+                  <a n="ContainedVisualizations33" cet="String">
+                    <v>UI_Sim</v>
+                  </a>
+                </o>
+                <d n="VisualElementInputActions" t="Hashtable" />
+                <v n="VisualElementIdentification">{a16547f7-cfb3-4a45-ab4c-b1a0b7342bef}</v>
+                <v n="VisualElementOwningObjectGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
+                <a n="LMGuids" et="Guid" />
+                <d n="SubElements" t="Hashtable" />
+                <v n="VisualElementId">63</v>
                 <l n="UserManagementAccessRights" t="ArrayList" />
                 <v n="AnimationDuration">"0"</v>
                 <v n="BringToForeground">""</v>
@@ -14671,155 +15251,155 @@
             <o n="GeneratedVisuFbDescription" t="GenericFbDescription">
               <d n="FbMethods" t="CaseInsensitiveHashtable_1" ckt="String" cvt="Guid">
                 <v>ContainsPoint</v>
-                <v>ffa6ffa2-e94e-4dd8-a0ea-8381a413be2a</v>
+                <v>df2718df-6ce1-4e3e-8591-a5cd416e18f1</v>
                 <v>Destruct</v>
-                <v>dafdb108-d04f-4a1c-8524-f51c9264a2e0</v>
+                <v>d3325956-cffd-406b-acde-742446420d25</v>
                 <v>ElementInfo</v>
-                <v>f5fbe881-eea7-405b-957b-ee61543c037c</v>
+                <v>36c70f13-5285-49c5-b0a9-4d559ffd8fcf</v>
                 <v>FB_Exit</v>
-                <v>0dfc49ec-2575-49b4-a2d4-9c1929c88dd7</v>
+                <v>3df65b69-e501-4851-a262-dddf05149c8b</v>
                 <v>FB_Reinit</v>
-                <v>f36abc3d-ff75-46e5-a841-c9179163be69</v>
+                <v>9ee227e3-d081-4811-b8f2-592a34bd6511</v>
                 <v>GetClientData</v>
-                <v>4cdd6f3c-4bfb-4212-93df-f9b0178392c7</v>
+                <v>409643b3-4665-4e61-a7ce-c6b8cdcefa27</v>
                 <v>GetDialogInterface</v>
-                <v>732ccaee-460b-4f7a-86bb-56549c262bfb</v>
+                <v>4a71cd49-d093-4473-b89c-25dd9b2b2285</v>
                 <v>GetDialogInterfaceSize</v>
-                <v>fe46ec14-8fdb-4485-8661-90f500cdc5ae</v>
+                <v>5dfd2572-d408-40ac-91de-99346b26f376</v>
                 <v>GetElementArray</v>
-                <v>46fcddda-23a8-45c0-ae00-6e114d8fa62e</v>
+                <v>e3f5ad77-61e8-409d-8f8b-2154b6d388b3</v>
                 <v>GetElementIdArray</v>
-                <v>25896f11-e722-40bf-8566-72b43177d41a</v>
+                <v>96e56068-dc60-4554-b745-6a9b2876a6ed</v>
                 <v>GetElementName</v>
-                <v>bdc4af3a-ed4a-5995-b798-901203e297e6</v>
+                <v>e1ffd95b-6327-5184-a68b-eb6086981bdf</v>
                 <v>GetInitializeVersion</v>
-                <v>e3367572-5877-457b-a13c-81f183e7c3db</v>
+                <v>a4e2c1d7-573a-43fc-b323-2d22a7887696</v>
                 <v>GetInstance</v>
-                <v>2e107662-8c7b-4984-8799-5b9694e8b019</v>
+                <v>192e5f29-552d-43c4-8bfb-2b3fce102b37</v>
                 <v>GetLocalUsergroup</v>
-                <v>c09f8d33-93b9-47f2-8dc1-4a3596492728</v>
+                <v>9b1bbeed-5cf9-4d90-b787-06a2320c3b96</v>
                 <v>GetName</v>
-                <v>bb19b420-1fb7-471b-ad9c-6e2935ca930d</v>
+                <v>0029eaf3-d07f-4d61-9955-f7dfe2c50155</v>
                 <v>GetNamespace</v>
-                <v>19f7fd11-7db8-4cac-aa18-65bb0e0d28c0</v>
+                <v>ca873b2f-f10a-4fa7-8a50-7f55605c765e</v>
                 <v>GetResult</v>
-                <v>c6375fba-764c-4509-a2e0-c879b3cbc97a</v>
+                <v>22749917-654d-4ef1-bf39-02c18d8ba393</v>
                 <v>GetSize</v>
-                <v>86b54b01-2b73-4d7b-b481-1efe47d1266c</v>
+                <v>299fa01f-ba7b-4d97-b368-1cf93627eaa5</v>
                 <v>GetSurroundingRect</v>
-                <v>a6ccfd8b-5933-4843-8dca-626af1c4d14e</v>
+                <v>33a20d85-be1e-4b5a-92c2-dc5b7c76bda5</v>
                 <v>GetTabOrderIdArray</v>
-                <v>0ce8f668-3243-5c18-9afb-d9842ba67bfe</v>
+                <v>f54aa755-a426-59d1-b274-b5ed6b6240cb</v>
                 <v>GetText</v>
-                <v>ec7c9c5b-f311-4de1-9304-73a01f1da59d</v>
+                <v>eacea078-0fc1-4cb5-8dbe-5dacf5c1b81f</v>
                 <v>GetTextProperties</v>
-                <v>d730379d-bb14-4d33-aa3d-e4a99a6b0d0d</v>
+                <v>f551086a-98cc-43b4-ba6a-4ac6292c6226</v>
                 <v>GetTooltip</v>
-                <v>a23f2d39-5281-4e11-9620-8541f8e4abbe</v>
+                <v>a1ebd98b-3c60-4e11-b23b-15f0b612d47d</v>
                 <v>GetTranslator</v>
-                <v>c2db1f44-b0a0-4b65-857c-750326928fb2</v>
+                <v>fcf7f794-0ed7-49b4-bef9-d2c0dc68eb10</v>
                 <v>GetUpdateRects</v>
-                <v>b54d8986-83aa-4ba9-a955-5de520d7acd6</v>
+                <v>7c48743e-7383-4a2f-bbd6-80361f237e1a</v>
                 <v>HandleInput</v>
-                <v>b4effd4f-fab0-4c9b-8bac-36796a5ad83c</v>
+                <v>a0adb522-5fb1-470b-badd-4263c8185ad3</v>
                 <v>HasInputAccess</v>
-                <v>b25cb760-a080-483d-bdf5-1c9aeab896d9</v>
+                <v>24a852d5-bf39-4411-87ef-6761bd20c3b2</v>
                 <v>HasInputAccessIntern</v>
-                <v>ee27bd86-21dc-5bc7-825f-08ccaf5cd58b</v>
+                <v>91480387-fd71-57e7-9845-7b6190d6d26c</v>
                 <v>HasVisibilityAccess</v>
-                <v>f4393791-1f61-4878-9a70-8d79bd42e56a</v>
+                <v>66b61bd7-b877-4122-ac51-6203e3dddd44</v>
                 <v>HasVisibilityAccessIntern</v>
-                <v>3bad7f41-6c6f-59bd-84e9-6ce43b53ce5d</v>
+                <v>22d4c08c-6ae9-5b58-ac45-93b5c9fd3863</v>
                 <v>Initialize</v>
-                <v>b6a69858-6eeb-4d63-90cf-6af2d401e778</v>
+                <v>a2ff6c8f-3268-4a81-aa73-cbe36a785c95</v>
                 <v>IsAntialiasingInactive</v>
-                <v>4db7d32a-af1b-437f-9ecf-9ba69c48b4be</v>
+                <v>e5867959-1bce-4526-8371-b0958a61f7a0</v>
                 <v>Paint</v>
-                <v>6d5b2939-d522-47c4-846f-409508cd2e7d</v>
+                <v>6f07ae29-ce6a-4ae7-acd4-18679592402c</v>
                 <v>SetClientData</v>
-                <v>fd9a3449-7f2a-49de-a9ce-907a928a0d5f</v>
+                <v>7476582a-8eb9-494d-8251-6b9b84fa822f</v>
                 <v>SetContainerSize</v>
-                <v>abfc2481-1ff3-510c-b9b3-957b2523ed9d</v>
+                <v>dc26b3c4-d075-56ac-a156-1492cadfb596</v>
                 <v>SetDialogInterface</v>
-                <v>17502ff1-4df9-4381-b993-b3b69aaebc7f</v>
+                <v>e8f66185-4db3-4d9c-a0c7-3cf65d5b8557</v>
                 <v>SetResult</v>
-                <v>69ac973c-af11-4b96-80ae-688ea5a8ce3c</v>
+                <v>079b4770-4249-46ef-ada9-66e9dd27e514</v>
                 <v>SetStaticState</v>
-                <v>4d32252d-05c7-4ab8-9ac8-3d5de2e80723</v>
+                <v>9f41b345-72b8-4782-9b50-256e9e77a9e5</v>
                 <v>SetVisuFlagsInternal</v>
-                <v>426ec81d-2181-4803-9079-13b8ef8fcf6c</v>
+                <v>6109a04d-541e-4e1f-aff0-03afff105236</v>
                 <v>Update</v>
-                <v>1d42c90f-f08c-4b57-8b72-61473c986ebf</v>
+                <v>613db892-4e1a-4c69-886b-7682ed65c3a7</v>
               </d>
               <d n="FbProperties" t="CaseInsensitiveHashtable_1" ckt="String" cvt="Guid">
                 <v>__getContainer</v>
-                <v>b12ec686-7676-42e5-9071-92e4949b625c</v>
+                <v>8ec0f20a-5c97-48f0-b65a-d7fe3d85f721</v>
                 <v>__getVisu</v>
-                <v>d8a8ccea-ad9c-4837-ab39-4e3f9f480974</v>
+                <v>34602048-caf0-4e4d-b159-6a5f8508bc82</v>
               </d>
               <v n="FbName">"NotImportant"</v>
-              <v n="FbGuid">{2fc264c4-fb8a-4400-974f-7a4a9687dd6e}</v>
+              <v n="FbGuid">{1e026e4d-f1dc-41ee-aecc-8d5674db4a1b}</v>
             </o>
-            <v n="GeneratedGlobalVisuVarsGuid">{b3c99d46-91e4-43ff-a179-8f38a9979bff}</v>
-            <v n="GeneratedGlobalTheVisuVarlistGuid">{06d60dbb-9599-4748-a8cc-2c1a4be18c89}</v>
-            <v n="GeneratedGlobalVisuConstants">{3dab4e4f-4ce9-4030-9960-8c21f76ffa11}</v>
+            <v n="GeneratedGlobalVisuVarsGuid">{502a4f58-e92a-4a61-bf2d-c9765ca456fc}</v>
+            <v n="GeneratedGlobalTheVisuVarlistGuid">{53745c33-3e74-47a0-9817-b193c666ab6f}</v>
+            <v n="GeneratedGlobalVisuConstants">{03d0278c-3351-4c47-9cd8-23cea83b0c0d}</v>
             <d n="GeneratedAllElementsEntries" t="Hashtable" />
             <o n="VisuRegDesc" t="GenericFbDescription">
               <d n="FbMethods" t="CaseInsensitiveHashtable_1" ckt="String" cvt="Guid">
                 <v>FB_Exit</v>
-                <v>9cdba375-884b-49c5-8d0a-c9a20fa22828</v>
+                <v>a341ef93-fd02-4531-8875-0188a185cb57</v>
                 <v>FB_Init</v>
-                <v>80d74b6a-5822-4b6e-8579-0bb2880fc4b7</v>
+                <v>eda8543c-75d5-4c2b-83ed-d7d80b7ebcfd</v>
                 <v>FB_Reinit</v>
-                <v>573b99db-8f1d-4a06-8a93-81230c53038e</v>
+                <v>ff2b7b92-f1d6-471f-ac5d-3f719d78427a</v>
               </d>
               <d n="FbProperties" t="CaseInsensitiveHashtable_1" />
               <v n="FbName">"NotImportant"</v>
-              <v n="FbGuid">{f4205bbc-19cd-4ad5-80c1-7a7be361707d}</v>
+              <v n="FbGuid">{30b7e285-d2ec-4758-bd6c-62fc903d9824}</v>
             </o>
-            <v n="VisuRegisterGvl">{36185fa6-5e93-4554-ba39-b0dd7747e8b6}</v>
+            <v n="VisuRegisterGvl">{5251a48f-1f85-44f3-9bf9-e3bc909a0c16}</v>
             <n n="SettingsPou" />
             <n n="MemManPou" />
             <o n="InputsPou" t="GenericFbDescription">
               <d n="FbMethods" t="CaseInsensitiveHashtable_1" ckt="String" cvt="Guid">
                 <v>abstrGetDefaultCursor</v>
-                <v>9832c1fa-a14f-4e5e-8ecf-5497cd818af1</v>
+                <v>c8d45fc3-0c8f-49a8-902c-51540064d4f2</v>
                 <v>ExecuteDialogClosed</v>
-                <v>a513882c-e17e-4de2-8373-08af151bc646</v>
+                <v>17fb7c53-5a6e-442f-b506-b45ee8841207</v>
                 <v>ExecuteKeyDown</v>
-                <v>635da2a4-1f7c-4b6b-9764-15df2fbc56be</v>
+                <v>b86b87ec-761e-43d7-80b8-fea277599365</v>
                 <v>ExecuteKeyUp</v>
-                <v>26811881-f67a-4d78-ab6d-e66e74723f53</v>
+                <v>6e4e6db2-1b00-4d6a-a9dc-12b5a4722441</v>
                 <v>ExecuteLooseCapture</v>
-                <v>c01dd949-6483-41de-9100-ad032f6e4c41</v>
+                <v>6e0dd8e4-43a8-425e-ade6-7e4bdb9a7d71</v>
                 <v>ExecuteMouseClick</v>
-                <v>b5de02ef-3731-4390-acf3-6221c449ed5e</v>
+                <v>87ff9161-9692-4f23-9419-219092868813</v>
                 <v>ExecuteMouseDblClick</v>
-                <v>edf58d57-fdc0-45b6-9539-1d0b5280dcbc</v>
+                <v>ed8d35ca-d766-48c2-9a9c-a208a989712d</v>
                 <v>ExecuteMouseDown</v>
-                <v>d5cc1b42-91e3-4fa1-b9b6-4fc2ee1e17b1</v>
+                <v>39a3f9fb-3cb3-4368-a9c1-c32a7b0c5d7c</v>
                 <v>ExecuteMouseEnter</v>
-                <v>af6c5fc4-6ff3-4289-bc99-f2647e1fb35f</v>
+                <v>f8d316a3-3342-40cb-8e2a-b18d58be9018</v>
                 <v>ExecuteMouseLeave</v>
-                <v>997e87ef-10ec-40b3-b638-67dae805ba42</v>
+                <v>e05263c3-f512-42c9-a2a6-4a466bb77b33</v>
                 <v>ExecuteMouseMove</v>
-                <v>612fa036-3412-47e4-b298-f47e411dd739</v>
+                <v>2c936525-5eaf-47bf-b1b0-d3f87350e74c</v>
                 <v>ExecuteMouseUp</v>
-                <v>a976ac38-0d74-460a-8771-6c7659b75d0a</v>
+                <v>55183e3a-fa0c-4635-b1ca-5862ea7fc7eb</v>
                 <v>ExecuteValueChanged</v>
-                <v>5268d119-e3c6-42ff-840b-2d3c01d0846e</v>
+                <v>930ad1af-49de-4de9-b3dc-13635b7daac2</v>
                 <v>GetElementInfo</v>
-                <v>bde2b028-5bae-4878-9ae8-61f97064689a</v>
+                <v>dd2ec365-3e57-4cdf-bc83-c67c35d9c25e</v>
                 <v>Initialize</v>
-                <v>0d53c69a-35a9-4030-a75d-69ba20a8a896</v>
+                <v>76c700a5-4c9a-4ef6-b2d2-8546d1cfdf35</v>
               </d>
               <d n="FbProperties" t="CaseInsensitiveHashtable_1" />
               <v n="FbName">"NotImportant"</v>
-              <v n="FbGuid">{c6ef08cb-a470-4817-8891-29ecb01ed5a9}</v>
+              <v n="FbGuid">{a1c1193d-f4e3-45fc-ab0d-cc02f017c538}</v>
             </o>
-            <v n="DialogDut">{a3b37fc5-40f8-4c42-bdfd-74dacc718aee}</v>
+            <v n="DialogDut">{dcc1e740-6bf3-427b-97fa-37480f5f637c}</v>
           </o>
-          <v n="LastUsedIdForIdentifier">31</v>
+          <v n="LastUsedIdForIdentifier">32</v>
           <o n="TextDocument" t="TextDocument">
             <v n="TextBlobForSerialisation">"VAR_IN_OUT
 	
@@ -14844,17 +15424,17 @@ END_VAR"</v>
               <v>0</v>
               <o>
                 <v n="Width">1460</v>
-                <v n="Height">920</v>
+                <v n="Height">960</v>
               </o>
               <v>1</v>
               <o>
                 <v n="Width">1460</v>
-                <v n="Height">920</v>
+                <v n="Height">960</v>
               </o>
               <v>2</v>
               <o>
                 <v n="Width">1460</v>
-                <v n="Height">920</v>
+                <v n="Height">960</v>
               </o>
             </d2>
             <v n="Version">2</v>
@@ -14910,8 +15490,8 @@ END_VAR"</v>
         <Data>
           <o xml:space="preserve" t="VisualProperty">
             <v n="VisuUsageType">0</v>
-            <v n="SizeX">1024</v>
-            <v n="SizeY">768</v>
+            <v n="SizeX">1470</v>
+            <v n="SizeY">970</v>
             <v n="IsStartVisu">false</v>
             <v n="VisuSizeMode" t="VisualVisuSizeMode">AutoDetect</v>
             <v n="Internal">false</v>

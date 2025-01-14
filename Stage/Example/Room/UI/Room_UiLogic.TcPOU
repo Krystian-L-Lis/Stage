@@ -44,7 +44,13 @@ VAR_INPUT
 	ctx			: REFERENCE TO Room_Ctx;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_ctx REF= ctx;]]></ST>
+        <ST><![CDATA[_ctx REF= ctx;
+
+IF _ctx.hmi.bDisable THEN
+	_ctx.hmi.sDisableText := 'Press to ENABLE!';
+ELSE
+	_ctx.hmi.sDisableText := 'Press to DISABLE!';
+END_IF	]]></ST>
       </Implementation>
     </Method>
   </POU>

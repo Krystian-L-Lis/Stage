@@ -20,7 +20,7 @@ VAR
 	
 	_uiLogic		: Room_UiLogic(_ctx);
 	
-	_systemReceiver	: Room_SystemReceiver(_ctx);
+	_onSystemEvent	: Room_OnSystemEvent(_ctx);
 	
 	_smgr			: StateManager<STATE_CAP>(_this);
 	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);

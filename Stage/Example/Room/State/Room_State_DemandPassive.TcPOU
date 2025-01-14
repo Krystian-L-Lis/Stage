@@ -6,7 +6,7 @@ VAR
 	_init					: Init(THIS^);
 	_exe					: Execute(THIS^);
 	_refEnable				: REFERENCE TO BOOL;
-	_onPassiveStateChange	: Signal;
+	_passiveStateChangeEvent	: Signal;
 	_bIsPassive				: BoolArg;
 END_VAR]]></Declaration>
     <Implementation>
@@ -73,17 +73,17 @@ END_VAR]]></Declaration>
 		CONTINUE;
 	END_IF
 	
-	IF IsOk(GetReceiver(_iEntity, '*._passiveHeatingCountRec', iRec => _iRec)) THEN
-		IF IsErr(_onPassiveStateChange.Pair(_iRec), nOut => _r) THEN
-			DebugMsg(_iRec, strb.Append('Cannot pair _onPassiveStateChange with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
+	IF IsOk(GetReceiver(_iEntity, '*._onPassiveRequest', iRec => _iRec)) THEN
+		IF IsErr(_passiveStateChangeEvent.Pair(_iRec), nOut => _r) THEN
+			DebugMsg(_iRec, strb.Append('Cannot pair _passiveStateChangeEvent with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
 		END_IF
 		
 		RETURN;
 	END_IF
 END_WHILE
 
-DebugMsg(THIS^, strb.Append('Cannot pair _onRequest with a ').Append('_requestRec').Append('!').Read());
-DebugMsg(_iEntity, strb.Append('_requestRec').Append(' not found!').Read());]]></ST>
+DebugMsg(THIS^, strb.Append('Cannot pair _passiveStateChangeEvent with a ').Append('_onPassiveRequest').Append('!').Read());
+DebugMsg(_iEntity, strb.Append('_onPassiveRequest').Append(' not found!').Read());]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{466d5c45-8960-408f-8f4b-136ffcbbd099}">
@@ -101,7 +101,7 @@ _ctx.hmi.nStatusColor := COL.BLACK.Raw;
 _ctx.hmi.bHideReset := TRUE;
 
 _bIsPassive.OpSet(TRUE);
-_onPassiveStateChange.Emit(_bIsPassive);]]></ST>
+_passiveStateChangeEvent.Emit(_bIsPassive);]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{3f050fb3-8211-4eb9-b971-e853c97945df}">
@@ -122,7 +122,7 @@ END_IF]]></ST>
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_bIsPassive.OpSet(FALSE);
-_onPassiveStateChange.Emit(_bIsPassive);]]></ST>
+_passiveStateChangeEvent.Emit(_bIsPassive);]]></ST>
       </Implementation>
     </Method>
   </POU>

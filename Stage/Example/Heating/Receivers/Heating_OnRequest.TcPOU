@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Heating_RequestRec" Id="{f1fcf00f-bece-4c8c-95ed-661830145846}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Heating_RequestRec IMPLEMENTS I_Callable
+  <POU Name="Heating_OnRequest" Id="{f1fcf00f-bece-4c8c-95ed-661830145846}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating_OnRequest IMPLEMENTS I_Callable
 VAR
 	_ctx			: REFERENCE TO Heating_Ctx;
 END_VAR

@@ -118,7 +118,7 @@ Returns:
 METHOD EmitTo : Result
 VAR_INPUT
 	iReceiver		: I_Receiver;
-	iArg			: I_Arg;
+	iArg			: I_Arg := 0;
 END_VAR
 ]]></Declaration>
       <Implementation>

@@ -39,7 +39,11 @@
             <v n="GuidShowChangeConfigDialogFunction">{00000000-0000-0000-0000-000000000000}</v>
             <v n="UseStandardKeyboardHandling">true</v>
             <v n="PaintDeactiveElementsGrayedOut">true</v>
-            <n n="GlobalOpenNumpadKeypadSettings" />
+            <o n="GlobalOpenNumpadKeypadSettings" t="VisualManagerGlobalOpenNumpadKeypadSettings">
+              <v n="GlobalOpenNumpadKeypadType" t="GlobalOpenNumpadKeypadType">OpenCentered</v>
+              <n n="PositionX" />
+              <n n="PositionY" />
+            </o>
             <v n="UseBackgroundForModalDialog">true</v>
             <v n="AnimationDuration">200</v>
             <v n="ConvertImages">false</v>
@@ -62,7 +66,7 @@
               <v>03dd2f8e-d48e-4767-ae49-63c83c2eabdb</v>
             </d>
             <d n="FbProperties" t="CaseInsensitiveHashtable" />
-            <v n="FbName">"NotImportant"</v>
+            <v n="FbName">"__VisuInitInstantiation_Fb"</v>
             <v n="FbGuid">{a5fb7ab0-e894-47dc-89e0-a373cdb44360}</v>
           </o>
           <o n="TargetProperties" t="VisualizationTargetProperties">
@@ -569,6 +573,7 @@
         <Type n="DeviceBasedHotkeyItem">{11a86981-4b02-4f98-b432-96e385cb41b7}</Type>
         <Type n="DeviceBasedHotkeysProvider">{c91fc5aa-1e38-43b2-9a05-c52cc5d7f5b6}</Type>
         <Type n="GenericFbDescription">{40d6dd8d-dfd0-493a-8e29-c9a35e1e6539}</Type>
+        <Type n="GlobalOpenNumpadKeypadType">{550f8ee0-c42e-42f0-b253-4fadf0c12bdf}</Type>
         <Type n="Guid">System.Guid</Type>
         <Type n="HotkeyConfiguration">{6b108d46-58af-4e41-a3f4-174d8f160cc4}</Type>
         <Type n="Int32">System.Int32</Type>
@@ -578,6 +583,7 @@
         <Type n="UnicodeSupport">{19611221-ebd3-4607-86d2-9822fbe84c30}</Type>
         <Type n="VisualClientSizeMode">{c37fe731-4f69-4d98-82fe-4f9aefbe200d}</Type>
         <Type n="VisualizationTargetProperties">{997fedbb-1888-4256-b61c-2933d8056bfd}</Type>
+        <Type n="VisualManagerGlobalOpenNumpadKeypadSettings">{422ed780-41e9-4352-8132-b322b16154c1}</Type>
         <Type n="VisualManagerObject">{4d3fdb8f-ab50-4c35-9d3a-d4bb9bb9a628}</Type>
         <Type n="VisualManagerViewSettings">{ec9b2ec6-92a2-4856-be72-7866fb274c64}</Type>
       </TypeList>
@@ -592,10 +598,10 @@
               <v n="MainStartHtm">true</v>
               <v n="UpdateRate">200</v>
               <v n="CommBufferSize">50000</v>
-              <v n="BestFit">true</v>
-              <v n="ClientSizeMode" t="VisualClientSizeMode">AutoDetect</v>
-              <v n="ClientSizeX">1280</v>
-              <v n="ClientSizeY">1024</v>
+              <v n="BestFit">false</v>
+              <v n="ClientSizeMode" t="VisualClientSizeMode">Specified</v>
+              <v n="ClientSizeX">1470</v>
+              <v n="ClientSizeY">970</v>
               <v n="ForceWebVisuClient">false</v>
               <v n="Antialiasing">true</v>
               <v n="ClientOperationType" t="eDefaultInputSetting">Keyboard</v>

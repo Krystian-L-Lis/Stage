@@ -20,6 +20,18 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Method Name="Clear" Id="{60abfa75-29d6-499a-907d-e34b56c038d1}">
+      <Declaration><![CDATA[(*
+Clears the queue.
+*)
+METHOD Clear
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_nHead := 1;
+_nTail := 1;
+_list.Append(0, 1);]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="Head" Id="{212475c4-e8c8-4d1b-a3ee-53654d6c7959}">
       <Declaration><![CDATA[(*
 Returns the current head index of the queue, indicating the next position for insertion.
@@ -64,6 +76,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsOk(_list.Get(_nTail, iArg => iArg), nOut => Pop) THEN
+	_list.Append(0, _nTail);
 	_nTail := _nTail + 1;
 	IF _nTail = nCap THEN
 		_nTail := 1;

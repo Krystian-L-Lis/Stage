@@ -14,7 +14,7 @@ STRUCT
 	bToggleSystemTemperatureRise	: BOOL := FALSE;
 	rSystemTemperatureRise			: REAL := 0.2;
 	
-	bToggleSystemTemperatureFall		: BOOL := FALSE;
+	bToggleSystemTemperatureFall	: BOOL := FALSE;
 	rSystemTemperatureFall			: REAL := 0.2;
 	
 	bToggleSystemPressureRise		: BOOL := FALSE;
@@ -24,7 +24,7 @@ STRUCT
 	rSystemPressureFall				: REAL := -0.10;   // bar/tick
 	
 	// Room parameters
-	rRoomTemperaturePassiveDrop		: REAL := -0.50;  // degC/tick/m2
+	rRoomTemperaturePassiveDrop		: REAL := -0.50;  // degC/tick
 	rRoomTemperatureRisePerHeater	: REAL := 0.70;   // degC/tick
 	
 	// Valve fault

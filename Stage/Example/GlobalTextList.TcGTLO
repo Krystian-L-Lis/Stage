@@ -21,6 +21,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"165"</v>
+              <v n="TextDefault">"%2.2f bar/tick"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"1000"</v>
               <v n="TextDefault">"%2.2f min"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -33,6 +38,11 @@
             <o>
               <v n="TextID">"181"</v>
               <v n="TextDefault">"%2.2f °C"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"899"</v>
+              <v n="TextDefault">"%2.2f °C/tick"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -296,6 +306,61 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"64"</v>
+              <v n="TextDefault">"RoomTemperaturePassiveDrop"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"649"</v>
+              <v n="TextDefault">"RoomTemperatureRisePerHeater"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"111"</v>
+              <v n="TextDefault">"rRoomTemperaturePassiveDrop"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"468"</v>
+              <v n="TextDefault">"rRoomTemperatureRisePerHeater"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"142"</v>
+              <v n="TextDefault">"rSystemPressureFall"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"531"</v>
+              <v n="TextDefault">"rSystemPressureRise"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"247"</v>
+              <v n="TextDefault">"rSystemTemperatureDropPassive"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"485"</v>
+              <v n="TextDefault">"rSystemTemperatureDropPerHeater"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"498"</v>
+              <v n="TextDefault">"rSystemTemperatureFall"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"155"</v>
+              <v n="TextDefault">"rSystemTemperatureRise"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"173"</v>
+              <v n="TextDefault">"rSystemTemperatureRisePerBurner"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"305"</v>
               <v n="TextDefault">"Run Output"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -376,6 +441,41 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"534"</v>
+              <v n="TextDefault">"SystemPressureFall"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"450"</v>
+              <v n="TextDefault">"SystemPressureRise"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"420"</v>
+              <v n="TextDefault">"SystemTemperatureDropPassive"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"410"</v>
+              <v n="TextDefault">"SystemTemperatureDropPerHeater"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"648"</v>
+              <v n="TextDefault">"SystemTemperatureFall"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"264"</v>
+              <v n="TextDefault">"SystemTemperatureRise"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"918"</v>
+              <v n="TextDefault">"SystemTemperatureRisePerBurner"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"12"</v>
               <v n="TextDefault">"Tank 0"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -396,6 +496,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"262"</v>
+              <v n="TextDefault">"Tick"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"743"</v>
               <v n="TextDefault">"Timeout"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -408,6 +513,11 @@
             <o>
               <v n="TextID">"430"</v>
               <v n="TextDefault">"Timeout: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"596"</v>
+              <v n="TextDefault">"Toggle"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>

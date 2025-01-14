@@ -47,10 +47,10 @@
     <Compile Include="Heating\Heating_Ctx.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Heating\Receivers\Heating_PassiveCountRec.TcPOU">
+    <Compile Include="Heating\Receivers\Heating_OnPassiveRequest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Heating\Receivers\Heating_RequestRec.TcPOU">
+    <Compile Include="Heating\Receivers\Heating_OnRequest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Heating\State\Heating_State.TcPOU">
@@ -88,7 +88,6 @@
     <Compile Include="MAIN\MAIN.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-      <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
     <Compile Include="MAIN\SIM.TcGVL">
       <SubType>Code</SubType>
@@ -163,7 +162,7 @@
     <Compile Include="Room\Ctx\Room_Ctx_States.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Receivers\Room_SystemReceiver.TcPOU">
+    <Compile Include="Room\Receivers\Room_OnSystemEvent.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\Rooms\AbstractRoom.TcPOU">
@@ -220,6 +219,10 @@
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
     <Compile Include="_UI\UI_Room.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="_UI\UI_Sim.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>

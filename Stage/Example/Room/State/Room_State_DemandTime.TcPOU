@@ -8,7 +8,7 @@ VAR
 	_tonOff				: TON;
 	_tonOn				: TON;
 	
-	_onRequest				: Signal;
+	_requestEvent				: Signal;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -90,8 +90,8 @@ END_VAR]]></Declaration>
 		CONTINUE;
 	END_IF
 	
-	IF IsOk(GetReceiver(_iEntity, '*._requestRec', iRec => _iRec)) THEN
-		IF IsErr(_onRequest.Pair(_iRec), nOut => _r) THEN
+	IF IsOk(GetReceiver(_iEntity, '*._onRequest', iRec => _iRec)) THEN
+		IF IsErr(_requestEvent.Pair(_iRec), nOut => _r) THEN
 			DebugMsg(_iRec, strb.Append('Cannot pair _onRequest with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
 		END_IF
 		
@@ -99,8 +99,8 @@ END_VAR]]></Declaration>
 	END_IF
 END_WHILE
 
-DebugMsg(THIS^, strb.Append('Cannot pair _onRequest with a ').Append('_requestRec').Append('!').Read());
-DebugMsg(_iEntity, strb.Append('_requestRec').Append(' not found!').Read());]]></ST>
+DebugMsg(THIS^, strb.Append('Cannot pair _RequestEvent with a ').Append('_onRequest').Append('!').Read());
+DebugMsg(_iEntity, strb.Append('_onRequest').Append(' not found!').Read());]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{6de24a63-b10e-46fa-b036-c1fc69237759}">
@@ -119,7 +119,7 @@ _ctx.hmi.bHideReset := TRUE;
 
 _tonOn(IN := FALSE);
 
-_onRequest.Emit(_ctx.priv.iThisRoom);
+_requestEvent.Emit(_ctx.priv.iThisRoom);
 ]]></ST>
       </Implementation>
     </Method>
@@ -127,7 +127,7 @@ _onRequest.Emit(_ctx.priv.iThisRoom);
       <Declaration><![CDATA[METHOD OnExecute
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_tonOn(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOn * 1000));
+        <ST><![CDATA[_tonOn(IN := _ctx.priv.bOpen, PT := UDINT_TO_TIME(_refTimeSettings.nOn * 1000));
 IF _ctx.hmi.bDisable THEN
 	_ctx.state.iMgr.Request(_ctx.state.iDisable);
 ELSIF _tonOn.Q THEN

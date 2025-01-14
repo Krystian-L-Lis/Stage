@@ -1,22 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Room_SystemReceiver" Id="{41d76812-2850-4f2a-a1e2-4775d2650df6}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Room_SystemReceiver IMPLEMENTS I_Init, I_Callable
+  <POU Name="Room_OnSystemEvent" Id="{41d76812-2850-4f2a-a1e2-4775d2650df6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_OnSystemEvent IMPLEMENTS I_Init, I_Callable
 VAR
-	_init			: Init(THIS^);
-	_systemRec		: Receiver(THIS^);
+	_init				: Init(THIS^);
+	_onSystemEvent		: Receiver(THIS^);
 	
-	_bError			: BOOL;
+	_bError				: BOOL;
 	
-	_iOnResume		: I_Signal;
-	_iOnPause		: I_Signal;
-	_iOnEnable		: I_Signal;
-	_iOnDisable		: I_Signal;
+	_iResumeEvent		: I_Signal;
+	_iPauseEvent		: I_Signal;
+	_iEnableEvent		: I_Signal;
+	_iDisableEvent		: I_Signal;
 	
-	_ctx			: REFERENCE TO Room_Ctx;
-	
-	_iOnPauseBehaviour	: I_Callable;
-	_iOnResumeBehaviour	: I_Callable;
+	_ctx				: REFERENCE TO Room_Ctx;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -37,7 +34,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE GetSignal(iEntity, sToFind, iSignal => iSignal) OF
 	Ok:
-		IF IsErr(iSignal.Pair(_systemRec), nOut => _r) THEN
+		IF IsErr(iSignal.Pair(_onSystemEvent), nOut => _r) THEN
 			_bError := TRUE;
 			DebugMsg(iSignal, strb.Append('Cannot pair _systemRec with this signal! Error code: ').Append(INT_TO_STRING(_r)).Read());
 		END_IF
@@ -55,7 +52,6 @@ VAR_INPUT
 END_VAR
 VAR
 	cmp		: TagCmp;
-	cmp2	: TagCmp;
 	_iTag	: I_Tag;
 END_VAR]]></Declaration>
       <Implementation>
@@ -73,35 +69,28 @@ END_IF
 
 cmp.Set(_iTag);
 
-IF cmp.Match(_iOnResume.Tag).IsTrue() THEN
+IF cmp.Match(_iResumeEvent.Tag).IsTrue() THEN
 	_ctx.priv.bPaused := FALSE;		
 	RETURN;
 END_IF
 
-IF cmp.Match(_iOnPause.Tag).IsTrue() THEN
+IF cmp.Match(_iPauseEvent.Tag).IsTrue() THEN
 	_ctx.priv.bPaused := TRUE;
 	RETURN;
 END_IF
 
-IF _ctx.state.iMgr.Current <> 0 THEN
-	cmp2.Set(_ctx.state.iMgr.Current.Tag);
-END_IF
+IF cmp.Match(_iEnableEvent.Tag).IsTrue() THEN
+	IF NOT _ctx.priv.bSysOff THEN
+		RETURN;
+	END_IF
 
-IF cmp.Match(_iOnEnable.Tag).IsTrue() THEN
-	IF cmp2.Match(_ctx.state.iSystemOff.Tag).IsFalse() THEN
-		RETURN;
-	END_IF
-	
-	IF cmp2.Match(_ctx.state.iIdle.Tag).IsTrue() THEN
-		RETURN;
-	END_IF
 	_ctx.priv.bSysOff := FALSE;
 	_ctx.state.iMgr.Request(_ctx.state.iIdle);	
 	RETURN;
 END_IF
 
-IF cmp.Match(_iOnDisable.Tag).IsTrue() THEN
-	IF cmp2.Match(_ctx.state.iSystemOff.Tag).IsTrue() THEN
+IF cmp.Match(_iDisableEvent.Tag).IsTrue() THEN
+	IF _ctx.priv.bSysOff THEN
 		RETURN;
 	END_IF
 	
@@ -139,10 +128,10 @@ END_VAR]]></Declaration>
 		CONTINUE;
 	END_IF
 	
-	_GetSignalAndPair(_iEntity, '*._onPause', iSignal => _iOnPause);
-	_GetSignalAndPair(_iEntity, '*._onResume', iSignal => _iOnResume);
-	_GetSignalAndPair(_iEntity, '*._onEnable', iSignal => _iOnEnable);
-	_GetSignalAndPair(_iEntity, '*._onDisable', iSignal => _iOnDisable);
+	_GetSignalAndPair(_iEntity, '*._pauseEvent', iSignal => _iPauseEvent);
+	_GetSignalAndPair(_iEntity, '*._resumeEvent', iSignal => _iResumeEvent);
+	_GetSignalAndPair(_iEntity, '*._enableEvent', iSignal => _iEnableEvent);
+	_GetSignalAndPair(_iEntity, '*._disableEvent', iSignal => _iDisableEvent);
 	
 	RETURN;
 END_WHILE]]></ST>

@@ -51,7 +51,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => _iEntity)) DO
-	IF IsOk(GetSignal(_iEntity, '*._onSafetyChange', iSignal => _iSignal)) THEN
+	IF IsOk(GetSignal(_iEntity, '*._safetyEvent', iSignal => _iSignal)) THEN
 		IF IsErr(_iSignal.Pair(_safetyRec), nOut => _r) THEN
 			DebugMsg(_iSignal, CONCAT('Could not be paired! Error code: ', TO_STRING(_r)));
 		END_IF
@@ -79,7 +79,7 @@ _ctx.io.out.bPump := FALSE;
 
 _ctx.priv.iOnDisable.Emit();
 
-]]></ST>
+_ctx.priv.iQueue.Clear();]]></ST>
       </Implementation>
     </Method>
   </POU>

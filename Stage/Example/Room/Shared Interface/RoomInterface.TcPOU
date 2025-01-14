@@ -39,6 +39,7 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx REF= ctx;
+_ctx.priv.iThisRoom := THIS^;
 _nMaxRoom := _nMaxRoom + 1;
 _nId := _nMaxRoom;
 _ctx.hmi.nId := _nMaxRoom;]]></ST>
