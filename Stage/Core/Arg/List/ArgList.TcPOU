@@ -37,8 +37,7 @@ END_VAR
 Retrieves the `I_Arg` at the specified index.  
 Returns:
 - `Ok` - Successfully retrieves the `I_Arg`.
-- `Err.Idx` - The list is empty.
-- `Err.Ovf` - The specified index is out of bounds.
+- `Err.Idx` - The specified index is out of bounds.
 *)
 METHOD Get : Result
 VAR_INPUT
@@ -49,7 +48,7 @@ VAR_OUTPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
-	Get := Err.Ovf;
+	Get := Err.Idx;
 	RETURN;	
 END_IF
 
@@ -65,8 +64,7 @@ END_IF
 Adds, updates, or removes an argument in the list at the specified index.  
 Return:
 - `Ok` - Upon successfully adding, modifying, or removing an entry.
-- `None` - When replacing a null entry with another null entry.
-- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
+- `Err.Idx` - When attempting to modify an entry at an out-of-bounds index.
 *)
 METHOD Set : Result
 VAR_INPUT
@@ -75,7 +73,7 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
-	Set := Err.Ovf;
+	Set := Err.Idx;
 	RETURN;	
 END_IF
 

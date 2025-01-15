@@ -20,8 +20,7 @@ PROPERTY Cap : UDINT]]></Declaration>
 Retrieves the `I_Arg` at the specified index.  
 Returns:
 - `Ok` - Successfully retrieves the `I_Arg`.
-- `Err.Idx` - The list is empty.
-- `Err.Ovf` - The specified index is out of bounds.
+- `Err.Idx` - The specified index is out of bounds.
 *)
 METHOD Get : Result
 VAR_INPUT

@@ -11,8 +11,7 @@ INTERFACE I_MutArgList EXTENDS I_ArgList
 Adds, updates, or removes an argument in the list at the specified index.  
 Return:
 - `Ok` - Upon successfully adding, modifying, or removing an entry.
-- `None` - When replacing a null entry with another null entry.
-- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
+- `Err.Idx` - When attempting to modify an entry at an out-of-bounds index.
 *)
 METHOD Set : Result
 VAR_INPUT
