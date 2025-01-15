@@ -375,12 +375,6 @@
     <Compile Include="Strings\Strf\Strf.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Strings\SymPath\SymPath.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strings\SymPath\MatchSymPathPattern.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Tags\Casts\IArgToITag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -405,10 +399,16 @@
     <Compile Include="Tags\I_Tagged.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tags\MatchTagPathPattern.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tags\Tag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\TagCmp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\TagPath.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\TagProxy.TcPOU">
@@ -468,7 +468,6 @@
     <Folder Include="Strings\Alias" />
     <Folder Include="Strings\Strb" />
     <Folder Include="Strings\Strf" />
-    <Folder Include="Strings\SymPath" />
     <Folder Include="Tags\Helpers" />
     <Folder Include="Tags\Casts" />
     <Folder Include="_" />

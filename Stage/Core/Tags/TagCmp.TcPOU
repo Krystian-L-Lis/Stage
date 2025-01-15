@@ -236,10 +236,10 @@ VAR_INPUT
 	sPattern 			: Str;
 END_VAR
 VAR
-	pttPath				: SymPath;
+	pttPath				: TagPath;
 	pttSeg				: Str;
 	pttPeek				: Str;
-	addPath				: SymPath;
+	addPath				: TagPath;
 	addSeg				: Str;
 	bMatch				: BOOL;
 END_VAR
@@ -256,7 +256,7 @@ END_IF
 CASE _nResult OF
 	Ok,
 	None:		
-		_nResult := MatchSymPathPattern(_iBaseTag.Id, sPattern);
+		_nResult := MatchTagPathPattern(_iBaseTag.Id, sPattern);
 END_CASE
 
 ]]></ST>

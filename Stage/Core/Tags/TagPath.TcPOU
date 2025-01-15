@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="SymPath" Id="{de08c266-82f2-43b6-8ef2-f01293adb92c}" SpecialFunc="None">
+  <POU Name="TagPath" Id="{de08c266-82f2-43b6-8ef2-f01293adb92c}" SpecialFunc="None">
     <Declaration><![CDATA[// Manages symbols paths, supporting segment-based navigation, validation, and modification.
 // Example path: MAIN.functionBlock.5.bBool
-FUNCTION_BLOCK FINAL SymPath
+FUNCTION_BLOCK FINAL TagPath
 VAR
 	_sPath		: Str;
 	_nLen		: INT := 0;
