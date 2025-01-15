@@ -15,6 +15,12 @@ PROPERTY Head : UDINT]]></Declaration>
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
+    <Property Name="Length" Id="{bc2b1f08-109e-46b1-b38c-adfa0d4f5023}">
+      <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
+      <Get Name="Get" Id="{f28113b3-bd5b-4941-ae11-73f6ed88375b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Property Name="List" Id="{22d13380-699e-45b5-956e-33b334fa798a}">
       <Declaration><![CDATA[(*
 Provides access to the underlying list structure that holds the queue's argument objects.

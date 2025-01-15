@@ -13,55 +13,11 @@ IMPLEMENTS I_MutArgList
 
 VAR
 	_iList	: ARRAY[1..nCap] OF I_Arg;
-	_nLen	: UDINT := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="Append" Id="{e43a485e-6cb6-45fe-b385-9a9421cc55b9}">
-      <Declaration><![CDATA[(*
-Adds, updates, or removes an argument in the list at the specified index.  
-Return:
-- `Ok` - Upon successfully adding, modifying, or removing an entry.
-- `None` - When replacing a null entry with another null entry.
-- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
-*)
-METHOD Append : Result
-VAR_INPUT
-	iArg		: I_Arg;
-	nIndex		: UDINT;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
-	Append := Err.Ovf;
-	RETURN;	
-END_IF
-
-IF iArg = 0 THEN
-	IF _iList[nIndex] = 0 THEN
-		// Do nothing
-		Append := None;
-	ELSE
-		// Remove
-		_iList[nIndex] := 0;
-		_nLen := _nLen - 1;
-		Append := Ok;
-	END_IF
-ELSE
-	IF _iList[nIndex] = 0 THEN
-		// Add
-		_iList[nIndex] := iArg;
-		_nLen := _nLen + 1;
-		Append := Ok;		
-	ELSE
-		// Modify
-		_iList[nIndex] := iArg;
-		Append := Ok;			
-	END_IF
-END_IF]]></ST>
-      </Implementation>
-    </Method>
     <Property Name="Cap" Id="{1048cc8b-e43e-4da9-a171-782c39431c37}">
       <Declaration><![CDATA[(*
 Provides the maximum capacity of the list.
@@ -92,12 +48,7 @@ VAR_OUTPUT
 	iArg	: I_Arg;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _nLen = 0 THEN
-	Get := Err.Idx;
-	RETURN;
-END_IF
-
-IF nIndex > nCap OR nIndex = 0 THEN
+        <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
 	Get := Err.Ovf;
 	RETURN;	
 END_IF
@@ -109,19 +60,31 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Length" Id="{64da98aa-17c6-48de-abec-0f8af739d3fd}">
+    <Method Name="Set" Id="{e43a485e-6cb6-45fe-b385-9a9421cc55b9}">
       <Declaration><![CDATA[(*
-Returns the current number of elements in the list.
+Adds, updates, or removes an argument in the list at the specified index.  
+Return:
+- `Ok` - Upon successfully adding, modifying, or removing an entry.
+- `None` - When replacing a null entry with another null entry.
+- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
 *)
-PROPERTY Length : UDINT]]></Declaration>
-      <Get Name="Get" Id="{068cf6fb-ea35-402b-b5df-5a4081492742}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Length := _nLen;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
+METHOD Set : Result
+VAR_INPUT
+	iArg		: I_Arg;
+	nIndex		: UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
+	Set := Err.Ovf;
+	RETURN;	
+END_IF
+
+_iList[nIndex] := iArg;
+IF iArg <> 0 THEN
+	Set := Ok;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

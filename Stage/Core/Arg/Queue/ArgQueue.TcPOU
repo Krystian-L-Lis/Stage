@@ -13,6 +13,7 @@ IMPLEMENTS I_MutArgQueue
 
 VAR
 	_list		: ArgList<nCap>;
+	_nLen		: UDINT := 0;
 	_nHead		: UDINT := 1;
 	_nTail		: UDINT := 1;
 END_VAR
@@ -29,7 +30,8 @@ METHOD Clear
       <Implementation>
         <ST><![CDATA[_nHead := 1;
 _nTail := 1;
-_list.Append(0, 1);]]></ST>
+_nLen := 0;
+_list.Set(0, 1);]]></ST>
       </Implementation>
     </Method>
     <Property Name="Head" Id="{212475c4-e8c8-4d1b-a3ee-53654d6c7959}">
@@ -43,6 +45,17 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[Head := _nHead;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Length" Id="{6c789f5f-1bd5-4a93-a3d4-b00289ab6031}">
+      <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
+      <Get Name="Get" Id="{d476a79c-0af2-4a2d-a64d-2783507722fd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Length := _nLen;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -75,13 +88,16 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsOk(_list.Get(_nTail, iArg => iArg), nOut => Pop) THEN
-	_list.Append(0, _nTail);
-	_nTail := _nTail + 1;
-	IF _nTail = nCap THEN
-		_nTail := 1;
-	END_IF
-END_IF]]></ST>
+        <ST><![CDATA[IF _nLen = 0 THEN
+	Pop := None;
+	RETURN;
+END_IF;
+
+IF IsOk(_list.Get(_nHead, iArg => iArg), nOut => Pop) THEN
+	_nHead := (_nHead MOD nCap) + 1;
+	_nLen := _nLen - 1;
+	Pop := Ok;
+END_IF;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Push" Id="{4cffbac1-66d4-4260-a313-b7e0e1c784cf}">
@@ -98,17 +114,16 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _nHead = _nTail THEN
+        <ST><![CDATA[IF _nLen = nCap THEN
 	Push := Err.Ovf;
 	RETURN;
-END_IF
+END_IF;
 
-IF IsOk(_list.Append(iArg, _nHead), nOut => Push) THEN
-	_nHead := _nHead + 1;
-	IF _nHead = nCap THEN
-		_nHead := 1;
-	END_IF
-END_IF]]></ST>
+IF IsOk(_list.Set(iArg, _nTail), nOut => Push) THEN
+	_nTail := (_nTail MOD nCap) + 1;
+	_nLen := _nLen + 1;
+	Push := Ok;
+END_IF;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Tail" Id="{0030fa0d-2cec-40bb-9189-8d4288b9442f}">

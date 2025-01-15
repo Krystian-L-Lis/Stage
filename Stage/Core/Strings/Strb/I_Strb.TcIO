@@ -128,8 +128,8 @@ END_VAR
       <Declaration><![CDATA[// Extracts a substring starting from a given position with a specified length.
 METHOD Slice : I_Strb
 VAR_INPUT
+	nLength : INT;   // Length of the slice
     nPosition : INT; // Starting position of the slice
-    nLength : INT;   // Length of the slice
 END_VAR
 VAR_OUTPUT
     sSlice : Strb;   // The sliced string

@@ -6,7 +6,7 @@ A list implementation for managing `I_Arg`.
 *)
 INTERFACE I_MutArgList EXTENDS I_ArgList
 ]]></Declaration>
-    <Method Name="Append" Id="{9cd928ff-dfb7-497d-a0a3-0685d1fb0111}">
+    <Method Name="Set" Id="{9cd928ff-dfb7-497d-a0a3-0685d1fb0111}">
       <Declaration><![CDATA[(*
 Adds, updates, or removes an argument in the list at the specified index.  
 Return:
@@ -14,7 +14,7 @@ Return:
 - `None` - When replacing a null entry with another null entry.
 - `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
 *)
-METHOD Append : Result
+METHOD Set : Result
 VAR_INPUT
 	iArg		: I_Arg;
 	nIndex		: UDINT;
