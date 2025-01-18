@@ -54,7 +54,7 @@ VAR_OUTPUT
 	bOutletValve		: BOOL;
 END_VAR
 VAR
-	_timeDemand		: Room_State_DemandTime(_this, _ctx, _settings.timee);
+	_timeDemand		: Room_State_DemandHeating(_this, _ctx, _settings.timee);
 	_tempDemand		: Room_State_DemandTemperature(_this, _ctx, _settings.temp, rTemperature);
 	_passiveDemand	: Room_State_DemandPassive(_this, _ctx, _settings.bEnablePassive);
 	

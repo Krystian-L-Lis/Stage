@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Room_State_Idle" Id="{4c766015-91cf-477b-985f-581e4af963c5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_Idle EXTENDS Room_State
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_Idle EXTENDS _Room_State
 VAR_INPUT
 END_VAR
 VAR_OUTPUT

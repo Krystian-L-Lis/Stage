@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Room_State" Id="{df0168ad-9f27-4512-92eb-a0e2e652ad32}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT Room_State EXTENDS State
+  <POU Name="_Room_State" Id="{df0168ad-9f27-4512-92eb-a0e2e652ad32}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT _Room_State EXTENDS State
 VAR
 	_ctx	: REFERENCE TO Room_Ctx;
 END_VAR

@@ -51,7 +51,7 @@ VAR_OUTPUT
 	bOutletValve		: BOOL;
 END_VAR
 VAR
-	_timeDemand		: Room_State_DemandTime(_this, _ctx, _settings);
+	_timeDemand		: Room_State_DemandHeating(_this, _ctx, _settings);
 	_simInlet		: ValveSim;
 	_simOutlet		: ValveSim;
 END_VAR

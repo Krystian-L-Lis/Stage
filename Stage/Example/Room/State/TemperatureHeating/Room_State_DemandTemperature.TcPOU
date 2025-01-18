@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Room_State_DemandTemperature" Id="{c98dfd46-a1dc-427b-9523-1ac85e9186a3}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_DemandTemperature EXTENDS Room_State IMPLEMENTS I_Execute, I_Init
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_DemandTemperature EXTENDS _Room_State IMPLEMENTS I_Execute, I_Init
 VAR
 	_init					: Init(THIS^);
 	_exe					: Execute(THIS^);

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Room_State_PassiveHeating_Hmi" Id="{19942d14-7b9a-419a-9d53-abe959d99cdb}">
+    <Declaration><![CDATA[TYPE Room_State_PassiveHeating_Hmi :
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Room_State_DemandTime" Id="{0389a633-ce0e-45d1-8ffe-b5458804ca69}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_DemandTime EXTENDS Room_State IMPLEMENTS I_Execute
+  <POU Name="Room_State_DemandHeating" Id="{0389a633-ce0e-45d1-8ffe-b5458804ca69}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_State_DemandHeating EXTENDS _Room_State IMPLEMENTS I_Execute
 VAR
 	_exe				: Execute(THIS^);
 	_refTimeSettings	: REFERENCE TO Room_Settings_TimeSettings;
 	_tonOff				: TON;
 	_tonOn				: TON;
 	
-	_requestEvent				: Signal;
+	_requestEvent		: Signal;
 END_VAR
 ]]></Declaration>
     <Implementation>
