@@ -41,7 +41,7 @@ VAR PERSISTENT
 END_VAR
 
 VAR_INPUT
-	rTemperature	: REAL;
+	rTemperature	: REAL := 19.0 + LREAL_TO_REAL(Random());
 
 	bInletValveIsOpen		: BOOL;
 	bInletValveIsClosed		: BOOL;
@@ -93,8 +93,8 @@ IF NOT sim.bTick THEN
 END_IF
 
 IF bInletValve AND bOutletValve THEN
-	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater;
-	rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater;
+	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater * LREAL_TO_REAL(Random());
+	rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater * LREAL_TO_REAL(Random());
 END_IF
 
 rTemperature := rTemperature + sim.param.rRoomTemperaturePassiveDrop;

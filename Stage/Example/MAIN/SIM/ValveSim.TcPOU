@@ -14,12 +14,14 @@ VAR
 	_ton		: TON;
 	_rt			: R_TRIG;
 	_ft			: F_TRIG;
+	_bInit		: BOOl := TRUE;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[_rt(CLK := bInput);
 _ft(CLK := bInput);
-IF _rt.Q OR _ft.Q THEN
+IF _rt.Q OR _ft.Q OR _bInit THEN
 	_ton.IN := TRUE;
+	_bInit := FALSE;
 END_IF
 
 _ton();

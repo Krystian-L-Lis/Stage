@@ -8,7 +8,7 @@ VAR
 	_refTemperatureSettings	: REFERENCE TO Room_Settings_TemperatureSettings;
 	_refTemperature			: REFERENCE TO REAL;
 	
-	_onRequest				: Signal;
+	_requestEvent				: Signal;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -30,7 +30,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_strb.Set(_ctx.hmi.sData)
 		.Append(' ')
-		.Append(REAL_TO_STRING(_refTemperature))
+		.Append(Strf.Fmt('%0.2f', F_Real(_refTemperature)))
 		.Append(' degC');
 
 _ctx.hmi.sData := _strb.Read();
@@ -88,14 +88,13 @@ END_VAR]]></Declaration>
 	END_IF
 	
 	IF IsOk(GetReceiver(_iEntity, '*._onRequest', iRec => _iRec)) THEN
-		IF IsErr(_onRequest.Pair(_iRec), nOut => _r) THEN
+		IF IsErr(_requestEvent.Pair(_iRec), nOut => _r) THEN
 			DebugMsg(_iRec, strb.Append('Cannot pair _onRequest with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
 		END_IF
 		
 		RETURN;
 	END_IF
 END_WHILE
-
 
 DebugMsg(THIS^, strb.Append('Cannot pair _requestEvent with a ').Append('_onRequest').Append('!').Read());
 DebugMsg(_iEntity, strb.Append('_onRequest').Append(' not found!').Read());
@@ -117,7 +116,7 @@ _ctx.hmi.nStatusColor := COL.BLACK.Raw;
 
 _ctx.hmi.bHideReset := TRUE;
 
-_onRequest.Emit(_ctx.priv.iThisRoom);]]></ST>
+_requestEvent.Emit(_ctx.priv.iThisRoom);]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{cb6312a9-8ff8-4ec6-9559-0b72ff764e07}">

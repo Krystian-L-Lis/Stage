@@ -2,12 +2,17 @@
 <TcPlcObject Version="1.1.0.1">
   <GVL Name="SIM" Id="{de8cc5ca-cc47-4b1a-bf7d-a1e7819162e6}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
-VAR_GLOBAL
+VAR_GLOBAL PERSISTENT
 	param			: SimulationGlobalParameters;
+END_VAR
+
+VAR_GLOBAL
 	bTick				: BOOL;	
 
-	rSystemTemperature	: REAL;
-	rSystemPressure		: REAL;
-END_VAR]]></Declaration>
+	rSystemTemperature	: REAL := 60;
+	rSystemPressure		: REAL := 1;
+	bFlow				: BOOL;
+END_VAR
+]]></Declaration>
   </GVL>
 </TcPlcObject>

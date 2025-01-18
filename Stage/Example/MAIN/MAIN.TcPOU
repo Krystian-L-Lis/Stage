@@ -18,17 +18,11 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[rtTick(CLK :=  Tick(sim.param.nTick), Q => sim.bTick);
+sim.bTick := sim.bTick AND sim.param.bToggleSim;
 Runtime();
 
 
 ]]></ST>
     </Implementation>
-    <Method Name="_IO" Id="{03b676de-555c-400e-bba5-4ba9784520ec}">
-      <Declaration><![CDATA[METHOD PRIVATE _IO
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

@@ -8,6 +8,21 @@ PROGRAM Strf
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Method Name="Fmt" Id="{2e4699c7-d42c-40f8-a916-1ba18101d5a2}">
+      <Declaration><![CDATA[// Formats a string using Tc2_Utilities.FB_FormatString with a single argument.
+METHOD Fmt : Str
+VAR_INPUT
+	sFormat			: Str; // Format, check format specification on Beckhoff infosys.
+	tcArg			: Tc2_Utilities.T_Arg;
+END_VAR
+VAR
+	_fmt			: Tc2_Utilities.FB_FormatString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_fmt(sFormat := sFormat, arg1 := tcArg, sOut => Fmt);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Padding" Id="{7d05623e-05a9-49ee-b8ca-0efb8661641b}">
       <Declaration><![CDATA[// Adds left and/or right padding to a string with a specified fill character.
 // Returns the padded string.
@@ -19,34 +34,29 @@ VAR_INPUT
     sFillChar    : Ch := ' ';  // Character used for padding
 END_VAR
 VAR
-	_sBase					: Strb;
-	_sLeft					: Strb;
-	_sRight					: Strb;
+	_nLen		: INT := Tc2_Standard.LEN(sValue);
+	_nLeftMiss	: INT;
+	_nRightMiss	: INT;	
+
+	i			: INT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_sBase.Set(sValue);
-IF nRightPadding = 0 THEN
-	WHILE _sBase.Length() < nLeftPadding DO
-		_sBase.Prepend(sFillChar);
-	END_WHILE
-ELSIF nLeftPadding = 0 THEN
-	WHILE _sBase.Length() < nRightPadding DO
-		_sBase.Append(sFillChar);
-	END_WHILE
-ELSE
-	_sBase.Split(_sBase.Length()/2, sLeft => _sLeft, sRight => _sRight);
-	WHILE _sLeft.Length() < nLeftPadding DO
-		_sLeft.Prepend(sFillChar);
-	END_WHILE
-	WHILE _sRight.Length() < nRightPadding DO
-		_sRight.Append(sFillChar);
-	END_WHILE
-	
-	_sLeft.Append(_sRight.Read());
-	_sBase.Set(_sLeft.Read());
+        <ST><![CDATA[_nLeftMiss := nLeftPadding - _nLen;
+_nRightMiss := nRightPadding - _nLen;
+
+IF _nLeftMiss > 0 THEN
+	FOR i := 1 TO _nleftMiss DO
+		sValue := Tc2_Standard.CONCAT(sFillChar, sValue);
+	END_FOR	
 END_IF
 
-Padding := _sBase.Read();
+IF _nRightMiss > 0 THEN
+	FOR i := 1 TO _nRightMiss DO
+		sValue := Tc2_Standard.CONCAT(sFillChar, sValue);
+	END_FOR	
+END_IF
+
+Padding := sValue;
 ]]></ST>
       </Implementation>
     </Method>

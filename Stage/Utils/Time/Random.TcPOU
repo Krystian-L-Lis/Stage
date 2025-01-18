@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Random" Id="{3fc7c2b7-032a-47a0-aa64-5e5ab6687c57}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Random : LREAL
+VAR_STAT
+	_nSeed		: INT;
+END_VAR
+VAR
+	_drand		: Tc2_System.DRAND;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_drand(seed := (_nSeed := _nSeed + 1), Num => Random);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

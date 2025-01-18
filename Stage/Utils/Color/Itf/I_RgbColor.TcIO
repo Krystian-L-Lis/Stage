@@ -38,7 +38,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="Raw" Id="{71a4be24-f240-4748-875e-15491da3629e}">
-      <Declaration><![CDATA[PROPERTY Raw : DWORD]]></Declaration>
+      <Declaration><![CDATA[PROPERTY Raw : Color]]></Declaration>
       <Get Name="Get" Id="{9aede787-8993-471e-992b-ce11ca65f74b}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

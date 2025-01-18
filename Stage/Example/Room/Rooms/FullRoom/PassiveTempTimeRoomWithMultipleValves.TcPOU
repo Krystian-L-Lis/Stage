@@ -46,7 +46,7 @@ VAR PERSISTENT
 	_settings		: Room_Settings_PassiveTempTime;
 END_VAR
 VAR_INPUT
-	rTemperature	: REAL;
+	rTemperature	: REAL := 19.0 + LREAL_TO_REAL(Random());
 
 	bInletValveIsOpen		: ARRAY[1..VALVE_CAP] OF BOOL;
 	bInletValveIsClosed		: ARRAY[1..VALVE_CAP] OF BOOL;
@@ -108,8 +108,8 @@ END_IF
 
 FOR i := 1 TO VALVE_CAP DO
 	IF bInletValve[i] AND bOutletValve[i] THEN
-		sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater;
-		rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater;
+		sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater * LREAL_TO_REAL(Random());
+		rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater * LREAL_TO_REAL(Random());
 	END_IF
 END_FOR
 

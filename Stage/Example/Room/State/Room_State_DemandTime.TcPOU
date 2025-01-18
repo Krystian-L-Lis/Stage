@@ -99,7 +99,7 @@ END_VAR]]></Declaration>
 	END_IF
 END_WHILE
 
-DebugMsg(THIS^, strb.Append('Cannot pair _RequestEvent with a ').Append('_onRequest').Append('!').Read());
+DebugMsg(THIS^, strb.Append('Cannot pair _requestEvent with a ').Append('_onRequest').Append('!').Read());
 DebugMsg(_iEntity, strb.Append('_onRequest').Append(' not found!').Read());]]></ST>
       </Implementation>
     </Method>

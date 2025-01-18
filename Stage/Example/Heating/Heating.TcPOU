@@ -11,8 +11,8 @@ VAR_INPUT
 	bPumpOverload	: BOOL;
 	bBurnerOverload	: BOOL;
 
-	rBoilerTemp		: REAL;
-	rBoilerPressure	: REAL;	
+	rBoilerTemp		: REAL := 60;
+	rBoilerPressure	: REAL := 1;
 END_VAR
 VAR_OUTPUT
 	bPump			: BOOL;
@@ -103,9 +103,9 @@ END_IF
 
 // System temperature
 IF bBurner THEN
-	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRisePerBurner;
+	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRisePerBurner * LREAL_TO_REAL(Random());
 END_IF
-sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureDropPassive;
+sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureDropPassive * LREAL_TO_REAL(Random());
 
 IF sim.param.bToggleSystemTemperatureRise THEN
 	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRise;
@@ -119,6 +119,8 @@ IF sim.rSystemTemperature < 0 THEN
 ELSIF sim.rSystemTemperature > 100 THEN
 	sim.rSystemTemperature := 100;
 END_IF
+
+sim.bFlow := bPump;
 
 // System Pressure
 IF sim.param.bToggleSystemPressureRise THEN

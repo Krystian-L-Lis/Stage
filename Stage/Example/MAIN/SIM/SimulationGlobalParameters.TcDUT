@@ -4,7 +4,8 @@
     <Declaration><![CDATA[TYPE SimulationGlobalParameters :
 STRUCT
 	// Simulation parameter
-	nTick							: UDINT := 1000; // ms	
+	nTick							: UDINT := 1000; // ms
+	bToggleSim						: BOOL;	
 
 	// Heating system parameters
 	rSystemTemperatureRisePerBurner	: REAL := 0.20;   // degC/tick

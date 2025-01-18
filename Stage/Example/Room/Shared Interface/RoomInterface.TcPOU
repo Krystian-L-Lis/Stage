@@ -14,17 +14,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="Close" Id="{a7b9d657-00fa-45e9-baeb-af69e6018523}">
-      <Declaration><![CDATA[METHOD Close
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF NOT _ctx.priv.bActive THEN
-	RETURN;
-END_IF
-
-_ctx.io.bOpenValves := FALSE;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="FB_init" Id="{ca22bbab-be21-4373-9409-1f9b1007feee}">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
 //The return value is not evaluated. For a specific influence, you can also declare the
@@ -43,6 +32,17 @@ _ctx.priv.iThisRoom := THIS^;
 _nMaxRoom := _nMaxRoom + 1;
 _nId := _nMaxRoom;
 _ctx.hmi.nId := _nMaxRoom;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoIdle" Id="{a7b9d657-00fa-45e9-baeb-af69e6018523}">
+      <Declaration><![CDATA[METHOD GoIdle
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _ctx.priv.bActive THEN
+	RETURN;
+END_IF
+
+_ctx.state.iMgr.Request(_ctx.state.iIdle);]]></ST>
       </Implementation>
     </Method>
     <Property Name="Id" Id="{cab61793-e91a-43d3-b4f1-43fa7063eb1d}">

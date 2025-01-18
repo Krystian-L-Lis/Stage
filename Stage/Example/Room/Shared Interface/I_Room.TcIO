@@ -3,8 +3,8 @@
   <Itf Name="I_Room" Id="{76a64c62-873b-4b19-9f71-81cd9ae5bd4a}">
     <Declaration><![CDATA[INTERFACE I_Room EXTENDS I_Arg
 ]]></Declaration>
-    <Method Name="Close" Id="{58e7653f-e1ac-4385-b729-fcc12c30b43f}">
-      <Declaration><![CDATA[METHOD Close
+    <Method Name="GoIdle" Id="{58e7653f-e1ac-4385-b729-fcc12c30b43f}">
+      <Declaration><![CDATA[METHOD GoIdle
 ]]></Declaration>
     </Method>
     <Property Name="Id" Id="{f4e2640b-d8af-47d9-82c8-6c5680ee6808}">

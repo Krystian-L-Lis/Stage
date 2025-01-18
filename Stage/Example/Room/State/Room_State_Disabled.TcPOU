@@ -16,7 +16,7 @@ END_VAR
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_ctx.io.bOpenValves := TRUE;
+        <ST><![CDATA[_ctx.io.bOpenValves := FALSE;
 
 _ctx.priv.bActive := FALSE;
 _ctx.priv.bReady := FALSE;

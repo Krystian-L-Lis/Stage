@@ -106,7 +106,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="Raw" Id="{2c7b24d8-afcd-4243-8d9f-839ca3e0e22f}">
-      <Declaration><![CDATA[PROPERTY Raw : DWORD]]></Declaration>
+      <Declaration><![CDATA[PROPERTY Raw : Color]]></Declaration>
       <Get Name="Get" Id="{101e36a2-7284-4e50-b5a7-31e84ab6f554}">
         <Declaration><![CDATA[VAR
 END_VAR

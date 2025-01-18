@@ -93,9 +93,6 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="MAIN\SIM\Random.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MAIN\SIM\SimulationGlobalParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -317,6 +314,10 @@
           <Value>15</Value>
         </Parameter>
       </Parameters>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>

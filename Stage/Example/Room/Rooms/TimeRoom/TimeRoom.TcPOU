@@ -86,8 +86,8 @@ IF NOT sim.bTick THEN
 	RETURN;
 END_IF
 
-IF bInletValve AND bOutletValve THEN
-	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater;
+IF bInletValve AND bOutletValve AND sim.bFlow THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater * LREAL_TO_REAL(Random());
 END_IF
 
 ]]></ST>

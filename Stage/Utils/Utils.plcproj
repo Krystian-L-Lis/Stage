@@ -49,10 +49,10 @@
     <Compile Include="Color\RgbColor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Timer\GetSysTime.TcPOU">
+    <Compile Include="Time\GetSysTime.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Timer\Timer.TcPOU">
+    <Compile Include="Time\Random.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -90,7 +90,7 @@
   <ItemGroup>
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
-    <Folder Include="Timer" />
+    <Folder Include="Time" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Utils.tmc">

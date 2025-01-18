@@ -43,6 +43,13 @@
     </DocFormat>
   </PropertyGroup>
   <ItemGroup>
+    <PlaceholderReference Include="Tc2_Math">
+      <DefaultResolution>Tc2_Math, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Math</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -474,11 +481,6 @@
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Core.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
