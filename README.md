@@ -70,7 +70,7 @@ This guide provides a brief overview of using the **Stage** library.
 
 ---
 
-## **Define a Simple Entity**
+### **Define a Simple Entity**
 
 ```structured-text
 FUNCTION_BLOCK Pump IMPLEMENTS I_Callable, I_Execute, I_Init
@@ -117,7 +117,7 @@ END_FUNCTION_BLOCK
 
 ---
 
-## **Define States**
+### **Define States**
 
 ```structured-text
 // Create a context structure or interface
@@ -156,7 +156,7 @@ END_FUNCTION_BLOCK
 
 ---
 
-## **Define an Entity with a State Manager**
+### **Define an Entity with a State Manager**
 
 ```structured-text
 // Create a concrete state definition
@@ -184,9 +184,9 @@ END_FUNCTION_BLOCK
 
 ---
 
-## **Browse the Entities Through the Registry**
+### **Browse the Entities Through the Registry**
 
-### **Simple Method**
+#### **Simple Method**
 
 ```structured-text
 // Browse entities 
@@ -200,7 +200,7 @@ END_WHILE
 
 ---
 
-### **Verbose Method**
+#### **Verbose Method**
 
 ```structured-text
 // Alternatively, browse and cast components manually
@@ -221,7 +221,7 @@ END_WHILE
 
 ---
 
-## **Emit Signals**
+### **Emit Signals**
 
 ```structured-text
 VAR
