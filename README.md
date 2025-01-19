@@ -37,7 +37,7 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 
    ### **Option 2: Use precompiled files**
 
-   1. Download the compiled files from the [release page](https://github.com/Krystian-L-Lis/Stage/releases).
+   1. Download the compiled files(`Core.library` and/or `Utils.library`) from the [release page](https://github.com/Krystian-L-Lis/Stage/releases).
    2. Open your TwinCAT PLC project and navigate to **References**, then **right-click** and select **"Library Repository" > "Install"**.  
       Choose the downloaded `.library` file to add Stage to the repository.
    3. After installation, **right-click** on **References**, select **"Add Library"**, and locate the `Core` and/or `Utils` under `Stage` category to include it in your project.
