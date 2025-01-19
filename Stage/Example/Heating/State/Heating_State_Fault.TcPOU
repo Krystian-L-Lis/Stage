@@ -13,29 +13,34 @@ END_VAR
       <Declaration><![CDATA[METHOD Execute
 VAR
 	cmp			: TagCmp;
+	bFault		: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT _ctx.io.in.bBurnerOverload THEN
-	RETURN;
+        <ST><![CDATA[IF _ctx.io.in.bBurnerOverload THEN
+	bFault := TRUE;
 END_IF
 
-IF NOT _ctx.io.in.bPumpOverload THEN
-	RETURN;
+IF _ctx.io.in.bPumpOverload THEN
+	bFault := TRUE;
 END_IF
 
 IF _ctx.io.in.rBoilerPressure > _ctx.hmi.rMaxPressure THEN
-	RETURN;
+	bFault := TRUE;
 END_IF
 
 IF _ctx.io.in.rBoilerPressure < _ctx.hmi.rMinPressure THEN
-	RETURN;
+	bFault := TRUE;
 END_IF
 
 IF _ctx.io.in.rBoilerTemp > _ctx.hmi.rMaxTemperature THEN
-	RETURN;
+	bFault := TRUE;
 END_IF
 
 IF cmp.Set(_ctx.state.iMgr.Current.Tag).Match(_ctx.state.iFault.Tag).Match(_ctx.state.iSafety.Tag).IsTrue() THEN
+	bFault := FALSE;
+END_IF
+
+IF NOT bFault THEN
 	RETURN;
 END_IF
 
@@ -46,9 +51,9 @@ _ctx.state.iMgr.Request(_ctx.state.iFault);]]></ST>
       <Declaration><![CDATA[METHOD OnEntry
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT _ctx.io.in.bBurnerOverload THEN
+        <ST><![CDATA[IF _ctx.io.in.bBurnerOverload THEN
 	_ctx.hmi.sErrorText := 'Caused by burner overload!';
-ELSIF NOT _ctx.io.in.bPumpOverload THEN
+ELSIF _ctx.io.in.bPumpOverload THEN
 	_ctx.hmi.sErrorText := 'Caused by pump overload!';
 ELSIF _ctx.io.in.rBoilerPressure > _ctx.hmi.rMaxPressure THEN
 	_ctx.hmi.sErrorText := 'Caused by boiler overpressure!';
@@ -62,50 +67,49 @@ _ctx.hmi.sStatusText := CONCAT('Fault: ', _ctx.hmi.sErrorText);
 
 _ctx.hmi.nStatusColor := COL.RED.Raw;
 
-_ctx.hmi.sButtonText := '';
+_ctx.hmi.sButtonText := 'Press to RESET';
 _ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;
 
 _ctx.io.out.bBurner := FALSE;
 _ctx.io.out.bPump := FALSE;
-
-_ctx.priv.iOnDisable.Emit();
 
 _ctx.priv.iQueue.Clear();]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{47c8e274-11fa-47cf-8f15-91062de1a435}">
       <Declaration><![CDATA[METHOD OnExecute
-]]></Declaration>
+VAR
+	bFault : BOOL;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_ctx.hmi.sButtonText := '';
-_ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;
-
-IF _ctx.io.in.bBurnerOverload THEN
-	RETURN;
+        <ST><![CDATA[IF _ctx.io.in.bBurnerOverload THEN
+	bFault := TRUE;
 END_IF
 
 IF _ctx.io.in.bPumpOverload THEN
-	RETURN;
+	bFault := TRUE;;
 END_IF
 
-IF _ctx.io.in.rBoilerPressure < _ctx.hmi.rMaxPressure THEN
-	RETURN;
+IF _ctx.io.in.rBoilerPressure > _ctx.hmi.rMaxPressure THEN
+	bFault := TRUE;;
 END_IF
 
-IF _ctx.io.in.rBoilerPressure > _ctx.hmi.rMinPressure THEN
-	RETURN;
+IF _ctx.io.in.rBoilerPressure < _ctx.hmi.rMinPressure THEN
+	bFault := TRUE;;
 END_IF
 
-IF _ctx.io.in.rBoilerTemp < _ctx.hmi.rMaxTemperature THEN
-	RETURN;
+IF _ctx.io.in.rBoilerTemp > _ctx.hmi.rMaxTemperature THEN
+	bFault := TRUE;;
 END_IF
 
-_ctx.hmi.sButtonText := 'Press to RESET!';
-_ctx.hmi.nButtonColor := COL.BLACK.Raw;
-
-IF _ctx.hmi.bButton THEN
+IF _ctx.hmi.bButton AND NOT bFault THEN
 	_ctx.hmi.bButton := FALSE;
 	_ctx.state.iMgr.Request(_ctx.state.iDisable);
+ELSIF NOT bFault THEN
+	_ctx.hmi.nButtonColor := COL.BLACK.Raw;	
+ELSE
+	_ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;	
+	_ctx.hmi.bButton := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>

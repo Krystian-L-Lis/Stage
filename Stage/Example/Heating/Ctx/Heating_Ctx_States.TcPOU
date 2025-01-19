@@ -9,7 +9,7 @@ VAR_OUTPUT
 	iFault			: I_State;
 	iDisable		: I_State;
 	iEnable			: I_State;
-	iPump			: I_State;
+	iHeating		: I_State;
 	iHeatup			: I_State;
 	
 END_VAR

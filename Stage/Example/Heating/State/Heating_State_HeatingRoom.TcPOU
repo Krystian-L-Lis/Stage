@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Heating_State_Pumping" Id="{195b0e92-992c-4b31-a0dd-1b5af906cbe2}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_Pumping EXTENDS Heating_State
+  <POU Name="Heating_State_HeatingRoom" Id="{195b0e92-992c-4b31-a0dd-1b5af906cbe2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Heating_State_HeatingRoom EXTENDS Heating_State
 VAR CONSTANT
-	ERROR_STEP		: USINT := 8;
-	OK_STEP			: USINT := 7;
-	READY_STEP		: USINT := 9;
+	EXIT_STEP		: USINT := 7;
+	READY_STEP		: USINT := 8;
 END_VAR
 VAR
 	_nStep		: USINT;
 	_tonTimeout	: TON;
+	_sErrMsg	: Str;
+	_iNextState : I_State;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -41,10 +42,10 @@ _ctx.hmi.nButtonColor := COL.BLACK.Raw;
 _ctx.io.out.bBurner := FALSE;
 _ctx.io.out.bPump := FALSE;
 
-_ctx.priv.iOnPause.Emit();
-
 _nStep := 0;
-_tonTimeout(IN := FALSE);]]></ST>
+_tonTimeout(IN := FALSE);
+
+_iNextState := _ctx.state.iEnable;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{bbc510df-aef5-44dc-9d86-57811004103f}">
@@ -54,19 +55,22 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _ctx.priv.iActiveRoom = 0 THEN
-	_nStep := ERROR_STEP;
-	_ctx.hmi.sErrorText := 'Pumping -Incorrect iActiveRoom value!';
+	_iNextState := _ctx.state.iFault;	
+
+	_nStep := EXIT_STEP;
+	_ctx.hmi.sErrorText := 'HeatingRoom - Incorrect iActiveRoom value!';
 ELSIF _ctx.hmi.bButton THEN
 	_ctx.hmi.bButton := FALSE;
+	_iNextState := _ctx.state.iDisable;
 	
 	_nStep := 4;
 ELSIF _tonTimeout.Q THEN
-	_nStep := OK_STEP;
-	_ctx.priv.iActiveRoom.TriggerFault(	strb.Append('Timeout at step ')
-												.Append(USINT_TO_STRING(_nStep))
-												.Append('!')
-												.Read());
+	_ctx.priv.iActiveRoom.GoFault(strb.Set('Timeout on: ').Append(_sErrMsg).Read());
+	
+	_nStep := EXIT_STEP;
 ELSIF _nStep < 4 AND_THEN NOT _ctx.priv.iActiveRoom.IsActive THEN
+	_iNextState := _ctx.state.iEnable;	
+
 	_nStep := 4;
 END_IF
 
@@ -76,7 +80,8 @@ END_IF
 
 CASE _nStep OF
 	0:
-		_ctx.priv.iActiveRoom.Open();
+		_sErrMsg := 'Valve opening!';
+		_ctx.priv.iActiveRoom.GoHeat();
 		_nStep := 1;
 		
 	1:
@@ -84,11 +89,11 @@ CASE _nStep OF
 			_nStep := 2;
 		END_IF
 	2:	
+		
 		_ctx.io.out.bPump := TRUE;
 		_nStep := 3;
-		
 	3:
-		_tonTimeout(IN := FALSE);
+		_sErrMsg := 'Heating!';
 		IF _ctx.priv.iActiveRoom.IsReady THEN
 			_nStep := 4;
 		END_IF
@@ -96,19 +101,37 @@ CASE _nStep OF
 		_ctx.io.out.bPump := FALSE;
 		_nStep := 5;
 	5:
+		_sErrMsg := 'Valve closing!';
 		_ctx.priv.iActiveRoom.GoIdle();
 		_nStep := 6;
 	6:
 		IF _ctx.priv.iActiveRoom.IsClosed THEN
-			_nStep := 7;
+			_nStep := EXIT_STEP;
 		END_IF
 	7:
-		_ctx.state.iMgr.Request(_ctx.state.iEnable);
-		_nStep := READY_STEP;
-	ERROR_STEP:
-		_ctx.state.iMgr.Request(_ctx.state.iFault);
+		IF _iNextState <> 0 THEN
+			_ctx.state.iMgr.Request(_iNextState);
+		ELSE
+			_ctx.hmi.sErrorText := 'HeatingRoom - Incorrect _iNextState value!';
+			_ctx.state.iMgr.Request(_ctx.state.iFault);
+		END_IF
+		
 		_nStep := READY_STEP;
 END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExit" Id="{d4d44493-2d9f-4f23-8a2c-9424c1976ea7}">
+      <Declaration><![CDATA[(*
+Executed when the state transitions to another state.  
+Provides a hook for defining cleanup or transition-specific behavior.
+*)
+METHOD OnExit
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _ctx.priv.iActiveRoom <> 0 THEN
+	_ctx.priv.iActiveRoom.GoIdle();
+END_IF
+]]></ST>
       </Implementation>
     </Method>
   </POU>

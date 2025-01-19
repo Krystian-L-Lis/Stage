@@ -9,8 +9,8 @@ END_VAR
 VAR_GLOBAL
 	bTick				: BOOL;	
 
-	rSystemTemperature	: REAL := 60;
-	rSystemPressure		: REAL := 1;
+	rSystemTemperature	: LREAL := 60;
+	rSystemPressure		: LREAL := 1;
 	bFlow				: BOOL;
 END_VAR
 ]]></Declaration>

@@ -91,6 +91,21 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"18"</v>
+              <v n="TextDefault">"Demand"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"819"</v>
+              <v n="TextDefault">"Demand Activation Time"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"935"</v>
+              <v n="TextDefault">"Demand Active"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"969"</v>
               <v n="TextDefault">"Drain Outlet Open"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -518,6 +533,26 @@
             <o>
               <v n="TextID">"596"</v>
               <v n="TextDefault">"Toggle"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"315"</v>
+              <v n="TextDefault">"ToggleValveFault"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"379"</v>
+              <v n="TextDefault">"ToggleValveFault - Next valve action will fail"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1064"</v>
+              <v n="TextDefault">"ToggleValveFault - Next valve actuation will fail"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"168"</v>
+              <v n="TextDefault">"TriggerValveFault"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>

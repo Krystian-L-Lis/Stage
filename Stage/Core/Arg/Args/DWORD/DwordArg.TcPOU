@@ -34,6 +34,22 @@ METHOD BlockMut
         <ST><![CDATA[_bMut := FALSE;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="FB_Init" Id="{8603d428-c57e-4569-9ec2-b2ec8beaa7db}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+
+	initVal		: DWORD;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_val := initVal;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="Get" Id="{cc59ac16-520a-4813-9448-11df56543b41}">
       <Declaration><![CDATA[(*
 Reads the internal value.

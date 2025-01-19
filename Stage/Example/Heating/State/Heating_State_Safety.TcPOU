@@ -77,8 +77,6 @@ _ctx.hmi.nButtonColor := COL.INVISIBLE.Raw;
 _ctx.io.out.bBurner := FALSE;
 _ctx.io.out.bPump := FALSE;
 
-_ctx.priv.iOnDisable.Emit();
-
 _ctx.priv.iQueue.Clear();]]></ST>
       </Implementation>
     </Method>

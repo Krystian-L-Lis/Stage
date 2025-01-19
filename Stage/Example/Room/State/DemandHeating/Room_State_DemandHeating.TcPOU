@@ -4,11 +4,8 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Room_State_DemandHeating EXTENDS _Room_State IMPLEMENTS I_Execute
 VAR
 	_exe				: Execute(THIS^);
-	_refTimeSettings	: REFERENCE TO Room_Settings_TimeSettings;
-	_tonOff				: TON;
-	_tonOn				: TON;
-	
-	_requestEvent		: Signal;
+	_hmi				: Room_State_DemandHeating_Hmi;
+	_tonActive			: TON;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -29,12 +26,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_strb.Set(_ctx.hmi.sData)
-		.Append(' Off: ').Append(strf.SimpleTime(_tonOff.ET, 'S', 'M'))
-		.Append(' |')
-		.Append(' On: ').Append(strf.SimpleTime(_tonOn.ET, 'S', 'M'))
-		.Append(' |');
-
-
+		.Append(' On: ').Append(strf.SimpleTime(_tonActive.ET, 'S', 'M'));
 
 _ctx.hmi.sData := _strb.Read();
 
@@ -43,36 +35,12 @@ IF _ctx.state.iMgr.Current <> _ctx.state.iIdle THEN
 END_IF
 
 IF _ctx.state.iMgr.Current = _iSelf THEN
-	_tonOff(IN := FALSE);
 	RETURN;
-ELSE
-	_tonOff(IN := TRUE, PT := UDINT_TO_TIME(_refTimeSettings.nOff * 1000));
 END_IF
 
-IF _tonOff.Q THEN
-	_tonOff(IN := FALSE);
+IF _hmi.bDemandButton THEN
 	_ctx.state.iMgr.Request(THIS^);
 END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="FB_Init" Id="{8fa04958-ceb0-4427-aa95-612a4923000a}">
-      <Declaration><![CDATA[(*FB_Init is always available implicitly and it is used primarily for initialization.
-The return value is not evaluated. For a specific influence, you can also declare the
-methods explicitly and provide additional code there with the standard initialization
-code. You can evaluate the return value.*)
-METHOD FB_Init : BOOL
-VAR_INPUT
-	(* TRUE: the retain variables are initialized (reset warm / reset cold)*)
-	bInitRetains	: BOOL;
-	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
-	bInCopyCode	: BOOL;
-	iEntity	: Core.I_Entity;
-	ctx			: REFERENCE TO Room_Ctx;
-	refSettings		: REFERENCE TO Room_Settings_TimeSettings;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_refTimeSettings REF= refSettings;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{5963c11d-cd15-4e87-a244-3534781c622c}">
@@ -91,7 +59,7 @@ END_VAR]]></Declaration>
 	END_IF
 	
 	IF IsOk(GetReceiver(_iEntity, '*._onRequest', iRec => _iRec)) THEN
-		IF IsErr(_requestEvent.Pair(_iRec), nOut => _r) THEN
+		IF IsErr(_ctx.priv.iRequestEvent.Pair(_iRec), nOut => _r) THEN
 			DebugMsg(_iRec, strb.Append('Cannot pair _onRequest with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
 		END_IF
 		
@@ -117,22 +85,33 @@ _ctx.hmi.nStatusColor := COL.BLACK.Raw;
 
 _ctx.hmi.bHideReset := TRUE;
 
-_tonOn(IN := FALSE);
+_tonActive(IN := FALSE);
 
-_requestEvent.Emit(_ctx.priv.iThisRoom);
+_ctx.priv.iRequestEvent.Emit(_ctx);
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{1ac3585c-789d-4477-9aa9-784a9986c68a}">
-      <Declaration><![CDATA[METHOD OnExecute
-]]></Declaration>
+      <Declaration><![CDATA[METHOD OnExecute]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_tonOn(IN := _ctx.priv.bOpen, PT := UDINT_TO_TIME(_refTimeSettings.nOn * 1000));
+        <ST><![CDATA[_tonActive(IN := _ctx.io.bValvesOpen, PT := UDINT_TO_TIME(_hmi.nActivationTime * 1000));
 IF _ctx.hmi.bDisable THEN
 	_ctx.state.iMgr.Request(_ctx.state.iDisable);
-ELSIF _tonOn.Q THEN
+ELSIF NOT _hmi.bDemandButton THEN
 	_ctx.priv.bReady := TRUE;
+ELSIF _tonActive.Q THEN
+	_ctx.priv.bReady := TRUE;
+	_hmi.bDemandButton := FALSE;
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExit" Id="{b73aa6bb-78f6-4772-b297-d9f813926fb5}">
+      <Declaration><![CDATA[METHOD OnExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_hmi.bDemandButton := FALSE;]]></ST>
       </Implementation>
     </Method>
   </POU>

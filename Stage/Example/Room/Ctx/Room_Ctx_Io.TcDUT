@@ -4,6 +4,9 @@
     <Declaration><![CDATA[TYPE Room_Ctx_Io :
 STRUCT
 	bOpenValves			: BOOL;
+	
+	bValvesOpen			: BOOL;
+	bValvesClosed		: BOOL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

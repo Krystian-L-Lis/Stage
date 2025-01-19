@@ -24,7 +24,7 @@ _ctx.priv.bReady := FALSE;
 _ctx.hmi.sStatusText := 'Heating ON: Idle';
 _ctx.hmi.nStatusColor := COL.BLACK.Raw;
 
-_ctx.hmi.bHideReset := FALSE;]]></ST>
+_ctx.hmi.bHideReset := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{1f6e34fe-0771-4959-934b-53cc7be7116b}">

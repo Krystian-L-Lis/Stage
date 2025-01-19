@@ -8,25 +8,25 @@ STRUCT
 	bToggleSim						: BOOL;	
 
 	// Heating system parameters
-	rSystemTemperatureRisePerBurner	: REAL := 0.20;   // degC/tick
-	rSystemTemperatureDropPassive	: REAL := -0.01;  // degC/tick
-	rSystemTemperatureDropPerHeater	: REAL := -0.01;  // degC/tick per heater
+	rSystemTemperatureRisePerBurner	: REAL := 2.00;   // degC/tick
+	rSystemTemperatureDropPassive	: LREAL := -0.01;  // degC/tick
+	rSystemTemperatureDropPerHeater	: LREAL := -0.01;  // degC/tick per heater
 	
 	bToggleSystemTemperatureRise	: BOOL := FALSE;
-	rSystemTemperatureRise			: REAL := 0.2;
+	rSystemTemperatureRise			: LREAL := 0.2;
 	
 	bToggleSystemTemperatureFall	: BOOL := FALSE;
-	rSystemTemperatureFall			: REAL := 0.2;
+	rSystemTemperatureFall			: LREAL := 0.2;
 	
 	bToggleSystemPressureRise		: BOOL := FALSE;
-	rSystemPressureRise				: REAL := 0.10;   // bar/tick
+	rSystemPressureRise				: LREAL := 0.10;   // bar/tick
 	
 	bToggleSystemPressureFall		: BOOL := FALSE;
-	rSystemPressureFall				: REAL := -0.10;   // bar/tick
+	rSystemPressureFall				: LREAL := -0.10;   // bar/tick
 	
 	// Room parameters
-	rRoomTemperaturePassiveDrop		: REAL := -0.50;  // degC/tick
-	rRoomTemperatureRisePerHeater	: REAL := 0.70;   // degC/tick
+	rRoomTemperaturePassiveDrop		: LREAL := -0.05;  // degC/tick
+	rRoomTemperatureRisePerHeater	: LREAL := 0.50;   // degC/tick
 	
 	// Valve fault
 	bToggleValveFault				: BOOL;

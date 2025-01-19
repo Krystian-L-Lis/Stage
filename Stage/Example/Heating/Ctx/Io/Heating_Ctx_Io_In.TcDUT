@@ -6,8 +6,8 @@ STRUCT
 	bPumpOverload	: BOOL;
 	bBurnerOverload	: BOOL;
 	
-	rBoilerTemp		: REAL;
-	rBoilerPressure	: REAL;
+	rBoilerTemp		: LREAL;
+	rBoilerPressure	: LREAL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

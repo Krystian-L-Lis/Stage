@@ -25,8 +25,9 @@ _ctx.hmi.nButtonColor := COL.BLACK.Raw;
 _ctx.io.out.bBurner := FALSE;
 _ctx.io.out.bPump := FALSE;
 
-_ctx.priv.iOnEnable.Emit();
-_ctx.priv.iOnResume.Emit();]]></ST>
+IF _ctx.state.iMgr.Current = _ctx.state.iDisable THEN
+	_ctx.priv.iOnEnable.Emit();
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{8515d0dd-e19e-4fb0-85ae-5b4ce34b6e10}">
@@ -45,21 +46,11 @@ ELSIF _ctx.io.in.rBoilerTemp < _ctx.hmi.rMinTemperature THEN
 ELSIF IsOk(_ctx.priv.iQueue.Pop(iArg => _iRoomArg)) THEN
 	IF IsOk(IArgToIRoom(_iRoomArg, iDest => _ctx.priv.iActiveRoom)) THEN
 		IF _ctx.priv.iActiveRoom.IsActive THEN
-			_ctx.state.iMgr.Request(_ctx.state.iPump);
+			_ctx.state.iMgr.Request(_ctx.state.iHeating);
 		END_IF
 	ELSE
 		_ctx.hmi.sErrorText := 'Room Queue - Incorrect iRoomArg!';
 	END_IF
-END_IF
-
-IF NOT _ctx.io.out.bPump AND _ctx.priv.nPassiveRooms <> 0 THEN
-	_ctx.io.out.bPump := TRUE;
-	_ctx.hmi.sStatusText := 'Heating enabled: Circulating...';
-	
-ELSIF _ctx.io.out.bPump AND _ctx.priv.nPassiveRooms <> 0 THEN
-	_ctx.io.out.bPump := FALSE;
-	_ctx.hmi.sStatusText := 'Heating enabled: Waiting for requests...';
-	
 END_IF]]></ST>
       </Implementation>
     </Method>

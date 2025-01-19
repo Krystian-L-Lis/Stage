@@ -47,9 +47,6 @@
     <Compile Include="Heating\Heating_Ctx.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Heating\Receivers\Heating_OnPassiveRequest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Heating\Receivers\Heating_OnRequest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -65,7 +62,7 @@
     <Compile Include="Heating\State\Heating_State_Heatup.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Heating\State\Heating_State_Pumping.TcPOU">
+    <Compile Include="Heating\State\Heating_State_HeatingRoom.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Heating\State\Heating_State_Safety.TcPOU">
@@ -105,46 +102,16 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Room\StandardRoom.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Room\IArgToIRoom.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Rooms\FullRoom\PassiveTempTimeRoomWithMultipleValves.TcPOU">
+    <Compile Include="Room\I_Room.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Rooms\FullRoom\Room_Settings_PassiveTempTime.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\FullRoom\PassiveTempTimeRoom.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\PassiveRoom\PassiveRoom.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\TempRoom\Room_Settings_TemperatureSettings.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\TempRoom\TempRoom.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\TimeRoom\Room_Settings_TimeSettings.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\TempRoom\TempRoomWithMultipleSensors.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\TempTimeRoom\Room_Settings_TempTime.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\TempTimeRoom\TempTimeRoom.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Rooms\TimeRoom\TimeRoom.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Shared Interface\I_Room.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Shared Interface\RoomInterface.TcPOU">
+    <Compile Include="Room\Room_Ctx.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\Ctx\Room_Ctx_Hmi.TcPOU">
@@ -162,22 +129,16 @@
     <Compile Include="Room\Receivers\Room_OnSystemEvent.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\Rooms\AbstractRoom.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\Room_Ctx.TcPOU">
+    <Compile Include="Room\ReceptionRoom.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\State\DemandHeating\Room_State_DemandHeating.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\State\DemandHeating\Room_State_DemandHeating_Hmi.TcDUT">
+    <Compile Include="Room\State\DemandHeating\Room_State_DemandHeating_Hmi.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\State\PassiveHeating\Room_State_PassiveHeating_Hmi.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\State\PassiveHeating\Room_State_DemandPassive.TcPOU">
+    <Compile Include="Room\State\LowTemperature\Room_State_LowTemperature_Hmi.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\State\_Room_State.TcPOU">
@@ -192,7 +153,7 @@
     <Compile Include="Room\State\Room_State_Disabled.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\State\TemperatureHeating\Room_State_DemandTemperature.TcPOU">
+    <Compile Include="Room\State\LowTemperature\Room_State_LowTemperature.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\UI\Room_UiLogic.TcPOU">
@@ -221,6 +182,7 @@
     <Compile Include="_UI\UI_Room.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
     <Compile Include="_UI\UI_Sim.TcVIS">
       <SubType>Code</SubType>
@@ -229,10 +191,12 @@
     <Compile Include="_UI\UI_Temp.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
-    <Compile Include="_UI\UI_Time.TcVIS">
+    <Compile Include="_UI\UI_Demand.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -375,19 +339,11 @@
     <Folder Include="Heating" />
     <Folder Include="MAIN\SIM" />
     <Folder Include="Room\State\DemandHeating" />
-    <Folder Include="Room\State\TemperatureHeating" />
-    <Folder Include="Room\State\PassiveHeating" />
+    <Folder Include="Room\State\LowTemperature" />
     <Folder Include="_UI" />
     <Folder Include="Safety" />
     <Folder Include="Room" />
     <Folder Include="Room\Ctx" />
-    <Folder Include="Room\Shared Interface" />
-    <Folder Include="Room\Rooms" />
-    <Folder Include="Room\Rooms\FullRoom" />
-    <Folder Include="Room\Rooms\TempTimeRoom" />
-    <Folder Include="Room\Rooms\TimeRoom" />
-    <Folder Include="Room\Rooms\PassiveRoom" />
-    <Folder Include="Room\Rooms\TempRoom" />
     <Folder Include="Room\UI" />
     <Folder Include="Room\Receivers" />
     <Folder Include="Room\State" />

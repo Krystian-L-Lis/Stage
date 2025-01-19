@@ -5,7 +5,7 @@
       <Data>
         <o xml:space="preserve" t="VisualObject">
           <n n="LastVisuLanguageModelEntry" />
-          <v n="UniqueIdGenerator">"77"</v>
+          <v n="UniqueIdGenerator">"80"</v>
           <o n="VisualElemList" t="VisualElemList">
             <l n="VisualElementList" t="VisualElemCollection" cet="GenericVisualElem">
               <o>
@@ -510,11 +510,11 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">420</v>
+                      <v n="Value">320</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">0</v>
+                      <v n="Value">60</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
@@ -546,11 +546,11 @@
                     </o>
                     <o>
                       <v n="Id">550940142L</v>
-                      <v n="Value">470</v>
+                      <v n="Value">370</v>
                     </o>
                     <o>
                       <v n="Id">1473355128L</v>
-                      <v n="Value">50</v>
+                      <v n="Value">110</v>
                     </o>
                     <o>
                       <v n="Id">2678395525L</v>
@@ -1197,18 +1197,18 @@ END_VAR"</v>
             <d2 n="Size" ckt="Int32" cvt="VisualObjectSize">
               <v>0</v>
               <o>
-                <v n="Width">520</v>
-                <v n="Height">100</v>
+                <v n="Width">420</v>
+                <v n="Height">160</v>
               </o>
               <v>1</v>
               <o>
-                <v n="Width">521</v>
-                <v n="Height">101</v>
+                <v n="Width">421</v>
+                <v n="Height">161</v>
               </o>
               <v>2</v>
               <o>
-                <v n="Width">521</v>
-                <v n="Height">101</v>
+                <v n="Width">421</v>
+                <v n="Height">161</v>
               </o>
             </d2>
             <v n="Version">2</v>

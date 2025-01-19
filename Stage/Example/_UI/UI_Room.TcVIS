@@ -5,7 +5,7 @@
       <Data>
         <o xml:space="preserve" t="VisualObject">
           <n n="LastVisuLanguageModelEntry" />
-          <v n="UniqueIdGenerator">"184"</v>
+          <v n="UniqueIdGenerator">"199"</v>
           <o n="VisualElemList" t="VisualElemList">
             <l n="VisualElementList" t="VisualElemCollection" cet="GenericVisualElem">
               <o>
@@ -1511,7 +1511,7 @@
                     </o>
                     <o>
                       <v n="Id">1999528970L</v>
-                      <v n="Value">"ctx.priv.bOpen"</v>
+                      <v n="Value">"ctx.io.bValvesOpen"</v>
                     </o>
                     <o>
                       <v n="Id">3719097617L</v>
@@ -1571,7 +1571,7 @@
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"Active"</v>
+                      <v n="Value">"Heating"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -1579,7 +1579,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"231"</v>
+                      <v n="Value">"393"</v>
                     </o>
                   </l>
                 </o>

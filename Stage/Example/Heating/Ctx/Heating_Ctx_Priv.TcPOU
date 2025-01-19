@@ -4,13 +4,9 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Heating_Ctx_Priv
 VAR_INPUT
 	iActiveRoom		: I_Room;
-	nPassiveRooms	: UDINT;
 END_VAR
 VAR_OUTPUT
 	iOnEnable		: I_SignalEmit;
-	iOnDisable		: I_SignalEmit;
-	iOnPause		: I_SignalEmit;
-	iOnResume		: I_SignalEmit;
 	
 	iQueue			: I_MutArgQueue;
 END_VAR

@@ -12,12 +12,12 @@ VAR_INPUT
 	nButtonColor			: Color;	
 END_VAR
 VAR_OUTPUT PERSISTENT
-	rMaxPressure			: REAL := 2.0; // bar
-	rMinPressure			: REAL := 0.2; // bar
+	rMaxPressure			: LREAL := 2.0; // bar
+	rMinPressure			: LREAL := 0.2; // bar
 	
-	rMaxTemperature			: REAL := 65.0; // °C
-	rStdTemperature			: REAL := 60.0; // °C
-	rMinTemperature			: REAL := 55.0; // °C
+	rMaxTemperature			: LREAL := 65.0; // °C
+	rStdTemperature			: LREAL := 60.0; // °C
+	rMinTemperature			: LREAL := 55.0; // °C
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

@@ -1,16 +1,137 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Room_Ctx" Id="{8aac3efc-2438-43bb-b2e7-024ad5e5c587}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx
-VAR_INPUT
-	io		: Room_Ctx_Io; // different
-	hmi		: Room_Ctx_Hmi; // the same
-	state	: Room_Ctx_States; // the same
-	priv	: Room_Ctx_Priv; // the same but different logic
+  <POU Name="Room_Ctx" Id="{6599786c-ba93-4fed-b30a-839e05cc02d4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Room_Ctx IMPLEMENTS I_Room
+VAR_STAT
+	_nNextRoom	: UDINT;
 END_VAR
-]]></Declaration>
+VAR_INPUT
+	io			: Room_Ctx_Io;
+	hmi			: Room_Ctx_Hmi;
+	priv		: Room_Ctx_Priv;
+END_VAR
+VAR_OUTPUT
+	state		: Room_Ctx_States;	
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="_" Id="{93023407-6fce-4cd4-a59f-f4e5ea04c3a7}" />
+    <Folder Name="Flags" Id="{9bd30358-ab44-46bf-81aa-ba6b3185935e}" />
+    <Folder Name="Request" Id="{58538f0c-0c0f-4a71-8112-ce2d7fd2ab3d}" />
+    <Method Name="FB_init" Id="{ca22bbab-be21-4373-9409-1f9b1007feee}" FolderPath="_\">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_nNextRoom := _nNextRoom + 1;
+hmi.nId := _nNextRoom;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoFault" Id="{58bcbc1a-fac3-413a-a2a2-69cf90b35fc2}" FolderPath="Request\">
+      <Declaration><![CDATA[METHOD GoFault
+VAR_INPUT
+	sErrorText		: Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[hmi.sErrorText := sErrorText;
+state.iMgr.Request(state.iFault);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoHeat" Id="{2ef519f7-2d21-4fe3-a50b-7c53dc7ef0e6}" FolderPath="Request\">
+      <Declaration><![CDATA[METHOD GoHeat
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT priv.bActive THEN
+	RETURN;
+END_IF
+
+io.bOpenValves := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoIdle" Id="{a7b9d657-00fa-45e9-baeb-af69e6018523}" FolderPath="Request\">
+      <Declaration><![CDATA[METHOD GoIdle
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT priv.bActive THEN
+	RETURN;
+END_IF
+
+state.iMgr.Request(state.iIdle);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Id" Id="{cab61793-e91a-43d3-b4f1-43fa7063eb1d}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Id : UDINT]]></Declaration>
+      <Get Name="Get" Id="{0db4bec7-83f4-40cb-a9f0-f42887b91727}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Id := hmi.nId;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsActive" Id="{05099b11-7bf8-4c59-9cb6-a7bb7b3a2db4}" FolderPath="Flags\">
+      <Declaration><![CDATA[PROPERTY IsActive : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9fda7680-eecb-4790-855c-e58914c1503a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsActive := priv.bActive;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsClosed" Id="{8201ff4f-9b53-446e-b50e-9f3ccbca46fc}" FolderPath="Flags\">
+      <Declaration><![CDATA[PROPERTY IsClosed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{860a5c51-d17a-487c-8cbf-c0e50bf3bb19}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsClosed := io.bValvesClosed;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsOpen" Id="{363ee4e3-517b-4e8e-a8ef-3e40d440e3f6}" FolderPath="Flags\">
+      <Declaration><![CDATA[PROPERTY IsOpen : BOOL]]></Declaration>
+      <Get Name="Get" Id="{19a270b5-a546-429e-9caa-5fce82d24831}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsOpen := io.bValvesOpen;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsReady" Id="{faede1ff-4852-4edb-be53-dba65663064d}" FolderPath="Flags\">
+      <Declaration><![CDATA[PROPERTY IsReady : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9ff15937-25cb-474e-b7f4-31a6db2c8096}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsReady := priv.bReady;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Timeout" Id="{eecc649b-322a-4026-a5ac-c0aea4a056f0}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Timeout : TIME]]></Declaration>
+      <Get Name="Get" Id="{2bf87570-2da5-4e3e-8bee-0d0856799639}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Timeout := UDINT_TO_TIME(hmi.nTimeout * 1000 * 60);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
   </POU>
 </TcPlcObject>

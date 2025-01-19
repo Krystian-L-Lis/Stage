@@ -5,12 +5,9 @@
 VAR
 	safety				: Safety<CST.MAX_ESTOP>;
 	heating				: Heating<CST.MAX_ROOM>;
-	standardRoom		: ARRAY[1..5] OF TempTimeRoom;
-	receptionRoom		: PassiveRoom;
-	conferentionRoom01	: PassiveTempTimeRoom;
-	conferentionRoom02	: PassiveTempTimeRoomWithMultipleValves<3>;
-	storeRoom01			: TempRoom;
-	storeRoom02			: TempRoomWithMultipleSensors<3>;
+	
+	stdRoom				: ARRAY[1..3] OF StandardRoom;
+	reception			: ReceptionRoom;
 
 	dbgInfo				: DebugInfo;
 	rtTick				: R_TRIG;

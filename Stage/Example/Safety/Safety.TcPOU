@@ -23,7 +23,7 @@ VAR
 	_safetyEvent		: Signal;
 	_compOnSafetyChange	: Comp(_safetyEvent, _this);
 	
-	_bSafetyStopActive	: BoolArg;
+	_bSafetyStopActive	: BoolArg(FALSE);
 	
 	_hmi				: Safety_Hmi<ESTOP_CAP>;
 	

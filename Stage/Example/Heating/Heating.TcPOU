@@ -11,8 +11,8 @@ VAR_INPUT
 	bPumpOverload	: BOOL;
 	bBurnerOverload	: BOOL;
 
-	rBoilerTemp		: REAL := 60;
-	rBoilerPressure	: REAL := 1;
+	rBoilerTemp		: LREAL := 60;
+	rBoilerPressure	: LREAL := 1;
 END_VAR
 VAR_OUTPUT
 	bPump			: BOOL;
@@ -30,18 +30,6 @@ VAR
 	_compEnableEvent	: Comp(_enableEvent, _this);
 	_proxEnableEvent	: SignalProxy(_enableEvent, _ctx.priv.iOnEnable);
 	
-	_disableEvent		: Signal;
-	_compDisableEvent	: Comp(_disableEvent, _this);
-	_proxDisableEvent	: SignalProxy(_disableEvent, _ctx.priv.iOnDisable);
-	
-	_pauseEvent			: Signal;
-	_compPauseEvent		: Comp(_pauseEvent, _this);
-	_proxPauseEvent		: SignalProxy(_pauseEvent, _ctx.priv.iOnPause);
-	
-	_resumeEvent		: Signal;
-	_compResumeEvent	: Comp(_resumeEvent, _this);
-	_proxResumeEvent	: SignalProxy(_resumeEvent, _ctx.priv.iOnResume);
-	
 	_smgr			: StateManager<6>(_this);
 	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
 	
@@ -57,15 +45,11 @@ VAR
 	_enabled		: Heating_State_Enabled(_this, _ctx);
 	_proxEnabled	: StateProxy(_enabled, _ctx.state.iEnable);
 	
-	_pumping		: Heating_State_Pumping(_this, _ctx);
-	_proxPumping	: StateProxy(_pumping, _ctx.state.iPump);
+	_pumping		: Heating_State_HeatingRoom(_this, _ctx);
+	_proxPumping	: StateProxy(_pumping, _ctx.state.iHeating);
 	
 	_heatup			: Heating_State_Heatup(_this, _ctx);
 	_proxHeatup		: StateProxy(_heatup, _ctx.state.iHeatup);
-
-	_passiveRequestCall		: Heating_OnPassiveRequest(_ctx);
-	_onPassiveRequest		: Receiver(_passiveRequestCall);
-	_compOnPassiveRequest	: Comp(_onPassiveRequest, _this);
 	
 	_requestCall			: Heating_OnRequest(_ctx);
 	_onRequest				: Receiver(_requestCall);
@@ -103,9 +87,9 @@ END_IF
 
 // System temperature
 IF bBurner THEN
-	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRisePerBurner * LREAL_TO_REAL(Random());
+	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRisePerBurner * Random();
 END_IF
-sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureDropPassive * LREAL_TO_REAL(Random());
+sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureDropPassive * Random();
 
 IF sim.param.bToggleSystemTemperatureRise THEN
 	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRise;
