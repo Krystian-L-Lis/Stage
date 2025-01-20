@@ -13,6 +13,7 @@ VAR
 	_nStart			: UDINT;
 	_nEnd			: UDINT;
 	_nSize			: UDINT;
+	_bIsLocked		: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -94,18 +95,30 @@ END_VAR
       <Declaration><![CDATA[(*
 Emits an argument through the signal's broadcasting system.  
 If no argument is provided, it defaults to emitting the associated tag.
+Returns:
+- Ok - On Success
+- Err.InfLoop - Upon recursive call attempt
 *)
-METHOD Emit
+METHOD Emit : Result
 VAR_INPUT
 	iArg			: I_Arg := 0;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF iArg = 0 THEN
+        <ST><![CDATA[IF _bIsLocked THEN
+	Emit := Err.InfLoop;
+	RETURN;
+END_IF
+
+IF iArg = 0 THEN
 	iArg := _tag;
 END_IF
 
-_Emit(THIS^, iArg);]]></ST>
+_bIsLocked := TRUE;
+_Emit(THIS^, iArg);
+_bIsLocked := FALSE;
+
+Emit := Ok;]]></ST>
       </Implementation>
     </Method>
     <Method Name="EmitTo" Id="{01237bb5-eb33-4f6f-8303-4496429927bb}">
@@ -114,6 +127,7 @@ Emits an argument to a specified receiver.
 Returns:
 - `Ok` - If the emission is successful.
 - `Err.Itf0` - If the receiver interface is invalid.
+- `Err.InfLoop` - Upon recursive call attempt
 *)
 METHOD EmitTo : Result
 VAR_INPUT
@@ -127,11 +141,19 @@ END_VAR
 	RETURN;
 END_IF
 
+IF _bIsLocked THEN
+	EmitTo := Err.InfLoop;
+	RETURN;
+END_IF
+
 IF iArg = 0 THEN
 	iArg := _tag;
 END_IF
 
+_bIsLocked := TRUE;
 iReceiver.Receive(iArg);
+_bIsLocked := FALSE;
+
 EmitTo := Ok;
 ]]></ST>
       </Implementation>

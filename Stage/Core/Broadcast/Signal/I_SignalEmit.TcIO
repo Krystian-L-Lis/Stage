@@ -10,8 +10,11 @@ INTERFACE I_SignalEmit
       <Declaration><![CDATA[(*
 Emits an argument through the signal's broadcasting system.  
 If no argument is provided, it defaults to emitting the associated tag.
+Returns:
+- `Ok` - On Success
+- `Err.InfLoop` - Upon recursive call attempt
 *)
-METHOD Emit
+METHOD Emit : Result
 VAR_INPUT
 	iArg			: I_Arg := 0;
 END_VAR
@@ -23,6 +26,7 @@ Emits an argument to a specified receiver.
 Returns:
 - `Ok` - If the emission is successful.
 - `Err.Itf0` - If the receiver interface is invalid.
+- `Err.InfLoop` - Upon recursive call attempt
 *)
 METHOD EmitTo : Result
 VAR_INPUT
