@@ -11,12 +11,21 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Property Name="_InQueue" Id="{8550ca70-63f7-455b-b1b5-7891fcc34a1c}" FolderPath="_\">
+    <Property Name="_InQueue" Id="{02ccade8-718f-4090-82d6-3da62d5eb7ab}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _InQueue : BOOL]]></Declaration>
-      <Get Name="Get" Id="{5dbe6b56-3c78-4259-9af1-bcc59ffac19a}">
+      <Get Name="Get" Id="{5ec3504f-98d9-49cd-a289-f02c6221e357}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
-      <Set Name="Set" Id="{0fefd082-13d0-4ed6-b772-6e0ca0f9a7ef}">
+      <Set Name="Set" Id="{4dc69405-ced6-4d6e-a2e0-c8d41c29999e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_NextInBuffer" Id="{9d69fbbb-f40c-44f5-a73c-7b16ee2630e0}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _NextInBuffer : I_StateInternal]]></Declaration>
+      <Get Name="Get" Id="{d75c9538-b75a-4f1f-96c4-0ffdef60e1b2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{5569cd80-7757-474c-8eac-16d82fafea70}">
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>

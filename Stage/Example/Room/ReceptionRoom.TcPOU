@@ -2,9 +2,6 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ReceptionRoom" Id="{da0c2305-b67f-4452-8260-f7daed97569d}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ReceptionRoom IMPLEMENTS I_Execute, I_Init
-VAR CONSTANT
-	STATE_CAP		: UDINT := 5;
-END_VAR
 VAR_INPUT
 	rTemperature	: LREAL := 20.0 + Random();
 	
@@ -41,7 +38,7 @@ VAR
 	
 	
 	// State Manager
-	_smgr			: StateManager<STATE_CAP>(_this);
+	_smgr			: StateManager(_this);
 	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
 	
 	// States

@@ -2,9 +2,6 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="StandardRoom" Id="{2e0e75c6-de15-4761-ae40-14041f36bdf4}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK StandardRoom IMPLEMENTS I_Execute, I_Init
-VAR CONSTANT
-	STATE_CAP		: UDINT := 5;
-END_VAR
 VAR_INPUT
 	rTemperature	: LREAL := 20.0 + Random();
 	
@@ -41,7 +38,7 @@ VAR
 	
 	
 	// State Manager
-	_smgr			: StateManager<STATE_CAP>(_this);
+	_smgr			: StateManager(_this);
 	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
 	
 	// States

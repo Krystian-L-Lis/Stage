@@ -30,7 +30,7 @@ VAR
 	_compEnableEvent	: Comp(_enableEvent, _this);
 	_proxEnableEvent	: SignalProxy(_enableEvent, _ctx.priv.iOnEnable);
 	
-	_smgr			: StateManager<6>(_this);
+	_smgr			: StateManager(_this);
 	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
 	
 	_disabled		: Heating_State_Disabled(_this, _ctx);

@@ -2,16 +2,12 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="_StateBuffer" Id="{711a25fc-792a-4435-9ccd-e8054980130d}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-A circular buffer for storing states.  
+A buffer for storing states.  
 *)
 FUNCTION_BLOCK INTERNAL _StateBuffer
-VAR_GENERIC CONSTANT
-	STATE_CAP			: UDINT(1..16#7FFFFFFF) := 1;
-END_VAR
 VAR
-	_iState				: ARRAY[1..STATE_CAP] OF I_StateInternal;
-	_nHead				: UDINT := 1;
-	_nTail				: UDINT := 1;
+	_iFirst				: I_StateInternal;
+	_iLast				: I_StateInternal;
 	_nLen				: UDINT;
 END_VAR
 ]]></Declaration>
@@ -20,18 +16,6 @@ END_VAR
     </Implementation>
     <Folder Name="Other" Id="{5d3df489-8735-43fe-a81c-03404c1c5f20}" />
     <Folder Name="Push" Id="{4903ac7f-b709-435c-851d-d394b1e3ffec}" />
-    <Method Name="Cap" Id="{0d43e644-fff4-43e2-a039-01aede7b9e10}" FolderPath="Other\">
-      <Declaration><![CDATA[(*
-Returns the maximum capacity of the state buffer, indicating how many states it can hold.
-*)
-METHOD Cap : UDINT
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[Cap := STATE_CAP;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Length" Id="{264889a2-4c66-4869-80d2-31916bbd4e00}" FolderPath="Other\">
       <Declaration><![CDATA[(*
 Returns the current number of states stored in the buffer.
@@ -57,23 +41,22 @@ VAR_OUTPUT
 	iState			: I_StateInternal;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _nHead = _nTail THEN
-    Pop := None;
-    RETURN;
+        <ST><![CDATA[IF _iFirst = 0 THEN
+	Pop := None;
+	RETURN;
 END_IF
 
-iState := _iState[_nHead];
-_iState[_nHead] := 0;
+iState := _iFirst;
+_iFirst := _iFirst._NextInBuffer;
+iState._NextInBuffer := 0;
+iState._InQueue := FALSE;
 
-_nHead := _nHead + 1;
+IF _iFirst = 0 THEN
+	_iLast := 0;
+END_IF
+
 _nLen := _nLen - 1;
-
-IF _nHead > STATE_CAP THEN
-    _nHead := 1;
-END_IF
-
 Pop := Ok;
-
 ]]></ST>
       </Implementation>
     </Method>
@@ -83,14 +66,11 @@ Adds a new state to the buffer.
 Returns:
 - `Ok` - If the state is successfully added.
 - `Err.Itf0` - If the provided state interface is invalid.
-- `Err.Ovf` - If the buffer is full.
+- `Err.IncArg` - Uf the provided state already is in some buffer.
 *)
 METHOD Push : Result
 VAR_INPUT
 	iState			: I_StateInternal;
-END_VAR
-VAR
-	_nNextTail 		: UDINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iState = 0 THEN
@@ -98,20 +78,23 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-_nNextTail := _nTail + 1;
-
-IF _nNextTail > STATE_CAP THEN
-    _nNextTail := 1;
+IF iState._InQueue THEN
+	Push := Err.IncArg;
+	RETURN;
 END_IF
 
-IF _nNextTail = _nHead THEN
-    Push := Err.Ovf; 
-    RETURN;
+IF _iLast = 0 THEN
+	_iFirst := iState;
+	_iLast := iState;
+	iState._InQueue := TRUE;
+	_nLen := _nLen + 1;
+ELSE
+	_iLast._NextInBuffer := iState;
+	_iLast := iState;
+	iState._InQueue := TRUE;
+	_nLen := _nLen + 1;
 END_IF
 
-_nLen := _nLen + 1;
-_iState[_nTail] := iState;
-_nTail := _nNextTail;
 Push := Ok;]]></ST>
       </Implementation>
     </Method>

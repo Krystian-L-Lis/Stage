@@ -6,18 +6,14 @@ Manages the lifecycle and transitions of states within an entity.
 Supports queuing state change requests, triggering state transitions, and broadcasting state change events.  
 Adds a `_stateChangeEvent` Signal to the owning `I_Entity` during initialization, enabling external components to listen for state changes.
 *)
-FUNCTION_BLOCK FINAL StateManager
-VAR_GENERIC CONSTANT
-	STATE_CAP			: UDINT := 1;
-END_VAR
-IMPLEMENTS I_Execute, I_StateManager, I_Debug
+FUNCTION_BLOCK FINAL StateManager IMPLEMENTS I_Execute, I_StateManager, I_Debug
 
 VAR
 	_iOwner				: I_Entity;
 
 	_exe				: Execute(THIS^);
 	_sm					: _StateMachine;
-	_buffer				: _StateBuffer<STATE_CAP>;
+	_buffer				: _StateBuffer;
 	
 	_stateChangeEvent	: Signal;
 	
@@ -59,14 +55,15 @@ END_VAR]]></Declaration>
         <ST><![CDATA[IF IsOk(_buffer.Pop(iState => _iNewState)) THEN
 	_iPretender := _iNewState._AsIState;
 	IF IsOk(_sm.Change(_iNewState, iOldState => _iOldState)) THEN
+		_stateChangeEvent.Emit(_iNewState._AsIState.Tag);
+		
 		_iCurrent		:= _iNewState._AsIState;
 		IF _iOldState <> 0 THEN
 			_iPrevious		:= _iOldState._AsIState;
 		END_IF
-		_stateChangeEvent.Emit(_iNewState._AsIState.Tag);
+		
 	END_IF
 	
-	_iPretender._AsIStateInternal._InQueue := FALSE;
 	_iPretender		:= 0;
 END_IF
 
@@ -178,11 +175,6 @@ IF iState.Owner <> _iOwner THEN
 	RETURN;
 END_IF
 
-IF iState._AsIStateInternal._InQueue THEN
-	Request := Err.IncArg;
-	RETURN;
-END_IF
-iState._AsIStateInternal._InQueue := TRUE;
 Request := _buffer.Push(iState._AsIStateInternal);]]></ST>
       </Implementation>
     </Method>
