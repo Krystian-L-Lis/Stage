@@ -172,7 +172,7 @@ VAR
 
 	// Create a StateManager which wraps around the StateMachine
 	// Apart from managing the state lifecycle, it also handles queues and change requests
-	_smgr		: StateManager<2>(_this);
+	_smgr		: StateManager(_this);
 
 	_empty		: Tank_State_Empty(_this, _ctx);
 	_compEmpty	: Comp(_empty, _this);
