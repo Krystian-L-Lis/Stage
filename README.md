@@ -25,7 +25,7 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
    git clone https://github.com/Krystian-L-Lis/Stage.git
    ```
 
-2. **Import the library into TwinCAT:**
+2. **Import the framework into TwinCAT:**
 
    ### **Option 1: Build from source**
 
@@ -67,7 +67,7 @@ Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page for:
 
 ## **Quick Start**
 
-This guide provides a brief overview of using the **Stage** library.
+This guide provides a brief overview of using the **Stage** framework.
 
 ---
 
