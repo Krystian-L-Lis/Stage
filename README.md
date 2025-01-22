@@ -61,7 +61,6 @@ Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page for:
 - 🔄 **State Management** – Implement flexible state-driven logic.  
 - 📡 **Event-Driven Programming** – Easily connect components via signals.  
 - 🧩 **Plug & Play Components** – Quick integration with existing TwinCAT projects.  
-- 🛠️ **Developer-Friendly** – Clean, readable code with standardized conventions.  
 
 ---
 
