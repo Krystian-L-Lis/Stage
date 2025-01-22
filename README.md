@@ -106,7 +106,7 @@ END_VAR
 
 	METHOD Init; END_METHOD		// Implemented from I_Init
 	METHOD Execute; END_METHOD	// Implemented from I_Execute
-	METHOD Call;				// Implemented from I_Callable
+	METHOD Call;			// Implemented from I_Callable
 		VAR_INPUT
 			iArg		: I_Arg;
 		END_VAR
@@ -123,7 +123,7 @@ END_FUNCTION_BLOCK
 // Create a context structure or interface
 TYPE Tank_Ctx:  
 STRUCT  
-	rSomeSensor				: LREAL;
+	rSomeSensor			: LREAL;
 	iPumpEventCache			: I_Signal;
 	iPumpCommandCache		: I_Receiver;
 	sHmiStatusText			: Str;
@@ -146,10 +146,10 @@ END_FUNCTION_BLOCK
 
 // Create a concrete state definition
 FUNCTION_BLOCK Tank_State_Empty EXTENDS _Tank_State
-METHOD OnEntry; END_METHOD 								// Override...
-METHOD OnExecute; END_METHOD 							// any or all...
-METHOD OnExit; END_METHOD 								// of these...
-METHOD CanActivate; CanActivate := TRUE; END_METHOD 	// methods.
+METHOD OnEntry; END_METHOD 					// Override...
+METHOD OnExecute; END_METHOD 					// any or all...
+METHOD OnExit; END_METHOD 					// of these...
+METHOD CanActivate; CanActivate := TRUE; END_METHOD 		// methods.
 METHOD CanDeactivate; CanDeactivate := TRUE; END_METHOD
 END_FUNCTION_BLOCK
 ```
