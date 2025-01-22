@@ -1,11 +1,10 @@
 # **Stage**  
-_A TwinCAT 3.1 Framework for Streamlined PLC Development_
 
 ---
 
 ## Overview
 
-Stage is a framework designed to simplify PLC programming in TwinCAT 3.1. It promotes a modular approach to developing scalable and maintainable automation software through optional features such as composition-based architecture, event handling, and state management. Stage integrates seamlessly into both simple and complex control applications, offering a structured and flexible development approach without unnecessary complexity.
+Stage is a framework designed to simplify PLC programming in TwinCAT 3.1. It promotes a modular approach to developing scalable and maintainable automation software through features based on composition, state and observer patterns. Stage integrates seamlessly into both simple and complex control applications, offering a structured and flexible development approach without unnecessary complexity.
 
 ---
 
