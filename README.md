@@ -1,5 +1,5 @@
 # **Stage**
-_A framework for writing scalable and maintanable ST code_
+_A framework for writing scalable and maintainable ST code_
 
 ---
 
