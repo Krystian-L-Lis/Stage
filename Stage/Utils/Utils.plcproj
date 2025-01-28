@@ -49,10 +49,10 @@
     <Compile Include="Color\RgbColor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Time\GetSysTime.TcPOU">
+    <Compile Include="Other\Random.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Time\Random.TcPOU">
+    <Compile Include="Time\GetUnixTime.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -90,6 +90,7 @@
   <ItemGroup>
     <Folder Include="Color" />
     <Folder Include="Color\Itf" />
+    <Folder Include="Other" />
     <Folder Include="Time" />
   </ItemGroup>
   <ItemGroup>
