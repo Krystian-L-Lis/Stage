@@ -1,11 +1,11 @@
-# **Stage**  
-_A TwinCAT 3.1 Framework for Streamlined PLC Development_
+# **Stage**
+_A framework for writing scalable and maintainable ST code_
 
 ---
 
 ## Overview
 
-Stage is a framework designed to simplify PLC programming in TwinCAT 3.1. It promotes a modular approach to developing scalable and maintainable automation software through optional features such as composition-based architecture, event handling, and state management. Stage integrates seamlessly into both simple and complex control applications, offering a structured and flexible development approach without unnecessary complexity.
+Stage is a framework designed to simplify PLC programming in TwinCAT 3.1. It promotes a modular approach to developing scalable and maintainable automation software through features based on composition, state and observer patterns. Stage integrates seamlessly into both simple and complex control applications, offering a structured and flexible development approach without unnecessary complexity.
 
 ---
 
@@ -25,7 +25,7 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
    git clone https://github.com/Krystian-L-Lis/Stage.git
    ```
 
-2. **Import the library into TwinCAT:**
+2. **Import the framework into TwinCAT:**
 
    ### **Option 1: Build from source**
 
@@ -51,6 +51,7 @@ Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page for:
 ✔️ Detailed guides  
 ✔️ Example projects  
 ✔️ API reference  
+✔️ Changelog  
 
 ---
 
@@ -60,13 +61,12 @@ Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page for:
 - 🔄 **State Management** – Implement flexible state-driven logic.  
 - 📡 **Event-Driven Programming** – Easily connect components via signals.  
 - 🧩 **Plug & Play Components** – Quick integration with existing TwinCAT projects.  
-- 🛠️ **Developer-Friendly** – Clean, readable code with standardized conventions.  
 
 ---
 
 ## **Quick Start**
 
-This guide provides a brief overview of using the **Stage** library.
+This guide provides a brief overview of using the **Stage** framework.
 
 ---
 
@@ -106,7 +106,7 @@ END_VAR
 
 	METHOD Init; END_METHOD		// Implemented from I_Init
 	METHOD Execute; END_METHOD	// Implemented from I_Execute
-	METHOD Call;				// Implemented from I_Callable
+	METHOD Call;			// Implemented from I_Callable
 		VAR_INPUT
 			iArg		: I_Arg;
 		END_VAR
@@ -123,7 +123,7 @@ END_FUNCTION_BLOCK
 // Create a context structure or interface
 TYPE Tank_Ctx:  
 STRUCT  
-	rSomeSensor				: LREAL;
+	rSomeSensor			: LREAL;
 	iPumpEventCache			: I_Signal;
 	iPumpCommandCache		: I_Receiver;
 	sHmiStatusText			: Str;
@@ -146,10 +146,10 @@ END_FUNCTION_BLOCK
 
 // Create a concrete state definition
 FUNCTION_BLOCK Tank_State_Empty EXTENDS _Tank_State
-METHOD OnEntry; END_METHOD 								// Override...
-METHOD OnExecute; END_METHOD 							// any or all...
-METHOD OnExit; END_METHOD 								// of these...
-METHOD CanActivate; CanActivate := TRUE; END_METHOD 	// methods.
+METHOD OnEntry; END_METHOD 					// Override...
+METHOD OnExecute; END_METHOD 					// any or all...
+METHOD OnExit; END_METHOD 					// of these...
+METHOD CanActivate; CanActivate := TRUE; END_METHOD 		// methods.
 METHOD CanDeactivate; CanDeactivate := TRUE; END_METHOD
 END_FUNCTION_BLOCK
 ```
@@ -171,7 +171,7 @@ VAR
 
 	// Create a StateManager which wraps around the StateMachine
 	// Apart from managing the state lifecycle, it also handles queues and change requests
-	_smgr		: StateManager<2>(_this);
+	_smgr		: StateManager(_this);
 
 	_empty		: Tank_State_Empty(_this, _ctx);
 	_compEmpty	: Comp(_empty, _this);
@@ -264,4 +264,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have questions or suggestions, feel free to reach out via:
 
 - **GitHub Issues:** [Submit an issue](https://github.com/Krystian-L-Lis/Stage/issues)  
-- **Community Discussions:** [Join the forum](https://github.com/Krystian-L-Lis/Stage/discussions)  
