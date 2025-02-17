@@ -411,6 +411,7 @@ FodyWeavers.xsd
 *.tmcRefac
 *.library
 *.project.~u
+*.~u
 *.tsproj.bak
 *.xti.bak
 LineIDs.dbg
