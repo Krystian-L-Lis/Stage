@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>Core</Name>
-    <ProgramVersion>3.1.4026.9</ProgramVersion>
+    <ProgramVersion>3.1.4026.13</ProgramVersion>
     <Application>{fec3d0c7-471d-43f5-84d2-6083b5cf05d6}</Application>
     <TypeSystem>{48aaa59b-78a5-43c8-9209-8584a2741719}</TypeSystem>
     <Implicit_Task_Info>{79ea7876-d3f0-4635-a2b5-0ad959ac0d65}</Implicit_Task_Info>
@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>Core</Title>
-    <ProjectVersion>1.0.0</ProjectVersion>
+    <ProjectVersion>1.0.1</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -424,9 +424,6 @@
     <Compile Include="_\Param.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="_\_ToDo.TcPOU">
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

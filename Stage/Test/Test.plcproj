@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>Test</Name>
-    <ProgramVersion>3.1.4026.9</ProgramVersion>
+    <ProgramVersion>3.1.4026.13</ProgramVersion>
     <Application>{6ffbc157-20e5-4a8d-a4d8-f24959c139ab}</Application>
     <TypeSystem>{14961324-2917-4a54-a91d-b165474820ea}</TypeSystem>
     <Implicit_Task_Info>{b9d8ee02-7c71-4835-a042-e9e0b76d33eb}</Implicit_Task_Info>
@@ -54,32 +54,6 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
-      <Parameters>
-        <Parameter ListName="PARAM" xmlns="">
-          <Key>TABLE_UPPER_BOUND</Key>
-          <Value>15</Value>
-        </Parameter>
-        <Parameter ListName="PARAM" xmlns="">
-          <Key>STRING_LENGTH_EXP</Key>
-          <Value>255</Value>
-        </Parameter>
-        <Parameter ListName="PARAM" xmlns="">
-          <Key>STRING_LENGTH_ADDRESS</Key>
-          <Value>20</Value>
-        </Parameter>
-        <Parameter ListName="PARAM" xmlns="">
-          <Key>STRING_LENGTH_COMMENT</Key>
-          <Value>255</Value>
-        </Parameter>
-        <Parameter ListName="PARAM" xmlns="">
-          <Key>STRING_LENGTH_OUTSTRING</Key>
-          <Value>255</Value>
-        </Parameter>
-        <Parameter ListName="PARAM" xmlns="">
-          <Key>TABLE_SHOW_VALID_ITEMS</Key>
-          <Value>FALSE</Value>
-        </Parameter>
-      </Parameters>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -91,24 +65,16 @@
       <Namespace>Core</Namespace>
       <Parameters>
         <Parameter ListName="PARAM">
-          <Key>ENTITY_CAP</Key>
-          <Value>20</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
           <Key>COMP_CAP</Key>
           <Value>20</Value>
         </Parameter>
         <Parameter ListName="PARAM">
-          <Key>DEBUG_CAP</Key>
-          <Value>10</Value>
+          <Key>RECEIVER_CAP</Key>
+          <Value>20</Value>
         </Parameter>
         <Parameter ListName="PARAM">
           <Key>SIGNAL_CAP</Key>
           <Value>200</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>RECEIVER_CAP</Key>
-          <Value>20</Value>
         </Parameter>
       </Parameters>
     </PlaceholderReference>

@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>Example</Name>
-    <ProgramVersion>3.1.4026.9</ProgramVersion>
+    <ProgramVersion>3.1.4026.13</ProgramVersion>
     <Application>{07b3f1d7-64e2-42f4-8f8f-a69b901d6e5d}</Application>
     <TypeSystem>{c496a2ca-0053-4fa4-8e60-f009dce59719}</TypeSystem>
     <Implicit_Task_Info>{965204c2-2d3a-4c5e-a668-7662ad151e7a}</Implicit_Task_Info>
@@ -255,32 +255,6 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
-      <Parameters>
-        <Parameter ListName="PARAM">
-          <Key>STRING_LENGTH_ADDRESS</Key>
-          <Value>20</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>STRING_LENGTH_COMMENT</Key>
-          <Value>255</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>STRING_LENGTH_EXP</Key>
-          <Value>255</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>STRING_LENGTH_OUTSTRING</Key>
-          <Value>255</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>TABLE_SHOW_VALID_ITEMS</Key>
-          <Value>FALSE</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>TABLE_UPPER_BOUND</Key>
-          <Value>15</Value>
-        </Parameter>
-      </Parameters>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Utilities">
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -310,14 +284,6 @@
         <Parameter ListName="PARAM">
           <Key>DEBUGSTR_CAP</Key>
           <Value>10</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>ENTITY_CAP</Key>
-          <Value>20</Value>
-        </Parameter>
-        <Parameter ListName="PARAM">
-          <Key>RECEIVER_CAP</Key>
-          <Value>100</Value>
         </Parameter>
         <Parameter ListName="PARAM">
           <Key>SIGNAL_CAP</Key>

@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>Utils</Name>
-    <ProgramVersion>3.1.4026.9</ProgramVersion>
+    <ProgramVersion>3.1.4026.13</ProgramVersion>
     <Application>{27c6098d-2ecd-41f5-8a4c-9dfd760a4ab6}</Application>
     <TypeSystem>{c4e484e8-3149-488c-ac2a-3768c5fe01bd}</TypeSystem>
     <Implicit_Task_Info>{47f005fd-c879-429f-baf9-26e64d516273}</Implicit_Task_Info>
@@ -32,7 +32,7 @@
     <SelectedLibraryCategories>
       <Id xmlns="">{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
     </SelectedLibraryCategories>
-    <ProjectVersion>1.0.1</ProjectVersion>
+    <ProjectVersion>1.0.2</ProjectVersion>
     <DefaultNamespace>Utils</DefaultNamespace>
     <Placeholder>_Utils</Placeholder>
     <Author>Krystian Lis et al.</Author>
@@ -78,13 +78,6 @@
       <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
       <Optional>true</Optional>
       <QualifiedOnly>true</QualifiedOnly>
-    </PlaceholderReference>
-    <PlaceholderReference Include="_Results">
-      <DefaultResolution>Results, * (_)</DefaultResolution>
-      <Namespace>Results</Namespace>
-      <QualifiedOnly>true</QualifiedOnly>
-      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
-      <Optional>true</Optional>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
