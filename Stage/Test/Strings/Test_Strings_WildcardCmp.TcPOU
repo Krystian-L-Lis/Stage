@@ -26,7 +26,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF bTest THEN
 	FOR i := 1 TO 10 DO
-		nResult[i] := MatchSymPathPattern(sAddress, sPattern[i]);
+		nResult[i] := MatchTagPathPattern(sAddress, sPattern[i]);
 		IF nResult[i] = nExpected[i] THEN
 			nMatchResult := nMatchResult + 1;
 		END_IF
