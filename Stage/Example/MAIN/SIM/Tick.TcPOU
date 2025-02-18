@@ -7,7 +7,7 @@ VAR_INPUT
 	nTaskInMs	: ULINT := 20;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Tick := (GetSysTime() MOD (nTimeInMs * 10_000)) < (nTaskInMs * 10_000);]]></ST>
+      <ST><![CDATA[Tick := (GetUnixTime() MOD (nTimeInMs * 10_000)) < (nTaskInMs * 10_000);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

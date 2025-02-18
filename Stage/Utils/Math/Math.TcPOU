@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Math" Id="{76db6186-827d-4be6-8551-4ecec23c6cd1}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Math
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="LowPassFilter" Id="{54dd59a2-6c09-4c12-9961-65f71218b6f9}">
+      <Declaration><![CDATA[METHOD LowPassFilter : LREAL
+VAR_INPUT
+	rX				: LREAL;
+	rPrvY			: LREAL;
+	
+	rCoefficient	: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[LowPassFilter := rX * rCoefficient + rPrvY * (1 - rCoefficient);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Normalization" Id="{37fc285e-354d-4811-9875-fb9578429fc0}">
+      <Declaration><![CDATA[METHOD Normalization : LREAL
+VAR_INPUT
+	rX				: LREAL;
+	rMinX			: LREAL;
+	rMaxX			: LREAL;
+	rMinY			: LREAL := 0;
+	rMaxY			: LREAL := 1;
+END_VAR
+VAR
+	_rDnmtr			: LREAL := rMaxX - rMinX;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _rDnmtr <> 0 THEN
+	Normalization := rMinY + ((rX - rMinX)/_rDnmtr) * (rMaxY - rMinY);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Random" Id="{8fa98490-891b-4c1e-b9e9-80fb0f11e0b4}">
+      <Declaration><![CDATA[// Random number generator.
+METHOD Random : LREAL
+VAR_STAT
+	_nSeed		: INT;
+END_VAR
+VAR
+	_drand		: Tc2_System.DRAND;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_drand(Seed := _nSeed, Num => Random);
+_nSeed := _nSeed + 1;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

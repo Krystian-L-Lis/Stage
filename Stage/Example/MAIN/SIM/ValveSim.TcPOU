@@ -8,7 +8,7 @@ VAR
 	_bIsClosed	: REFERENCE TO BOOL;	
 
 	_exe		: Execute(THIS^);
-	_ton		: TON := (PT := LREAL_TO_TIME(Random() * 1000));
+	_ton		: TON := (PT := LREAL_TO_TIME(Math.Random() * 1000));
 	_rt			: R_TRIG;
 	_ft			: F_TRIG;
 	_bInit		: BOOL := TRUE;

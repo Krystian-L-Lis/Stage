@@ -3,7 +3,7 @@
   <POU Name="StandardRoom" Id="{2e0e75c6-de15-4761-ae40-14041f36bdf4}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK StandardRoom IMPLEMENTS I_Execute, I_Init
 VAR_INPUT
-	rTemperature	: LREAL := 20.0 + Random();
+	rTemperature	: LREAL := 20.0 + Math.Random();
 	
 	bInletValveIsClosed	: BOOL;
 	bInletValveIsOpen	: BOOL;
@@ -86,11 +86,11 @@ IF NOT sim.bTick THEN
 END_IF
 
 IF bInletValve AND bOutletValve THEN
-	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater * Random();
-	rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater * Random();
+	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater * Math.Random();
+	rTemperature := rTemperature + sim.param.rRoomTemperatureRisePerHeater * Math.Random();
 END_IF
 
-rTemperature := rTemperature + sim.param.rRoomTemperaturePassiveDrop * Random();
+rTemperature := rTemperature + sim.param.rRoomTemperaturePassiveDrop * Math.Random();
 
 IF rTemperature < 0 THEN
 	rTemperature := 0;

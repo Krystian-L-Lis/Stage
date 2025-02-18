@@ -87,9 +87,9 @@ END_IF
 
 // System temperature
 IF bBurner THEN
-	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRisePerBurner * Random();
+	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRisePerBurner * Math.Random();
 END_IF
-sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureDropPassive * Random();
+sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureDropPassive * Math.Random();
 
 IF sim.param.bToggleSystemTemperatureRise THEN
 	sim.rSystemTemperature := sim.rSystemTemperature + Sim.param.rSystemTemperatureRise;
