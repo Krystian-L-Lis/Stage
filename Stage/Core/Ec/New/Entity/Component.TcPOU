@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Component" Id="{fa960ebd-c1a5-43b6-93f9-37986edc8a8e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Component
+VAR
+	_iComponent	: I_Component;
+	_iEntity	: I_EntityNode;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Entity" Id="{03f954b7-96dd-486d-bc2c-304b7fa3fabf}">
+      <Declaration><![CDATA[PROPERTY Entity : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{d240c28c-91c6-4daa-8272-834d768826b4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Entity := _iEntity._AsIEntity;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{6b3be823-b707-4752-9ff4-9bf296045f36}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iComponent	: I_Component;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iComponent := iComponent;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Raw" Id="{f0629eb7-2548-4aad-92a4-4ae12d6f0db5}">
+      <Declaration><![CDATA[PROPERTY Raw : I_Component]]></Declaration>
+      <Get Name="Get" Id="{ce00bc59-cc2a-41f7-9580-773a33558064}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Raw := _iComponent;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

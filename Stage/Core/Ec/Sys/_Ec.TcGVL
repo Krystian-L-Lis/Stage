@@ -19,7 +19,8 @@ VAR_GLOBAL INTERNAL
     nEntityLen  : UDINT;         // Number of active entities
     nCompLen    : UDINT;         // Number of allocated slots in 'comp' array
 	
-	bRegLock	: BOOL;
+	iUnderConstruction	: I_EntityNode; // Upon program initialization stores the entity that is being constructed.
+	nConstructedScopes	: UDINT; // Keeps number of Entity scopes under construction
 END_VAR
 ]]></Declaration>
   </GVL>

@@ -29,7 +29,7 @@ VAR
 	_nNewStart	: UDINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF _Ec.bRegLock THEN
+      <ST><![CDATA[IF NOT _Runtime.bInit THEN
 	_RegComp := Err.Init;
 	RETURN;
 END_IF
@@ -88,7 +88,7 @@ IF iEntity._Start = 0 THEN
         // Update the entity’s metadata
         iEntity._Start := _nStart;
         iEntity._End   := _nEnd;
-        iEntity._SetSize(2);
+        iEntity._Size := 2;
         
         // Increase global count of used slots
         _Ec.nCompLen := _Ec.nCompLen + 2;
@@ -116,7 +116,7 @@ IF _nNextId <= Param.COMP_CAP AND_THEN _Ec.comp[_nNextId].nType = 0 THEN
     
     // Update entity info
     iEntity._End := _nNextId;
-    iEntity._SetSize(iEntity.Size + 1);
+    iEntity._Size := iEntity._Size + 1;
     
     // Increase global used-slot counter
     _Ec.nCompLen := _Ec.nCompLen + 1;
@@ -137,7 +137,7 @@ IF _nNextId > 0 AND_THEN _Ec.comp[_nNextId].nType = 0 THEN
     
     // Update entity to reflect new _Start
     iEntity._Start := _nNextId;
-    iEntity._SetSize(iEntity.Size + 1);
+    iEntity._Size := iEntity._Size + 1;
     
     // Increase global used-slot counter
     _Ec.nCompLen := _Ec.nCompLen + 1;
@@ -204,7 +204,7 @@ IF IsOk(_RegComp) THEN
     // Update the entity to reflect the new block location
     iEntity._Start := _nStart;
     iEntity._End   := _nEnd;
-    iEntity._SetSize(_nNewSize);
+    iEntity._Size := _nNewSize;
     
     // One more slot used
     _Ec.nCompLen := _Ec.nCompLen + 1;

@@ -216,28 +216,40 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Ec\Core\Comp.TcPOU">
+    <Compile Include="Ec\New\Comp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\Entity.TcPOU">
+    <Compile Include="Ec\New\Entity\Component.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\GetOwner.TcPOU">
+    <Compile Include="Ec\New\Entity\EntityEnd.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_Component.TcIO">
+    <Compile Include="Ec\New\Entity\EntityExtend.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_EntityNode.TcIO">
+    <Compile Include="Ec\New\Entity\EntityStart.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_Entity.TcIO">
+    <Compile Include="Ec\New\Entity\I_FatComponent.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\GetEntity.TcPOU">
+    <Compile Include="Ec\New\GetOwner.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\RegComp.TcPOU">
+    <Compile Include="Ec\New\I_Component.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\New\I_EntityNode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\New\I_Entity.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\New\GetEntity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\New\RegComp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ec\List\CompList.TcPOU">
@@ -265,10 +277,13 @@
     <Compile Include="Ec\Sys\_Helpers\_EcGetBestFit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_RegComp.TcPOU">
+    <Compile Include="Ec\Sys\_Helpers\_RegComp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_RegEntity.TcPOU">
+    <Compile Include="Ec\Sys\_Helpers\_RegEntity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ec\Sys\_Helpers\_FinalizeEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Iter\Iter.TcPOU">
@@ -444,7 +459,8 @@
     <Folder Include="Ec">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
-    <Folder Include="Ec\Core" />
+    <Folder Include="Ec\New" />
+    <Folder Include="Ec\New\Entity" />
     <Folder Include="Ec\List" />
     <Folder Include="Ec\Sys" />
     <Folder Include="Callable" />
@@ -478,11 +494,6 @@
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Core.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

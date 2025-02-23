@@ -18,7 +18,7 @@ VAR_OUTPUT
     nIndex  : UDINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF _Ec.bRegLock THEN
+      <ST><![CDATA[IF NOT _Runtime.bInit THEN
 	_RegEntity := Err.Init;
 	RETURN;
 END_IF
@@ -36,6 +36,9 @@ END_IF
 _Ec.nEntityLen := _Ec.nEntityLen + 1;
 _Ec.iEntity[_Ec.nEntityLen] := iEntity;
 nIndex := _Ec.nEntityLen;
+
+_Ec.iUnderConstruction := iEntity;
+_Ec.nConstructedScopes := _Ec.nConstructedScopes + 1;
 
 _RegEntity := Ok;
 

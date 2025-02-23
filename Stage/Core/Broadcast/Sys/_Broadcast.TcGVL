@@ -9,7 +9,6 @@ VAR_GLOBAL INTERNAL
 	iFirst				: I_SignalNode;
 	nRecLen				: UDINT;
 	nSignalLen			: UDINT;
-	bRegLock			: BOOL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

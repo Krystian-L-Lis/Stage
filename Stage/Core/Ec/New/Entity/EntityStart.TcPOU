@@ -1,24 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Entity" Id="{a3fc4420-1b23-490b-958c-b8e82c07e80d}" SpecialFunc="None">
+  <POU Name="EntityStart" Id="{a495af02-6953-4eb7-8379-f765a35279b5}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Represents a registered entity in the Entity-Component system.
 *)
-FUNCTION_BLOCK Entity IMPLEMENTS I_Entity, I_Debug;
+FUNCTION_BLOCK EntityStart IMPLEMENTS I_Entity, I_Debug;
 VAR
 	_nId		: UDINT;
 	_nStart		: UDINT;
 	_nEnd		: UDINT;
 	_nSize		: UDINT;
+	_bIsCompleted	: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Folder Name="_" Id="{e8077190-5b33-4c5b-91af-7b20957542bb}" />
-    <Property Name="_AsIEntity" Id="{60fc76fa-dd40-4521-93f5-29f3a0849bcf}" FolderPath="_\">
+    <Folder Name="_" Id="{71138bdc-ea6c-4ac9-85c3-4bca04b71bf2}" />
+    <Property Name="_AsIEntity" Id="{30a417d2-a14a-4729-891e-479b5a9865c4}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY _AsIEntity : I_Entity]]></Declaration>
-      <Get Name="Get" Id="{5b7b9954-87f2-4bb7-9b69-46ae3bdefa15}">
+      <Get Name="Get" Id="{42b9a2ca-4c1d-4d9f-896b-d441100d3328}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -27,9 +28,9 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="_End" Id="{7ed5e455-fc58-494a-8dc6-0ca2573e5409}" FolderPath="_\">
+    <Property Name="_End" Id="{7ddff298-f8fa-43fb-a380-60921da4e046}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _End : UDINT]]></Declaration>
-      <Get Name="Get" Id="{7db79da8-8058-4634-a09e-a01f1ca34087}">
+      <Get Name="Get" Id="{3289821d-5e77-485c-aad3-ad4121795ee2}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -37,7 +38,7 @@ END_VAR
           <ST><![CDATA[_End := _nEnd;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{77e2b638-de88-4a1a-b8f5-31e89a519e72}">
+      <Set Name="Set" Id="{a1d74045-5663-482a-a7a5-1606859b04c2}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -46,19 +47,47 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="_SetSize" Id="{341e7bbc-0303-483d-8f8d-69b5d7410f42}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD INTERNAL _SetSize
-VAR_INPUT
-	nSize	: UDINT;
+    <Property Name="_IsCompleted" Id="{9cea21e4-deec-4281-a980-e0c846ffd39e}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY _IsCompleted : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5b80ff0e-09cf-4d88-83c6-314efff97562}">
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_nSize := nSize;]]></ST>
-      </Implementation>
-    </Method>
-    <Property Name="_Start" Id="{5d53a0dc-b463-4cf0-bcbc-720c698356a0}" FolderPath="_\">
+        <Implementation>
+          <ST><![CDATA[_IsCompleted := _bIsCompleted;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{eb2bdf6d-54b6-4a92-aad5-65353cea0b7b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_bIsCompleted := _IsCompleted;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Size" Id="{c8bb90ea-5aec-46f6-9a2f-7b176fd3cf5b}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Size : UDINT]]></Declaration>
+      <Get Name="Get" Id="{c39f82f0-f0a7-4ace-8836-3bf0456c0b11}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Size := _nSize;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5724da63-ce15-41e5-b35f-3b6648bbdad5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_nSize := _Size;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Start" Id="{19e52aac-cfba-478c-ab9f-7985a456aaa5}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _Start : UDINT]]></Declaration>
-      <Get Name="Get" Id="{b451cf7c-ffda-4cbd-9831-246d8bce73bb}">
+      <Get Name="Get" Id="{72cc1e7f-6087-49cd-8170-1f06b15fd337}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -66,7 +95,7 @@ END_VAR
           <ST><![CDATA[_Start := _nStart;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{7a9c4d16-2560-42af-ac22-20b3625b8918}">
+      <Set Name="Set" Id="{3ffcff5f-d5d3-403c-a4eb-671d4509c69f}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -75,7 +104,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Fb_init" Id="{8a1c93fc-56bb-463c-aa1e-e5009cf51636}">
+    <Method Name="Fb_init" Id="{b0e00dc3-eb49-4117-9095-1283145ba835}">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
 //The return value is not evaluated. For a specific influence, you can also declare the
 //methods explicitly and provide additional code there with the standard initialization
@@ -90,13 +119,13 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsErr(_RegEntity(THIS^, nIndex => _nId), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('_RegEntity(THIS^) failed with code: ', TO_STRING(_nResult)));
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('_RegEntity(THIS^) failed with code: ', ResultToStr(_nResult)));
 END_IF
 
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Get" Id="{d850980f-263b-4ca3-bf68-c37b4aaa2580}">
+    <Method Name="Get" Id="{646396ad-09a8-4895-b39a-1783367488da}">
       <Declaration><![CDATA[(*
 Retrieves a specific component from the entity based on the provided index.  
 Returns `None` if the index is out of range or the entity size is zero.
@@ -120,12 +149,12 @@ iComp := _Ec.comp[_nStart + nIndex].variant.iComponent;
 Get := Ok;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Id" Id="{4402c710-18d7-433c-9c5e-7e50ee140721}">
+    <Property Name="Id" Id="{2fd38c65-5dd6-4917-aa20-a83bbe234a4f}">
       <Declaration><![CDATA[(*
 Returns the unique identifier of the entity, used for tracking and referencing within the EC system.
 *)
 PROPERTY Id : UDINT]]></Declaration>
-      <Get Name="Get" Id="{a6b229f7-6688-455d-b326-4d6e21f10657}">
+      <Get Name="Get" Id="{5077c8f9-0620-48ac-b27f-027d0b5c814a}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -134,13 +163,13 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Size" Id="{14d02e17-8a75-4f2f-aafd-191cc43b5896}">
+    <Property Name="Size" Id="{5ea77c14-4244-4747-bff8-829c45204e52}">
       <Declaration><![CDATA[(*
 Provides the size of the entity, indicating the number of components it manages.  
 Note: For internal logic purposes, this value is incremented by one beyond the actual component count.
 *)
 PROPERTY Size : UDINT]]></Declaration>
-      <Get Name="Get" Id="{fd80484a-41ec-435a-93fd-cf4a1c9dc4b9}">
+      <Get Name="Get" Id="{30ab1e6b-7de1-4a4a-8ffb-bbbac7be4e9d}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>

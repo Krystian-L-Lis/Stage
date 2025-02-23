@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="EntityEnd" Id="{34b61a1d-0202-49c6-b917-871045bf4f88}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK EntityEnd
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{17d6f919-a70b-48a1-9ad6-f04e8f9ba0bb}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+END_VAR
+VAR
+	_nResult	: Result;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF IsErr(_FinalizeEntity(), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('_FinalizeEntity() failed with code: ', ResultToStr(_nResult)));
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

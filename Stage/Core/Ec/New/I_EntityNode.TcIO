@@ -20,13 +20,24 @@
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
-    <Method Name="_SetSize" Id="{4f2cfe96-e866-4ccb-ad69-0a3a5c406b8d}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD INTERNAL _SetSize
-VAR_INPUT
-	nSize	: UDINT;
-END_VAR
-]]></Declaration>
-    </Method>
+    <Property Name="_IsCompleted" Id="{b286c546-d5bc-457e-ab5d-fd610753700a}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY _IsCompleted : BOOL]]></Declaration>
+      <Get Name="Get" Id="{aff89d77-4d01-4a7c-bfb2-ab8595305fa7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{86b08583-e014-4058-bfa0-9ff16e9ec6a5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Size" Id="{442dacda-2b3b-44ad-97d6-2d86502474fc}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Size : UDINT]]></Declaration>
+      <Get Name="Get" Id="{bbf338cc-44ea-4dd3-872c-937a773a321d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{e1783e5c-5753-41d7-a64e-80405fd8388d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
     <Property Name="_Start" Id="{fba37a9c-e717-4483-b830-5c2558d56f62}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _Start : UDINT]]></Declaration>
       <Get Name="Get" Id="{2d45fa20-3ff4-4baf-bca7-86504413b5ce}">
