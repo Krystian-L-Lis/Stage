@@ -9,7 +9,7 @@ Adds a `_stateChangeEvent` Signal to the owning `I_Entity` during initialization
 FUNCTION_BLOCK FINAL StateManager IMPLEMENTS I_Execute, I_StateManager, I_Debug
 
 VAR
-	_iOwner				: I_Entity;
+	_comp				: Component(THIS^);
 
 	_exe				: Execute(THIS^);
 	_sm					: _StateMachine;
@@ -70,40 +70,6 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_init" Id="{cace226d-9a3c-4318-b567-809402523510}" FolderPath="_\">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
-METHOD FB_Init: BOOL
-VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
-	
-	iEntity		: I_Entity;
-END_VAR
-VAR
-	_nResult	: Result;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF iEntity = 0 THEN
-	DebugMsg(THIS^, 'iEntity = 0!');
-END_IF
-
-_iOwner := iEntity;
-
-IF IsErr(_RegComp(iEntity, THIS^), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
-	DebugMsg(THIS^, 'Could not be added!');
-END_IF
-
-IF IsErr(_RegComp(iEntity, _stateChangeEvent), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
-	DebugMsg(_stateChangeEvent, 'Could not be added!');
-END_IF
-]]></ST>
-      </Implementation>
-    </Method>
     <Property Name="Owner" Id="{f4018121-2b1d-444e-9a31-6e2d9cde72f4}" FolderPath="_\">
       <Declaration><![CDATA[(*
 Returns the entity that owns this state.
@@ -114,7 +80,7 @@ PROPERTY Owner : I_Entity]]></Declaration>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Owner := _iOwner;]]></ST>
+          <ST><![CDATA[Owner := _comp.Entity;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -170,7 +136,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF iState.Owner <> _iOwner THEN
+IF iState.Owner <> _comp.Entity THEN
 	Request := Err.NoMatch;
 	RETURN;
 END_IF

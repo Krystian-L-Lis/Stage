@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="_RegEntity" Id="{618ef74d-0d56-4669-901e-d4c47eaee109}" SpecialFunc="None">
+  <POU Name="_StartEntity" Id="{618ef74d-0d56-4669-901e-d4c47eaee109}" SpecialFunc="None">
     <Declaration><![CDATA[// ---------------------------------------------------------------------------
 // FUNCTION:  _RegEntity
 // PURPOSE:   Registers (adds) a new entity into the global _Ec.iEntity array.
@@ -10,7 +10,7 @@
 // NOTE:
 //   - Fails if iEntity = 0 (null pointer) or if the array is at max capacity.
 // ---------------------------------------------------------------------------
-FUNCTION INTERNAL _RegEntity : Result
+FUNCTION INTERNAL _StartEntity : Result
 VAR_INPUT
     iEntity : I_EntityNode;
 END_VAR
@@ -19,17 +19,17 @@ VAR_OUTPUT
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF NOT _Runtime.bInit THEN
-	_RegEntity := Err.Init;
+	_StartEntity := Err.Init;
 	RETURN;
 END_IF
 
 IF iEntity = 0 THEN
-	_RegEntity := Err.Itf0;
+	_StartEntity := Err.Itf0;
 	RETURN;
 END_IF
 
 IF _Ec.nEntityLen = Param.ENTITY_CAP THEN
-	_RegEntity := Err.Ovf;
+	_StartEntity := Err.Ovf;
 	RETURN;
 END_IF
 
@@ -40,7 +40,7 @@ nIndex := _Ec.nEntityLen;
 _Ec.iUnderConstruction := iEntity;
 _Ec.nConstructedScopes := _Ec.nConstructedScopes + 1;
 
-_RegEntity := Ok;
+_StartEntity := Ok;
 
 ]]></ST>
     </Implementation>

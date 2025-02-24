@@ -17,7 +17,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	i			: Iter(1);
-	_iComp		: I_Component;
+	_iComp		: I_FatComponent;
 	cmp			: TagCmp;
 END_VAR
 ]]></Declaration>
@@ -28,7 +28,7 @@ END_VAR
 END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(ICompToIStateMgr(_iComp, iDest => iSmgr)) THEN
+	IF IsOk(ICompToIStateMgr(_iComp.Raw, iDest => iSmgr)) THEN
 		GetStateManager := Ok;
 		RETURN;
 	END_IF

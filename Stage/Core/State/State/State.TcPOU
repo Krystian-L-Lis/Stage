@@ -9,13 +9,12 @@ Offers default behavior for state lifecycle methods, allowing programmers to ove
 FUNCTION_BLOCK ABSTRACT State IMPLEMENTS I_StateInternal, I_State
 VAR
 	{attribute 'hide'}
-	_tag						: Tag('');
-	{attribute 'hide'}
 	_bInQueue					: BOOL;
 	{attribute 'hide'}
-	_iOwner						: I_Entity;
-	{attribute 'hide'}
 	_iNextInBuffer				: I_StateInternal; // State Buffer management
+	
+	_tag						: Tag;
+	_comp						: Component(THIS^);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -105,34 +104,6 @@ METHOD CanDeactivate : BOOL
         <ST><![CDATA[CanDeactivate := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_init" Id="{2842d681-0b8d-4523-860b-e4e2b7025ae0}" FolderPath="_\">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
-METHOD FB_Init: BOOL
-VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
-	
-	iEntity		: I_Entity;
-END_VAR
-VAR
-	_nResult	: Result;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF iEntity = 0 THEN
-	DebugMsg(THIS^, 'iEntity = 0!');
-END_IF
-
-_iOwner := iEntity;;
-
-IF IsErr(_RegComp(iEntity, THIS^), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', TO_STRING(_nResult)));
-	DebugMsg(THIS^, 'Could not be added!');
-END_IF]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="OnEntry" Id="{233f0cb7-a018-4a8e-a04c-cd20357f448f}" FolderPath="On\">
       <Declaration><![CDATA[(*
 Executed when the state is entered.  
@@ -175,7 +146,7 @@ PROPERTY FINAL Owner : I_Entity
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Owner := _iOwner;]]></ST>
+          <ST><![CDATA[Owner := _comp.Entity;]]></ST>
         </Implementation>
       </Get>
     </Property>

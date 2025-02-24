@@ -15,7 +15,7 @@
 FUNCTION INTERNAL _RegComp : Result
 VAR_INPUT
     iEntity     : I_EntityNode;
-    iComponent  : I_Component;
+    iComponent  : I_FatComponent;
 END_VAR
 VAR
     i           : UDINT;

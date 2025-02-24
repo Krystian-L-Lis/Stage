@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Component" Id="{fa960ebd-c1a5-43b6-93f9-37986edc8a8e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Component
+    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Component IMPLEMENTS I_FatComponent
 VAR
-	_iComponent	: I_Component;
-	_iEntity	: I_EntityNode;
+	_iComponent		: I_Component;
+	_iEntity		: I_EntityNode;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -32,9 +32,21 @@ VAR_INPUT
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
 	iComponent	: I_Component;
+END_VAR
+VAR
+	_nResult		: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_iComponent := iComponent;]]></ST>
+        <ST><![CDATA[IF bExclude THEN
+	RETURN;
+END_IF
+
+_iComponent := iComponent;
+_iEntity := _Ec.iUnderConstruction;
+
+IF IsErr(_RegComp(_iEntity, THIS^), nOut => _nResult) THEN
+	DebugMsg(iComponent, Tc2_Standard.CONCAT('Failed with code: ', ResultToStr(_nResult)));
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Raw" Id="{f0629eb7-2548-4aad-92a4-4ae12d6f0db5}">

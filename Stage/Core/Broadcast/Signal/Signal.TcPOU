@@ -8,7 +8,8 @@ Enables the emission of events and supports pairing with receivers.
 FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_SignalEmit
 
 VAR
-	_tag			: Tag('');
+	_tag			: Tag;
+	_comp			: Component(THIS^);
 	_nId			: UDINT;
 	_nStart			: UDINT;
 	_nEnd			: UDINT;

@@ -60,7 +60,7 @@ VAR_INPUT
 	nIndex		: UDINT;
 END_VAR
 VAR_OUTPUT
-	iComp		: I_Component;
+	iComp		: I_FatComponent;
 END_VAR]]></Declaration>
     </Method>
     <Property Name="Id" Id="{c3aa60be-0f8f-4a21-8b5a-adca79ca23b3}">

@@ -26,8 +26,6 @@ END_VAR
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	
-	sOptionInit		: Str; // Add optional segment upon initialization.
 END_VAR
 VAR
 	i				: INT;
@@ -68,8 +66,7 @@ FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
 	END_IF
 END_FOR
 
-_sId := Tc2_Utilities.F_ToLCase(_sID);
-Option := sOptionInit;]]></ST>
+_sId := Tc2_Utilities.F_ToLCase(_sID);]]></ST>
       </Implementation>
     </Method>
     <Property Name="Id" Id="{b0dd2c0b-7dc9-43ce-98fa-e7469eee6720}">

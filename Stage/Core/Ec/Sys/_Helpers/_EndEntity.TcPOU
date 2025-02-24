@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="_FinalizeEntity" Id="{82cbd3cc-9cc2-4c0d-b07f-49b218e520bd}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION INTERNAL _FinalizeEntity : Result
+  <POU Name="_EndEntity" Id="{82cbd3cc-9cc2-4c0d-b07f-49b218e520bd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _EndEntity : Result
 VAR
 	i						: UDINT;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF NOT _Runtime.bInit THEN
-	_RegEntity := Err.Init;
+	_EndEntity := Err.Init;
 	RETURN;
 END_IF
 
 IF _Ec.iUnderConstruction = 0 THEN
-	_RegEntity := Err.Itf0;
+	_EndEntity := Err.Itf0;
 	RETURN;
 END_IF
 
@@ -20,18 +20,19 @@ _Ec.iUnderConstruction._IsCompleted := TRUE;
 
 _Ec.nConstructedScopes := _Ec.nConstructedScopes - 1;
 IF _Ec.nConstructedScopes > 0 THEN
-	FOR i := _Ec.iUnderConstruction.Id TO 1 BY -1 DO
+	FOR i := _Ec.nEntityLen TO 1 BY -1 DO
 		IF NOT _Ec.iEntity[i]._IsCompleted THEN
 			_Ec.iUnderConstruction := _Ec.iEntity[i];
-			_FinalizeEntity := Ok;
+			_EndEntity := Ok;
 			RETURN;
 		END_IF
 	END_FOR
 	
-	_FinalizeEntity := Err.Udf;
+	// All completed
+	_EndEntity := Ok;
 ELSE
 	_Ec.iUnderConstruction := 0;
-	_FinalizeEntity := Ok;
+	_EndEntity := Ok;
 END_IF
 
 ]]></ST>

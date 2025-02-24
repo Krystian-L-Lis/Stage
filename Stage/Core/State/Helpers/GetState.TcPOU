@@ -18,7 +18,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	i			: Iter(1);
-	_iComp		: I_Component;
+	_iComp		: I_FatComponent;
 	cmp			: TagCmp;
 END_VAR
 ]]></Declaration>
@@ -29,7 +29,7 @@ END_VAR
 END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(ICompToIState(_iComp, iDest => iState)) THEN
+	IF IsOk(ICompToIState(_iComp.Raw, iDest => iState)) THEN
 		IF cmp.Set(iState.Tag).MatchWcdId(sTagId).IsTrue() THEN
 			GetState := Ok;
 			RETURN;

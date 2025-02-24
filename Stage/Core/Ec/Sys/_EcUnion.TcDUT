@@ -3,7 +3,7 @@
   <DUT Name="_EcUnion" Id="{03758be6-2b89-43ee-b6ee-40fda7565e5b}">
     <Declaration><![CDATA[TYPE INTERNAL _EcUnion :
 UNION
-	iComponent	: I_Component;
+	iComponent	: I_FatComponent;
 	iEntity		: I_EntityNode;
 END_UNION
 END_TYPE

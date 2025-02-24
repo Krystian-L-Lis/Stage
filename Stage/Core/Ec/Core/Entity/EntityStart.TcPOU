@@ -118,8 +118,8 @@ VAR
 	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsErr(_RegEntity(THIS^, nIndex => _nId), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('_RegEntity(THIS^) failed with code: ', ResultToStr(_nResult)));
+        <ST><![CDATA[IF IsErr(_StartEntity(THIS^, nIndex => _nId), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('_StartEntity(THIS^) failed with code: ', ResultToStr(_nResult)));
 END_IF
 
 ]]></ST>
@@ -136,7 +136,7 @@ VAR_INPUT
 	nIndex	: UDINT;
 END_VAR
 VAR_OUTPUT
-	iComp	: I_Component;
+	iComp	: I_FatComponent;
 END_VAR
 ]]></Declaration>
       <Implementation>
