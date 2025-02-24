@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Component" Id="{fa960ebd-c1a5-43b6-93f9-37986edc8a8e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FINAL Component IMPLEMENTS I_FatComponent
+    <Declaration><![CDATA[(*
+Allows registration of FB implementing `I_Component`. The framework will automatically add this function block to the entitys scope.
+*)
+FUNCTION_BLOCK FINAL Component IMPLEMENTS I_FatComponent
 VAR
 	_iComponent		: I_Component;
 	_iEntity		: I_EntityNode;
@@ -31,19 +34,20 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
-	iComponent	: I_Component;
+	iComponent		: I_Component;
 END_VAR
 VAR
 	_nResult		: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF bExclude THEN
-	RETURN;
-END_IF
-
-_iComponent := iComponent;
+        <ST><![CDATA[_iComponent := iComponent;
 _iEntity := _Ec.iUnderConstruction;
 
+IF _iEntity = 0 THEN
+	DebugMsg(iComponent, 'Declared outside Entity scope!');
+	RETURN;
+END_IF
+			
 IF IsErr(_RegComp(_iEntity, THIS^), nOut => _nResult) THEN
 	DebugMsg(iComponent, Tc2_Standard.CONCAT('Failed with code: ', ResultToStr(_nResult)));
 END_IF]]></ST>

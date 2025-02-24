@@ -102,7 +102,13 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Room\StandardRoom.TcPOU">
+    <Compile Include="Room\Rooms\ReceptionRoom.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Rooms\BaseRoom.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room\Rooms\StandardRoom.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\IArgToIRoom.TcPOU">
@@ -127,9 +133,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\Receivers\Room_OnSystemEvent.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Room\ReceptionRoom.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Room\State\DemandHeating\Room_State_DemandHeating.TcPOU">
@@ -304,6 +307,7 @@
     <Folder Include="MAIN" />
     <Folder Include="Heating" />
     <Folder Include="MAIN\SIM" />
+    <Folder Include="Room\Rooms" />
     <Folder Include="Room\State\DemandHeating" />
     <Folder Include="Room\State\LowTemperature" />
     <Folder Include="_UI" />

@@ -9,12 +9,13 @@ Offers default behavior for state lifecycle methods, allowing programmers to ove
 FUNCTION_BLOCK ABSTRACT State IMPLEMENTS I_StateInternal, I_State
 VAR
 	{attribute 'hide'}
+	_comp						: Component(THIS^);
+	{attribute 'hide'}
 	_bInQueue					: BOOL;
 	{attribute 'hide'}
 	_iNextInBuffer				: I_StateInternal; // State Buffer management
 	
-	_tag						: Tag;
-	_comp						: Component(THIS^);
+	_tag			: TagBase;	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -149,6 +150,18 @@ END_VAR
           <ST><![CDATA[Owner := _comp.Entity;]]></ST>
         </Implementation>
       </Get>
+    </Property>
+    <Property Name="Proxy" Id="{e148912a-ec6c-4d53-987e-2cc3081d8267}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_State]]></Declaration>
+      <Set Name="Set" Id="{c3e00474-819c-47ac-8733-a728d746c29b}">
+        <Declaration><![CDATA[
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Proxy := THIS^;]]></ST>
+        </Implementation>
+      </Set>
     </Property>
     <Property Name="Tag" Id="{0bbeba40-ec6e-4b6d-a33f-9c84eca9c89e}" FolderPath="_\">
       <Declaration><![CDATA[(*

@@ -6,9 +6,10 @@ Represents a receiver in the Broadcast system. Implements the necessary methods 
 *)
 FUNCTION_BLOCK FINAL Receiver IMPLEMENTS I_ReceiverNode, I_Receiver
 VAR
-	_iCallable		: I_Callable;
+	
 	_comp			: Component(THIS^);
-	_tag			: Tag;
+	_tag			: TagBase;
+	_iCallable		: I_Callable;
 	_bIsOk			: BOOL := TRUE;
 END_VAR
 ]]></Declaration>

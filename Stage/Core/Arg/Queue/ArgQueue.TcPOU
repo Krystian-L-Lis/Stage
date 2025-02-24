@@ -21,6 +21,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="Proxy" Id="{d14fc49b-fbe4-489b-9b76-3ea6c79f6011}" />
     <Method Name="Clear" Id="{60abfa75-29d6-499a-907d-e34b56c038d1}">
       <Declaration><![CDATA[(*
 Clears the queue.
@@ -73,6 +74,17 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="MutProxy" Id="{5ece68d2-7363-424f-8f8b-111fb2eb195c}" FolderPath="Proxy\">
+      <Declaration><![CDATA[PROPERTY MutProxy : REFERENCE TO I_MutArgQueue]]></Declaration>
+      <Set Name="Set" Id="{678ee690-78c2-4106-8501-33a4ca26a389}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MutProxy := THIS^;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="Pop" Id="{c0e476b5-0312-468c-bd79-2e025a1976a9}">
       <Declaration><![CDATA[(*
 Retrieves and removes the next argument from the queue.  
@@ -99,6 +111,17 @@ IF IsOk(_list.Get(_nHead, iArg => iArg), nOut => Pop) THEN
 END_IF;]]></ST>
       </Implementation>
     </Method>
+    <Property Name="Proxy" Id="{ce7b3ec4-cbe2-4590-afe8-2fe7a2476afd}" FolderPath="Proxy\">
+      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_ArgQueue]]></Declaration>
+      <Set Name="Set" Id="{94c1427c-e86f-489c-8468-7e862cd122be}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Proxy := THIS^;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="Push" Id="{4cffbac1-66d4-4260-a313-b7e0e1c784cf}">
       <Declaration><![CDATA[(*
 Adds a new argument to the queue.  

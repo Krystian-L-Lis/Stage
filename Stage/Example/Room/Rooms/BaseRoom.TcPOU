@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="BaseRoom" Id="{60a3686a-be9c-49c4-b78f-757d262590fe}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BaseRoom IMPLEMENTS I_Execute, I_Init
+VAR_INPUT	
+	bInletValveIsClosed	: BOOL;
+	bInletValveIsOpen	: BOOL;
+	
+	bOutletValveIsClosed: BOOL;
+	bOutletValveIsOpen	: BOOL;
+END_VAR
+VAR_OUTPUT
+	bInletValve		: BOOL;
+	bOutletValve	: BOOL;
+END_VAR
+VAR    
+    // Initialization and execution logic
+    _init           : Init(THIS^);
+    _exe            : Execute(THIS^);
+    _ctx            : Room_Ctx;
+	
+	// UI Logic
+    _uiLogic        : Room_UiLogic(_ctx);
+	
+    // Simulation
+    _inletSim       : ValveSim(bInletValve, bInletValveIsOpen, bInletValveIsClosed);
+    _outletSim      : ValveSim(bOutletValve, bOutletValveIsOpen, bOutletValveIsClosed);	
+	
+	
+    // Entity
+    _entityStart    : EntityStart;
+	
+    _tag            : Tag := (Option := CONCAT('Room_', UDINT_TO_STRING(_ctx.Id)));
+    
+    // State Manager
+    _smgr           : StateManager := (Proxy := _ctx.state.iMgr);
+    
+    // States
+    _disabled       : Room_State_Disabled(_ctx) := (Proxy := _ctx.state.iDisable);
+    _fault          : Room_State_Fault(_ctx) := (Proxy := _ctx.state.iFault);
+    _idle           : Room_State_Idle(_ctx) := (Proxy := _ctx.state.iIdle);
+	
+	// Receiver
+    _onSystemEvent  : Room_OnSystemEvent(_ctx);
+    
+    // Signal
+    _requestEvent   : Signal := (Proxy := _ctx.priv.iRequestEvent);
+   
+    _entityEnd      : EntityEnd;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{abe1c6fc-7a08-4ddc-bd83-72dbe826f4d7}">
+      <Declaration><![CDATA[METHOD Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// HMI
+
+_ctx.hmi.sData := '';
+
+// Inputs
+_ctx.io.bValvesOpen := bInletValveIsOpen AND bOutletValveIsOpen;
+_ctx.io.bValvesClosed := bInletValveIsClosed AND bOutletValveIsClosed;
+
+// Outputs
+bInletValve := _ctx.io.bOpenValves;
+bOutletValve := _ctx.io.bOpenValves;
+
+// Simulation
+IF NOT sim.bTick THEN
+	RETURN;
+END_IF
+
+IF bInletValve AND bOutletValve THEN
+	sim.rSystemTemperature := sim.rSystemTemperature + sim.param.rSystemTemperatureDropPerHeater * Math.Random();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{c27f5bbb-98ed-4d0c-9315-e1b313e2413e}">
+      <Declaration><![CDATA[METHOD Init
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_smgr.Request(_idle);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

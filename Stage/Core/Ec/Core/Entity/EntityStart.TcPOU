@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="EntityStart" Id="{a495af02-6953-4eb7-8379-f765a35279b5}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Represents a registered entity in the Entity-Component system.
+Represents a registered entity in the Entity-Component system and start of its scope.
 *)
 FUNCTION_BLOCK EntityStart IMPLEMENTS I_Entity, I_Debug;
 VAR

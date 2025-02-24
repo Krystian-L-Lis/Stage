@@ -1,140 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="Tag" Id="{2e4b93ca-cf29-4297-8c18-30aee9f4dbcc}" SpecialFunc="None">
+  <POU Name="Tag" Id="{1f0098db-33f0-4898-a480-2525f8673171}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-An identifier that uses reflection to generate a unique symbol path.
-It simplifies the path by removing project, PLC, and tag segments.
-Example:
-- Reflection: proj.plc.MAIN.functionBlock[*]._tag
-- Path: MAIN.functionBlock.5
+TagBase with auto component registration.
 *)
-{attribute 'reflection'}
-FUNCTION_BLOCK FINAL Tag IMPLEMENTS I_Tag
+FUNCTION_BLOCK FINAL Tag EXTENDS TagBase
 VAR
-	{attribute 'instance-path'} 
-    {attribute 'noinit'} 
-	_sId			: Str;
-	_nOptionPos		: USINT;
-	_nOptionLen		: USINT;
+	_component		: Component(THIS^);	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="FB_init" Id="{32f06f41-7774-4492-bbae-9ef87fedb467}">
-      <Declaration><![CDATA[METHOD FB_init : BOOL
-VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-END_VAR
-VAR
-	i				: INT;
-	_sChar			: Ch;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[// Delete this name
-FOR i := Tc2_Standard.LEN(_sId) TO 1 BY -1 DO
-	IF Tc2_Standard.MID(_sId, 1, i) = '.' THEN
-		_sId := Tc2_Standard.LEFT(_sId, i - 1);
-		EXIT;
-	END_IF
-END_FOR
-
-// Delete project name
-FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
-	IF Tc2_Standard.MID(_sId, 1, i) = '.' THEN
-		_sId := Tc2_Standard.DELETE(_sId, i, 1);
-		EXIT;
-	END_IF
-END_FOR
-
-// Delete plc name
-FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
-	IF Tc2_Standard.MID(_sId, 1, i) = '.' THEN
-		_sId := Tc2_Standard.DELETE(_sId, i, 1);
-		EXIT;
-	END_IF
-END_FOR
-
-// Replace '[' with '.' and remove ']' 
-FOR i := 1 TO Tc2_Standard.LEN(_sId) DO
-	_sChar := Tc2_Standard.MID(_sId, 1, i);
-	IF _sChar = '[' THEN
-		_sId := Tc2_Standard.REPLACE(_sId, '.', 1, i);
-	ELSIF _sChar = ']' THEN
-		_sId := Tc2_Standard.DELETE(_sId, 1, i);
-	END_IF
-END_FOR
-
-_sId := Tc2_Utilities.F_ToLCase(_sID);]]></ST>
-      </Implementation>
-    </Method>
-    <Property Name="Id" Id="{b0dd2c0b-7dc9-43ce-98fa-e7469eee6720}">
-      <Declaration><![CDATA[// Read address path without Option segment.
-PROPERTY Id : Str]]></Declaration>
-      <Get Name="Get" Id="{ef9dbdd5-51da-4e00-9df9-abd90d96465d}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IF _nOptionPos <> 0 THEN
-	Id := Tc2_Standard.DELETE(_sId, _nOptionLen + 1, _nOptionPos); 
-ELSE
-	Id := _sId;
-END_IF]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="Option" Id="{66edb463-3b71-4c89-b966-006f5d753148}">
-      <Declaration><![CDATA[// Modify or read the optional segment.
-PROPERTY Option : Str]]></Declaration>
-      <Get Name="Get" Id="{f548895c-1f6d-4c8a-932c-8d8c4861861c}">
-        <Declaration><![CDATA[VAR
-	i				: INT;
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IF _nOptionPos <> 0 THEN
-	Option := Tc2_Standard.DELETE(_sId, _nOptionPos, 1); 
-ELSE
-	Option := '';
-END_IF]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{b7ab1309-6936-40d7-9d51-047baede1f20}">
-        <Declaration><![CDATA[
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IF Option <> '' THEN
-    _nOptionLen := INT_TO_USINT(Tc2_Standard.LEN(Option));    
-    IF _nOptionPos <> 0 THEN
-        _sId := Tc2_Standard.LEFT(_sId, _nOptionPos);
-        _sId := Tc2_Standard.CONCAT(_sId, Option);
-    ELSE
-        // The option does not exist, so we append it
-        _nOptionPos := INT_TO_USINT(Tc2_Standard.LEN(_sId) + 1);
-        _sId := Tc2_Standard.CONCAT(_sId, '.');
-        _sId := Tc2_Standard.CONCAT(_sId, Option);
-    END_IF
-ELSIF _nOptionPos <> 0 THEN
-    _sId := Tc2_Standard.LEFT(_sId, _nOptionPos - 1);
-    _nOptionPos := 0;
-END_IF
-]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="Self" Id="{e153ed58-4e18-467d-9035-8a08187af0e1}">
-      <Declaration><![CDATA[// Return interface pointer to THIS^.
-PROPERTY Self : I_Tag]]></Declaration>
-      <Get Name="Get" Id="{206a24c8-8314-4d48-9be0-59b3e98c552f}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Self := THIS^;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
   </POU>
 </TcPlcObject>

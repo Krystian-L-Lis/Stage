@@ -85,7 +85,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EC Tests" />
+    <Folder Include="EC Tests">
+      <ExcludeFromBuild>true</ExcludeFromBuild>
+    </Folder>
     <Folder Include="Broadcast Test" />
     <Folder Include="Strings" />
   </ItemGroup>

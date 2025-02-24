@@ -20,7 +20,6 @@ VAR_INPUT
 	bInitRetains	: BOOL;
 	(* TRUE: the instance will be copied to the copy code afterward (online change)*)
 	bInCopyCode	: BOOL;
-	iEntity	: Core.I_Entity;
 	ctx		: REFERENCE TO Room_Ctx;
 END_VAR
 ]]></Declaration>

@@ -6,10 +6,9 @@ Represents a signal node within the Broadcast system.
 Enables the emission of events and supports pairing with receivers.
 *)
 FUNCTION_BLOCK FINAL Signal IMPLEMENTS I_SignalNode, I_Signal, I_SignalEmit
-
 VAR
-	_tag			: Tag;
 	_comp			: Component(THIS^);
+	_tag			: TagBase;	
 	_nId			: UDINT;
 	_nStart			: UDINT;
 	_nEnd			: UDINT;
@@ -223,6 +222,17 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="Proxy" Id="{41b74fc0-6e2d-470c-acdc-692ecfebdb94}">
+      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_SignalEmit]]></Declaration>
+      <Set Name="Set" Id="{4d0fe8ef-d2dc-4e1b-a297-50eb6dfde675}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Proxy := THIS^;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="Tag" Id="{276c9dc2-e1f1-4c44-b5b0-4b2a0ec67ff8}">
       <Declaration><![CDATA[(*
 Provides access to the tag associated with the signal.

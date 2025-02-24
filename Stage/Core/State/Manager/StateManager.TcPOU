@@ -114,6 +114,17 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="Proxy" Id="{c84b4b1b-1dde-471a-9a35-21636f83c5d3}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_StateManager]]></Declaration>
+      <Set Name="Set" Id="{f44529b5-5fa8-4582-ba32-00ad5d0d8de7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Proxy := THIS^;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="Request" Id="{12dc1eaf-0190-483f-ada2-8afa12a43cbf}" FolderPath="Request\">
       <Declaration><![CDATA[(*
 Queues a request to transition to a specified state.  

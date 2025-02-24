@@ -8,6 +8,8 @@ VAR_GLOBAL INTERNAL
 	
 	nLastMsg				: UDINT;
 	nLastStr				: UDINT;
+	
+	nErrorNumber			: UDINT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

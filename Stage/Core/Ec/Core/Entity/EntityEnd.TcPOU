@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="EntityEnd" Id="{34b61a1d-0202-49c6-b917-871045bf4f88}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK EntityEnd IMPLEMENTS I_Debug
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
-VAR
-END_VAR
+    <Declaration><![CDATA[(*
+Ends of an entity scope.
+*)
+FUNCTION_BLOCK EntityEnd IMPLEMENTS I_Debug
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

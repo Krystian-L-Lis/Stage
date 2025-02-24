@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>Core</Title>
-    <ProjectVersion>1.0.1</ProjectVersion>
+    <ProjectVersion>1.1.1</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -121,9 +121,6 @@
     <Compile Include="Arg\Queue\ArgQueue.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Queue\ArgQueueProxy.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Arg\Queue\I_ArgQueue.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -149,9 +146,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Signal\ICompToISignal.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Signal\SignalProxy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Signal\I_SignalEmit.TcIO">
@@ -352,9 +346,6 @@
     <Compile Include="State\Manager\ICompToIStateMgr.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="State\Manager\StateManagerProxy.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="State\Manager\I_StateManager.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -374,9 +365,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="State\State\State.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="State\State\StateProxy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Strings\Alias\Ch.TcDUT">
@@ -409,6 +397,9 @@
     <Compile Include="Tags\Helpers\GetTagOpt.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tags\Helpers\MatchTagPathPattern.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tags\I_Tag.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -418,10 +409,7 @@
     <Compile Include="Tags\I_Tagged.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\MatchTagPathPattern.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tags\Tag.TcPOU">
+    <Compile Include="Tags\TagBase.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\TagCmp.TcPOU">
@@ -430,7 +418,7 @@
     <Compile Include="Tags\TagPath.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\TagProxy.TcPOU">
+    <Compile Include="Tags\Tag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="_\Param.TcGVL">

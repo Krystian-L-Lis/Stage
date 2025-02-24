@@ -19,47 +19,31 @@ VAR_OUTPUT
 	bBurner			: BOOL;
 END_VAR
 VAR
-	_this			: Entity;
-	_ctx			: Heating_Ctx;
-	_tag			: Tag('Heating');
-	_compTag		: Comp(_tag, _this);
 	_init			: Init(THIS^);
 	_exe			: Execute(THIS^);
+	_ctx			: Heating_Ctx;
+	_tonPump		: TON;
+	_tonBurner		: TON;	
+
+	_entityStart	: EntityStart;
+	_tag			: Tag := (Option := 'Heating');
+
+	_smgr			: StateManager := (Proxy := _ctx.state.iMgr);
 	
-	_enableEvent		: Signal;
-	_compEnableEvent	: Comp(_enableEvent, _this);
-	_proxEnableEvent	: SignalProxy(_enableEvent, _ctx.priv.iOnEnable);
+	_disabled		: Heating_State_Disabled(_ctx) := (Proxy := _ctx.state.iDisable);
+	_safety         : Heating_State_Safety(_ctx) := (Proxy := _ctx.state.iSafety);
+	_fault          : Heating_State_Fault(_ctx) := (Proxy := _ctx.state.iFault);
+	_enabled        : Heating_State_Enabled(_ctx) := (Proxy := _ctx.state.iEnable);
+	_pumping        : Heating_State_HeatingRoom(_ctx) := (Proxy := _ctx.state.iHeating);
+	_heatup         : Heating_State_Heatup(_ctx) := (Proxy := _ctx.state.iHeatup);
+
+	_enableEvent	: Signal := (Proxy := _ctx.priv.iOnEnable);
+	_onRequestCall	: Heating_OnRequest(_ctx);
+	_onRequest		: Receiver(_onRequestCall);
 	
-	_smgr			: StateManager(_this);
-	_proxSmgr		: StateManagerProxy(_smgr, _ctx.state.iMgr);
+	_queue			: ArgQueue<ROOM_CAP> := (MutProxy := _ctx.priv.iQueue);
 	
-	_disabled		: Heating_State_Disabled(_this, _ctx);
-	_proxDisabled	: StateProxy(_disabled, _ctx.state.iDisable);
-	
-	_safety			: Heating_State_Safety(_this, _ctx);
-	_proxSafety		: StateProxy(_safety, _ctx.state.iSafety);
-	
-	_fault			: Heating_State_Fault(_this, _ctx);
-	_proxFault		: StateProxy(_fault, _ctx.state.iFault);
-	
-	_enabled		: Heating_State_Enabled(_this, _ctx);
-	_proxEnabled	: StateProxy(_enabled, _ctx.state.iEnable);
-	
-	_pumping		: Heating_State_HeatingRoom(_this, _ctx);
-	_proxPumping	: StateProxy(_pumping, _ctx.state.iHeating);
-	
-	_heatup			: Heating_State_Heatup(_this, _ctx);
-	_proxHeatup		: StateProxy(_heatup, _ctx.state.iHeatup);
-	
-	_requestCall			: Heating_OnRequest(_ctx);
-	_onRequest				: Receiver(_requestCall);
-	_compOnRequest			: Comp(_onRequest, _this);
-	
-	_queue					: ArgQueue<ROOM_CAP>;
-	_queueProxy				: ArgQueueProxy(_queue, _ctx.priv.iQueue);
-	
-	_tonPump	: TON;
-	_tonBurner	: TON;
+	_entityEnd		: EntityEnd;
 END_VAR
 ]]></Declaration>
     <Implementation>
