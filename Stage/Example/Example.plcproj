@@ -276,19 +276,19 @@
       <DefaultResolution>Core, * (_)</DefaultResolution>
       <Namespace>Core</Namespace>
       <Parameters>
-        <Parameter ListName="PARAM">
+        <Parameter ListName="PARAM" xmlns="">
           <Key>COMP_CAP</Key>
           <Value>200</Value>
         </Parameter>
-        <Parameter ListName="PARAM">
+        <Parameter ListName="PARAM" xmlns="">
           <Key>DEBUGMSG_CAP</Key>
           <Value>500</Value>
         </Parameter>
-        <Parameter ListName="PARAM">
+        <Parameter ListName="PARAM" xmlns="">
           <Key>DEBUGSTR_CAP</Key>
           <Value>10</Value>
         </Parameter>
-        <Parameter ListName="PARAM">
+        <Parameter ListName="PARAM" xmlns="">
           <Key>SIGNAL_CAP</Key>
           <Value>50</Value>
         </Parameter>

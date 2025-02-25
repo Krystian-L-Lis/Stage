@@ -11,6 +11,18 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
+    <Method Name="_CanActivate" Id="{f8f7be64-9c99-4fdf-81b1-a2add969bdf5}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD INTERNAL _CanActivate : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="_CanDeactivate" Id="{ab838055-e4d5-46d5-a42d-ccdc9271d26a}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD INTERNAL _CanDeactivate : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
     <Property Name="_InQueue" Id="{02ccade8-718f-4090-82d6-3da62d5eb7ab}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _InQueue : BOOL]]></Declaration>
       <Get Name="Get" Id="{5ec3504f-98d9-49cd-a289-f02c6221e357}">
@@ -29,32 +41,20 @@
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
-    <Method Name="CanActivate" Id="{f8f7be64-9c99-4fdf-81b1-a2add969bdf5}" FolderPath="Can\">
-      <Declaration><![CDATA[METHOD CanActivate : BOOL
+    <Method Name="_OnEntry" Id="{34f20feb-a6b8-476a-ac7d-107b73173ddd}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnEntry
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="CanDeactivate" Id="{ab838055-e4d5-46d5-a42d-ccdc9271d26a}" FolderPath="Can\">
-      <Declaration><![CDATA[METHOD CanDeactivate : BOOL
+    <Method Name="_OnExecute" Id="{23860f66-3827-4c1c-aa60-c228bf755ba9}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnExecute
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="OnEntry" Id="{34f20feb-a6b8-476a-ac7d-107b73173ddd}" FolderPath="On\">
-      <Declaration><![CDATA[METHOD OnEntry
-VAR_INPUT
-END_VAR
-]]></Declaration>
-    </Method>
-    <Method Name="OnExecute" Id="{23860f66-3827-4c1c-aa60-c228bf755ba9}" FolderPath="On\">
-      <Declaration><![CDATA[METHOD OnExecute
-VAR_INPUT
-END_VAR
-]]></Declaration>
-    </Method>
-    <Method Name="OnExit" Id="{387ee35a-ce91-409e-90a2-90039f63ee69}" FolderPath="On\">
-      <Declaration><![CDATA[METHOD OnExit
+    <Method Name="_OnExit" Id="{387ee35a-ce91-409e-90a2-90039f63ee69}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnExit
 VAR_INPUT
 END_VAR
 ]]></Declaration>

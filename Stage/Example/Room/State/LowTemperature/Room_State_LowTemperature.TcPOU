@@ -12,7 +12,7 @@ END_VAR]]></Declaration>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="CanActivate" Id="{51bcc432-de37-45d3-9cd7-d6044b188fd2}">
-      <Declaration><![CDATA[METHOD CanActivate : BOOL
+      <Declaration><![CDATA[METHOD PROTECTED CanActivate : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanActivate := _ctx.state.iMgr.Current = _ctx.state.iIdle;]]></ST>
@@ -95,7 +95,7 @@ DebugMsg(_iEntity, strb.Append('_onRequest').Append(' not found!').Read());
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{aa027ac0-d2d2-41a0-a2a1-be232fcb4334}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.io.bOpenValves := FALSE;
@@ -112,7 +112,7 @@ _ctx.priv.iRequestEvent.Emit(_ctx);]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{cb6312a9-8ff8-4ec6-9559-0b72ff764e07}">
-      <Declaration><![CDATA[METHOD OnExecute
+      <Declaration><![CDATA[METHOD PROTECTED OnExecute
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _ctx.hmi.bDisable THEN

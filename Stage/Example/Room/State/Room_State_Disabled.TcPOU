@@ -13,7 +13,7 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="OnEntry" Id="{f389e261-ef83-454d-a100-de95232fb4c4}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.io.bOpenValves := FALSE;
@@ -28,7 +28,7 @@ _ctx.hmi.bHideReset := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{77eb3e2f-d766-45f5-844e-dd3b61e6835e}">
-      <Declaration><![CDATA[METHOD OnExecute
+      <Declaration><![CDATA[METHOD PROTECTED OnExecute
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT _ctx.hmi.bDisable THEN

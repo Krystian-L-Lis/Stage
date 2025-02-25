@@ -48,7 +48,7 @@ _ctx.state.iMgr.Request(_ctx.state.iFault);]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{1a485ee3-23cb-485d-a3aa-fbbe73930b2a}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _ctx.io.in.bBurnerOverload THEN
@@ -77,7 +77,7 @@ _ctx.priv.iQueue.Clear();]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{47c8e274-11fa-47cf-8f15-91062de1a435}">
-      <Declaration><![CDATA[METHOD OnExecute
+      <Declaration><![CDATA[METHOD PROTECTED OnExecute
 VAR
 	bFault : BOOL;
 END_VAR]]></Declaration>

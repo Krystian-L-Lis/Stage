@@ -12,7 +12,7 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="CanActivate" Id="{86ff272b-9274-447f-85e5-14afab09edea}">
-      <Declaration><![CDATA[METHOD CanActivate : BOOL
+      <Declaration><![CDATA[METHOD PROTECTED CanActivate : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanActivate := _ctx.state.iMgr.Current = _ctx.state.iIdle;]]></ST>
@@ -72,7 +72,7 @@ DebugMsg(_iEntity, strb.Append('_onRequest').Append(' not found!').Read());]]></
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{6de24a63-b10e-46fa-b036-c1fc69237759}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.io.bOpenValves := FALSE;
@@ -92,7 +92,7 @@ _ctx.priv.iRequestEvent.Emit(_ctx);
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{1ac3585c-789d-4477-9aa9-784a9986c68a}">
-      <Declaration><![CDATA[METHOD OnExecute]]></Declaration>
+      <Declaration><![CDATA[METHOD PROTECTED OnExecute]]></Declaration>
       <Implementation>
         <ST><![CDATA[_tonActive(IN := _ctx.io.bValvesOpen, PT := UDINT_TO_TIME(_hmi.nActivationTime * 1000));
 IF _ctx.hmi.bDisable THEN
@@ -106,7 +106,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExit" Id="{b73aa6bb-78f6-4772-b297-d9f813926fb5}">
-      <Declaration><![CDATA[METHOD OnExit
+      <Declaration><![CDATA[METHOD PROTECTED OnExit
 VAR_INPUT
 END_VAR
 ]]></Declaration>

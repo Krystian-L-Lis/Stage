@@ -13,7 +13,7 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="OnEntry" Id="{ff2ff1ed-67cd-4bcc-bf07-4aeaf2a4bb97}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.hmi.sStatusText := 'Heating enabled: Waiting for requests...';
@@ -31,7 +31,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{8515d0dd-e19e-4fb0-85ae-5b4ce34b6e10}">
-      <Declaration><![CDATA[METHOD OnExecute
+      <Declaration><![CDATA[METHOD PROTECTED OnExecute
 VAR
 	_iRoomArg		: I_Arg;
 END_VAR]]></Declaration>

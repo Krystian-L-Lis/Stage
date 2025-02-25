@@ -32,7 +32,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="CanDeactivate" Id="{fbb0ddd0-58f9-41c4-8e52-433fd6600485}">
-      <Declaration><![CDATA[METHOD CanDeactivate : BOOL
+      <Declaration><![CDATA[METHOD PROTECTED CanDeactivate : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanDeactivate := NOT _bSafetyStopActive;]]></ST>
@@ -65,7 +65,7 @@ DebugMsg(THIS^, CONCAT('_safetyRec not paired! Error code: ', TO_STRING(_r)));
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{c5598497-5be7-45e4-ae85-b40aa632e5cb}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.hmi.sStatusText := 'Safety engaged! Check safety system...';

@@ -68,7 +68,8 @@ _a := iColor.Alpha;]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{8f277162-e746-4b57-9ebb-b150327f2243}">
-      <Declaration><![CDATA[METHOD FB_init : BOOL
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD FB_init : BOOL
 VAR_INPUT
 	bInitRetains : BOOL;
 	bInCopyCode : BOOL;

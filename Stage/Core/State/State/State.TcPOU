@@ -46,6 +46,19 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="_CanActivate" Id="{71c49a83-838e-4656-9fc2-ce8957b8e198}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD INTERNAL _CanActivate : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_CanActivate := CanActivate();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_CanDeactivate" Id="{d9ac8857-b429-40a0-ae64-2f200213bb6e}" FolderPath="Can\">
+      <Declaration><![CDATA[METHOD INTERNAL _CanDeactivate : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_CanDeactivate := CanDeactivate();]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="_InQueue" Id="{00343d62-1ac6-4b7a-af5a-8983a284ec4e}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY INTERNAL _InQueue : BOOL]]></Declaration>
       <Get Name="Get" Id="{ebe10328-99fb-4c92-9263-ffe964414865}">
@@ -84,54 +97,101 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="CanActivate" Id="{71c49a83-838e-4656-9fc2-ce8957b8e198}" FolderPath="Can\">
+    <Method Name="_OnEntry" Id="{233f0cb7-a018-4a8e-a04c-cd20357f448f}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnEntry
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OnEntry();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_OnExecute" Id="{aabb82b9-2f5d-4e99-b353-6c10e3d6ce3d}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnExecute]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OnExecute();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_OnExit" Id="{25d7c89a-22df-4af1-9c2c-e2be2f3e48a9}" FolderPath="On\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnExit]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OnExit();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CanActivate" Id="{dd755635-2c1b-4d2f-832c-8fe84230e7c4}" FolderPath="Can\">
       <Declaration><![CDATA[(*
 Determines whether the state can be activated.  
 Returns `TRUE` by default but can be overridden for specific activation conditions.
 *)
-METHOD CanActivate : BOOL]]></Declaration>
+METHOD PROTECTED CanActivate : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanActivate := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="CanDeactivate" Id="{d9ac8857-b429-40a0-ae64-2f200213bb6e}" FolderPath="Can\">
+    <Method Name="CanDeactivate" Id="{7b012b92-459d-4244-99c6-c8d2e693b887}" FolderPath="Can\">
       <Declaration><![CDATA[(*
 Determines whether the state can be deactivated.  
 Returns `TRUE` by default but can be overridden for specific deactivation conditions.
 *)
-METHOD CanDeactivate : BOOL
+METHOD PROTECTED CanDeactivate : BOOL
+VAR_INPUT
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanDeactivate := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnEntry" Id="{233f0cb7-a018-4a8e-a04c-cd20357f448f}" FolderPath="On\">
+    <Method Name="FB_Init" Id="{0426a892-c538-4afe-92f1-9f241d1ee74d}" FolderPath="_\">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+{attribute 'hide'}
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnEntry" Id="{71184392-1093-4315-9a73-835d846ab945}" FolderPath="On\">
       <Declaration><![CDATA[(*
 Executed when the state is entered.  
 Provides a hook for defining state-specific behavior to be performed during the transition into this state.
 *)
-METHOD OnEntry
+METHOD PROTECTED OnEntry
+VAR_INPUT
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnExecute" Id="{aabb82b9-2f5d-4e99-b353-6c10e3d6ce3d}" FolderPath="On\">
+    <Method Name="OnExecute" Id="{1a4db232-f3d2-440c-9d63-b8a4efc99401}" FolderPath="On\">
       <Declaration><![CDATA[(*
 Executed during the state's operation.  
 Used to define state-specific logic that runs while the state is active.
 *)
-METHOD OnExecute]]></Declaration>
+METHOD PROTECTED OnExecute
+VAR_INPUT
+END_VAR
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="OnExit" Id="{25d7c89a-22df-4af1-9c2c-e2be2f3e48a9}" FolderPath="On\">
+    <Method Name="OnExit" Id="{9584048f-886b-4757-b0ed-688b849511a2}" FolderPath="On\">
       <Declaration><![CDATA[(*
 Executed when the state transitions to another state.  
 Provides a hook for defining cleanup or transition-specific behavior.
 *)
-METHOD OnExit]]></Declaration>
+METHOD PROTECTED OnExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
       </Implementation>

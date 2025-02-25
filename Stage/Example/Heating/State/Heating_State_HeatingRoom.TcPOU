@@ -17,14 +17,14 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="CanActivate" Id="{f4e469e0-3329-4636-829f-7a5f4c27939b}">
-      <Declaration><![CDATA[METHOD CanActivate : BOOL
+      <Declaration><![CDATA[METHOD PROTECTED CanActivate : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanActivate :=  _ctx.state.iMgr.Current = _ctx.state.iEnable;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{dc76118f-322c-4257-9d92-65205e9e8301}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 VAR
 	strb			: Strb;
 END_VAR]]></Declaration>
@@ -49,7 +49,7 @@ _iNextState := _ctx.state.iEnable;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{bbc510df-aef5-44dc-9d86-57811004103f}">
-      <Declaration><![CDATA[METHOD OnExecute
+      <Declaration><![CDATA[METHOD PROTECTED OnExecute
 VAR
 	strb		: Strb;
 END_VAR]]></Declaration>
@@ -125,7 +125,7 @@ END_CASE]]></ST>
 Executed when the state transitions to another state.  
 Provides a hook for defining cleanup or transition-specific behavior.
 *)
-METHOD OnExit
+METHOD PROTECTED OnExit
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _ctx.priv.iActiveRoom <> 0 THEN

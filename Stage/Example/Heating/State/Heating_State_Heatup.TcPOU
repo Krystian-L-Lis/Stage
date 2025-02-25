@@ -13,14 +13,14 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="CanActivate" Id="{f05d18ba-d846-47dc-8c6e-a43c0921ca66}">
-      <Declaration><![CDATA[METHOD CanActivate : BOOL
+      <Declaration><![CDATA[METHOD PROTECTED CanActivate : BOOL
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CanActivate :=  _ctx.state.iMgr.Current = _ctx.state.iEnable;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnEntry" Id="{625eecf1-2f5e-4832-964f-a20b5cc15fa9}">
-      <Declaration><![CDATA[METHOD OnEntry
+      <Declaration><![CDATA[METHOD PROTECTED OnEntry
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_ctx.hmi.sStatusText := 'Heating enabled: Heating up...';
@@ -38,7 +38,7 @@ _ctx.io.out.bPump := TRUE;
       </Implementation>
     </Method>
     <Method Name="OnExecute" Id="{1e385c1c-ab42-445b-8b2a-c386ab10b6e6}">
-      <Declaration><![CDATA[METHOD OnExecute
+      <Declaration><![CDATA[METHOD PROTECTED OnExecute
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _ctx.hmi.bButton THEN

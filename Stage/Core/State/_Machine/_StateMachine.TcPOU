@@ -37,21 +37,21 @@ IF iNewState = _iCurrentState THEN
 	RETURN;
 END_IF
 
-IF NOT iNewState.CanActivate() THEN
+IF NOT iNewState._CanActivate() THEN
 	Change := None;
 	RETURN;
 END_IF
 
-IF _iCurrentState <> 0 AND_THEN NOT _iCurrentState.CanDeactivate() THEN
+IF _iCurrentState <> 0 AND_THEN NOT _iCurrentState._CanDeactivate() THEN
 	Change := None;
 	RETURN;
 END_IF
 
 IF _iCurrentState <> 0 THEN
-	_iCurrentState.OnExit();
+	_iCurrentState._OnExit();
 END_IF
 
-iNewState.OnEntry();
+iNewState._OnEntry();
 iOldState := _iCurrentState;
 _iCurrentState := iNewState;
 Change := Ok;]]></ST>
@@ -62,7 +62,7 @@ Change := Ok;]]></ST>
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _iCurrentState <> 0 THEN
-	_iCurrentState.OnExecute();
+	_iCurrentState._OnExecute();
 END_IF]]></ST>
       </Implementation>
     </Method>
