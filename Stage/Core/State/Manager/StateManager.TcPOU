@@ -46,6 +46,7 @@ END_VAR
     </Property>
     <Method Name="Execute" Id="{f267a716-e453-4e52-a04a-1da93f557d85}" FolderPath="_\">
       <Declaration><![CDATA[// DO NOT CALL MANUALLY
+{attribute 'hide'}
 METHOD Execute
 VAR
 	_iNewState		: I_StateInternal;
