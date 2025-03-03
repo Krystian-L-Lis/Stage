@@ -183,20 +183,25 @@ END_VAR]]></Declaration>
 END_CASE]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Option" Id="{1843f7ed-dc01-49ec-bf6f-06b77ee6ae5f}">
-      <Declaration><![CDATA[(*
-Sets an Tag.Option property of an internal Tag. Chainable.
-*)
-METHOD Option : REFERENCE TO Signal
-VAR_INPUT
-	sOption		: Str;
+    <Property Name="Option" Id="{8be92b2c-a6e0-4c27-bc36-6d0ae1d2be23}">
+      <Declaration><![CDATA[PROPERTY Option : Str]]></Declaration>
+      <Get Name="Get" Id="{492d6fb3-0688-47a2-b238-5a44f20de2fa}">
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[Option REF= THIS^;
-_tag.Option := sOption;]]></ST>
-      </Implementation>
-    </Method>
+        <Implementation>
+          <ST><![CDATA[Option := _tag.Option;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{0fe5f94b-8b0d-4e9e-861f-ffca76794a53}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_tag.Option := Option;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="Pair" Id="{ffac2203-3a22-4d2d-be13-7d02d87566af}">
       <Declaration><![CDATA[(*
 Pairs the signal with a receiver.  

@@ -51,6 +51,25 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="Option" Id="{ec2f92a0-3163-4c2f-b6c4-95d948e23c76}">
+      <Declaration><![CDATA[PROPERTY Option : Str]]></Declaration>
+      <Get Name="Get" Id="{b1db190c-03d6-4fab-862d-099cb59cb8b2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Option := _tag.Option;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9696c4d2-63e7-4d6e-b635-a446f31805ea}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_tag.Option := Option;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="Pair" Id="{6fffc843-9230-4d39-885d-576d2d6aa59f}">
       <Declaration><![CDATA[(*
 Pairs the receiver with a signal.  
