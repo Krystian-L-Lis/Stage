@@ -18,7 +18,7 @@ END_VAR
     </Implementation>
     <Folder Name="_" Id="{71138bdc-ea6c-4ac9-85c3-4bca04b71bf2}" />
     <Property Name="_AsIEntity" Id="{30a417d2-a14a-4729-891e-479b5a9865c4}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY _AsIEntity : I_Entity]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _AsIEntity : I_Entity]]></Declaration>
       <Get Name="Get" Id="{42b9a2ca-4c1d-4d9f-896b-d441100d3328}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -48,7 +48,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="_IsCompleted" Id="{9cea21e4-deec-4281-a980-e0c846ffd39e}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY _IsCompleted : BOOL]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _IsCompleted : BOOL]]></Declaration>
       <Get Name="Get" Id="{5b80ff0e-09cf-4d88-83c6-314efff97562}">
         <Declaration><![CDATA[VAR
 END_VAR

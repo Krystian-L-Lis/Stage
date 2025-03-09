@@ -6,7 +6,7 @@
 ]]></Declaration>
     <Folder Name="_" Id="{da71af14-1425-4366-a03a-2e7575b43e6a}" />
     <Property Name="_AsIEntity" Id="{8f6c498d-7ff4-422c-9f2e-b33830def3c4}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY _AsIEntity : I_Entity]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _AsIEntity : I_Entity]]></Declaration>
       <Get Name="Get" Id="{a898706e-0586-44e5-8c16-650a539ab9fb}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
@@ -21,7 +21,7 @@
       </Set>
     </Property>
     <Property Name="_IsCompleted" Id="{b286c546-d5bc-457e-ab5d-fd610753700a}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY _IsCompleted : BOOL]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _IsCompleted : BOOL]]></Declaration>
       <Get Name="Get" Id="{aff89d77-4d01-4a7c-bfb2-ab8595305fa7}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
