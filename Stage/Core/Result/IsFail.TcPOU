@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="IsFail" Id="{e05e24d8-50a3-4409-8484-8694994e4855}" SpecialFunc="None">
+    <Declaration><![CDATA[// Return TRUE on a NON successful (NOT Ok) result.
+// Optionally carries the value over to nOut for further processing.
+FUNCTION IsFail : BOOL
+VAR_INPUT
+    nIn : Result; // Result variable to check for success
+END_VAR
+VAR_OUTPUT
+    nOut : Result; // Carries the input value for further use
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsFail := nIn <= 0;
+nOut := nIn;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

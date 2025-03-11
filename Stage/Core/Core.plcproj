@@ -297,6 +297,9 @@
     <Compile Include="Result\IsOk.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Result\IsFail.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Result\IsSome.TcPOU">
       <SubType>Code</SubType>
     </Compile>
