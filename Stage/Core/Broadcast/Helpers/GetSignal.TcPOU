@@ -30,7 +30,7 @@ END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
 	IF IsOk(ICompToISignal(_iComp.Raw, iDest => iSignal)) THEN
-		IF cmp.Set(iSignal.Tag).MatchWcdId(sTagId).IsTrue() THEN
+		IF cmp.Set(iSignal.Tag).MatchWcdId(sTagId).IsTrue THEN
 			GetSignal := Ok;
 			RETURN;
 		ELSE

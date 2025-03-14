@@ -20,7 +20,6 @@ Advances the tail pointer, ensuring cyclic operation within the queue's capacity
 Returns:
 - Ok - Returns I_Arg.
 - None - Returns null, queue empty.
-- Err.Idx - Returns null, the underlying list empty.
 *)
 METHOD Pop : Result
 VAR_OUTPUT

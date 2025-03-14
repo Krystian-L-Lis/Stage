@@ -108,15 +108,18 @@ CASE _nResult OF
 END_CASE]]></ST>
       </Implementation>
     </Method>
-    <Method Name="IsErr" Id="{248d90f2-753e-444d-9c5b-49d2b4aa255c}">
+    <Property Name="IsErr" Id="{c1a4ea56-c90a-4156-92d0-a55d01e10c32}">
       <Declaration><![CDATA[(*
 Returns `TRUE` if any evaluated conditions resulted in `Error`.  
 Halts further evaluations by locking the current state.
 *)
-METHOD IsErr : BOOL
+PROPERTY IsErr : BOOL]]></Declaration>
+      <Get Name="Get" Id="{73323b62-5dee-4e82-8d31-18ea433b1529}">
+        <Declaration><![CDATA[VAR
+END_VAR
 ]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF _bLock THEN
+        <Implementation>
+          <ST><![CDATA[IF _bLock THEN
 	RETURN;
 END_IF
 
@@ -125,19 +128,22 @@ IF _nResult >= 0 THEN
 END_IF
 
 _bLock := TRUE;
-IsErr := TRUE;
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsFalse" Id="{4388843a-3f13-4d13-9444-a6c347a1b77c}">
+IsErr := TRUE;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsFalse" Id="{11292169-7aff-4c89-9253-67d74f4bdf3a}">
       <Declaration><![CDATA[(*
 Returns `TRUE` if all evaluated conditions resulted in `FALSE`.  
 Halts further evaluations by locking the current state.
 *)
-METHOD IsFalse : BOOL
+PROPERTY IsFalse : BOOL]]></Declaration>
+      <Get Name="Get" Id="{30647ce5-bd2f-4e13-98e4-e414f9ef2b38}">
+        <Declaration><![CDATA[VAR
+END_VAR
 ]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF _bLock THEN
+        <Implementation>
+          <ST><![CDATA[IF _bLock THEN
 	RETURN;
 END_IF
 
@@ -146,19 +152,22 @@ IF _nResult <> None THEN
 END_IF
 
 _bLock := TRUE;
-IsFalse := TRUE;
-
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsTrue" Id="{866e2e11-40a2-444c-9771-a238b0485540}">
+IsFalse := TRUE;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsTrue" Id="{e2b86b75-2d30-4923-a521-3e676fb75410}">
       <Declaration><![CDATA[(*
 Returns `TRUE` if any evaluated condition resulted in `TRUE`.  
 Halts further evaluations by locking the current state.
 *)
-METHOD IsTrue : BOOL]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF _bLock THEN
+PROPERTY IsTrue : BOOL]]></Declaration>
+      <Get Name="Get" Id="{3363a9c6-e92d-462a-96f7-cdfd4b112c6e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _bLock THEN
 	RETURN;
 END_IF
 
@@ -167,10 +176,10 @@ IF _nResult <> Ok THEN
 END_IF
 
 _bLock := TRUE;
-IsTrue := TRUE;
-]]></ST>
-      </Implementation>
-    </Method>
+IsTrue := TRUE;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Match" Id="{5c938a28-c260-4bf1-adcc-c84d59421fa8}">
       <Declaration><![CDATA[(*
 Updates its internal state based on the internal status and external I_Tag.  

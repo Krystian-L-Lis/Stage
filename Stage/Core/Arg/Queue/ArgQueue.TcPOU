@@ -75,7 +75,14 @@ END_VAR
       </Get>
     </Property>
     <Property Name="MutProxy" Id="{5ece68d2-7363-424f-8f8b-111fb2eb195c}" FolderPath="Proxy\">
-      <Declaration><![CDATA[PROPERTY MutProxy : REFERENCE TO I_MutArgQueue]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
+Example:
+iQueue: I_MutArgQueue;
+queue: ArgQueue := (MutProxy := iQueue);
+Result: iQueue <> 0 
+*)
+PROPERTY MutProxy : REFERENCE TO I_MutArgQueue]]></Declaration>
       <Set Name="Set" Id="{678ee690-78c2-4106-8501-33a4ca26a389}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -112,7 +119,14 @@ END_IF;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Proxy" Id="{ce7b3ec4-cbe2-4590-afe8-2fe7a2476afd}" FolderPath="Proxy\">
-      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_ArgQueue]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
+Example:
+iQueue: I_ArgQueue;
+queue: ArgQueue := (Proxy := iQueue);
+Result: iQueue <> 0 
+*)
+PROPERTY Proxy : REFERENCE TO I_ArgQueue]]></Declaration>
       <Set Name="Set" Id="{94c1427c-e86f-489c-8468-7e862cd122be}">
         <Declaration><![CDATA[VAR
 END_VAR

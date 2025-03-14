@@ -14,7 +14,10 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Property Name="Entity" Id="{03f954b7-96dd-486d-bc2c-304b7fa3fabf}">
-      <Declaration><![CDATA[PROPERTY Entity : I_Entity]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns parent Entity.
+*)
+PROPERTY Entity : I_Entity]]></Declaration>
       <Get Name="Get" Id="{d240c28c-91c6-4daa-8272-834d768826b4}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -55,7 +58,10 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Raw" Id="{f0629eb7-2548-4aad-92a4-4ae12d6f0db5}">
-      <Declaration><![CDATA[PROPERTY Raw : I_Component]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns raw I_Component pointer.
+*)
+PROPERTY Raw : I_Component]]></Declaration>
       <Get Name="Get" Id="{ce00bc59-cc2a-41f7-9580-773a33558064}">
         <Declaration><![CDATA[VAR
 END_VAR

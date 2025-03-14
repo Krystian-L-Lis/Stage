@@ -184,7 +184,10 @@ END_CASE]]></ST>
       </Implementation>
     </Method>
     <Property Name="Option" Id="{8be92b2c-a6e0-4c27-bc36-6d0ae1d2be23}">
-      <Declaration><![CDATA[PROPERTY Option : Str]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows access to Option property of the internal Tag.
+*)
+PROPERTY Option : Str]]></Declaration>
       <Get Name="Get" Id="{492d6fb3-0688-47a2-b238-5a44f20de2fa}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -229,7 +232,14 @@ END_IF
       </Implementation>
     </Method>
     <Property Name="Proxy" Id="{41b74fc0-6e2d-470c-acdc-692ecfebdb94}">
-      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_SignalEmit]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
+Example:
+iSignal: I_Signal;
+signal: Signal := (Proxy := iSignal);
+Result: iSignal <> 0 
+*)
+PROPERTY Proxy : REFERENCE TO I_SignalEmit]]></Declaration>
       <Set Name="Set" Id="{4d0fe8ef-d2dc-4e1b-a297-50eb6dfde675}">
         <Declaration><![CDATA[VAR
 END_VAR

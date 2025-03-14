@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="ArgToIDwordArg" Id="{251bbc86-8ca7-4831-8a1b-2f5e6a418da8}" SpecialFunc="None">
+  <POU Name="IArgToIRealtArg" Id="{6990d5d4-7f95-460d-b805-d7b0f1d0f775}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Casts I_Arg as I_DwordArg
+Casts I_Arg as I_RealArg
 *)
-FUNCTION ArgToIDwordArg : Result
+FUNCTION IArgToIRealtArg : Result
 VAR_INPUT
 	iArg		: I_Arg;
 END_VAR
 VAR_OUTPUT
-	iVal		: I_DwordArg;
+	iVal		: I_RealArg;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF __QUERYINTERFACE(iArg, iVal) THEN
-	ArgToIDwordArg := Ok;
+	IArgToIRealtArg := Ok;
 END_IF]]></ST>
     </Implementation>
   </POU>

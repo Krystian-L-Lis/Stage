@@ -30,7 +30,7 @@ END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
 	IF IsOk(ICompToIState(_iComp.Raw, iDest => iState)) THEN
-		IF cmp.Set(iState.Tag).MatchWcdId(sTagId).IsTrue() THEN
+		IF cmp.Set(iState.Tag).MatchWcdId(sTagId).IsTrue THEN
 			GetState := Ok;
 			RETURN;
 		ELSE

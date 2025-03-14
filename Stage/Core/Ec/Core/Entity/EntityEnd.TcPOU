@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="EntityEnd" Id="{34b61a1d-0202-49c6-b917-871045bf4f88}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Ends of an entity scope.
+Defines end of an entity scope outside which no new component can be registered.
 *)
 FUNCTION_BLOCK EntityEnd IMPLEMENTS I_Debug
 ]]></Declaration>

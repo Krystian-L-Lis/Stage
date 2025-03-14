@@ -116,7 +116,14 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Proxy" Id="{c84b4b1b-1dde-471a-9a35-21636f83c5d3}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_StateManager]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
+Example:
+iSMgr: I_StateManager;
+smgr: StateManager := (Proxy := iSMgr);
+Result: iSMgr <> 0 
+*)
+PROPERTY Proxy : REFERENCE TO I_StateManager]]></Declaration>
       <Set Name="Set" Id="{f44529b5-5fa8-4582-ba32-00ad5d0d8de7}">
         <Declaration><![CDATA[VAR
 END_VAR

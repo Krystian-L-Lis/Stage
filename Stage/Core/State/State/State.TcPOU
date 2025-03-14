@@ -212,7 +212,14 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Proxy" Id="{e148912a-ec6c-4d53-987e-2cc3081d8267}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_State]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
+Example:
+iState: I_State;
+state: SomeState := (Proxy := iState);
+Result: iState <> 0 
+*)
+PROPERTY Proxy : REFERENCE TO I_State]]></Declaration>
       <Set Name="Set" Id="{c3e00474-819c-47ac-8733-a728d746c29b}">
         <Declaration><![CDATA[
 VAR

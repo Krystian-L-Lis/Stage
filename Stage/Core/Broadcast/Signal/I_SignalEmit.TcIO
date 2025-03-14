@@ -36,7 +36,10 @@ END_VAR
 ]]></Declaration>
     </Method>
     <Property Name="Option" Id="{4ed0786f-65f3-45fa-994e-a4711b0eff33}">
-      <Declaration><![CDATA[PROPERTY Option : Str]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows access to Option property of the internal Tag.
+*)
+PROPERTY Option : Str]]></Declaration>
       <Get Name="Get" Id="{e6b30843-2985-473b-9f57-f340a96674e1}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

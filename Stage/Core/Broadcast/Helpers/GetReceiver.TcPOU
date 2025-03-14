@@ -30,7 +30,7 @@ END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
 	IF IsOk(ICompToIRec(_iComp.Raw, iDest => iRec)) THEN
-		IF cmp.Set(iRec.Tag).MatchWcdId(sTagId).IsTrue() THEN
+		IF cmp.Set(iRec.Tag).MatchWcdId(sTagId).IsTrue THEN
 			GetReceiver := Ok;
 			RETURN;
 		ELSE

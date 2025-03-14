@@ -2,7 +2,13 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Tag" Id="{1f0098db-33f0-4898-a480-2525f8673171}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-TagBase with auto component registration.
+An identifier that uses reflection to generate a unique symbol path.
+It simplifies the path by removing project, PLC, and tag segments.
+Example:
+- Reflection: proj.plc.MAIN.functionBlock[*]._tag
+- Path: MAIN.functionBlock.5
+
+Tag, unlike TagBase, is a component!
 *)
 FUNCTION_BLOCK FINAL Tag EXTENDS TagBase
 VAR

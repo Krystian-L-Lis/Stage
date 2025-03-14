@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="IArgAsIComp" Id="{5c29e6e1-73d7-4b4a-82c7-dcd0d4c36bbf}" SpecialFunc="None">
+  <POU Name="IArgToIComp" Id="{5c29e6e1-73d7-4b4a-82c7-dcd0d4c36bbf}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Casts I_Arg to I_Components
 *)
-FUNCTION IArgAsIComp : Result
+FUNCTION IArgToIComp : Result
 VAR_INPUT
 	iSource	: I_Arg;
 END_VAR
@@ -15,15 +15,15 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iSource = 0 THEN
-	IArgAsIComp := Err.Itf0;
+	IArgToIComp := Err.Itf0;
 	RETURN;
 END_IF
 
 IF __QUERYINTERFACE(iSource, iDest) THEN
-	IArgAsIComp := Ok;
+	IArgToIComp := Ok;
 ELSE
 	iDest := 0;
-	IArgAsIComp := Err.NoMatch;
+	IArgToIComp := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>
   </POU>

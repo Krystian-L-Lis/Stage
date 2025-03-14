@@ -7,6 +7,8 @@ It simplifies the path by removing project, PLC, and tag segments.
 Example:
 - Reflection: proj.plc.MAIN.functionBlock[*]._tag
 - Path: MAIN.functionBlock.5
+
+TagBase is not component!
 *)
 {attribute 'reflection'}
 FUNCTION_BLOCK TagBase IMPLEMENTS I_Tag

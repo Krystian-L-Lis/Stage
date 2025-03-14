@@ -73,7 +73,7 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arg\Args\BOOL\ArgToIBoolArg.TcPOU">
+    <Compile Include="Arg\Args\BOOL\IArgToIBoolArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\Args\BOOL\BoolArg.TcPOU">
@@ -82,7 +82,7 @@
     <Compile Include="Arg\Args\BOOL\I_BoolArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\REAL\ArgToIRealtArg.TcPOU">
+    <Compile Include="Arg\Args\REAL\IArgToIRealtArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\Args\REAL\RealArg.TcPOU">
@@ -91,7 +91,7 @@
     <Compile Include="Arg\Args\REAL\I_RealArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\DWORD\ArgToIDwordArg.TcPOU">
+    <Compile Include="Arg\Args\DWORD\IArgToIDwordArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\Args\DWORD\DwordArg.TcPOU">
@@ -103,7 +103,7 @@
     <Compile Include="Arg\ICompToIArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\IArgAsIComp.TcPOU">
+    <Compile Include="Arg\IArgToIComp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arg\List\ArgList.TcPOU">
