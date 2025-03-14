@@ -71,48 +71,41 @@ This guide provides a brief overview of using the **Stage** framework.
 ---
 
 ### **Define a Simple Entity**
+Entities are declared within an entity scope, ensuring automatic registration of components.
 
 ```structured-text
 FUNCTION_BLOCK Pump IMPLEMENTS I_Callable, I_Execute, I_Init
 VAR_INPUT
-	bOverload				: BOOL;
+	bOverload		: BOOL;
 END_VAR
 VAR_OUTPUT
-	bRunning				: BOOL;
+	bRunning		: BOOL;
 END_VAR
 VAR
-	// Execute on each iteration through the I_Execute.Execute method
-	_exe					: Execute(THIS^);
+	_exe			: Execute(THIS^);
+	_init			: Init(THIS^);
 
-	// Initialize during the first iteration through the I_Init.Init method
-	_init					: Init(THIS^);  
+	// Define an entity scope
+	_entityStart		: EntityStart;
+	
+		// Automatically register components within the entity scope
+		_tag			: Tag := (Option := 'Pump');
+		_stateChangeEvent	: Signal; 
+		_onCommand		: Receiver(THIS^); 
 
-	// Create an Entity within this function block
-	_this					: Entity; 
-
-	// Create a human-readable identifier and add it to the composition
-	_tag					: Tag('Pump');
-	_compTag				: Comp(_tag, _this);
-
-	// Create an event emitter and add the signal to the composition
-	_stateChangeEvent		: Signal; 
-	_compStateChangeEvent	: Comp(_stateChangeEvent, _this);
-
-	// Create an event receiver and add it to the composition
-	// Events are received through the I_Callable.Call method
-	_onCommand				: Receiver(THIS^); 
-	_compOnCommand			: Comp(_onCommand, _this);
+	_entityEnd		: EntityEnd;
 END_VAR
 
-	METHOD Init; END_METHOD		// Implemented from I_Init
-	METHOD Execute; END_METHOD	// Implemented from I_Execute
-	METHOD Call;			// Implemented from I_Callable
-		VAR_INPUT
-			iArg		: I_Arg;
-		END_VAR
-	END_METHOD
+METHOD Init; END_METHOD		// Implemented from I_Init
+METHOD Execute; END_METHOD	// Implemented from I_Execute
+METHOD Call;			// Implemented from I_Callable
+	VAR_INPUT
+		iArg		: I_Arg;
+	END_VAR
+END_METHOD
 
 END_FUNCTION_BLOCK
+
 ```
 
 ---
@@ -146,11 +139,11 @@ END_FUNCTION_BLOCK
 
 // Create a concrete state definition
 FUNCTION_BLOCK Tank_State_Empty EXTENDS _Tank_State
-METHOD OnEntry; END_METHOD 					// Override...
-METHOD OnExecute; END_METHOD 					// any or all...
-METHOD OnExit; END_METHOD 					// of these...
-METHOD CanActivate; CanActivate := TRUE; END_METHOD 		// methods.
-METHOD CanDeactivate; CanDeactivate := TRUE; END_METHOD
+METHOD PROTECTED OnEntry; END_METHOD 				// Override...
+METHOD PROTECTED OnExecute; END_METHOD 				// any or all...
+METHOD PROTECTED OnExit; END_METHOD 				// of these...
+METHOD PROTECTED CanActivate; CanActivate := TRUE; END_METHOD 	// methods.
+METHOD PROTECTED CanDeactivate; CanDeactivate := TRUE; END_METHOD
 END_FUNCTION_BLOCK
 ```
 
@@ -167,17 +160,15 @@ END_FUNCTION_BLOCK
 FUNCTION_BLOCK Tank EXTENDS State
 VAR
 	_ctx		: Tank_Ctx;
-	_this		: Entity;
 
-	// Create a StateManager which wraps around the StateMachine
-	// Apart from managing the state lifecycle, it also handles queues and change requests
-	_smgr		: StateManager(_this);
+	_entityStart	: EntityStart;
+		// Create a StateManager which wraps around the StateMachine
+		// Apart from managing the state lifecycle, it also handles queues and change requests
+		_smgr		: StateManager;
+		_empty		: Tank_State_Empty(_ctx);
+		_full		: Tank_State_Full(_ctx);
 
-	_empty		: Tank_State_Empty(_this, _ctx);
-	_compEmpty	: Comp(_empty, _this);
-
-	_full		: Tank_State_Full(_this, _ctx);
-	_compFull	: Comp(_full, _this);
+	_entityEnd	: EntityStart;
 END_VAR
 END_FUNCTION_BLOCK
 ```
@@ -190,9 +181,9 @@ END_FUNCTION_BLOCK
 
 ```structured-text
 // Browse entities 
-WHILE IsOk(GetEntity(i.Next(), iEntity => _iEntity)) DO
+WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
 	// Use a helper function to browse and extract
-	IF IsOk(GetTag(iEntity, 'Pump', iTag => _iPumpTag)) THEN
+	IF IsOk(GetTag(iEntity, 'Pump', _iPumpTag)) THEN
 		EXIT;
 	END_IF
 END_WHILE
@@ -205,10 +196,10 @@ END_WHILE
 ```structured-text
 // Alternatively, browse and cast components manually
 // This allows for multiple searches in one iteration
-WHILE IsOk(_iEntity.Get(j.Next(), iComp => _iComp)) DO
-	IF IsOk(ICompToISignal(_iComp, iSignal => _iSignal)) THEN
+WHILE IsOk(_iEntity.Get(j.Next(), _iComp)) DO
+	IF IsOk(ICompToISignal(_iComp.Raw, _iSignal)) THEN
 		_ctx.iPumpEventCache := _iSignal;
-	ELSIF IsOk(ICompToIRec(_iComp, iRec => _iReceiver)) THEN
+	ELSIF IsOk(ICompToIRec(_iComp.Raw, _iReceiver)) THEN
 		_ctx.iPumpCommandCache := _iReceiver;
 	END_IF
 	
