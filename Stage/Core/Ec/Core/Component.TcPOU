@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Component" Id="{fa960ebd-c1a5-43b6-93f9-37986edc8a8e}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Allows registration of FB implementing `I_Component`. The framework will automatically add this function block to the entitys scope.
+Allows registration of FB implementing `I_Component`. The framework will automatically add this function block to the entity's scope.
 *)
 FUNCTION_BLOCK FINAL Component IMPLEMENTS I_FatComponent
 VAR

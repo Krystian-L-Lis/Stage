@@ -7,12 +7,13 @@ This function may involve a costly search operation, iterating through all compo
 Returns:
 - `Ok` - Successfully retrieves the `I_Entity` that owns the component.
 - `Err.Itf0` - iIn = 0.
+- `Err.InvRef` - Invalid output reference.
 - `Err.NotFound` - No owning entity is found, returning null.
 *)
 FUNCTION GetOwnerFromRaw : Result
 VAR_INPUT
 	iIn: I_Component;
-	iOut: I_Entity;
+	iOut: REFERENCE TO I_Entity;
 END_VAR
 VAR
 	i			: Iter(1);
@@ -22,6 +23,11 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iIn = 0 THEN
 	GetOwnerFromRaw := Err.Itf0;
+	RETURN;
+END_IF
+
+IF NOT __ISVALIDREF(iOut) THEN
+	GetOwnerFromRaw := Err.InvRef;
 	RETURN;
 END_IF
 

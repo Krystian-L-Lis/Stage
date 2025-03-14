@@ -489,11 +489,6 @@
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Core.tmc">
-      <SubType>Content</SubType>
-    </None>
-  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
