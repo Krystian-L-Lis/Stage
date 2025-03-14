@@ -2,26 +2,33 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ICompToITagged" Id="{037a1bf0-02fe-469d-a7f0-fdd83b19b2c8}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Casts I_Component to I_Tagged
+Casts I_Component as I_Tagged.
+Returns:
+- Ok - Success,
+- Err.InvRef - Invalid reference,
+- Err.Itf0 - Invalid interface,
+- Err.NoMatch - Cast failed
 *)
 FUNCTION ICompToITagged : Result
 VAR_INPUT
-	iSource	: I_Component;
-END_VAR
-VAR_OUTPUT
-	iDest	: I_Tagged;
+	iIn		: I_Component;
+	iOut	: REFERENCE TO I_Tagged;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF iSource = 0 THEN
+      <ST><![CDATA[IF NOT __ISVALIDREF(iOut) THEN
+	ICompToITagged := Err.InvRef;
+	RETURN;
+END_IF
+
+IF iIn = 0 THEN
 	ICompToITagged := Err.Itf0;
 	RETURN;
 END_IF
 
-IF __QUERYINTERFACE(iSource, iDest) THEN
+IF __QUERYINTERFACE(iIn, iOut) THEN
 	ICompToITagged := Ok;
 ELSE
-	iDest := 0;
 	ICompToITagged := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>

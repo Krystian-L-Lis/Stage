@@ -52,15 +52,14 @@ END_VAR
     <Method Name="Get" Id="{afbd579f-fd8e-4b2e-abcf-16fd7b88f3d9}">
       <Declaration><![CDATA[(*
 Retrieves a specific component from the entity based on the provided index.  
-Returns `None` if the index is out of range or the entity size is zero.
+Returns `Err.NotFound` if the index is out of range or the entity size is zero.
+Returns `Err.InvRef` if the reference to interface variable is invalid.
 Otherwise returns `Ok`.
 *)
 METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
-END_VAR
-VAR_OUTPUT
-	iComp		: I_FatComponent;
+	iOut		: REFERENCE TO I_FatComponent;
 END_VAR]]></Declaration>
     </Method>
     <Property Name="Id" Id="{c3aa60be-0f8f-4a21-8b5a-adca79ca23b3}">

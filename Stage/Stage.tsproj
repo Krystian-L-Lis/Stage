@@ -52,7 +52,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="Core" PrjFilePath="Core\Core.plcproj" TmcFilePath="Core\Core.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{2FFDC2C7-CA9A-C2E0-1931-14322706D898}" TmcPath="Core\Core.tmc">
+				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{F0D145B4-B350-0B86-9113-B50DA71A858B}" TmcPath="Core\Core.tmc">
 					<Name>Core Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>

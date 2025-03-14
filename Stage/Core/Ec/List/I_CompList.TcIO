@@ -6,39 +6,29 @@ A list implementation for managing `I_Component`.
 *)
 INTERFACE I_CompList EXTENDS I_Debug
 ]]></Declaration>
-    <Property Name="Cap" Id="{291c67bf-7189-4948-8947-8920d3b565a1}">
+    <Property Name="Cap" Id="{3a8007cf-60c7-4ef3-aae4-3192a2117f2f}">
       <Declaration><![CDATA[(*
 Provides the maximum capacity of the list.
 *)
 PROPERTY Cap : UDINT]]></Declaration>
-      <Get Name="Get" Id="{d6556997-0641-484b-bf5e-ee7b63675fab}">
+      <Get Name="Get" Id="{19a163f9-a458-498d-8c9b-c786fe2947bc}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Method Name="Get" Id="{6d0ac523-901f-4217-bbaf-1573baa03871}">
+    <Method Name="Get" Id="{dfc16f17-53e4-4e50-863c-21dfe530b4b4}">
       <Declaration><![CDATA[(*
 Retrieves the `I_Component` at the specified index.  
 Returns:
 - `Ok` - Successfully retrieves the `I_Component`.
-- `Err.Idx` - The list is empty.
-- `Err.Ovf` - The specified index is out of bounds.
+- `Err.Idx` - The specified index is out of bounds.
+- `Err.InvRef` - Invalid output reference.
+- `Err.Idx` - `iOut` = 0.
 *)
 METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
-END_VAR
-VAR_OUTPUT
-	iComp	: I_Component;
+	iOut		: REFERENCE TO I_Component;
 END_VAR]]></Declaration>
     </Method>
-    <Property Name="Length" Id="{f505d97a-6992-4830-9f03-685b32d51775}">
-      <Declaration><![CDATA[(*
-Returns the current number of elements in the list.
-*)
-PROPERTY Length : UDINT]]></Declaration>
-      <Get Name="Get" Id="{f55bc4cc-b7c7-4a8d-9355-b1ef82f70d86}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
   </Itf>
 </TcPlcObject>

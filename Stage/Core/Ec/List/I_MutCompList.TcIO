@@ -6,17 +6,16 @@ A list implementation for managing `I_Component`.
 *)
 INTERFACE I_MutCompList EXTENDS I_CompList
 ]]></Declaration>
-    <Method Name="Append" Id="{5c77e0e9-4c2a-4778-92ac-45cbb94f65af}">
+    <Method Name="Set" Id="{bf6c0263-7637-44dc-9232-1cbac6f6347d}">
       <Declaration><![CDATA[(*
 Adds, updates, or removes an argument in the list at the specified index.  
 Return:
 - `Ok` - Upon successfully adding, modifying, or removing an entry.
-- `None` - When replacing a null entry with another null entry.
-- `Err.Ovf` - When attempting to modify an entry at an out-of-bounds index.
+- `Err.Idx` - When attempting to modify an entry at an out-of-bounds index.
 *)
-METHOD Append : Result
+METHOD Set : Result
 VAR_INPUT
-	iComponent	: I_Component;
+	iIn			: I_Component;
 	nIndex		: UDINT;
 END_VAR]]></Declaration>
     </Method>

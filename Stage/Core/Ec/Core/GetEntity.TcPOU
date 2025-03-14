@@ -5,22 +5,26 @@
 Retrieves the I_Entity instance at the given nIndex from the global entity list.
 Returns:
 - Ok - Returns I_Entity
-- None - Returns Null
+- Err.NotFound - Returns Null
+- Err.InvRef - Returns Null, invalid reference
 *)
 FUNCTION GetEntity : Result
 VAR_INPUT
 	nIndex		: UDINT;
-END_VAR
-VAR_OUTPUT
-	iEntity		: I_Entity;
+	iOut		: REFERENCE TO I_Entity;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF nIndex > _Ec.nEntityLen OR nIndex = 0 THEN
-	GetEntity := None;
+      <ST><![CDATA[IF NOT __ISVALIDREF(iOut) THEN
+	GetEntity := Err.InvRef;
 	RETURN;
 END_IF
 
-iEntity := _Ec.iEntity[nIndex]._AsIEntity;
+IF nIndex > _Ec.nEntityLen OR nIndex = 0 THEN
+	GetEntity := Err.NotFound;
+	RETURN;
+END_IF
+
+iOut := _Ec.iEntity[nIndex]._AsIEntity;
 GetEntity := Ok;
 ]]></ST>
     </Implementation>

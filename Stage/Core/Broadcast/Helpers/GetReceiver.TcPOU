@@ -5,16 +5,15 @@
 Searches an `I_Entity` for a `I_Receiver` component matching provided id pattern.
 Result:
 - Ok - Returns `I_Receiver`.
-- None - Returns null.
+- Err.NotFound - Returns null.
+- Err.InvRef - Returns null.
 - Err.Itf0 - Returns null, incorrect interface.
 *)
 FUNCTION GetReceiver : Result
 VAR_INPUT
 	iEntity		: I_Entity;
 	sTagId		: Str;
-END_VAR
-VAR_OUTPUT
-	iRec		: I_Receiver;
+	iOut		: REFERENCE TO I_Receiver;
 END_VAR
 VAR
 	i			: Iter(1);
@@ -28,13 +27,18 @@ END_VAR
 	RETURN;
 END_IF
 
-WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(ICompToIRec(_iComp.Raw, iDest => iRec)) THEN
-		IF cmp.Set(iRec.Tag).MatchWcdId(sTagId).IsTrue THEN
+IF NOT __ISVALIDREF(iOut) THEN
+	GetReceiver := Err.InvRef;
+	RETURN;
+END_IF
+
+WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
+	IF IsOk(ICompToIRec(_iComp.Raw, iOut)) THEN
+		IF cmp.Set(iOut.Tag).MatchWcdId(sTagId).IsTrue THEN
 			GetReceiver := Ok;
 			RETURN;
 		ELSE
-			iRec := 0;
+			iOut := 0;
 		END_IF
 	END_IF
 END_WHILE]]></ST>

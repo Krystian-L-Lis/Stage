@@ -97,21 +97,22 @@ END_VAR
 Retrieves and removes the next argument from the queue.  
 Advances the tail pointer, ensuring cyclic operation within the queue's capacity.
 Returns:
-- Ok - Returns I_Arg.
-- None - Returns null, queue empty.
+- Ok - Returns `I_Arg`.
+- Err.NotFound - Returns null, queue empty.
+- Check `I_ArgList.Get` for more results.
 *)
 METHOD Pop : Result
-VAR_OUTPUT
-	iArg	: I_Arg;
+VAR_INPUT
+	iOut	: REFERENCE TO I_Arg;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _nLen = 0 THEN
-	Pop := None;
+	Pop := Err.NotFound;
 	RETURN;
 END_IF;
 
-IF IsOk(_list.Get(_nHead, iArg => iArg), nOut => Pop) THEN
+IF IsOk(_list.Get(_nHead, iOut), nOut => Pop) THEN
 	_nHead := (_nHead MOD nCap) + 1;
 	_nLen := _nLen - 1;
 	Pop := Ok;
@@ -142,11 +143,12 @@ Adds a new argument to the queue.
 Advances the head pointer while maintaining a cyclic structure, and returns an overflow error if the queue is full.
 Returns:
 - Ok - Successful insertion
-- Err.Ovf - Returns null, the queue is full
+- Err.Ovf - Returns null, the queue is full.
+- Check `I_ArgList.Set` for more results.
 *)
 METHOD Push : Result
 VAR_INPUT
-	iArg		: I_Arg;
+	iIn		: I_Arg;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -155,7 +157,7 @@ END_VAR
 	RETURN;
 END_IF;
 
-IF IsOk(_list.Set(iArg, _nTail), nOut => Push) THEN
+IF IsOk(_list.Set(iIn, _nTail), nOut => Push) THEN
 	_nTail := (_nTail MOD nCap) + 1;
 	_nLen := _nLen + 1;
 	Push := Ok;

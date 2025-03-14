@@ -2,26 +2,32 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="ICompToISignal" Id="{5f959340-f887-4136-afe4-e25a563d68c5}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Casts I_Component to I_Signal
+Casts I_Component as I_Signal.
+Returns:
+- Ok - Success,
+- Err.InvRef - Invalid reference,
+- Err.Itf0 - Invalid interface,
+- Err.NoMatch - Cast failed
 *)
 FUNCTION ICompToISignal : Result
 VAR_INPUT
-	iSource	: I_Component;
-END_VAR
-VAR_OUTPUT
-	iDest	: I_Signal;
-END_VAR
-]]></Declaration>
+	iIn	: I_Component;
+	iOut: REFERENCE TO I_Signal;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF iSource = 0 THEN
+      <ST><![CDATA[IF NOT __ISVALIDREF(iOut) THEN
+	ICompToISignal := Err.InvRef;
+	RETURN;
+END_IF
+
+IF iIn = 0 THEN
 	ICompToISignal := Err.Itf0;
 	RETURN;
 END_IF
 
-IF __QUERYINTERFACE(iSource, iDest) THEN
+IF __QUERYINTERFACE(iIn, iOut) THEN
 	ICompToISignal := Ok;
 ELSE
-	iDest := 0;
 	ICompToISignal := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>

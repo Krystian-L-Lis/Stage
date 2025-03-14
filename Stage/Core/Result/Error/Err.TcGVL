@@ -16,6 +16,7 @@ VAR_GLOBAL CONSTANT
 	InfLoop			: Result := -12; // Potential infinity loop
 	IncArg			: Result := -13; // Incorrect input argument
 	Init			: Result := -14; // Initialisation error
+	NotFound		: Result := -15; // Item not found
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

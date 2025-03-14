@@ -38,13 +38,13 @@ Retrieves the `I_Arg` at the specified index.
 Returns:
 - `Ok` - Successfully retrieves the `I_Arg`.
 - `Err.Idx` - The specified index is out of bounds.
+- `Err.InvRef` - Invalid output reference.
+- `Err.Idx` - `iOut` = 0.
 *)
 METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
-END_VAR
-VAR_OUTPUT
-	iArg	: I_Arg;
+	iOut		: REFERENCE TO I_Arg;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
@@ -52,9 +52,16 @@ END_VAR]]></Declaration>
 	RETURN;	
 END_IF
 
-iArg := _iList[nIndex];
-IF iArg <> 0 THEN
+IF NOT __ISVALIDREF(iOut) THEN
+	Get := Err.InvRef;
+	RETURN;
+END_IF
+
+iOut := _iList[nIndex];
+IF iOut <> 0 THEN
 	Get := Ok;
+ELSE
+	Get := Err.NotFound;
 END_IF
 ]]></ST>
       </Implementation>
@@ -68,7 +75,7 @@ Return:
 *)
 METHOD Set : Result
 VAR_INPUT
-	iArg		: I_Arg;
+	iIn		: I_Arg;
 	nIndex		: UDINT;
 END_VAR]]></Declaration>
       <Implementation>
@@ -77,10 +84,9 @@ END_VAR]]></Declaration>
 	RETURN;	
 END_IF
 
-_iList[nIndex] := iArg;
-IF iArg <> 0 THEN
-	Set := Ok;
-END_IF
+_iList[nIndex] := iIn;
+Set := Ok;
+
 ]]></ST>
       </Implementation>
     </Method>

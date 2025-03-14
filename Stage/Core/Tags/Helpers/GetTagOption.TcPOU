@@ -1,20 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="GetTagOpt" Id="{b48ed172-a791-460c-b58e-fd210c4dcaad}" SpecialFunc="None">
+  <POU Name="GetTagOption" Id="{b48ed172-a791-460c-b58e-fd210c4dcaad}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Searches an `I_Entity` for a `I_Tag` component with provided `Option` value.
 Result:
 - Ok - Returns iTag.
-- None - Returns null.
+- Err.NotFound - Returns null.
+- Err.InvRef - Provided reference is invalid.
 - Err.Itf0 - Returns null, incorrect interface.
 *)
-FUNCTION GetTagOpt : Result
+FUNCTION GetTagOption : Result
 VAR_INPUT
 	iEntity		: I_Entity;
 	sOption		: Str;
-END_VAR
-VAR_OUTPUT
-	iTag		: I_Tag;
+	iOut		: REFERENCE TO I_Tag;
 END_VAR
 VAR
 	i			: Iter(1);
@@ -23,20 +22,27 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iEntity = 0 THEN
-	GetTagOpt := Err.Itf0;
+	GetTagOption := Err.Itf0;
 	RETURN;
 END_IF
 
-WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(ICompToITag(_iComp.Raw, iDest => iTag)) THEN
-		IF iTag.Option = sOption THEN
-			GetTagOpt := Ok;
+IF NOT __ISVALIDREF(iOut) THEN
+	GetTagOption := Err.InvRef;
+	RETURN;
+END_IF
+
+WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
+	IF IsOk(ICompToITag(_iComp.Raw, iOut)) THEN
+		IF iOut.Option = sOption THEN
+			GetTagOption := Ok;
 			RETURN;
 		ELSE
-			iTag := 0;
+			iOut := 0;
 		END_IF
 	END_IF
-END_WHILE]]></ST>
+END_WHILE
+
+GetTagOption := Err.NotFound;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

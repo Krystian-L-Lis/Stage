@@ -15,7 +15,7 @@ Return:
 *)
 METHOD Set : Result
 VAR_INPUT
-	iArg		: I_Arg;
+	iIn		: I_Arg;
 	nIndex		: UDINT;
 END_VAR]]></Declaration>
     </Method>

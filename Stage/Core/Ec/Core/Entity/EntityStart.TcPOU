@@ -130,24 +130,28 @@ END_IF
     <Method Name="Get" Id="{646396ad-09a8-4895-b39a-1783367488da}">
       <Declaration><![CDATA[(*
 Retrieves a specific component from the entity based on the provided index.  
-Returns `None` if the index is out of range or the entity size is zero.
+Returns `Err.NotFound` if the index is out of range or the entity size is zero.
+Returns `Err.InvRef` if the reference to interface variable is invalid.
 Otherwise returns `Ok`.
 *)
 METHOD Get : Result
 VAR_INPUT
 	nIndex	: UDINT;
-END_VAR
-VAR_OUTPUT
-	iComp	: I_FatComponent;
+	iOut	: REFERENCE TO I_FatComponent;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nIndex > _nSize - 1 OR_ELSE nIndex = 0 OR_ELSE _nSize = 0 THEN
-	Get := None;
+        <ST><![CDATA[IF NOT __ISVALIDREF(iOut) THEN
+	Get := Err.InvRef;
 	RETURN;
 END_IF
 
-iComp := _Ec.comp[_nStart + nIndex].variant.iComponent;
+IF nIndex > _nSize - 1 OR_ELSE nIndex = 0 OR_ELSE _nSize = 0 THEN
+	Get := Err.NotFound;
+	RETURN;
+END_IF
+
+iOut := _Ec.comp[_nStart + nIndex].variant.iComponent;
 Get := Ok;]]></ST>
       </Implementation>
     </Method>

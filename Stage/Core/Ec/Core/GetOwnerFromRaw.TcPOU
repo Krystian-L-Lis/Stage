@@ -6,14 +6,13 @@ Finds the owning entity of a given component in the Entity-Component system.
 This function may involve a costly search operation, iterating through all components.
 Returns:
 - `Ok` - Successfully retrieves the `I_Entity` that owns the component.
-- `None` - No owning entity is found, returning null.
+- `Err.Itf0` - iIn = 0.
+- `Err.NotFound` - No owning entity is found, returning null.
 *)
 FUNCTION GetOwnerFromRaw : Result
 VAR_INPUT
-	iComponent	: I_Component;
-END_VAR
-VAR_OUTPUT
-	iEntity		: I_Entity;
+	iIn: I_Component;
+	iOut: I_Entity;
 END_VAR
 VAR
 	i			: Iter(1);
@@ -21,15 +20,22 @@ VAR
 	_iComp		: I_FatComponent;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => iEntity)) DO
+      <ST><![CDATA[IF iIn = 0 THEN
+	GetOwnerFromRaw := Err.Itf0;
+	RETURN;
+END_IF
+
+WHILE IsOk(GetEntity(i.Next(), iOut)) DO
 	j.Set(1);
-	WHILE IsOk(iEntity.Get(j.Next(), iComp => _iComp)) DO
-		IF _iComp.Raw = iComponent THEN
+	WHILE IsOk(iOut.Get(j.Next(), _iComp)) DO
+		IF _iComp.Raw = iIn THEN
 			GetOwnerFromRaw := Ok;
 			RETURN;
 		END_IF
 	END_WHILE
 END_WHILE
+
+GetOwnerFromRaw := Err.NotFound;
 ]]></ST>
     </Implementation>
   </POU>

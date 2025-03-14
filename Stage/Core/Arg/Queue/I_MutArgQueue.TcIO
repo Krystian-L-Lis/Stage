@@ -18,12 +18,13 @@ METHOD Clear
 Retrieves and removes the next argument from the queue.  
 Advances the tail pointer, ensuring cyclic operation within the queue's capacity.
 Returns:
-- Ok - Returns I_Arg.
-- None - Returns null, queue empty.
+- Ok - Returns `I_Arg`.
+- Err.NotFound - Returns null, queue empty.
+- Check `I_MutArgList.Get` for more results.
 *)
 METHOD Pop : Result
-VAR_OUTPUT
-	iArg	: I_Arg;
+VAR_INPUT
+	iOut	: REFERENCE TO I_Arg;
 END_VAR
 ]]></Declaration>
     </Method>
@@ -32,12 +33,13 @@ END_VAR
 Adds a new argument to the queue.  
 Advances the head pointer while maintaining a cyclic structure, and returns an overflow error if the queue is full.
 Returns:
-- Ok - Successful insertion
-- Err.Ovf - Returns null, the queue is full
+- Ok - Successful insertion.
+- Err.Ovf - Returns null, the queue is full.
+- Check `I_MutArgList.Set` for more results.
 *)
 METHOD Push : Result
 VAR_INPUT
-	iArg		: I_Arg;
+	iIn		: I_Arg;
 END_VAR
 ]]></Declaration>
     </Method>

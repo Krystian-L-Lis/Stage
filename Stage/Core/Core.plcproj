@@ -397,7 +397,13 @@
     <Compile Include="Tags\Helpers\GetTag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\Helpers\GetTagOpt.TcPOU">
+    <Compile Include="Tags\Helpers\GetTagOption.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\Helpers\HasTagOption.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tags\Helpers\HasTag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\Helpers\MatchTagPathPattern.TcPOU">
@@ -482,11 +488,6 @@
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Core.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

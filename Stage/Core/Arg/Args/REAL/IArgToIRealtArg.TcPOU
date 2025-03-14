@@ -2,19 +2,34 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="IArgToIRealtArg" Id="{6990d5d4-7f95-460d-b805-d7b0f1d0f775}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Casts I_Arg as I_RealArg
+Casts I_Arg as I_RealArg.
+Returns:
+- Ok - Success,
+- Err.InvRef - Invalid reference,
+- Err.Itf0 - Invalid interface,
+- Err.NoMatch - Cast failed
 *)
 FUNCTION IArgToIRealtArg : Result
 VAR_INPUT
-	iArg		: I_Arg;
-END_VAR
-VAR_OUTPUT
-	iVal		: I_RealArg;
+	iIn		: I_Arg;
+	iOut	: REFERENCE TO I_RealArg;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF __QUERYINTERFACE(iArg, iVal) THEN
+      <ST><![CDATA[IF NOT __ISVALIDREF(iOut) THEN
+	IArgToIRealtArg := Err.InvRef;
+	RETURN;
+END_IF
+
+IF iIn = 0 THEN
+	IArgToIRealtArg := Err.Itf0;
+	RETURN;
+END_IF
+
+IF __QUERYINTERFACE(iIn, iOut) THEN
 	IArgToIRealtArg := Ok;
+ELSE
+	IArgToIRealtArg := Err.NoMatch;
 END_IF]]></ST>
     </Implementation>
   </POU>

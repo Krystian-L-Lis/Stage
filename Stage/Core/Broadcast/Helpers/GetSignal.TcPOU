@@ -5,16 +5,15 @@
 Searches an `I_Entity` for a `I_Signal` component matching provided id pattern.
 Result:
 - Ok - Returns `I_Signal`.
-- None - Returns null.
+- Err.NotFound - Returns null.
+- Err.InvRef - Returns null.
 - Err.Itf0 - Returns null, incorrect interface.
 *)
 FUNCTION GetSignal : Result
 VAR_INPUT
 	iEntity		: I_Entity;
 	sTagId		: Str;
-END_VAR
-VAR_OUTPUT
-	iSignal		: I_Signal;
+	iOut		: REFERENCE TO I_Signal;
 END_VAR
 VAR
 	i			: Iter(1);
@@ -28,16 +27,23 @@ END_VAR
 	RETURN;
 END_IF
 
-WHILE IsOk(iEntity.Get(i.Next(), iComp => _iComp)) DO
-	IF IsOk(ICompToISignal(_iComp.Raw, iDest => iSignal)) THEN
-		IF cmp.Set(iSignal.Tag).MatchWcdId(sTagId).IsTrue THEN
+IF NOT __ISVALIDREF(iOut) THEN
+	GetSignal := Err.InvRef;
+	RETURN;
+END_IF
+
+WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
+	IF IsOk(ICompToISignal(_iComp.Raw, iOut)) THEN
+		IF cmp.Set(iOut.Tag).MatchWcdId(sTagId).IsTrue THEN
 			GetSignal := Ok;
 			RETURN;
 		ELSE
-			iSignal := 0;
+			iOut := 0;
 		END_IF
 	END_IF
-END_WHILE]]></ST>
+END_WHILE
+
+GetSignal := Err.NotFound;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -1,49 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="GetTag" Id="{99d2f861-a98d-4a03-974c-921613e65770}" SpecialFunc="None">
+  <POU Name="HasTag" Id="{4288c4db-5369-4aa9-82af-d4cbad8a0920}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Searches an `I_Entity` for a `I_Tag` component matching provided id pattern.
 Result:
-- Ok - Returns iTag.
+- Ok
 - Err.NotFound - Returns null.
-- Err.InvRef - Provided reference is invalid.
 - Err.Itf0 - Returns null, incorrect interface.
 *)
-FUNCTION GetTag : Result
+FUNCTION HasTag : Result
 VAR_INPUT
 	iEntity		: I_Entity;
 	sIdPattern	: Str;
-	iOut		: REFERENCE TO I_Tag;
 END_VAR
 VAR
 	i			: Iter(1);
 	_iComp		: I_FatComponent;
+	_iTag		: I_Tag;
 	cmp			: TagCmp;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iEntity = 0 THEN
-	GetTag := Err.Itf0;
-	RETURN;
-END_IF
-
-IF NOT __ISVALIDREF(iOut) THEN
-	GetTag := Err.InvRef;
+	HasTag := Err.Itf0;
 	RETURN;
 END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
-	IF IsOk(ICompToITag(_iComp.Raw, iOut)) THEN
-		IF cmp.Set(iOut).MatchWcdId(sIdPattern).IsTrue THEN
-			GetTag := Ok;
+	IF IsOk(ICompToITag(_iComp.Raw, _iTag)) THEN
+		IF cmp.Set(_iTag).MatchWcdId(sIdPattern).IsTrue THEN
+			HasTag := Ok;
 			RETURN;
-		ELSE
-			iOut := 0;
 		END_IF
 	END_IF
 END_WHILE
 
-GetTag := Err.NotFound;]]></ST>
+HasTag := Err.NotFound;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
