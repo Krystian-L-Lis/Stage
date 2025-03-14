@@ -41,36 +41,36 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="IsErr" Id="{da92cb98-4a9e-4273-93b6-30992c71328d}">
+    <Method Name="IsErr" Id="{eade2c83-2eb4-4906-a88c-ecc02bd7617e}">
       <Declaration><![CDATA[(*
 Returns `TRUE` if any evaluated conditions resulted in `Error`.  
 Halts further evaluations by locking the current state.
 *)
-PROPERTY IsErr : BOOL]]></Declaration>
-      <Get Name="Get" Id="{58b14c6e-19ea-4e2e-8ad7-310664c35925}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
-    <Property Name="IsFalse" Id="{600cb1c9-a5dc-4727-9e20-41f0071a9671}">
+METHOD IsErr : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsFalse" Id="{1ddd5fe7-59a2-41d0-a2b4-4e9b08b22807}">
       <Declaration><![CDATA[(*
 Returns `TRUE` if all evaluated conditions resulted in `FALSE`.  
 Halts further evaluations by locking the current state.
 *)
-PROPERTY IsFalse : BOOL]]></Declaration>
-      <Get Name="Get" Id="{36233ed8-8038-4550-afb4-a0a96a7c7f81}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
-    <Property Name="IsTrue" Id="{11b0b6fc-c21b-4d1e-99f4-19c5037c32d6}">
+METHOD IsFalse : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsTrue" Id="{34600bc9-ed75-446f-8d26-ff01d90d3395}">
       <Declaration><![CDATA[(*
 Returns `TRUE` if any evaluated condition resulted in `TRUE`.  
 Halts further evaluations by locking the current state.
 *)
-PROPERTY IsTrue : BOOL]]></Declaration>
-      <Get Name="Get" Id="{45c09b7b-ea4a-49ae-9d38-5ebf2ac56448}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
+METHOD IsTrue : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="Match" Id="{ff272183-aeae-424d-9c25-2144ef81905e}">
       <Declaration><![CDATA[(*
 Updates its internal state based on the internal status and external I_Tag.  

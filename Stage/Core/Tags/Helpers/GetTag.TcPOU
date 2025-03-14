@@ -34,7 +34,7 @@ END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
 	IF IsOk(ICompToITag(_iComp.Raw, iOut)) THEN
-		IF cmp.Set(iOut).MatchWcdId(sIdPattern).IsTrue THEN
+		IF cmp.Set(iOut).MatchWcdId(sIdPattern).IsTrue() THEN
 			GetTag := Ok;
 			RETURN;
 		ELSE

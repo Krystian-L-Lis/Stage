@@ -34,7 +34,7 @@ END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
 	IF IsOk(ICompToIRec(_iComp.Raw, iOut)) THEN
-		IF cmp.Set(iOut.Tag).MatchWcdId(sTagId).IsTrue THEN
+		IF cmp.Set(iOut.Tag).MatchWcdId(sTagId).IsTrue() THEN
 			GetReceiver := Ok;
 			RETURN;
 		ELSE

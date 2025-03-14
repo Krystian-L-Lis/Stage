@@ -32,7 +32,7 @@ VAR
 	strb		: Strb;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE GetSignal(iEntity, sToFind, iSignal => iSignal) OF
+        <ST><![CDATA[CASE GetSignal(iEntity, sToFind, iSignal) OF
 	Ok:
 		IF IsErr(iSignal.Pair(_onSystemEvent), nOut => _r) THEN
 			_bError := TRUE;
@@ -61,7 +61,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF IsErr(IArgToITag(iArg, iDest => _iTag)) THEN
+IF IsErr(IArgToITag(iArg, _iTag)) THEN
 	_ctx.hmi.sErrorText := 'Incorrect call argument!';
 	_ctx.state.iMgr.Request(_ctx.state.iFault);
 	RETURN;
@@ -111,8 +111,8 @@ VAR
 	_iEntity	: I_Entity;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => _iEntity)) DO
-	IF IsNone(GetTagOpt(_iEntity, 'Heating')) THEN
+        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
+	IF IsNone(HasTagOption(_iEntity, 'Heating')) THEN
 		CONTINUE;
 	END_IF
 	

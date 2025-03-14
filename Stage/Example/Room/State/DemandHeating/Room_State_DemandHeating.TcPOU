@@ -53,12 +53,12 @@ VAR
 	strb		: Strb;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), iEntity => _iEntity)) DO
-	IF IsNone(GetTagOpt(_iEntity, 'Heating')) THEN
+        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
+	IF IsNone(HasTagOption(_iEntity, 'Heating')) THEN
 		CONTINUE;
 	END_IF
 	
-	IF IsOk(GetReceiver(_iEntity, '*._onRequest', iRec => _iRec)) THEN
+	IF IsOk(GetReceiver(_iEntity, '*._onRequest', _iRec)) THEN
 		IF IsErr(_ctx.priv.iRequestEvent.Pair(_iRec), nOut => _r) THEN
 			DebugMsg(_iRec, strb.Append('Cannot pair _onRequest with this receiver! Error code: ').Append(TO_STRING(_r)).Read());
 		END_IF

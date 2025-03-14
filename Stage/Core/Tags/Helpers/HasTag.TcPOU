@@ -28,7 +28,7 @@ END_IF
 
 WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
 	IF IsOk(ICompToITag(_iComp.Raw, _iTag)) THEN
-		IF cmp.Set(_iTag).MatchWcdId(sIdPattern).IsTrue THEN
+		IF cmp.Set(_iTag).MatchWcdId(sIdPattern).IsTrue() THEN
 			HasTag := Ok;
 			RETURN;
 		END_IF

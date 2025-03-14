@@ -43,7 +43,7 @@ END_VAR]]></Declaration>
 ELSIF _ctx.io.in.rBoilerTemp < _ctx.hmi.rMinTemperature THEN
 	_ctx.state.iMgr.Request(_ctx.state.iHeatup);
 	
-ELSIF IsOk(_ctx.priv.iQueue.Pop(iArg => _iRoomArg)) THEN
+ELSIF IsOk(_ctx.priv.iQueue.Pop(_iRoomArg)) THEN
 	IF IsOk(IArgToIRoom(_iRoomArg, iDest => _ctx.priv.iActiveRoom)) THEN
 		IF _ctx.priv.iActiveRoom.IsActive THEN
 			_ctx.state.iMgr.Request(_ctx.state.iHeating);
