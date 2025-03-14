@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="RgbColor" Id="{2722e4a4-8a93-411e-a3ea-39a44af2a9e8}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK RgbColor IMPLEMENTS I_RgbColor
+    <Declaration><![CDATA[(*
+Provides methods and properties to operate on RGBA value.
+*)
+FUNCTION_BLOCK RgbColor IMPLEMENTS I_RgbColor
 VAR
 	_r: BYTE;
 	_g: BYTE;
@@ -13,7 +16,10 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Property Name="Alpha" Id="{61fe6c55-bd71-4e71-af28-24097f508d00}">
-      <Declaration><![CDATA[PROPERTY Alpha : BYTE]]></Declaration>
+      <Declaration><![CDATA[(*
+ALPHA channel
+*)
+PROPERTY Alpha : BYTE]]></Declaration>
       <Get Name="Get" Id="{9d4821de-72dd-444c-991c-d2ec0cdd3814}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -32,7 +38,10 @@ END_VAR
       </Set>
     </Property>
     <Property Name="Blue" Id="{0473fd13-3e4a-46cd-92d1-78e19c1e7bc2}">
-      <Declaration><![CDATA[PROPERTY Blue : BYTE]]></Declaration>
+      <Declaration><![CDATA[(*
+BLUE component
+*)
+PROPERTY Blue : BYTE]]></Declaration>
       <Get Name="Get" Id="{8570242d-e6c6-4d02-a710-93e6cf52eda1}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -51,7 +60,10 @@ END_VAR
       </Set>
     </Property>
     <Method Name="Clone" Id="{924c2e5f-fff2-4c25-9bf1-439819cf4eda}">
-      <Declaration><![CDATA[METHOD Clone
+      <Declaration><![CDATA[(*
+Clones other components of I_RgbaColor interface.
+*)
+METHOD Clone
 VAR_INPUT
 	iColor	: I_RgbColor;
 END_VAR
@@ -88,7 +100,10 @@ END_VAR
       </Implementation>
     </Method>
     <Property Name="Green" Id="{8ec01b6b-1c45-4d2c-91da-d78954155238}">
-      <Declaration><![CDATA[PROPERTY Green : BYTE]]></Declaration>
+      <Declaration><![CDATA[(*
+GREEN component
+*)
+PROPERTY Green : BYTE]]></Declaration>
       <Get Name="Get" Id="{41b4783c-4227-4b80-93ac-7e4b95b6953a}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -107,7 +122,11 @@ END_VAR
       </Set>
     </Property>
     <Property Name="Raw" Id="{2c7b24d8-afcd-4243-8d9f-839ca3e0e22f}">
-      <Declaration><![CDATA[PROPERTY Raw : Color]]></Declaration>
+      <Declaration><![CDATA[(*
+Compute single Color value from RGBA components when used as getter.
+Sets RGBA values by extracting components from a single Color value.
+*)
+PROPERTY Raw : Color]]></Declaration>
       <Get Name="Get" Id="{101e36a2-7284-4e50-b5a7-31e84ab6f554}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -132,7 +151,10 @@ _a := UDINT_TO_USINT(SHR(Raw, 24) AND 16#FF);]]></ST>
       </Set>
     </Property>
     <Property Name="Red" Id="{cec73e8f-0e69-462b-8b4d-1f0aa08c453e}">
-      <Declaration><![CDATA[PROPERTY Red : BYTE]]></Declaration>
+      <Declaration><![CDATA[(*
+RED component
+*)
+PROPERTY Red : BYTE]]></Declaration>
       <Get Name="Get" Id="{eceb49b4-def0-4258-8e6c-43d57dab2ccf}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -151,7 +173,10 @@ END_VAR
       </Set>
     </Property>
     <Method Name="Set" Id="{1d8ceed2-bd8a-4471-aa42-fc7ee85534e9}">
-      <Declaration><![CDATA[METHOD Set
+      <Declaration><![CDATA[(*
+Set each RGBA component value separately.
+*)
+METHOD Set
 VAR_INPUT
 	nRed: USINT;
 	nGreen: USINT;

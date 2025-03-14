@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Math" Id="{76db6186-827d-4be6-8551-4ecec23c6cd1}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Math
+    <Declaration><![CDATA[(*Provides various mathematical functions*)
+PROGRAM Math
 VAR
 END_VAR
 ]]></Declaration>
@@ -9,7 +10,11 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="LowPassFilter" Id="{54dd59a2-6c09-4c12-9961-65f71218b6f9}">
-      <Declaration><![CDATA[METHOD LowPassFilter : LREAL
+      <Declaration><![CDATA[(*
+First-order low pass filter.
+Yt = Xt * Coeff + Y(t-1) * (1- Coeff)
+*)
+METHOD LowPassFilter : LREAL
 VAR_INPUT
 	rX				: LREAL;
 	rPrvY			: LREAL;
@@ -21,7 +26,11 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <Method Name="Normalization" Id="{37fc285e-354d-4811-9875-fb9578429fc0}">
-      <Declaration><![CDATA[METHOD Normalization : LREAL
+      <Declaration><![CDATA[(*
+Allows for value normalization with rescalling option.
+Returns 0 when rMaxX - rMinX = 0.
+*)
+METHOD Normalization : LREAL
 VAR_INPUT
 	rX				: LREAL;
 	rMinX			: LREAL;
@@ -40,7 +49,9 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Random" Id="{8fa98490-891b-4c1e-b9e9-80fb0f11e0b4}">
-      <Declaration><![CDATA[// Random number generator.
+      <Declaration><![CDATA[(*
+Generates random number every time is called.
+*)
 METHOD Random : LREAL
 VAR_STAT
 	_nSeed		: INT;
