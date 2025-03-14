@@ -52,7 +52,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
 	IF IsOk(GetSignal(_iEntity, '*._safetyEvent', _iSignal)) THEN
-		IF IsErr(_iSignal.Pair(_safetyRec), nOut => _r) THEN
+		IF IsFail(_iSignal.Pair(_safetyRec), nOut => _r) THEN
 			DebugMsg(_iSignal, CONCAT('Could not be paired! Error code: ', TO_STRING(_r)));
 		END_IF
 		

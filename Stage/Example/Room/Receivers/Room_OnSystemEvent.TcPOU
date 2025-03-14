@@ -34,7 +34,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE GetSignal(iEntity, sToFind, iSignal) OF
 	Ok:
-		IF IsErr(iSignal.Pair(_onSystemEvent), nOut => _r) THEN
+		IF IsFail(iSignal.Pair(_onSystemEvent), nOut => _r) THEN
 			_bError := TRUE;
 			DebugMsg(iSignal, strb.Append('Cannot pair _systemRec with this signal! Error code: ').Append(INT_TO_STRING(_r)).Read());
 		END_IF
@@ -112,7 +112,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
-	IF IsNone(HasTagOption(_iEntity, 'Heating')) THEN
+	IF IsFail(HasTagOption(_iEntity, 'Heating')) THEN
 		CONTINUE;
 	END_IF
 	
