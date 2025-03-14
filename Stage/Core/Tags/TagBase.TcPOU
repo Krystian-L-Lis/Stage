@@ -128,7 +128,14 @@ END_IF
       </Set>
     </Property>
     <Property Name="Proxy" Id="{f27cd52a-cc58-40ed-b243-65041daea015}">
-      <Declaration><![CDATA[PROPERTY Proxy : REFERENCE TO I_Tag]]></Declaration>
+      <Declaration><![CDATA[(*
+Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
+Example:
+iTag: I_Tag;
+tag: Tag := (Proxy := iTag);
+Result: iTag <> 0 
+*)
+PROPERTY Proxy : REFERENCE TO I_Tag]]></Declaration>
       <Set Name="Set" Id="{0b0052f6-98c0-4255-8c6f-f4b582b0030b}">
         <Declaration><![CDATA[VAR
 END_VAR
