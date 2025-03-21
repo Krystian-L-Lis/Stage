@@ -210,71 +210,71 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Ec\Core\Component.TcPOU">
+    <Compile Include="Entity\Core\Component.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\Entity\EntityEnd.TcPOU">
+    <Compile Include="Entity\Core\Entity\EntityEnd.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\Entity\EntityExtend.TcPOU">
+    <Compile Include="Entity\Core\Entity\EntityExtend.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\Entity\EntityStart.TcPOU">
+    <Compile Include="Entity\Core\Entity\EntityStart.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_FatComponent.TcIO">
+    <Compile Include="Entity\Core\I_FatComponent.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\GetOwnerFromRaw.TcPOU">
+    <Compile Include="Entity\Core\GetOwnerFromRaw.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_Component.TcIO">
+    <Compile Include="Entity\Core\I_Component.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_EntityNode.TcIO">
+    <Compile Include="Entity\Core\I_EntityNode.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\I_Entity.TcIO">
+    <Compile Include="Entity\Core\I_Entity.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Core\GetEntity.TcPOU">
+    <Compile Include="Entity\Core\GetEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\List\CompList.TcPOU">
+    <Compile Include="Entity\List\CompList.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\List\I_CompList.TcIO">
+    <Compile Include="Entity\List\I_CompList.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\List\I_MutCompList.TcIO">
+    <Compile Include="Entity\List\I_MutCompList.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_EcStruct.TcDUT">
+    <Compile Include="Entity\Sys\_EcStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_EcUnion.TcDUT">
+    <Compile Include="Entity\Sys\_EcUnion.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_Ec.TcGVL">
+    <Compile Include="Entity\Sys\_Ec.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Ec\Sys\_Helpers\_EcDefragment.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_EcDefragment.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_Helpers\_EcGetBestFit.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_EcGetBestFit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_Helpers\_ExtendEntity.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_ExtendEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_Helpers\_RegComp.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_RegComp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_Helpers\_StartEntity.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_StartEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ec\Sys\_Helpers\_EndEntity.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_EndEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Iter\Iter.TcPOU">
@@ -450,15 +450,15 @@
     <Folder Include="Broadcast\Sys\Helpers" />
     <Folder Include="Broadcast\Sys\Structs" />
     <Folder Include="Dbg" />
-    <Folder Include="Ec">
+    <Folder Include="Entity">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
-    <Folder Include="Ec\Core" />
-    <Folder Include="Ec\Core\Entity" />
-    <Folder Include="Ec\List" />
-    <Folder Include="Ec\Sys" />
+    <Folder Include="Entity\Core" />
+    <Folder Include="Entity\Core\Entity" />
+    <Folder Include="Entity\List" />
+    <Folder Include="Entity\Sys" />
     <Folder Include="Callable" />
-    <Folder Include="Ec\Sys\_Helpers" />
+    <Folder Include="Entity\Sys\_Helpers" />
     <Folder Include="Iter" />
     <Folder Include="Arg" />
     <Folder Include="Runtime" />

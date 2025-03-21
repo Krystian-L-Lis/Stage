@@ -59,7 +59,9 @@ Change := Ok;]]></ST>
     </Method>
     <Method Name="Execute" Id="{b879bcd6-341c-4f09-8d48-6726ba706920}">
       <Declaration><![CDATA[METHOD Execute
-]]></Declaration>
+VAR_INPUT
+	nPhase: INT := 0;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _iCurrentState <> 0 THEN
 	_iCurrentState._OnExecute();

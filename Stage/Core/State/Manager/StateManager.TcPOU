@@ -48,6 +48,9 @@ END_VAR
       <Declaration><![CDATA[// DO NOT CALL MANUALLY
 {attribute 'hide'}
 METHOD Execute
+VAR_INPUT
+	nPhase: INT := 0;
+END_VAR
 VAR
 	_iNewState		: I_StateInternal;
 	_iOldState		: I_StateInternal;

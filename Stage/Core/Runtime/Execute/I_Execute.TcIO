@@ -11,6 +11,7 @@ If registered, this method will be executed cyclically.
 *)
 METHOD Execute
 VAR_INPUT
+	nPhase: INT := 0;
 END_VAR
 ]]></Declaration>
     </Method>

@@ -12,6 +12,7 @@ If registered, this method will be executed upon startup.
 *)
 METHOD Init
 VAR_INPUT
+	nPhase: INT := 0;
 END_VAR
 ]]></Declaration>
     </Method>
