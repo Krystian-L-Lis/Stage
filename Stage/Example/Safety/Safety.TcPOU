@@ -34,6 +34,9 @@ END_VAR
     </Implementation>
     <Method Name="Execute" Id="{55d13787-afea-44f7-b92a-b7b1e114eed6}">
       <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 VAR
 	i			: UDINT;
 END_VAR]]></Declaration>

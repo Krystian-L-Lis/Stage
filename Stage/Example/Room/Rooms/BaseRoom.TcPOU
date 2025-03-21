@@ -53,6 +53,9 @@ END_VAR]]></Declaration>
     </Implementation>
     <Method Name="Execute" Id="{abe1c6fc-7a08-4ddc-bd83-72dbe826f4d7}">
       <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// HMI
@@ -79,7 +82,9 @@ END_IF]]></ST>
     </Method>
     <Method Name="Init" Id="{c27f5bbb-98ed-4d0c-9315-e1b313e2413e}">
       <Declaration><![CDATA[METHOD Init
-]]></Declaration>
+VAR_INPUT
+	nPhase: INT;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_smgr.Request(_idle);]]></ST>
       </Implementation>

@@ -40,6 +40,9 @@ END_IF]]></ST>
     </Method>
     <Method Name="Init" Id="{a22836c3-bdf1-4b4e-b4df-40ad1a1ec5d1}">
       <Declaration><![CDATA[METHOD Init
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 VAR
 	i			: Iter(1);
 	_r			: Result;

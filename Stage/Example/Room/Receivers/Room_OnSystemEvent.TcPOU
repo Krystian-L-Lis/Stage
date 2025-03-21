@@ -106,6 +106,9 @@ END_VAR]]></Declaration>
     </Method>
     <Method Name="Init" Id="{c21ffc82-a83f-42ba-b5d9-14591fef07b7}">
       <Declaration><![CDATA[METHOD Init
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 VAR
 	i			: Iter(1);
 	_iEntity	: I_Entity;

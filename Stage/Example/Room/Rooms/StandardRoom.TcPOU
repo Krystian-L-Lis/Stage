@@ -19,9 +19,11 @@ END_VAR]]></Declaration>
     </Implementation>
     <Method Name="Execute" Id="{51b956d4-c76f-41de-a458-174fed593c72}">
       <Declaration><![CDATA[METHOD Execute
-]]></Declaration>
+VAR_INPUT
+	nPhase: INT;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[SUPER^.Execute();
+        <ST><![CDATA[SUPER^.Execute(nPhase);
 
 // Simulation
 IF NOT sim.bTick THEN

@@ -20,6 +20,9 @@ END_VAR
     </Method>
     <Method Name="Execute" Id="{6db6c303-2883-4848-80bb-b716126fca0e}">
       <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 VAR
 	_iSelf		: I_State := THIS^;
 	_strb		: Strb;

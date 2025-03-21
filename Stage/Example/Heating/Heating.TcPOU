@@ -51,7 +51,9 @@ END_VAR
     </Implementation>
     <Method Name="Execute" Id="{2db28cf4-24c2-48ef-813b-53c66671dd1a}">
       <Declaration><![CDATA[METHOD Execute
-]]></Declaration>
+VAR_INPUT
+	nPhase: INT := 0;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Inputs
 _ctx.io.in.bBurnerOverload := bBurnerOverload;
@@ -112,7 +114,9 @@ rBoilerPressure := sim.rSystemPressure;]]></ST>
     </Method>
     <Method Name="Init" Id="{cc8e1674-1a3f-478e-a1dc-45b6956a8d3e}">
       <Declaration><![CDATA[METHOD Init
-]]></Declaration>
+VAR_INPUT
+	nPhase: INT;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_smgr.Request(_disabled);]]></ST>
       </Implementation>

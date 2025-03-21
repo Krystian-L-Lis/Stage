@@ -21,6 +21,9 @@ END_VAR]]></Declaration>
 If registered, this method will be executed cyclically.
 *)
 METHOD Execute
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_rt(CLK := _bInput);

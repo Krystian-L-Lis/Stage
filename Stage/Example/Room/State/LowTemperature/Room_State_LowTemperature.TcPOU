@@ -20,6 +20,9 @@ END_VAR]]></Declaration>
     </Method>
     <Method Name="Execute" Id="{8b5d189f-4b23-4430-818b-71b05464abf1}">
       <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 VAR
 	_iSelf		: I_State := THIS^;
 	_strb		: strb;
@@ -66,6 +69,9 @@ END_VAR
     </Method>
     <Method Name="Init" Id="{62e3aadc-34b8-4f90-934a-bae9858dcaa8}">
       <Declaration><![CDATA[METHOD Init
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 VAR
 	i			: Iter(1);
 	_iEntity	: I_Entity;

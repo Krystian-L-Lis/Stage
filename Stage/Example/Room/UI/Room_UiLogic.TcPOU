@@ -18,6 +18,9 @@ END_VAR
     </Implementation>
     <Method Name="Execute" Id="{d341eedf-67ce-43fa-9263-eda8dd293ad1}">
       <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _bPrvDisable <> _ctx.hmi.bDisable THEN

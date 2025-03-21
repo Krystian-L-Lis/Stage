@@ -11,6 +11,9 @@ END_VAR
     </Implementation>
     <Method Name="Execute" Id="{dd289930-8188-4bea-a8b1-8037094b52d7}">
       <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+	nPhase: INT;
+END_VAR
 VAR
 	cmp			: TagCmp;
 	bFault		: BOOL;
