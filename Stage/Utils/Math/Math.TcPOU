@@ -26,16 +26,6 @@ rDeltaTime   := MAX(rDeltaTime, 0.0);
 ExptDecay := LIMIT(0.0, 1.0 - EXPT(1.0 - rBlendFactor, rDeltaTime), 1.0);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="GetCycleTime" Id="{dab0e14b-f490-4122-b6af-bde2aeae9a99}">
-      <Declaration><![CDATA[(*
-	Get task cycle time in seconds.
-*)
-METHOD GetCycleTime : LREAL
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetCycleTime := UDINT_TO_LREAL(_TaskInfo[TC2_System.GETCURTASKINDEXEX()].CycleTime) / 10_000_000;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="LowPassFilter" Id="{54dd59a2-6c09-4c12-9961-65f71218b6f9}">
       <Declaration><![CDATA[(*
 First-order low pass filter.

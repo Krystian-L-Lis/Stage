@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GetTaskCycleTime" Id="{acded846-b650-4bf5-b83e-616dac5772c0}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+	Get task cycle time in seconds.
+*)
+FUNCTION GetTaskCycleTime : LREAL
+VAR_IN_OUT CONSTANT
+	taskInfo: ARRAY[*] OF PlcTaskSystemInfo; // Just assign _TaskInfo as _TaskInfo cannot be accessed from lib :(
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GetTaskCycleTime := UDINT_TO_LREAL(taskInfo[TC2_System.GETCURTASKINDEXEX()].CycleTime) / 10_000_000;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -32,7 +32,7 @@
     <SelectedLibraryCategories>
       <Id xmlns="">{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
     </SelectedLibraryCategories>
-    <ProjectVersion>1.2.0</ProjectVersion>
+    <ProjectVersion>1.2.1</ProjectVersion>
     <DefaultNamespace>Utils</DefaultNamespace>
     <Placeholder>_Utils</Placeholder>
     <Author>Krystian Lis et al.</Author>
@@ -50,6 +50,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Math.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Time\GetTaskCycleTime.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Time\GetUnixTime.TcPOU">
