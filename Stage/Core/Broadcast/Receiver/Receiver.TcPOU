@@ -4,13 +4,12 @@
     <Declaration><![CDATA[(*
 Represents a receiver in the Broadcast system. Implements the necessary methods for receiving events and pairing signals.
 *)
-FUNCTION_BLOCK FINAL Receiver IMPLEMENTS I_ReceiverNode, I_Receiver
+FUNCTION_BLOCK FINAL Receiver IMPLEMENTS I_Receiver
 VAR
 	
 	_comp			: Component(THIS^);
 	_tag			: TagBase;
 	_iCallable		: I_Callable;
-	_bIsOk			: BOOL := TRUE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -32,25 +31,10 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iCallable := iCallable;
 IF _iCallable = 0 THEN
-	_bIsOk := FALSE;
 	DebugMsg(THIS^, 'iReceiver = 0!');
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Property Name="IsOk" Id="{f1f087c9-ce24-4a7a-9d2f-520cd51dc062}">
-      <Declaration><![CDATA[(*
-Checks if the receiver is properly initialized and ready to operate.
-*)
-PROPERTY INTERNAL IsOk : BOOL]]></Declaration>
-      <Get Name="Get" Id="{01cfd46c-ea36-47ad-88cc-581ac680254f}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IsOk := _bIsOk;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Property Name="Option" Id="{ec2f92a0-3163-4c2f-b6c4-95d948e23c76}">
       <Declaration><![CDATA[(*
 Allows access to Option property of the internal Tag.
@@ -73,29 +57,6 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Pair" Id="{6fffc843-9230-4d39-885d-576d2d6aa59f}">
-      <Declaration><![CDATA[(*
-Pairs the receiver with a signal.  
-Returns:
-- `Ok` - If pairing is successful.
-- `Err.Itf0` - If the receiver interface is invalid.
-- `Err.IncArg` - If the `I_Receiver` is invalid.
-- `Err.ItfEq` - If the `I_Receiver` is already paired with this `I_Signal`.
-- `Err.Ovf` - If there is no space for another pairing.
-*)
-METHOD Pair : Result
-VAR_INPUT
-	iSignal		: I_Signal;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF iSignal <> 0 THEN
-	Pair := iSignal.Pair(THIS^);
-ELSE
-	Pair := Error;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Receive" Id="{7cf97b80-2026-43ed-bd4a-a4b08dba024b}">
       <Declaration><![CDATA[METHOD INTERNAL Receive
 VAR_INPUT
@@ -103,7 +64,10 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_iCallable.Call(iArg);]]></ST>
+        <ST><![CDATA[IF _iCallable <> 0 THEN
+	_iCallable.Call(iArg);
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Tag" Id="{c4ff52e5-e8db-4834-b8d3-e55ed4dc8f91}">
@@ -120,27 +84,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Unpair" Id="{9cdd6e18-8337-45bf-81f7-8c24c8d9cdfa}">
-      <Declaration><![CDATA[(*
-Unpairs the signal from a specified receiver.
-Returns:
-- `Ok` - If unpairing is successful.
-- `Err.Itf0` - If the receiver interface is invalid.
-- `Err.IncArg` - If the `I_Receiver` is invalid.
-- `Err.NoMatch` - If `I_Signal` is not paired with this `I_Receiver`.
-*)
-METHOD Unpair : Result
-VAR_INPUT
-	iSignal		: I_Signal;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF iSignal <> 0 THEN
-	Unpair := iSignal.Unpair(THIS^);
-ELSE
-	Unpair := Error;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

@@ -3,12 +3,6 @@
   <Itf Name="I_ReceiverNode" Id="{8feabb5e-e1de-46c9-abdd-f60feee98617}">
     <Declaration><![CDATA[INTERFACE INTERNAL I_ReceiverNode EXTENDS I_Debug
 ]]></Declaration>
-    <Property Name="IsOk" Id="{348239b1-f517-4363-9e67-8701a65ffdfb}">
-      <Declaration><![CDATA[PROPERTY INTERNAL IsOk : BOOL]]></Declaration>
-      <Get Name="Get" Id="{46a3294f-3f65-4ad2-8288-337eeba811e2}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
     <Method Name="Receive" Id="{d18b5768-d005-4abe-97ce-0acae1bb45dc}">
       <Declaration><![CDATA[METHOD INTERNAL Receive
 VAR_INPUT

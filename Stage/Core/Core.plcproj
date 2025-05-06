@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>Core</Title>
-    <ProjectVersion>1.2.1</ProjectVersion>
+    <ProjectVersion>1.3.0</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -131,6 +131,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Helpers\GetReceiver.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Receiver\AbstractReceiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Receiver\ICompToIRec.TcPOU">

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="AbstractReceiver" Id="{21b26383-9808-407b-a8ba-abcd48a678b0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT AbstractReceiver IMPLEMENTS I_Callable, I_Receiver
+VAR
+	_tag: Tag;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{a0f6c3b5-e234-4f8a-9a5e-368a72c8c866}">
+      <Declaration><![CDATA[(*
+This method provides a standardized way for other objects to interact with the object that owns it.
+*)
+METHOD Call
+VAR_INPUT
+	iArg	: I_Arg;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Receive" Id="{e0854879-c2ba-4c5c-b3ab-b6a2008b53db}">
+      <Declaration><![CDATA[METHOD INTERNAL Receive
+VAR_INPUT
+	iArg			: I_Arg;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Call(iArg);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Tag" Id="{9ee99f7a-7a32-4794-966e-c9d5108d39b2}">
+      <Declaration><![CDATA[(*
+Provides access to the tag associated with the signal.
+*)
+PROPERTY FINAL Tag : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{44574137-36bb-4b98-a702-3983fe897ba4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Tag := _tag;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

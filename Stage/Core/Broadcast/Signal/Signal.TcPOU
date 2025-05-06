@@ -222,10 +222,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iReceiver = 0 THEN
 	Pair := Err.Itf0;
-ELSIF iReceiver.IsOk THEN
-	Pair := _Pair(THIS^, iReceiver);
 ELSE
-	Pair := Err.IncArg;
+	Pair := _Pair(THIS^, iReceiver);
 END_IF
 
 ]]></ST>
@@ -280,10 +278,8 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF iReceiver = 0 THEN
 	Unpair := Err.Itf0;
-ELSIF iReceiver.IsOk THEN
-	Unpair := _Unpair(THIS^, iReceiver);
 ELSE
-	Unpair := Err.IncArg;
+	Unpair := _Unpair(THIS^, iReceiver);
 END_IF]]></ST>
       </Implementation>
     </Method>
