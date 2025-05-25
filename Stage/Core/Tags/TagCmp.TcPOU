@@ -259,7 +259,7 @@ END_IF
 CASE _nResult OF
 	Ok,
 	None:		
-		_nResult := MatchTagPathPattern(_iBaseTag.Id, sPattern);
+		_nResult := MatchPath(_iBaseTag.Id, sPattern);
 END_CASE
 
 ]]></ST>

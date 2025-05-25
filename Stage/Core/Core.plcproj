@@ -409,7 +409,7 @@
     <Compile Include="Tags\Helpers\HasTag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\Helpers\MatchTagPathPattern.TcPOU">
+    <Compile Include="Tags\Helpers\MatchPath.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\I_Tag.TcIO">
