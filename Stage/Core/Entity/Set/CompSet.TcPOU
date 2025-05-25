@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="CompSet" Id="{41ec61c2-8b49-4757-983e-1a173104cc05}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CompSet
+
+VAR_GENERIC CONSTANT
+	CAP: UDINT := 10;
+END_VAR
+
+IMPLEMENTS I_CompSet
+
+VAR_OUTPUT
+END_VAR
+VAR
+	_iComp: ARRAY[1..CAP] OF I_Component;
+	_nLen: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Append" Id="{be7d32e6-e593-4b25-8efe-e9d29619cf25}">
+      <Declaration><![CDATA[METHOD Append : Result
+VAR_INPUT
+	iComp: I_Component;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _nLen = CAP THEN
+	Append := Err.Ovf;
+	RETURN;
+END_IF
+
+IF iComp = 0 THEN
+	Append := Err.Itf0;
+	RETURN;
+END_IF
+
+_nLen := _nLen + 1;
+_iComp[_nLen] := iComp;
+Append := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Get" Id="{baf33711-dc60-4aba-8514-43b7ca9fb8d1}">
+      <Declaration><![CDATA[METHOD Get : Result
+VAR_INPUT
+	nIdx: UDINT;
+	iResult: REFERENCE TO I_Component;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nIdx = 0 OR nIdx > CAP THEN
+	Get := Err.Ovf;
+	RETURN;
+END_IF
+
+IF NOT __ISVALIDREF(iResult) THEN
+	Get := Err.InvRef;
+	RETURN;
+END_IF
+
+iResult := _iComp[nIdx];
+Get := Ok;
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

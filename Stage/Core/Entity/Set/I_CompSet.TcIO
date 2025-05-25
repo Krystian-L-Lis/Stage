@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_CompSet" Id="{286546d5-8c5a-4230-894f-69f0bdcfa344}">
+    <Declaration><![CDATA[INTERFACE I_CompSet
+]]></Declaration>
+    <Method Name="Append" Id="{1f7557b6-939f-46d3-9b84-24e980bbf581}">
+      <Declaration><![CDATA[METHOD Append : Result
+VAR_INPUT
+	iComp: I_Component;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Get" Id="{0a1d4dfd-43f9-42fe-a39a-23fa2d924203}">
+      <Declaration><![CDATA[METHOD Get : Result
+VAR_INPUT
+	nIdx: UDINT;
+	iResult: REFERENCE TO I_Component;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

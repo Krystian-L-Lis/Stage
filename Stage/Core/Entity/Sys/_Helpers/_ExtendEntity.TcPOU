@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="_ExtendEntity" Id="{44b8eb4b-c7eb-4697-a2af-56deb6276418}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION _ExtendEntity : Result
+    <Declaration><![CDATA[FUNCTION INTERNAL _ExtendEntity : Result
 VAR_INPUT
 	iEntity	: I_EntityNode;
 END_VAR
