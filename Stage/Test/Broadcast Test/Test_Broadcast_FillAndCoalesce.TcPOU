@@ -58,7 +58,9 @@ END_VAR]]></Declaration>
     </Implementation>
     <Method Name="Execute" Id="{7edb6c7b-4f9b-489d-8ea9-a632711c37f7}">
       <Declaration><![CDATA[METHOD Execute
-]]></Declaration>
+VAR_INPUT
+	nPhase: INT := 0;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF bTest THEN
 	FOR i := 1 TO 3 DO
