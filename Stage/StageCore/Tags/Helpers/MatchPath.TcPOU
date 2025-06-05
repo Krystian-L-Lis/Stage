@@ -23,9 +23,11 @@ END_VAR
     <Implementation>
       <ST><![CDATA[// Init
 IF IsErr(addPath.Set(sAddress)) THEN
+	MatchPath := Err.NoMatch;
 	RETURN;
 END_IF
 IF IsErr(pttPath.Set(sPattern)) THEN
+	MatchPath := Err.NoMatch;
 	RETURN;
 END_IF
 
@@ -62,17 +64,20 @@ WHILE IsOk(pttPath.Next(sSeg => pttSeg)) DO
 			bMatch := TRUE;
 			EXIT; // Consume get next pattern segment
 		ELSE
+			MatchPath := Err.NoMatch;
 			RETURN; // No match - return
 		END_IF
 	END_WHILE
 
 	IF NOT bMatch THEN
+		MatchPath := Err.NoMatch;
 		RETURN;
 	END_IF
 
 END_WHILE
 
 IF IsOk(addPath.Peek()) THEN
+	MatchPath := Err.NoMatch;
 	RETURN;
 END_IF
 
