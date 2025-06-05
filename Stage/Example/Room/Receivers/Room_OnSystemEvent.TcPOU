@@ -48,7 +48,7 @@ END_CASE]]></ST>
     <Method Name="Call" Id="{42f05947-b063-4e2f-b93d-01e7d6e1ce6a}">
       <Declaration><![CDATA[METHOD Call
 VAR_INPUT
-	iArg	: Core.I_Arg;
+	iArg	: StageCore.I_Arg;
 END_VAR
 VAR
 	cmp		: TagCmp;

@@ -14,7 +14,7 @@ END_VAR
     <Method Name="Call" Id="{ccf8c9ca-547d-4a52-a859-566cad5f3a9e}">
       <Declaration><![CDATA[METHOD Call
 VAR_INPUT
-	iArg		: Core.I_Arg;
+	iArg		: StageCore.I_Arg;
 END_VAR
 VAR
 	_iSafeModeOn: I_BoolArg;

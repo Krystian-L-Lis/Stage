@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.13" TcVersionFixed="true">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.16" TcVersionFixed="true">
 	<Project ProjectGUID="{C61CA2FA-5123-4198-9125-8734FBACFE30}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
 			<Tasks>
@@ -15,9 +15,9 @@
 			</Tasks>
 		</System>
 		<Plc>
-			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="Utils" PrjFilePath="Utils\Utils.plcproj" TmcFilePath="Utils\Utils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
+			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="StageUtils" PrjFilePath="StageUtils\StageUtils.plcproj" TmcFilePath="StageUtils\StageUtils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{FAEF55F2-72E1-CBB0-E60D-0E9245617A35}" TmcPath="Utils\Utils.tmc">
-					<Name>Utils Instance</Name>
+					<Name>StageUtils Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>
@@ -51,9 +51,9 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
-			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="Core" PrjFilePath="Core\Core.plcproj" TmcFilePath="Core\Core.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
+			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="StageCore" PrjFilePath="StageCore\StageCore.plcproj" TmcFilePath="StageCore\StageCore.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{45D90E22-CD00-061F-4851-F9B3F9B82D4B}" TmcPath="Core\Core.tmc">
-					<Name>Core Instance</Name>
+					<Name>StageCore Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>

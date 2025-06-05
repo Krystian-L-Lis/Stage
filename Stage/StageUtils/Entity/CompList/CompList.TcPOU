@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="ArgList" Id="{2b96f983-70e4-40e0-8445-dead91093f2f}" SpecialFunc="None">
+  <POU Name="CompList" Id="{ab0a7914-9ac4-41cb-a281-5d9e708234e4}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 A list implementation for managing `I_Arg`.  
 *)
-FUNCTION_BLOCK ArgList
+FUNCTION_BLOCK CompList
 VAR_GENERIC CONSTANT
 	nCap	: UDINT := 100;
 END_VAR
 
-IMPLEMENTS I_MutArgList
+IMPLEMENTS I_MutCompList
 
 VAR
-	_iList	: ARRAY[1..nCap] OF I_Arg;
+	_iList	: ARRAY[1..nCap] OF I_Component;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="Cap" Id="{1048cc8b-e43e-4da9-a171-782c39431c37}">
+    <Property Name="Cap" Id="{a16011eb-eccf-4267-a3d9-5dda38aa8b01}">
       <Declaration><![CDATA[(*
 Provides the maximum capacity of the list.
 *)
 PROPERTY Cap : UDINT]]></Declaration>
-      <Get Name="Get" Id="{c0c3415d-8c77-4181-aeea-f218ef2d28f8}">
+      <Get Name="Get" Id="{4d225c82-253b-4ef0-b494-d33220e45dcb}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -32,11 +32,11 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Get" Id="{5c57983f-1819-44e3-afe2-2f589f56d44d}">
+    <Method Name="Get" Id="{f84861e2-0afd-46b7-8244-73ebc3fcdd54}">
       <Declaration><![CDATA[(*
-Retrieves the `I_Arg` at the specified index.  
+Retrieves the `I_Component` at the specified index.  
 Returns:
-- `Ok` - Successfully retrieves the `I_Arg`.
+- `Ok` - Successfully retrieves the `I_Component`.
 - `Err.Idx` - The specified index is out of bounds.
 - `Err.InvRef` - Invalid output reference.
 - `Err.Idx` - `iOut` = 0.
@@ -44,7 +44,7 @@ Returns:
 METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
-	iOut		: REFERENCE TO I_Arg;
+	iOut		: REFERENCE TO I_Component;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF nIndex > nCap OR nIndex = 0 THEN
@@ -66,7 +66,7 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Set" Id="{e43a485e-6cb6-45fe-b385-9a9421cc55b9}">
+    <Method Name="Set" Id="{6e175e97-5942-4516-887c-86db013eb6a3}">
       <Declaration><![CDATA[(*
 Adds, updates, or removes an argument in the list at the specified index.  
 Return:
@@ -75,7 +75,7 @@ Return:
 *)
 METHOD Set : Result
 VAR_INPUT
-	iIn		: I_Arg;
+	iIn			: I_Component;
 	nIndex		: UDINT;
 END_VAR]]></Declaration>
       <Implementation>

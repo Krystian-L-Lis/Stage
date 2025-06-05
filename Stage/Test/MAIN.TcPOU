@@ -12,7 +12,7 @@ VAR
 	
 	strings_test_01			: Test_Strings_WildcardCmp;
 
-	debugInfo				: Core.DebugInfo;
+	debugInfo				: StageCore.DebugInfo;
 	
 END_VAR
 ]]></Declaration>

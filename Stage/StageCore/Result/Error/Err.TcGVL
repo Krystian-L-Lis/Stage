@@ -17,6 +17,7 @@ VAR_GLOBAL CONSTANT
 	IncArg			: Result := -13; // Incorrect input argument
 	Init			: Result := -14; // Initialisation error
 	NotFound		: Result := -15; // Item not found
+	InvItf			: Result := -16; // Invalid interface
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

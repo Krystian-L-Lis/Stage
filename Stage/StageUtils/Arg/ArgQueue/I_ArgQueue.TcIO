@@ -1,41 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <Itf Name="I_ArgQueue" Id="{479af9a2-73ee-4633-80f3-a7501838f2f1}">
+  <Itf Name="I_ArgQueue" Id="{a3add385-e7ac-433c-818a-288d2bee859e}">
     <Declaration><![CDATA[(*
 A circular queue implementation for managing `I_Arg`.  
 *)
 INTERFACE I_ArgQueue EXTENDS I_Debug
 ]]></Declaration>
-    <Property Name="Head" Id="{63cffb29-df17-41ec-a017-453383157af9}">
+    <Property Name="Head" Id="{1e0693ff-f569-4e1a-858a-956b6e787fad}">
       <Declaration><![CDATA[(*
 Returns the current head index of the queue, indicating the next position for insertion.
 *)
 PROPERTY Head : UDINT]]></Declaration>
-      <Get Name="Get" Id="{7b0919ac-80d0-4104-a8ee-5c8b397efa95}">
+      <Get Name="Get" Id="{9e200817-2fc1-4cb6-b775-a63d6666a137}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Property Name="Length" Id="{bc2b1f08-109e-46b1-b38c-adfa0d4f5023}">
+    <Property Name="Length" Id="{249cc34d-41f5-42c1-b7f3-69864b6b8d42}">
       <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
-      <Get Name="Get" Id="{f28113b3-bd5b-4941-ae11-73f6ed88375b}">
+      <Get Name="Get" Id="{3e5ab514-7ad4-43a3-acb8-e66bc3d4d2ab}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Property Name="List" Id="{22d13380-699e-45b5-956e-33b334fa798a}">
+    <Property Name="List" Id="{ea10b641-3a44-49a3-8c2f-48f403aee4f0}">
       <Declaration><![CDATA[(*
 Provides access to the underlying list structure that holds the queue's argument objects.
 *)
 PROPERTY List : I_ArgList]]></Declaration>
-      <Get Name="Get" Id="{8bd18bf7-b6ad-434a-927e-8b900b9a1b7d}">
+      <Get Name="Get" Id="{1a2e15ab-7f7f-4c87-b178-b194d2df5ecc}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Property Name="Tail" Id="{044d209c-e47e-44ea-85f2-0bbbbbf8c740}">
+    <Property Name="Tail" Id="{8b16c1d8-9ba4-45de-a37d-399410386f61}">
       <Declaration><![CDATA[(*
 Returns the current tail index of the queue, indicating the next position for retrieval.
 *)
 PROPERTY Tail : UDINT]]></Declaration>
-      <Get Name="Get" Id="{b2840707-759f-40f0-b9d2-b3d1e79747d1}">
+      <Get Name="Get" Id="{166a081e-a191-44c6-94eb-7586e93ce60b}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>

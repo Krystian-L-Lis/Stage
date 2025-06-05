@@ -55,6 +55,7 @@
             <v n="BackImageRight">0</v>
             <v n="BackImageWarning">true</v>
             <v n="BackImageLimit">true</v>
+            <v n="ResponsiveVisualizationSize">false</v>
           </o>
           <o n="RegisterDesc" t="GenericFbDescription">
             <d n="FbMethods" t="CaseInsensitiveHashtable" ckt="String" cvt="Guid">
@@ -74,7 +75,7 @@
               <v n="Modifiers">7</v>
               <v n="DevType">4096</v>
               <v n="DevId">"1002 0004"</v>
-              <v n="DevVersion">"1.0.0.7"</v>
+              <v n="DevVersion">"1.0.0.8"</v>
               <v n="BaseProvider">{cb73a13e-6ccc-4bc6-8859-f5aa98bb116b}</v>
               <l n="Keys" t="ArrayList" cet="DeviceBasedHotkeyItem">
                 <o>
@@ -610,6 +611,8 @@
               <v n="HandleTouchEvents">true</v>
               <v n="LoginVisu">""</v>
               <v n="FillBackground">true</v>
+              <v n="UseBrowserLanguage">false</v>
+              <v n="ClientSizeModeNew" t="VisualClientSizeMode">Specified</v>
             </o>
           </o>
         </Data>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="ArgQueue" Id="{5fefed48-7bae-45b6-a5e2-f3473e48d477}" SpecialFunc="None">
+  <POU Name="ArgQueue" Id="{c76e1546-2227-4293-8d71-24ba2b1f9980}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 A circular queue implementation for managing `I_Arg`.  
 *)
@@ -21,8 +21,8 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Folder Name="Proxy" Id="{d14fc49b-fbe4-489b-9b76-3ea6c79f6011}" />
-    <Method Name="Clear" Id="{60abfa75-29d6-499a-907d-e34b56c038d1}">
+    <Folder Name="Proxy" Id="{9f39ca87-734b-4ce2-a064-6cb3a1e15ca4}" />
+    <Method Name="Clear" Id="{de26b2be-362d-4495-b24f-d07023138547}">
       <Declaration><![CDATA[(*
 Clears the queue.
 *)
@@ -35,12 +35,12 @@ _nLen := 0;
 _list.Set(0, 1);]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Head" Id="{212475c4-e8c8-4d1b-a3ee-53654d6c7959}">
+    <Property Name="Head" Id="{c9aced8c-5615-4602-a8c9-d2cca06beb56}">
       <Declaration><![CDATA[(*
 Returns the current head index of the queue, indicating the next position for insertion.
 *)
 PROPERTY Head : UDINT]]></Declaration>
-      <Get Name="Get" Id="{a9358f8b-2ada-4118-b863-513c0b85c740}">
+      <Get Name="Get" Id="{e1f4e3bb-f456-4b54-a664-6226a1648088}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -49,9 +49,9 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Length" Id="{6c789f5f-1bd5-4a93-a3d4-b00289ab6031}">
+    <Property Name="Length" Id="{138194cb-0617-4188-9db7-14d43055e764}">
       <Declaration><![CDATA[PROPERTY Length : UDINT]]></Declaration>
-      <Get Name="Get" Id="{d476a79c-0af2-4a2d-a64d-2783507722fd}">
+      <Get Name="Get" Id="{c65e8145-303d-4803-99d0-e1f5bad90830}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -60,12 +60,12 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="List" Id="{7bb419a2-9a05-4640-9427-d39f30187a46}">
+    <Property Name="List" Id="{cf73eedb-24ba-4099-8ac4-bd0f99e7e007}">
       <Declaration><![CDATA[(*
 Provides access to the underlying list structure that holds the queue's argument objects.
 *)
 PROPERTY List : I_ArgList]]></Declaration>
-      <Get Name="Get" Id="{a822b4ee-ebcd-431d-bee5-1b2176157c94}">
+      <Get Name="Get" Id="{fcb1b69f-2ae2-4e8b-8036-3051766ec0a1}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -74,7 +74,7 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="MutProxy" Id="{5ece68d2-7363-424f-8f8b-111fb2eb195c}" FolderPath="Proxy\">
+    <Property Name="MutProxy" Id="{df8ba48c-7672-4a55-b0be-3b5f9a4d9dff}" FolderPath="Proxy\">
       <Declaration><![CDATA[(*
 Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
 Example:
@@ -83,7 +83,7 @@ queue: ArgQueue := (MutProxy := iQueue);
 Result: iQueue <> 0 
 *)
 PROPERTY MutProxy : REFERENCE TO I_MutArgQueue]]></Declaration>
-      <Set Name="Set" Id="{678ee690-78c2-4106-8501-33a4ca26a389}">
+      <Set Name="Set" Id="{e645097b-951f-44f1-9c61-03dc6b075533}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -92,7 +92,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Pop" Id="{c0e476b5-0312-468c-bd79-2e025a1976a9}">
+    <Method Name="Pop" Id="{ebbd8206-4440-4673-b31a-c80b5ef2f1c1}">
       <Declaration><![CDATA[(*
 Retrieves and removes the next argument from the queue.  
 Advances the tail pointer, ensuring cyclic operation within the queue's capacity.
@@ -119,7 +119,7 @@ IF IsOk(_list.Get(_nHead, iOut), nOut => Pop) THEN
 END_IF;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Proxy" Id="{ce7b3ec4-cbe2-4590-afe8-2fe7a2476afd}" FolderPath="Proxy\">
+    <Property Name="Proxy" Id="{0a9d7853-91a6-46b9-8229-824366fef474}" FolderPath="Proxy\">
       <Declaration><![CDATA[(*
 Allows initializing an external interface variable with an interface pointer to this instance within declaration block.
 Example:
@@ -128,7 +128,7 @@ queue: ArgQueue := (Proxy := iQueue);
 Result: iQueue <> 0 
 *)
 PROPERTY Proxy : REFERENCE TO I_ArgQueue]]></Declaration>
-      <Set Name="Set" Id="{94c1427c-e86f-489c-8468-7e862cd122be}">
+      <Set Name="Set" Id="{3ef5d859-90d8-4433-81d3-8c4a83e9ef75}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -137,7 +137,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Push" Id="{4cffbac1-66d4-4260-a313-b7e0e1c784cf}">
+    <Method Name="Push" Id="{7a6a861d-ce7d-4b8e-83b1-463d9bd37168}">
       <Declaration><![CDATA[(*
 Adds a new argument to the queue.  
 Advances the head pointer while maintaining a cyclic structure, and returns an overflow error if the queue is full.
@@ -164,12 +164,12 @@ IF IsOk(_list.Set(iIn, _nTail), nOut => Push) THEN
 END_IF;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Tail" Id="{0030fa0d-2cec-40bb-9189-8d4288b9442f}">
+    <Property Name="Tail" Id="{86561c9d-d0a1-4b85-b773-d6ff1230d5fb}">
       <Declaration><![CDATA[(*
 Returns the current tail index of the queue, indicating the next position for retrieval.
 *)
 PROPERTY Tail : UDINT]]></Declaration>
-      <Get Name="Get" Id="{09bdafc1-07ce-41b5-9418-66d1d38d8e89}">
+      <Get Name="Get" Id="{97904e90-29ab-41d0-962b-7b170142aeb0}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>

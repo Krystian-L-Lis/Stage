@@ -26,6 +26,7 @@ END_VAR]]></Declaration>
     -13: ResultToStr := 'IncArg';
 	-14: ResultToStr := 'Init';
 	-15: ResultToStr := 'Item not found';
+	-16: ResultToStr := 'InvItf';
     ELSE
         ResultToStr := Tc2_Standard.CONCAT('Unknown result: ', INT_TO_STRING(nResult));
 END_CASE]]></ST>

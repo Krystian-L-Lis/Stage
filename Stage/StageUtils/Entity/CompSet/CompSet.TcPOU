@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="CompSet" Id="{41ec61c2-8b49-4757-983e-1a173104cc05}" SpecialFunc="None">
+  <POU Name="CompSet" Id="{a61558c7-e6ac-4729-b4fd-15d77b6e69fe}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK CompSet
 
 VAR_GENERIC CONSTANT
@@ -19,7 +19,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="Append" Id="{be7d32e6-e593-4b25-8efe-e9d29619cf25}">
+    <Method Name="Append" Id="{6ced0f15-6a14-4b24-860c-afe326c08f11}">
       <Declaration><![CDATA[METHOD Append : Result
 VAR_INPUT
 	iComp: I_Component;
@@ -41,7 +41,7 @@ _iComp[_nLen] := iComp;
 Append := Ok;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Get" Id="{baf33711-dc60-4aba-8514-43b7ca9fb8d1}">
+    <Method Name="Get" Id="{5fa371fe-717b-45eb-aaf6-c4e96434ef1c}">
       <Declaration><![CDATA[METHOD Get : Result
 VAR_INPUT
 	nIdx: UDINT;

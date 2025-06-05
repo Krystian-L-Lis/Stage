@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <Itf Name="I_MutArgQueue" Id="{3c319922-c4ac-4913-a5ff-e4204e65e323}">
+  <Itf Name="I_MutArgQueue" Id="{bfa254c1-b89f-4368-9efe-0eb88bf9fb59}">
     <Declaration><![CDATA[(*
 A circular queue implementation for managing `I_Arg`.  
 *)
 INTERFACE I_MutArgQueue EXTENDS I_ArgQueue
 ]]></Declaration>
-    <Method Name="Clear" Id="{41345009-58c3-4603-a1dd-71a3de823a25}">
+    <Method Name="Clear" Id="{6fd609a7-3967-4f75-96ec-8525830ce196}">
       <Declaration><![CDATA[(*
 Clears the queue.
 *)
 METHOD Clear
 ]]></Declaration>
     </Method>
-    <Method Name="Pop" Id="{be1b5892-95ee-403d-b9ca-f9025d7f85a9}">
+    <Method Name="Pop" Id="{eed13044-56a3-4d5b-b02e-6682ccb4b0d8}">
       <Declaration><![CDATA[(*
 Retrieves and removes the next argument from the queue.  
 Advances the tail pointer, ensuring cyclic operation within the queue's capacity.
@@ -28,7 +28,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="Push" Id="{1f80bd1a-a0b7-40b0-a5e7-7adf8b264e2c}">
+    <Method Name="Push" Id="{1c911968-2e87-47fb-b7c2-7221a23f31f4}">
       <Declaration><![CDATA[(*
 Adds a new argument to the queue.  
 Advances the head pointer while maintaining a cyclic structure, and returns an overflow error if the queue is full.

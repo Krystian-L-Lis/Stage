@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <Itf Name="I_CompList" Id="{d8fd80a0-3272-49d8-a5be-503482b9faa2}">
+  <Itf Name="I_ArgList" Id="{ebf0d78f-4078-4420-90cf-3c27fe88901b}">
     <Declaration><![CDATA[(*
-A list implementation for managing `I_Component`.  
+A list implementation for managing `I_Arg`.  
 *)
-INTERFACE I_CompList EXTENDS I_Debug
+INTERFACE I_ArgList EXTENDS I_Debug
 ]]></Declaration>
-    <Property Name="Cap" Id="{3a8007cf-60c7-4ef3-aae4-3192a2117f2f}">
+    <Property Name="Cap" Id="{93fc02a4-69a8-48a7-b684-8b0e8d2a39cd}">
       <Declaration><![CDATA[(*
 Provides the maximum capacity of the list.
 *)
 PROPERTY Cap : UDINT]]></Declaration>
-      <Get Name="Get" Id="{19a163f9-a458-498d-8c9b-c786fe2947bc}">
+      <Get Name="Get" Id="{20d25a38-c36a-42c3-bd92-88fa4e743bf1}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Method Name="Get" Id="{dfc16f17-53e4-4e50-863c-21dfe530b4b4}">
+    <Method Name="Get" Id="{f2f87690-f9cb-4ae6-a2f0-8e33ef6f803d}">
       <Declaration><![CDATA[(*
-Retrieves the `I_Component` at the specified index.  
+Retrieves the `I_Arg` at the specified index.  
 Returns:
-- `Ok` - Successfully retrieves the `I_Component`.
+- `Ok` - Successfully retrieves the `I_Arg`.
 - `Err.Idx` - The specified index is out of bounds.
 - `Err.InvRef` - Invalid output reference.
 - `Err.Idx` - `iOut` = 0.
@@ -27,7 +27,7 @@ Returns:
 METHOD Get : Result
 VAR_INPUT
 	nIndex		: UDINT;
-	iOut		: REFERENCE TO I_Component;
+	iOut		: REFERENCE TO I_Arg;
 END_VAR]]></Declaration>
     </Method>
   </Itf>
