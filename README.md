@@ -181,7 +181,7 @@ END_FUNCTION_BLOCK
 
 ```structured-text
 // Browse entities 
-WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
+WHILE IsOk(GetNextEntity(_iEntity)) DO
 	// Use a helper function to browse and extract
 	IF IsOk(GetTag(iEntity, 'Pump', _iPumpTag)) THEN
 		EXIT;
@@ -196,7 +196,7 @@ END_WHILE
 ```structured-text
 // Alternatively, browse and cast components manually
 // This allows for multiple searches in one iteration
-WHILE IsOk(_iEntity.Get(j.Next(), _iComp)) DO
+WHILE IsOk(_iEntity.GetNextComp(_iComp)) DO
 	IF IsOk(ICompToISignal(_iComp.Raw, _iSignal)) THEN
 		_ctx.iPumpEventCache := _iSignal;
 	ELSIF IsOk(ICompToIRec(_iComp.Raw, _iReceiver)) THEN
