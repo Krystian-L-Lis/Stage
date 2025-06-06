@@ -12,7 +12,8 @@ END_VAR
     </Method>
     <Method Name="Exe" Id="{8d48a61b-dcd6-4e45-8916-d669dffef6c5}">
       <Declaration><![CDATA[METHOD INTERNAL Exe
-VAR_INPUT
+VAR_OUTPUT
+	iNext: I_ExecuteNode;
 END_VAR
 ]]></Declaration>
     </Method>

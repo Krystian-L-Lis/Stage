@@ -46,15 +46,14 @@ _iNext := iExecute;
     </Method>
     <Method Name="Exe" Id="{c801d5e7-2cd0-4874-a9b5-b0187da63b5c}">
       <Declaration><![CDATA[METHOD INTERNAL Exe
-VAR_INPUT
+VAR_OUTPUT
+	iNext: I_ExecuteNode;
 END_VAR
+
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iExecute.Execute(_nPhase);
-
-IF _iNext <> 0 THEN
-	_iNext.Exe();
-END_IF]]></ST>
+iNext := _iNext;]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{0c4d921f-e0eb-4cc3-851c-9a1e40abf9a1}">

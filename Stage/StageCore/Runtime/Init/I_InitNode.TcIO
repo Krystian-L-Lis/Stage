@@ -12,7 +12,8 @@ END_VAR
     </Method>
     <Method Name="Init" Id="{efc19024-b584-4658-9536-3dfc6a2fb47f}">
       <Declaration><![CDATA[METHOD INTERNAL Init
-VAR_INPUT
+VAR_OUTPUT
+	iNext: I_InitNode;
 END_VAR
 ]]></Declaration>
     </Method>
