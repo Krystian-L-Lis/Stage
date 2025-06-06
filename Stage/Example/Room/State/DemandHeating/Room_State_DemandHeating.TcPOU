@@ -56,7 +56,7 @@ VAR
 	strb		: Strb;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
+        <ST><![CDATA[WHILE IsOk(GetNextEntity(_iEntity)) DO
 	IF IsNone(HasTagOption(_iEntity, 'Heating')) THEN
 		CONTINUE;
 	END_IF

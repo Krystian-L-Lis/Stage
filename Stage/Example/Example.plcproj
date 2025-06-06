@@ -269,6 +269,12 @@
     <PlaceholderReference Include="_StageCore">
       <DefaultResolution>StageCore, * (_)</DefaultResolution>
       <Namespace>StageCore</Namespace>
+      <Parameters>
+        <Parameter ListName="PARAM" xmlns="">
+          <Key>DEBUGMSG_CAP</Key>
+          <Value>500</Value>
+        </Parameter>
+      </Parameters>
     </PlaceholderReference>
     <PlaceholderReference Include="_StageUtils">
       <DefaultResolution>StageUtils, * (_)</DefaultResolution>

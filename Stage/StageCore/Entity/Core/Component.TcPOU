@@ -4,15 +4,92 @@
     <Declaration><![CDATA[(*
 Allows registration of FB implementing `I_Component`. The framework will automatically add this function block to the entity's scope.
 *)
-FUNCTION_BLOCK FINAL Component IMPLEMENTS I_FatComponent
+FUNCTION_BLOCK FINAL Component IMPLEMENTS I_Component
 VAR
-	_iComponent		: I_Component;
-	_iEntity		: I_EntityNode;
+	_iComponent: I_RawComponent;
+	_iEntity: I_Entity;
+	_iNext: I_Component;
+	_iPrev: I_Component;			
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Folder Name="_" Id="{2f64ab46-31e6-48ed-9d95-c4291bcfd948}" />
+    <Property Name="_AsiComponent" Id="{47b9770d-a779-430d-8c42-5bfef0941f79}">
+      <Declaration><![CDATA[PROPERTY _AsiComponent : I_Component
+]]></Declaration>
+      <Get Name="Get" Id="{4a4979e6-2905-4c2b-a12f-d659a7c19d62}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_AsIComponent := THIS^;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="_Entity" Id="{04992c4b-8576-490a-bc5a-4ea7e42d0690}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY _Entity : I_Entity
+]]></Declaration>
+      <Get Name="Get" Id="{4099a2bf-0181-4f7e-83da-372c0e5753e4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Entity := _iEntity;
+
+	]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5c120199-3d0f-4c55-aed9-23d3550af9a3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iEntity := _Entity;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Next" Id="{b697f57c-1907-4eab-afeb-f88c92893472}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY _Next : I_ComponentNode
+]]></Declaration>
+      <Get Name="Get" Id="{fbe2d6bf-25b1-49dd-b699-6801a0cd8f57}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Next := _iNext;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7f04b85c-87a9-43e1-ad09-8aa8b8f0995e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iNext := _Next._AsiComponent;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{49dba3a3-71ab-4665-bf1c-df44eb849e53}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY _Prev : I_ComponentNode
+]]></Declaration>
+      <Get Name="Get" Id="{5188ba92-1868-49bb-ac7c-116358111ebe}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Prev := _iPrev;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{312bfdfd-5d0b-428d-a350-b64bcdfbc76b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPrev := _Prev._AsiComponent;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="Entity" Id="{03f954b7-96dd-486d-bc2c-304b7fa3fabf}">
       <Declaration><![CDATA[(*
 Returns parent Entity.
@@ -23,7 +100,8 @@ PROPERTY Entity : I_Entity]]></Declaration>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Entity := _iEntity._AsIEntity;]]></ST>
+          <ST><![CDATA[Entity := _iEntity;
+]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -38,22 +116,21 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
-	iComponent		: I_Component;
+	iComponent		: I_RawComponent;
 END_VAR
 VAR
 	_nResult		: Result;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iComponent := iComponent;
-_iEntity := _Ec.iUnderConstruction;
 
-IF _iEntity = 0 THEN
-	DebugMsg(iComponent, 'Declared outside Entity scope!');
+IF _Ec.iUnderConstruction = 0 THEN
+	DebugMsg(THIS^, 'Declared outside Entity scope!');
 	RETURN;
 END_IF
 			
-IF IsErr(_RegComp(_iEntity, THIS^), nOut => _nResult) THEN
-	DebugMsg(iComponent, Tc2_Standard.CONCAT('Failed with code: ', ResultToStr(_nResult)));
+IF IsErr(_RegisterComponent(THIS^), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', ResultToStr(_nResult)));
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -61,7 +138,7 @@ END_IF]]></ST>
       <Declaration><![CDATA[(*
 Returns raw I_Component pointer.
 *)
-PROPERTY Raw : I_Component]]></Declaration>
+PROPERTY Raw : I_RawComponent]]></Declaration>
       <Get Name="Get" Id="{ce00bc59-cc2a-41f7-9580-773a33558064}">
         <Declaration><![CDATA[VAR
 END_VAR

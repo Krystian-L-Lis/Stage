@@ -24,8 +24,8 @@ VAR
 	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsErr(_EndEntity(), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('_EndEntity() failed with code: ', ResultToStr(_nResult)));
+        <ST><![CDATA[IF IsErr(_EntityEnd(), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('EndEntity() failed with code: ', ResultToStr(_nResult)));
 END_IF]]></ST>
       </Implementation>
     </Method>

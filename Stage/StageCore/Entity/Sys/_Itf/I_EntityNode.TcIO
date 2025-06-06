@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_EntityNode" Id="{c69b9ec4-3971-4258-8ff6-b55228e1d9e3}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_EntityNode EXTENDS I_Debug
+
+]]></Declaration>
+    <Folder Name="_" Id="{da71af14-1425-4366-a03a-2e7575b43e6a}" />
+    <Property Name="_AsIEntity" Id="{a36bb9e8-31af-4f31-8dc3-6d3805c29c03}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _AsIEntity : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{c3cf54b4-8042-4741-b361-98eafe1dee04}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="_FirstComp" Id="{02fbe986-1bdd-415d-bb4c-ff100c6f2cf1}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _FirstComp : I_ComponentNode]]></Declaration>
+      <Get Name="Get" Id="{2975002c-0cdc-4aa1-b5e9-acee65f8547b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{e87ade3c-21f3-4b70-b95e-77e6bcd74721}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_LastComp" Id="{c1e4c03f-9fb7-4237-84de-642f771cf470}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _LastComp : I_ComponentNode]]></Declaration>
+      <Get Name="Get" Id="{8b32a67b-247b-4f83-a33d-10a5ecb0f5fc}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{5c8f06ab-af96-49c6-9975-37dcc2f94c35}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Next" Id="{e667f3fa-d3de-4c97-8db5-27fcacd5a238}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_EntityNode]]></Declaration>
+      <Get Name="Get" Id="{4c57db17-30bf-4e86-8e10-77f9968b4503}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{fcca1456-e6a2-453d-88ef-a0f9404dce8c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{f2f7accb-05a3-40d7-b5a4-49e3057c46d0}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_EntityNode]]></Declaration>
+      <Get Name="Get" Id="{926a06b1-a5bf-4b7a-bece-89e9ea4eaffa}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{073adfac-a98c-4de6-a2f2-f331fad5a6e2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Size" Id="{442dacda-2b3b-44ad-97d6-2d86502474fc}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Size : UDINT]]></Declaration>
+      <Get Name="Get" Id="{bbf338cc-44ea-4dd3-872c-937a773a321d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{e1783e5c-5753-41d7-a64e-80405fd8388d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_State" Id="{4bbace86-cd64-4c27-8035-1596b4824ba1}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _State : _EntityState]]></Declaration>
+      <Get Name="Get" Id="{91d63009-bbdd-4b02-b445-6bd121e4fccc}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{77096148-17ba-4b28-bc31-3a9dfedc8dd8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Method Name="GetNextComp" Id="{afbd579f-fd8e-4b2e-abcf-16fd7b88f3d9}">
+      <Declaration><![CDATA[(*
+Retrieves a specific component from the entity based on the provided index.  
+Returns `Err.NotFound` if the index is out of range or the entity size is zero.
+Returns `Err.InvRef` if the reference to interface variable is invalid.
+Otherwise returns `Ok`.
+*)
+METHOD GetNextComp : Result
+VAR_INPUT
+	iOut		: REFERENCE TO I_Component;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="GetPrevComp" Id="{74204c05-ffc4-4fb9-8e9e-cba9dc367ab1}">
+      <Declaration><![CDATA[(*
+Retrieves a specific component from the entity based on the provided index.  
+Returns `Err.NotFound` if the index is out of range or the entity size is zero.
+Returns `Err.InvRef` if the reference to interface variable is invalid.
+Otherwise returns `Ok`.
+*)
+METHOD GetPrevComp : Result
+VAR_INPUT
+	iOut		: REFERENCE TO I_Component;
+END_VAR]]></Declaration>
+    </Method>
+    <Property Name="Size" Id="{566027c5-cdc2-4034-8eb4-a311c8741cd8}">
+      <Declaration><![CDATA[(*
+Provides the size of the entity, indicating the number of components it manages.  
+Note: For internal logic purposes, this value is incremented by one beyond the actual component count.
+*)
+PROPERTY Size : UDINT]]></Declaration>
+      <Get Name="Get" Id="{717b31d4-ecc7-4a6c-bc4d-7f7fd087a1fc}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -11,7 +11,7 @@ Returns:
 *)
 FUNCTION ICompToIArg : Result
 VAR_INPUT
-	iIn		: I_Component;
+	iIn		: I_RawComponent;
 	iOut	: REFERENCE TO I_Arg;
 END_VAR
 

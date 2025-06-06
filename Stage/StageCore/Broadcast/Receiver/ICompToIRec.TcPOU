@@ -11,7 +11,7 @@ Returns:
 *)
 FUNCTION ICompToIRec : Result
 VAR_INPUT
-	iIn		: I_Component;
+	iIn		: I_RawComponent;
 	iOut	: REFERENCE TO I_Receiver;
 END_VAR
 ]]></Declaration>

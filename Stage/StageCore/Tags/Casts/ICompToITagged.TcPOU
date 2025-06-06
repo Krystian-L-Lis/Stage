@@ -11,7 +11,7 @@ Returns:
 *)
 FUNCTION ICompToITagged : Result
 VAR_INPUT
-	iIn		: I_Component;
+	iIn		: I_RawComponent;
 	iOut	: REFERENCE TO I_Tagged;
 END_VAR
 ]]></Declaration>

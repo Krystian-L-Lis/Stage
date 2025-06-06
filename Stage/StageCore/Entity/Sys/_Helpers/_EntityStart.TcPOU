@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_EntityStart" Id="{c28027db-299f-41e3-8054-167536697c8b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _EntityStart : Result
+VAR_INPUT
+	iEntity: I_Entity;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Check if the runtime system has been initialized
+IF NOT _Runtime.bInit THEN
+    // If not initialized, return with an initialization error
+    _EntityStart := Err.Init;
+    RETURN;
+END_IF
+
+// Check if the input entity reference is valid
+IF iEntity = 0 THEN
+    // If invalid, return with interface error
+    _EntityStart := Err.Itf0;
+    RETURN;
+END_IF
+
+// Ensure the entity is in the 'Unregistered' state before registering
+IF iEntity._State <> _EntityState.Unregistered THEN
+    // If already registered or in an unexpected state, return error
+    _EntityStart := Err.ItfEq;
+    RETURN;
+END_IF
+
+// If this is the first entity in the scope, initialize the list
+IF _Ec.iLast = 0 THEN
+    _Ec.iFirst := iEntity;       // Set as first entity
+    _Ec.iLast := iEntity;        // Set as last entity
+ELSE
+    // Link the new entity to the end of the current list						| iOther < iLast > 0			| 0 < iEntity > 0 
+    _Ec.iLast._Next := iEntity;  // Set previous last's next to new entity		| iOther < iLast > iEntity		| 0 < iEntity > 0
+    iEntity._Prev := _Ec.iLast;  // Set new entity's previous to old last		| iOther < iLast > iEntity		| iLast < iEntity > 0
+    _Ec.iLast := iEntity;        // Update the last entity pointer				| iLast = iEntity
+END_IF
+
+// Register the entity and prepare for construction
+iEntity._State := _EntityState.Registered;
+_Ec.iUnderConstruction := iEntity;
+
+// Increment the scope construction count
+_Ec.nConstructedScopes := _Ec.nConstructedScopes + 1;
+_EntityStart := Ok;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

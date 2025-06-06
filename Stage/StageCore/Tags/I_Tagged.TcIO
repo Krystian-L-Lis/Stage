@@ -5,7 +5,7 @@
 This component contains readable `I_Tag`.
 Can be casted to `I_Component`.
 *)
-INTERFACE I_Tagged EXTENDS I_Component
+INTERFACE I_Tagged EXTENDS I_RawComponent
 ]]></Declaration>
     <Property Name="Tag" Id="{89260ffc-7430-48a1-b2e1-4c0eefce60ad}">
       <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>

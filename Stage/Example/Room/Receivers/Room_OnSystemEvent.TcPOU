@@ -110,11 +110,10 @@ VAR_INPUT
 	nPhase: INT;
 END_VAR
 VAR
-	i			: Iter(1);
 	_iEntity	: I_Entity;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
+        <ST><![CDATA[WHILE IsOk(GetNextEntity(_iEntity)) DO
 	IF IsFail(HasTagOption(_iEntity, 'Heating')) THEN
 		CONTINUE;
 	END_IF

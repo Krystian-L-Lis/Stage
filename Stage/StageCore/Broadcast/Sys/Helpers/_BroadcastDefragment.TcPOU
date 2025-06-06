@@ -38,7 +38,7 @@ FOR i := 1 TO _Broadcast.nSignalLen DO
 		Tc2_SYSTEM.MEMCPY(
 							ADR(_temp[_nNextCopyId]),
 							ADR(_Broadcast.entry[_Broadcast.iSignal[i]._Start]),
-							SIZEOF(_EcStruct) * _Broadcast.iSignal[i]._Size
+							SIZEOF(_BroadcastStruct) * _Broadcast.iSignal[i]._Size
 						);
 		_Broadcast.iSignal[i]._Start := _nNextCopyId;
 		_nNextCopyId := _Broadcast.iSignal[i]._Size + _nNextCopyId;
@@ -56,14 +56,14 @@ END_IF
 Tc2_System.MEMCPY(
 	ADR(_Broadcast.entry),
 	ADR(_temp),
-	SIZEOF(_EcStruct) * _Broadcast.nRecLen
+	SIZEOF(_BroadcastStruct) * _Broadcast.nRecLen
 );
 
 // 5) Clear the remainging area
 Tc2_System.MEMSET(
 	ADR(_Broadcast.entry[_Broadcast.nRecLen + 1]),
 	0,
-	SIZEOF(_EcStruct) * (Param.RECEIVER_CAP - _Broadcast.nRecLen)
+	SIZEOF(_BroadcastStruct) * (Param.RECEIVER_CAP - _Broadcast.nRecLen)
 );
 
 // 6) First entry in _Ec.comp should always be iFirst

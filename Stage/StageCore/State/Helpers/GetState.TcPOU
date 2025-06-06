@@ -16,8 +16,7 @@ VAR_INPUT
 	iOut		: REFERENCE TO I_State;
 END_VAR
 VAR
-	i			: Iter(1);
-	_iComp		: I_FatComponent;
+	_iComp		: I_Component;
 	cmp			: TagCmp;
 END_VAR
 ]]></Declaration>
@@ -32,7 +31,7 @@ IF NOT __ISVALIDREF(iOut) THEN
 	RETURN;
 END_IF
 
-WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
+WHILE IsOk(iEntity.GetNextComp(_iComp)) DO
 	IF IsOk(ICompToIState(_iComp.Raw, iOut)) THEN
 		IF cmp.Set(iOut.Tag).MatchWcdId(sTagId).IsTrue() THEN
 			GetState := Ok;

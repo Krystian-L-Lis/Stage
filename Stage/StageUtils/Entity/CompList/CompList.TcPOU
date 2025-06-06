@@ -61,7 +61,7 @@ iOut := _iList[nIndex];
 IF iOut <> 0 THEN
 	Get := Ok;
 ELSE
-	Get := Err.NotFound;
+	Get := Err.End;
 END_IF
 ]]></ST>
       </Implementation>

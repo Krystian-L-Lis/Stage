@@ -108,7 +108,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _nLen = 0 THEN
-	Pop := Err.NotFound;
+	Pop := Err.End;
 	RETURN;
 END_IF;
 

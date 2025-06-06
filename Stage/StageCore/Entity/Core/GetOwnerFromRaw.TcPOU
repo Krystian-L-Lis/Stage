@@ -12,13 +12,11 @@ Returns:
 *)
 FUNCTION GetOwnerFromRaw : Result
 VAR_INPUT
-	iIn: I_Component;
+	iIn: I_RawComponent;
 	iOut: REFERENCE TO I_Entity;
 END_VAR
 VAR
-	i			: Iter(1);
-	j			: Iter(1);
-	_iComp		: I_FatComponent;
+	_iComp		: I_Component;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF iIn = 0 THEN
@@ -31,9 +29,8 @@ IF NOT __ISVALIDREF(iOut) THEN
 	RETURN;
 END_IF
 
-WHILE IsOk(GetEntity(i.Next(), iOut)) DO
-	j.Set(1);
-	WHILE IsOk(iOut.Get(j.Next(), _iComp)) DO
+WHILE IsOk(GetNextEntity(iOut)) DO
+	WHILE IsOk(iOut.GetNextComp(_iComp)) DO
 		IF _iComp.Raw = iIn THEN
 			GetOwnerFromRaw := Ok;
 			RETURN;

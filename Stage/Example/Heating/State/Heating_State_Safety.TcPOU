@@ -44,16 +44,14 @@ VAR_INPUT
 	nPhase: INT;
 END_VAR
 VAR
-	i			: Iter(1);
 	_r			: Result;
-	
 	_iEntity	: I_Entity;
 	_iSignal	: I_Signal;
 	
 	
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[WHILE IsOk(GetEntity(i.Next(), _iEntity)) DO
+        <ST><![CDATA[WHILE IsOk(GetNextEntity(_iEntity)) DO
 	IF IsOk(GetSignal(_iEntity, '*._safetyEvent', _iSignal)) THEN
 		IF IsFail(_iSignal.Pair(_safetyRec), nOut => _r) THEN
 			DebugMsg(_iSignal, CONCAT('Could not be paired! Error code: ', TO_STRING(_r)));

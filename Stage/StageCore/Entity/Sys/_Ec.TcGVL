@@ -3,24 +3,26 @@
   <GVL Name="_Ec" Id="{25f16a6e-7888-4e3e-877d-3b7e2fe9f871}">
     <Declaration><![CDATA[// ---------------------------------------------------------------------------
 // GLOBAL DATA BLOCK: _Ec
-// PURPOSE:
-//   This global variable block stores the primary structures for the entity-
-//   component system. "iEntity" is an array of I_EntityNode, each describing
-//   an entity's allocated range and metadata. "comp" is an array of ST_EcObject,
-//   representing the actual slots for components or entity headers.
-// ---------------------------------------------------------------------------
+// Purpose: Stores and manages the state and structure of all registered entities 
+//          and tracks the current scope under construction.
+
+// This attribute ensures variables are accessed using qualified names (e.g., _Ec.iFirst)
 {attribute 'qualified_only'}
-VAR_GLOBAL INTERNAL
-    iEntity     : ARRAY[1..Param.ENTITY_CAP] OF I_EntityNode;   // All entity nodes
-    comp        : ARRAY[1..Param.COMP_CAP] OF _EcStruct;      // Slots for components/entity headers
-    
-    iFirst      : I_EntityNode;  // Tracks the first (leftmost) allocated entity
-    
-    nEntityLen  : UDINT;         // Number of active entities
-    nCompLen    : UDINT;         // Number of allocated slots in 'comp' array
-	
-	iUnderConstruction	: I_EntityNode; // Upon program initialization stores the entity that is being constructed.
-	nConstructedScopes	: UDINT; // Keeps number of Entity scopes under construction	
+
+VAR_GLOBAL INTERNAL    
+    // Reference to the first registered entity in the global entity list
+    iFirst: I_EntityNode;
+
+    // Reference to the last registered entity in the global entity list
+    iLast: I_EntityNode;
+
+    // Points to the entity currently being constructed
+    // Used to add components or nested entities during initialization
+    iUnderConstruction: I_EntityNode;
+
+    // Tracks how many nested entity scopes are currently under construction
+    // Used to manage hierarchical or recursive construction logic
+    nConstructedScopes: UDINT;
 END_VAR
 ]]></Declaration>
   </GVL>

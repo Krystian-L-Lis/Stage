@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="_EntityExtend" Id="{7b9292d4-6363-4ffd-a284-be002a3ef692}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION INTERNAL _EntityExtend : Result
+VAR_INPUT
+	iEntity	: I_Entity;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Check if the runtime system has been initialized
+IF NOT _Runtime.bInit THEN
+    // If not initialized, return with an initialization error
+    _EntityExtend := Err.Init;
+    RETURN;
+END_IF
+
+// Check if the provided entity reference is valid
+IF iEntity = 0 THEN
+    // If invalid, return with interface error
+    _EntityExtend := Err.Itf0;
+    RETURN;
+END_IF
+
+// Ensure the entity is in the 'Completed' state before proceeding
+IF iEntity._State <> _EntityState.Completed THEN
+    // If not completed, return with incorrect argument error
+    _EntityExtend := Err.IncArg;
+    RETURN;
+END_IF
+
+// Mark the entity as 'Registered' for extension
+iEntity._State := _EntityState.Registered;
+
+// Set the entity as the current one under construction
+_Ec.iUnderConstruction := iEntity;
+
+// Increment the scope construction counter
+_Ec.nConstructedScopes := _Ec.nConstructedScopes + 1;
+_EntityExtend := Ok;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

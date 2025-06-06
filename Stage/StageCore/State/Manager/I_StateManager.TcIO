@@ -7,7 +7,7 @@ Manages the lifecycle and transitions of states within an entity.
 Supports queuing state change requests, triggering state transitions, and broadcasting state change events.  
 Adds a `_stateChangeEvent` Signal to the owning `I_Entity` during initialization, enabling external components to listen for state changes.
 *)
-INTERFACE I_StateManager EXTENDS I_Debug, I_Component
+INTERFACE I_StateManager EXTENDS I_Debug, I_RawComponent
 ]]></Declaration>
     <Folder Name="_" Id="{d37276ba-b4fd-4c01-85c1-b731864bfd31}" />
     <Folder Name="Request" Id="{87840c05-c4d3-4f53-8cbe-0a9fd43b4889}" />

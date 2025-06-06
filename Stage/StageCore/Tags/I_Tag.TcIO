@@ -9,7 +9,7 @@ Example:
 - Reflection: proj.plc.MAIN.functionBlock[*]._tag
 - Path: MAIN.functionBlock.5
 *)
-INTERFACE I_Tag EXTENDS I_Debug, I_Component, I_Arg
+INTERFACE I_Tag EXTENDS I_Debug, I_RawComponent, I_Arg
 ]]></Declaration>
     <Property Name="Id" Id="{a68c541f-7bc5-477f-8c26-6a17d7eb2271}">
       <Declaration><![CDATA[// Read address path without Option segment.

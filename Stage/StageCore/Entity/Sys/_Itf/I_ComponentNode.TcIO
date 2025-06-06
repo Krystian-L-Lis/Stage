@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_ComponentNode" Id="{293f8277-9be1-49c8-a36c-2a4c4768ebf2}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_ComponentNode EXTENDS I_Debug
+]]></Declaration>
+    <Property Name="_AsiComponent" Id="{bee533d2-aa31-4bed-8f17-f26207ba6180}">
+      <Declaration><![CDATA[PROPERTY _AsiComponent : I_Component]]></Declaration>
+      <Get Name="Get" Id="{dee337c3-f9bf-42ee-9e16-82295ff3d5d5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="_Entity" Id="{670eeaaf-1eb0-40dc-8308-df4ae8a4caa3}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Entity : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{03ff2e45-cbaa-495a-abce-74a0cb312780}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{118ba9f1-9041-4744-8ad9-0c110e8c3ce8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Next" Id="{fe269dd5-7715-4956-a298-8c9ea39c5bcb}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_ComponentNode]]></Declaration>
+      <Get Name="Get" Id="{eb0cb7a6-dbf9-4042-b35c-ff7f4f6b5171}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{817b0857-f5b8-49c5-96a8-c67347e8cc6e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{b3c81385-4094-4de3-9289-9340b533a7d9}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_ComponentNode]]></Declaration>
+      <Get Name="Get" Id="{53c88c69-05c3-440e-a311-9d0ee9073f04}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{030fd2dd-439f-4b6a-b9ba-adba15c65969}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

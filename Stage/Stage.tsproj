@@ -16,13 +16,13 @@
 		</System>
 		<Plc>
 			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="StageUtils" PrjFilePath="StageUtils\StageUtils.plcproj" TmcFilePath="StageUtils\StageUtils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{FAEF55F2-72E1-CBB0-E60D-0E9245617A35}" TmcPath="Utils\Utils.tmc">
+				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{2452B7A6-7B39-B71F-13E7-D92E665405DD}" TmcPath="StageUtils\StageUtils.tmc">
 					<Name>StageUtils Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>
 			<Project GUID="{55641B74-B2E9-428E-B2CD-6572D9010B47}" Name="Example" PrjFilePath="Example\Example.plcproj" TmcFilePath="Example\Example.tmc" ReloadTmc="true" AmsPort="865" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502380" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{712EF5FE-BF2A-CD1F-58EE-0DBA354BAE1A}" TmcPath="Example\Example.tmc">
+				<Instance Id="#x08502380" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{D561F292-8E8F-9941-9E7A-DCB48F5C5228}" TmcPath="Example\Example.tmc">
 					<Name>Example Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -52,13 +52,13 @@
 				</Instance>
 			</Project>
 			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="StageCore" PrjFilePath="StageCore\StageCore.plcproj" TmcFilePath="StageCore\StageCore.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{45D90E22-CD00-061F-4851-F9B3F9B82D4B}" TmcPath="Core\Core.tmc">
+				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{C03DF894-91F6-FEA0-F165-8C84F31E5096}" TmcPath="StageCore\StageCore.tmc">
 					<Name>StageCore Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>
 			<Project GUID="{8AE6D1C8-5585-479F-9D29-96A84C5D81BA}" Name="Test" PrjFilePath="Test\Test.plcproj" TmcFilePath="Test\Test.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{A89BF87E-A508-8249-8805-CA518D8BF638}" TmcPath="Test\Test.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{A32BEFDF-8241-F245-FE7D-D6D1AB48806D}" TmcPath="Test\Test.tmc">
 					<Name>Test Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

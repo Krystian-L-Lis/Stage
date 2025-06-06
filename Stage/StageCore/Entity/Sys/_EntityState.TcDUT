@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="_EntityState" Id="{74c03052-379c-4bb4-b9b6-d250c4ffb73e}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE INTERNAL _EntityState :
+(
+	Unregistered,
+	Registered,
+	Completed
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

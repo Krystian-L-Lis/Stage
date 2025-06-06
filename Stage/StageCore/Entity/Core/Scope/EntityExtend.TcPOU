@@ -26,8 +26,8 @@ VAR
 	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsErr(_ExtendEntity(iEntity), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('_ExtendEntity(I_EntityNode) failed with code: ', ResultToStr(_nResult)));
+        <ST><![CDATA[IF IsErr(_EntityExtend(iEntity._AsIEntity), nOut => _nResult) THEN
+	DebugMsg(THIS^, Tc2_Standard.CONCAT('ExtendEntity(I_EntityNode) failed with code: ', ResultToStr(_nResult)));
 END_IF]]></ST>
       </Implementation>
     </Method>

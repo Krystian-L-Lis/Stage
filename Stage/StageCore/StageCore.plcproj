@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>2.0.0</ProjectVersion>
+    <ProjectVersion>3.0.0</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -198,59 +198,56 @@
     <Compile Include="Entity\Core\Component.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Core\Entity\EntityEnd.TcPOU">
+    <Compile Include="Entity\Core\Scope\EntityEnd.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Core\Entity\EntityExtend.TcPOU">
+    <Compile Include="Entity\Core\Scope\EntityExtend.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Core\Entity\EntityStart.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entity\Core\I_FatComponent.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entity\Core\GetOwnerFromRaw.TcPOU">
+    <Compile Include="Entity\Core\Scope\EntityStart.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\Core\I_Component.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Core\I_EntityNode.TcIO">
+    <Compile Include="Entity\Core\GetOwnerFromRaw.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Core\I_RawComponent.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\Core\I_Entity.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Core\GetEntity.TcPOU">
+    <Compile Include="Entity\Core\GetNextEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Sys\_EcStruct.TcDUT">
+    <Compile Include="Entity\Core\GetPrevEntity.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Sys\_EcUnion.TcDUT">
+    <Compile Include="Entity\Sys\_EntityState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\Sys\_Ec.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Entity\Sys\_Helpers\_EcDefragment.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_EntityEnd.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Sys\_Helpers\_EcGetBestFit.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_EntityExtend.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Sys\_Helpers\_ExtendEntity.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_EntityStart.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Sys\_Helpers\_RegComp.TcPOU">
+    <Compile Include="Entity\Sys\_Helpers\_RegisterComponent.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Sys\_Helpers\_StartEntity.TcPOU">
+    <Compile Include="Entity\Sys\_Itf\I_ComponentNode.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Sys\_Helpers\_EndEntity.TcPOU">
+    <Compile Include="Entity\Sys\_Itf\I_EntityNode.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Iter\Iter.TcPOU">
@@ -277,6 +274,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Result\IsSome.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Result\IsEnd.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Result\Result.TcDUT">
@@ -428,9 +428,10 @@
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
     <Folder Include="Entity\Core" />
-    <Folder Include="Entity\Core\Entity" />
+    <Folder Include="Entity\Core\Scope" />
     <Folder Include="Entity\Sys" />
     <Folder Include="Callable" />
+    <Folder Include="Entity\Sys\_Itf" />
     <Folder Include="Entity\Sys\_Helpers" />
     <Folder Include="Iter" />
     <Folder Include="Arg" />
@@ -461,6 +462,11 @@
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="StageCore.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

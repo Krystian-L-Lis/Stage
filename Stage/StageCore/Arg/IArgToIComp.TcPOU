@@ -12,7 +12,7 @@ Returns:
 FUNCTION IArgToIComp : Result
 VAR_INPUT
 	iIn		: I_Arg;
-	iOut	: REFERENCE TO I_Component;
+	iOut	: REFERENCE TO I_RawComponent;
 END_VAR
 
 ]]></Declaration>

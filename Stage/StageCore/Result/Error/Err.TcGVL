@@ -18,6 +18,7 @@ VAR_GLOBAL CONSTANT
 	Init			: Result := -14; // Initialisation error
 	NotFound		: Result := -15; // Item not found
 	InvItf			: Result := -16; // Invalid interface
+	End				: Result := -17; // End of collection
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

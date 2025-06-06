@@ -14,8 +14,7 @@ VAR_INPUT
 	sOption		: Str;
 END_VAR
 VAR
-	i			: Iter(1);
-	_iComp		: I_FatComponent;
+	_iComp		: I_Component;
 	_iTag		: I_Tag;
 END_VAR
 ]]></Declaration>
@@ -25,7 +24,7 @@ END_VAR
 	RETURN;
 END_IF
 
-WHILE IsOk(iEntity.Get(i.Next(), _iComp)) DO
+WHILE IsOk(iEntity.GetNextComp(_iComp)) DO
 	IF IsOk(ICompToITag(_iComp.Raw, _iTag)) THEN
 		IF _iTag.Option = sOption THEN
 			HasTagOption := Ok;
