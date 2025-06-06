@@ -85,15 +85,13 @@ END_IF
     </Method>
     <Method Name="Init" Id="{8876f358-5cbf-4b42-b262-c64dff58b017}">
       <Declaration><![CDATA[METHOD INTERNAL Init
-VAR_INPUT
+VAR_OUTPUT
+	iNext: I_InitNode;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iInit.Init(_nPhase);
-
-IF _iNext <> 0 THEN
-	_iNext.Init();
-END_IF]]></ST>
+iNext := _iNext;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Phase" Id="{f49efe92-0704-4b7a-bf33-033e2ee1f8b6}">
