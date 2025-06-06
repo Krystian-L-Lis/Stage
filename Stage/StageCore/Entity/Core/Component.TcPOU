@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Component" Id="{fa960ebd-c1a5-43b6-93f9-37986edc8a8e}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-Allows registration of FB implementing `I_Component`. The framework will automatically add this function block to the entity's scope.
+Allows registration of FB implementing I_RawComponent. The framework will automatically add this function block to the entity's scope. Implements I_Component.
 *)
 FUNCTION_BLOCK FINAL Component IMPLEMENTS I_Component
 VAR
@@ -136,7 +136,7 @@ END_IF]]></ST>
     </Method>
     <Property Name="Raw" Id="{f0629eb7-2548-4aad-92a4-4ae12d6f0db5}">
       <Declaration><![CDATA[(*
-Returns raw I_Component pointer.
+Returns raw I_RawComponent pointer.
 *)
 PROPERTY Raw : I_RawComponent]]></Declaration>
       <Get Name="Get" Id="{ce00bc59-cc2a-41f7-9580-773a33558064}">

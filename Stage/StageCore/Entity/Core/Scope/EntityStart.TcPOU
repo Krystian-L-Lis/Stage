@@ -174,10 +174,13 @@ END_IF
     </Method>
     <Method Name="GetNextComp" Id="{9c6bf518-2f43-45c9-9f83-38ff2c39a1f8}">
       <Declaration><![CDATA[(*
-Retrieves a specific component from the entity based on the provided index.  
-Returns `Err.NotFound` if the index is out of range or the entity size is zero.
-Returns `Err.InvRef` if the reference to interface variable is invalid.
-Otherwise returns `Ok`.
+Description: Retrieves a next component after the inputted one or first component if referenced value is 0. 
+Returns:
+- Ok - Returns upon success, updates referenced value with new component.
+- Err.InvRef - Invalid output reference.
+- Err.ItfEq - Provided interface pointer doesn't belong to the queried entity. Nulls reference.
+- Err.NotFound - The entity doesn't contain any components. Nulls reference.
+- Err.End - No more components. Nulls reference.
 *)
 METHOD GetNextComp : Result
 VAR_INPUT
@@ -224,10 +227,13 @@ END_IF
     </Method>
     <Method Name="GetPrevComp" Id="{eb97c05c-8131-460b-a4e4-af8eb0fd3c47}">
       <Declaration><![CDATA[(*
-Retrieves a specific component from the entity based on the provided index.  
-Returns `Err.NotFound` if the index is out of range or the entity size is zero.
-Returns `Err.InvRef` if the reference to interface variable is invalid.
-Otherwise returns `Ok`.
+Description: Retrieves a previous component before the inputted one or last component if referenced value is 0.
+Returns:
+- Ok - Returns upon success, updates referenced value with new component.
+- Err.InvRef - Invalid output reference.
+- Err.ItfEq - Provided interface pointer doesn't belong to the queried entity. Nulls reference.
+- Err.NotFound - The entity doesn't contain any components. Nulls reference.
+- Err.End - No more components. Nulls reference.
 *)
 METHOD GetPrevComp : Result
 VAR_INPUT

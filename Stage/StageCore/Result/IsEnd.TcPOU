@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="IsEnd" Id="{64e2b328-2c41-4ea4-acc1-b6d7b61cfb9d}" SpecialFunc="None">
-    <Declaration><![CDATA[// Return TRUE for any value other than None (0).
+    <Declaration><![CDATA[// Return TRUE for nIn = Err.End.
 // Optionally carries the value over to nOut for further processing.
 FUNCTION IsEnd : BOOL
 VAR_INPUT

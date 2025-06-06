@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="GetNextEntity" Id="{fc221c64-d091-4a2b-8571-1e98f77e9d44}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION GetNextEntity : Result
+    <Declaration><![CDATA[(*
+Retrieves the I_Entity instance. It is either next entity in relation to the inputted one or first entity if passed interface pointer contains null.
+
+Results:
+- Ok - Success. Replaces value of iEntity with the first or following entity.
+- Err.InvRef - Invalid reference.
+- Err.Itf0 - No entity. Nulls passed interface pointer.
+- Err.End - End of collection. Nulls passed interface pointer.
+*)
+FUNCTION GetNextEntity : Result
 VAR_INPUT
 	iEntity: REFERENCE TO I_Entity;
 END_VAR

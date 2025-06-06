@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Component" Id="{9272b1ca-5046-44a6-8849-d09e16589182}">
     <Declaration><![CDATA[(*
-Stores raw I_Component value and additional metadata.
+Stores raw I_RawComponent value and additional metadata.
 *)
 INTERFACE I_Component EXTENDS I_ComponentNode
 ]]></Declaration>
@@ -17,7 +17,7 @@ PROPERTY Entity : I_Entity]]></Declaration>
     </Property>
     <Property Name="Raw" Id="{7d416757-8acb-4146-ae12-90b882db77a8}">
       <Declaration><![CDATA[(*
-Returns raw I_Component pointer.
+Returns raw I_RawComponent pointer.
 *)
 PROPERTY Raw : I_RawComponent]]></Declaration>
       <Get Name="Get" Id="{e25140a9-a228-42c9-9678-c44e1c0faa3c}">
