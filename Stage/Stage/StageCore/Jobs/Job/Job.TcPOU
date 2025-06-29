@@ -69,7 +69,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[OnExit();]]></ST>
+        <ST><![CDATA[_iNext := 0;
+_iPrev := 0;
+_eState := JobState.Idle;
+OnExit();
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="_OnRun" Id="{282b1123-78b3-4f76-80ac-354db08c0351}" FolderPath="_\">
