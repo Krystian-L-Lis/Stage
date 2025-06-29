@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Worker" Id="{94c29806-994b-4170-bdc4-d83dfeeb2cc1}">
+    <Declaration><![CDATA[(*
+An interface that represents an object that schedules jobs execution.
+*)
+INTERFACE I_Worker EXTENDS I_Debug
+]]></Declaration>
+    <Method Name="Defer" Id="{80f1612d-56e6-4bb1-9dcb-76b9751ce3a4}">
+      <Declaration><![CDATA[(*
+Defer the Job. Move it to the end of queue.
+Returns:
+- Ok - Success
+- Err.Itf0 - iJob = 0
+- Err.NoMatch = iJob.Worker <> THIS^
+*)
+METHOD Defer : Result
+VAR_INPUT
+    iJob : I_JobNode;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Dequeue" Id="{cdc11a47-7ecb-4f7f-8d99-126d6abb5e40}">
+      <Declaration><![CDATA[(*
+Remove job from the queue and resets it.
+Returns:
+- Ok - Success
+- Err.Itf0 - iJob = 0
+- Err.NoMatch - iJob.Worker <> THIS^
+- Err.IncArg - iJob.State = TaskState.Idle
+*)
+METHOD Dequeue : Result
+VAR_INPUT
+	iJob: I_JobNode;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Enqueue" Id="{4681d564-bba1-46c7-be7e-da2f99dfe5b6}">
+      <Declaration><![CDATA[(*
+Add Job to queue.
+Returns:
+- Ok - Success
+- Err.Itf0 - iJob = 0
+- Err.NoMatch - iJob.Worker <> THIS^
+- Err.IncArg - iJob.State <> TaskState.Idle 
+*)
+METHOD Enqueue : Result
+VAR_INPUT
+	iJob: I_JobNode;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="First" Id="{2ca3ae75-1785-4c11-b5ff-26e6e738b7cd}">
+      <Declaration><![CDATA[(*
+Returns first the Job in queue.
+*)
+PROPERTY First : I_JobNode]]></Declaration>
+      <Get Name="Get" Id="{46743194-37e1-443b-9b56-a029216af33f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

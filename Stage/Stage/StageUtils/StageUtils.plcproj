@@ -89,11 +89,6 @@
     <Folder Include="Math" />
     <Folder Include="Time" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="StageUtils.tmc">
-      <SubType>Content</SubType>
-    </None>
-  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>

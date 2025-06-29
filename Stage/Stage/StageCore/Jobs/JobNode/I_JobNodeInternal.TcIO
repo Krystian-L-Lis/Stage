@@ -33,13 +33,19 @@ END_VAR
 ]]></Declaration>
     </Method>
     <Property Name="State" Id="{40ba106d-f5cb-44d4-93ab-1d5747fe9c61}">
-      <Declaration><![CDATA[PROPERTY State : TaskState]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns Jobs state
+*)
+PROPERTY State : JobState]]></Declaration>
       <Get Name="Get" Id="{47eba237-e8ec-4d0a-98fa-6628f9e6e51e}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
     <Property Name="Worker" Id="{ebd0c1e4-e352-4924-86df-3b078a72350c}">
-      <Declaration><![CDATA[PROPERTY Worker : I_Worker]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns Worker working on this job
+*)
+PROPERTY Worker : I_Worker]]></Declaration>
       <Get Name="Get" Id="{9cd67c7f-916b-4d21-9b45-6dd0590dadaf}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

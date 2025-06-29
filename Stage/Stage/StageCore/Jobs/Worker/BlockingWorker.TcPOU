@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="BlockingWorker" Id="{4df31f95-b8c5-4f13-a754-0d5e2a3c4dcf}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK BlockingWorker
+    <Declaration><![CDATA[(*
+Worker wrapper that runs job until completition.
+*)
+FUNCTION_BLOCK BlockingWorker
 VAR
 	_scheduler: Worker;
 END_VAR
@@ -9,6 +12,20 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Property Name="Base" Id="{428f8038-c731-4fcf-8d16-6aea864f3d2f}">
+      <Declaration><![CDATA[(*
+Returns internal Worker.
+*)
+PROPERTY Base : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{d8fdf29e-8280-45d4-aace-254a56c73568}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Base := _scheduler;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Run" Id="{b01bdd15-c311-4810-9031-f686d33604bb}">
       <Declaration><![CDATA[METHOD Run
 VAR_INPUT
@@ -20,7 +37,7 @@ END_VAR
 END_IF
 
 CASE _scheduler.First.State OF
-	TaskState.Completed, TaskState.Aborted:
+	JobState.Completed, JobState.Aborted:
 		_scheduler.Dequeue(_scheduler.First);
 END_CASE
 
@@ -38,16 +55,5 @@ END_CASE
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Scheduler" Id="{428f8038-c731-4fcf-8d16-6aea864f3d2f}">
-      <Declaration><![CDATA[PROPERTY Scheduler : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{d8fdf29e-8280-45d4-aace-254a56c73568}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Scheduler := _scheduler;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
   </POU>
 </TcPlcObject>

@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Job" Id="{d189be26-c4d1-421c-b40d-0f9c5d388d23}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Job IMPLEMENTS I_JobNode
+    <Declaration><![CDATA[(*
+JobNode manages the state of a job and it's execution.
+*)
+FUNCTION_BLOCK Job IMPLEMENTS I_JobNode
 VAR
 	_iNext: I_JobNode;
 	_iPrev: I_JobNode;
 	_iWorker: I_Worker;
 	_iTask: I_Job;
-	_eState: TaskState;
+	_eState: JobState;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -61,7 +64,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[_iNext := 0;
 _iPrev := 0;
-_eState := TaskState.Idle;]]></ST>
+_eState := JobState.Idle;]]></ST>
       </Implementation>
     </Method>
     <Method Name="_Run" Id="{282b1123-78b3-4f76-80ac-354db08c0351}" FolderPath="_\">
@@ -70,38 +73,46 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_eState := TaskState.Running;
+        <ST><![CDATA[_eState := JobState.Running;
 _iTask.Run();
-_eState := TaskState.Ready;]]></ST>
+_eState := JobState.Ready;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Abort" Id="{c1b254d3-82b7-426a-bcdd-c337343702ca}">
-      <Declaration><![CDATA[METHOD Abort : Result
+      <Declaration><![CDATA[(*
+Notifies scheduler to aboort this job.
+Returns Err.IncArg on State = Idle
+*)
+METHOD Abort : Result
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _eState = TaskState.Idle THEN
+        <ST><![CDATA[IF _eState = JobState.Idle THEN
 	Abort := Err.IncArg;
 	RETURN;
 END_IF
 
-_eState := TaskState.Aborted;
+_eState := JobState.Aborted;
 Abort := Ok;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Complete" Id="{aabcf2a2-bc4a-433a-851b-c2329283fbd4}">
-      <Declaration><![CDATA[METHOD Complete : Result
+      <Declaration><![CDATA[(*
+Notifies scheduler that the jobs is completed.
+Returns Err.IncArg on State <> Running
+*)
+METHOD Complete : Result
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _eState <> TaskState.Running THEN
+        <ST><![CDATA[IF _eState <> JobState.Running THEN
 	Complete := Err.IncArg;
 	RETURN;
 END_IF
 
-_eState := TaskState.Completed;
+_eState := JobState.Completed;
 Complete := Ok;]]></ST>
       </Implementation>
     </Method>
@@ -110,6 +121,7 @@ Complete := Ok;]]></ST>
 //The return value is not evaluated. For a specific influence, you can also declare the
 //methods explicitly and provide additional code there with the standard initialization
 //code. You can evaluate the return value.
+{attribute 'hide'}
 METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
@@ -124,12 +136,17 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Start" Id="{64d9d087-d2ba-4baf-8149-dc62e899d49b}">
-      <Declaration><![CDATA[METHOD Start : Result
+      <Declaration><![CDATA[(*
+Starts the job and adds it to Workers queue.
+Returns Err.IncArg on State <> Idle.
+Returns Err.Itf0 on Worker = 0.
+*)
+METHOD Start : Result
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _eState <> TaskState.Idle THEN
+        <ST><![CDATA[IF _eState <> JobState.Idle THEN
 	Start := Err.IncArg;
 	RETURN;
 END_IF
@@ -140,12 +157,15 @@ IF _iWorker = 0 THEN
 END_IF
 
 IF IsOk(_iWorker.Enqueue(THIS^), nOut => Start) THEN
-	_eState := TaskState.Ready;
+	_eState := JobState.Ready;
 END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="State" Id="{6447f694-df9c-483c-9624-6f2e9a8b97e7}" FolderPath="Job\">
-      <Declaration><![CDATA[PROPERTY State : TaskState]]></Declaration>
+      <Declaration><![CDATA[(*
+Returns Jobs state
+*)
+PROPERTY State : JobState]]></Declaration>
       <Get Name="Get" Id="{bd91dcf6-8939-49c4-b291-29f8a1b3b103}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -156,7 +176,10 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Worker" Id="{62c059a9-8170-459f-9379-8371a51c831c}" FolderPath="Job\">
-      <Declaration><![CDATA[PROPERTY Worker : I_Worker
+      <Declaration><![CDATA[(*
+Returns Worker working on this job
+*)
+PROPERTY Worker : I_Worker
 ]]></Declaration>
       <Get Name="Get" Id="{927952be-4625-4ef1-867b-591ea7d3dec4}">
         <Declaration><![CDATA[VAR
@@ -172,7 +195,7 @@ VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[IF _eState = TaskState.Idle THEN
+          <ST><![CDATA[IF _eState = JobState.Idle THEN
 	_iWorker := Worker;
 END_IF]]></ST>
         </Implementation>

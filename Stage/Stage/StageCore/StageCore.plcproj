@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>3.2.0</ProjectVersion>
+    <ProjectVersion>3.2.1</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -406,31 +406,31 @@
     <Compile Include="Tags\Tag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Worker\Base\Worker.TcPOU">
+    <Compile Include="Jobs\Worker\Base\Worker.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Worker\Base\I_Worker.TcIO">
+    <Compile Include="Jobs\Worker\Base\I_Worker.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Worker\LoopWorker.TcPOU">
+    <Compile Include="Jobs\Worker\LoopWorker.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Worker\BlockingWorker.TcPOU">
+    <Compile Include="Jobs\Worker\BlockingWorker.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\TaskNode\I_JobNode.TcIO">
+    <Compile Include="Jobs\JobNode\I_JobNode.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\TaskNode\I_JobNodeInternal.TcIO">
+    <Compile Include="Jobs\JobNode\I_JobNodeInternal.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\TaskNode\Job.TcPOU">
+    <Compile Include="Jobs\JobNode\Job.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\TaskState.TcDUT">
+    <Compile Include="Jobs\JobState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Job\I_Job.TcIO">
+    <Compile Include="Jobs\Job\I_Job.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="_\Param.TcGVL">
@@ -485,20 +485,15 @@
     <Folder Include="Strings\Strf" />
     <Folder Include="Tags\Helpers" />
     <Folder Include="Tags\Casts" />
-    <Folder Include="Tasks" />
-    <Folder Include="Tasks\Worker" />
-    <Folder Include="Tasks\Worker\Base" />
-    <Folder Include="Tasks\TaskNode" />
-    <Folder Include="Tasks\Job" />
+    <Folder Include="Jobs" />
+    <Folder Include="Jobs\Worker" />
+    <Folder Include="Jobs\Worker\Base" />
+    <Folder Include="Jobs\JobNode" />
+    <Folder Include="Jobs\Job" />
     <Folder Include="_" />
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="StageCore.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

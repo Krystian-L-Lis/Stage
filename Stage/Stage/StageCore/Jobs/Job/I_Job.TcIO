@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Job" Id="{87a9768c-0425-48bc-8261-07f4f0c86d1c}">
-    <Declaration><![CDATA[INTERFACE I_Job EXTENDS I_Debug
+    <Declaration><![CDATA[(*
+An interface that represents an object that can be executed by Workers.
+*)
+INTERFACE I_Job EXTENDS I_Debug
 ]]></Declaration>
     <Method Name="Run" Id="{c44a7cd6-6690-4a0e-afed-d33e68feddb0}">
-      <Declaration><![CDATA[METHOD Run : TaskState]]></Declaration>
+      <Declaration><![CDATA[(*
+Job implementation.
+*)
+METHOD Run : JobState]]></Declaration>
     </Method>
   </Itf>
 </TcPlcObject>
