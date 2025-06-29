@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>3.1.0</ProjectVersion>
+    <ProjectVersion>3.2.0</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -406,6 +406,33 @@
     <Compile Include="Tags\Tag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\Worker\Base\Worker.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Worker\Base\I_Worker.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Worker\LoopWorker.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Worker\BlockingWorker.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\TaskNode\I_JobNode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\TaskNode\I_JobNodeInternal.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\TaskNode\Job.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\TaskState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Job\I_Job.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="_\Param.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -458,6 +485,11 @@
     <Folder Include="Strings\Strf" />
     <Folder Include="Tags\Helpers" />
     <Folder Include="Tags\Casts" />
+    <Folder Include="Tasks" />
+    <Folder Include="Tasks\Worker" />
+    <Folder Include="Tasks\Worker\Base" />
+    <Folder Include="Tasks\TaskNode" />
+    <Folder Include="Tasks\Job" />
     <Folder Include="_" />
     <Folder Include="Tags">
       <ExcludeFromBuild>false</ExcludeFromBuild>

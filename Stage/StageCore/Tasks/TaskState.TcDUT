@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="TaskState" Id="{cb7f1807-8f28-408f-8949-81e30fc2ee8b}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE TaskState :
+(
+	Error,
+	Idle,
+	Ready,
+	Running,
+	Aborted,
+	Completed
+) BYTE := Idle;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_JobNodeInternal" Id="{2ce45242-2ee2-48fc-8798-89f355749e56}">
+    <Declaration><![CDATA[INTERFACE INTERNAL I_JobNodeInternal EXTENDS I_Debug]]></Declaration>
+    <Property Name="_Next" Id="{87fef1e3-f6f6-46a4-b39e-7c0b718fd672}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_JobNode]]></Declaration>
+      <Get Name="Get" Id="{2d0ace25-2d9c-4ce3-a2c5-ea616c65d679}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{4e927b31-f06b-4ab1-a402-ebcc7ca91a3c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{dd5d9bdd-695b-471b-8165-18c58991ba5f}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_JobNode]]></Declaration>
+      <Get Name="Get" Id="{bb9f53b5-605e-454a-b1c0-4ff5189e2dea}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{cfc6a368-ef90-45f9-8ff0-40461c10d82c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Method Name="_Reset" Id="{ecc3108a-8c9f-4978-9f7b-ef1f16fb83a3}">
+      <Declaration><![CDATA[METHOD INTERNAL _Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="_Run" Id="{e7f78728-5390-480e-8201-6cfd17b69308}">
+      <Declaration><![CDATA[METHOD INTERNAL _Run
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="State" Id="{40ba106d-f5cb-44d4-93ab-1d5747fe9c61}">
+      <Declaration><![CDATA[PROPERTY State : TaskState]]></Declaration>
+      <Get Name="Get" Id="{47eba237-e8ec-4d0a-98fa-6628f9e6e51e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Worker" Id="{ebd0c1e4-e352-4924-86df-3b078a72350c}">
+      <Declaration><![CDATA[PROPERTY Worker : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{9cd67c7f-916b-4d21-9b45-6dd0590dadaf}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

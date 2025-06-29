@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Job" Id="{d189be26-c4d1-421c-b40d-0f9c5d388d23}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Job IMPLEMENTS I_JobNode
+VAR
+	_iNext: I_JobNode;
+	_iPrev: I_JobNode;
+	_iWorker: I_Worker;
+	_iTask: I_Job;
+	_eState: TaskState;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="_" Id="{788cea3f-9c89-4c58-9f8b-26391a806f35}" />
+    <Folder Name="Job" Id="{30958162-07b8-4f88-92e6-ce23182d425b}" />
+    <Property Name="_Next" Id="{5e0a6afe-9bd8-403e-ae27-c1e3514413ad}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_JobNode
+]]></Declaration>
+      <Get Name="Get" Id="{56f40b47-08b4-4d87-acff-0407d2abd968}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Next := _iNext;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{ce3e5deb-8114-42c1-92b7-0c5fd1201809}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iNext := _Next;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{ab52e9e9-e1b8-4e36-a7cc-c3ffe7b8a011}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_JobNode
+]]></Declaration>
+      <Get Name="Get" Id="{e01b98b1-7d87-4f71-b8c9-d2aa7f7c1966}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Prev := _iPrev;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{79a3a2b2-e6f3-4c9e-ab65-e3ea0bffc457}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPrev := _Prev;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="_Reset" Id="{a0ed9277-faf0-472d-a5ff-d71c18d5c81a}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _Reset
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iNext := 0;
+_iPrev := 0;
+_eState := TaskState.Idle;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_Run" Id="{282b1123-78b3-4f76-80ac-354db08c0351}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _Run
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_eState := TaskState.Running;
+_iTask.Run();
+_eState := TaskState.Ready;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Abort" Id="{c1b254d3-82b7-426a-bcdd-c337343702ca}">
+      <Declaration><![CDATA[METHOD Abort : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _eState = TaskState.Idle THEN
+	Abort := Err.IncArg;
+	RETURN;
+END_IF
+
+_eState := TaskState.Aborted;
+Abort := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Complete" Id="{aabcf2a2-bc4a-433a-851b-c2329283fbd4}">
+      <Declaration><![CDATA[METHOD Complete : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _eState <> TaskState.Running THEN
+	Complete := Err.IncArg;
+	RETURN;
+END_IF
+
+_eState := TaskState.Completed;
+Complete := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{6a9e7401-d8e2-47ed-9b55-404b5de36348}" FolderPath="_\">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	iTask: I_Job;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iTask := iTask;
+IF _iTask = 0 THEN
+	_eState := TaskState.Error;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{64d9d087-d2ba-4baf-8149-dc62e899d49b}">
+      <Declaration><![CDATA[METHOD Start : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _eState <> TaskState.Idle THEN
+	Start := Err.IncArg;
+	RETURN;
+END_IF
+
+IF _iWorker = 0 THEN
+	Start := Err.Itf0;
+	RETURN;
+END_IF
+
+IF IsOk(_iWorker.Enqueue(THIS^), nOut => Start) THEN
+	_eState := TaskState.Ready;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="State" Id="{6447f694-df9c-483c-9624-6f2e9a8b97e7}" FolderPath="Job\">
+      <Declaration><![CDATA[PROPERTY State : TaskState]]></Declaration>
+      <Get Name="Get" Id="{bd91dcf6-8939-49c4-b291-29f8a1b3b103}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[State := _eState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Worker" Id="{62c059a9-8170-459f-9379-8371a51c831c}" FolderPath="Job\">
+      <Declaration><![CDATA[PROPERTY Worker : I_Worker
+]]></Declaration>
+      <Get Name="Get" Id="{927952be-4625-4ef1-867b-591ea7d3dec4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Worker := _iWorker;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{2b1cd96d-0301-44ad-89a4-fe218d4224f9}">
+        <Declaration><![CDATA[
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _eState = TaskState.Idle THEN
+	_iWorker := Worker;
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

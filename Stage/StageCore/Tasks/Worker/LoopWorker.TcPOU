@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="LoopWorker" Id="{441fb644-9147-45db-9af7-51cecc3c1e57}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LoopWorker
+VAR
+	_scheduler: Worker;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Run" Id="{f543f0f7-b0a8-4b9e-9878-1b8fa71dc1f9}">
+      <Declaration><![CDATA[METHOD Run
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _scheduler.First = 0 THEN
+	RETURN;
+END_IF
+
+CASE _scheduler.First.State OF
+	TaskState.Completed, TaskState.Aborted:
+		_scheduler.Dequeue(_scheduler.First);
+END_CASE
+
+CASE _scheduler.Run(_scheduler.First) OF
+	Ok:
+		_scheduler.Defer(_scheduler.First);
+	Err.Itf0:
+		RETURN;
+	ELSE
+		DebugMsg(_scheduler, 'Scheduler: Incorrect task state!');
+		DebugMsg(_scheduler.First, 'Task: Incorrect task state!');
+		RETURN;	
+END_CASE
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Scheduler" Id="{177ef07f-71b2-407c-8753-27a70af21e29}">
+      <Declaration><![CDATA[PROPERTY Scheduler : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{585f641f-8de4-451e-807b-7a59f5f29825}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Scheduler := _scheduler;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

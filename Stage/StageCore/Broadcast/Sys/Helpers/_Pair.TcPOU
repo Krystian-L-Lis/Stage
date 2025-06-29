@@ -90,7 +90,7 @@ END_IF
 
 // 5) If the signal already has slots, try extending to the right by 1 slot.
 _nNextId := iSignal._End + 1;
-IF (_nNextId <= Param.COMP_CAP) AND_THEN (_Broadcast.entry[_nNextId].nType = 0) THEN
+IF (_nNextId <= Param.RECEIVER_CAP) AND_THEN (_Broadcast.entry[_nNextId].nType = 0) THEN
 	// Mark that free slot as a new receiver
 	_Broadcast.entry[_nNextId].nType := 2;
 	_Broadcast.entry[_nNextId].variant.iReceiver := iReceiver;

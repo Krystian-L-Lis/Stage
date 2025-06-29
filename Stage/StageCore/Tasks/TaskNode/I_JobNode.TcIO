@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_JobNode" Id="{d740f790-ee67-445b-9a56-dbf77aaa8b7e}">
+    <Declaration><![CDATA[INTERFACE I_JobNode EXTENDS I_JobNodeInternal
+]]></Declaration>
+  </Itf>
+</TcPlcObject>
