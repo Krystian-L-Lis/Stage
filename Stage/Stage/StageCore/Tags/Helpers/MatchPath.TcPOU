@@ -5,6 +5,7 @@
 Returns whether the symbol's path matches the provided pattern.
 Allows wildcards in form of "*" that can cover multiple segments.
 Example pattern: *.functionBlock.*.bBool
+Returns 'Ok' or 'Err.NoMatch'
 *)
 FUNCTION MatchPath : Result
 VAR_INPUT
