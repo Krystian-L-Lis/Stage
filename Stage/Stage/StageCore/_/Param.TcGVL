@@ -5,7 +5,7 @@
 // DO NOT SET ANY OF THE CAP PARAMETERS TO 0 OR LARGER THAN MAX DINT!!!
 VAR_GLOBAL CONSTANT
 	DEBUGMSG_CAP	: UDINT(1..16#7FFFFFFF) := 10; // Max number of debug messages.
-	DEBUGSTR_CAP	: UDINT(1..16#7FFFFFFF) := 500; // Max number of debug strings.
+	DEBUGSTR_CAP	: UDINT(1..16#7FFFFFFF) := 5; // Max number of debug strings.
 	
 	SIGNAL_CAP		: UDINT(1..16#7FFFFFFF) := 20; // Max number of signals.
 	RECEIVER_CAP	: UDINT(1..16#7FFFFFFF) := 100; // Max number of signal-receiver pairings.

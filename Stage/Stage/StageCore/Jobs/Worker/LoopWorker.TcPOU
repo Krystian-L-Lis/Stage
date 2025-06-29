@@ -47,8 +47,7 @@ CASE _scheduler.Run(_scheduler.First) OF
 	Err.Itf0:
 		RETURN;
 	ELSE
-		DebugMsg(_scheduler, 'Scheduler: Incorrect task state!');
-		DebugMsg(_scheduler.First, 'Task: Incorrect task state!');
+		DebugMsg(_scheduler, 'Scheduler: Incorrect task state!', _scheduler.First);
 		RETURN;	
 END_CASE
 

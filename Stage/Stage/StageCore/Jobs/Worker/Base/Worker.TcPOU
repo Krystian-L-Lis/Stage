@@ -100,7 +100,7 @@ IF iJob.Worker <> _iThis THEN
 END_IF;
 
 IF iJob.State = JobState.Idle THEN
-    Enqueue := Err.IncArg;
+    Dequeue := Err.IncArg;
     RETURN;
 END_IF;
 

@@ -3,7 +3,8 @@
   <DUT Name="_DebugInfo" Id="{ff4f564d-74f0-4be1-895f-bc1505d9c37a}">
     <Declaration><![CDATA[TYPE INTERNAL _DebugInfo :
 STRUCT
-	iDebug		: I_Debug;
+	iDebugMain	: I_Debug;
+	iDebugSub	: I_Debug;
 	sInfo		: Str;
 END_STRUCT
 END_TYPE

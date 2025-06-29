@@ -250,9 +250,6 @@
     <Compile Include="Entity\Sys\_Itf\I_EntityNode.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Iter\Iter.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Result\Error\Err.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -460,7 +457,6 @@
     <Folder Include="Callable" />
     <Folder Include="Entity\Sys\_Itf" />
     <Folder Include="Entity\Sys\_Helpers" />
-    <Folder Include="Iter" />
     <Folder Include="Arg" />
     <Folder Include="Runtime" />
     <Folder Include="Result" />

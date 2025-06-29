@@ -6,8 +6,9 @@ Logs a debug message as a string tied to a `I_Debug` interface for inspection an
 *)
 FUNCTION DebugMsg
 VAR_INPUT
-	iDebug			: I_Debug;
+	iDebugMain		: I_Debug;
 	sInfo			: Str;
+	iDebugSub		: I_Debug := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -19,7 +20,8 @@ ELSE
 	_Debug.nLastMsg := 1;
 END_IF
 
-_Debug.debugMsg[_Debug.nLastMsg].iDebug := iDebug;
+_Debug.debugMsg[_Debug.nLastMsg].iDebugMain := iDebugMain;
+_Debug.debugMsg[_Debug.nLastMsg].iDebugSub := iDebugSub;
 _Debug.debugMsg[_Debug.nLastMsg].sInfo := sInfo;
 ]]></ST>
     </Implementation>

@@ -178,7 +178,7 @@ END_VAR]]></Declaration>
 	Err.Ovf:
 		DebugMsg(THIS^, '_Broadcast.iSignal table overflow!');
 	ELSE
-		DebugMsg(THIS^, TC2_Standard.CONCAT('_RefSignal(I_Signal): unknown error! Error code: ', TO_STRING(_r)));
+		DebugMsg(THIS^, TC2_Standard.CONCAT('_RegSignal(I_Signal): unknown error! Error code: ', TO_STRING(_r)));
 END_CASE]]></ST>
       </Implementation>
     </Method>

@@ -131,7 +131,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_iTask := iTask;
 IF _iTask = 0 THEN
-	_eState := TaskState.Error;
+	_eState := JobState.Error;
 END_IF]]></ST>
       </Implementation>
     </Method>
