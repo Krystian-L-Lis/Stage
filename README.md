@@ -48,7 +48,7 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 ## **Wiki**
 
 Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page for:  
-✔️ Detailed guides
+✔️ Detailed guides 
 ✔️ API reference  
 ✔️ Changelog  
 
