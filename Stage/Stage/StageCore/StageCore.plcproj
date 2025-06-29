@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>3.2.1</ProjectVersion>
+    <ProjectVersion>3.2.2</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
