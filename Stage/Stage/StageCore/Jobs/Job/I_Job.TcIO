@@ -10,7 +10,7 @@ INTERFACE I_Job EXTENDS I_Debug
       <Declaration><![CDATA[(*
 Job implementation.
 *)
-METHOD Run : JobState]]></Declaration>
+METHOD Run]]></Declaration>
     </Method>
   </Itf>
 </TcPlcObject>
