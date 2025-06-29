@@ -2,24 +2,31 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Job" Id="{d189be26-c4d1-421c-b40d-0f9c5d388d23}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-JobNode manages the state of a job and it's execution.
+An abstract representation of a system job, providing the foundation for implementing job-specific behavior. Manages its state.  
+Offers default behavior for its lifecycle methods, allowing programmers to override only the relevant parts.
 *)
-FUNCTION_BLOCK Job IMPLEMENTS I_JobNode
+FUNCTION_BLOCK ABSTRACT Job IMPLEMENTS I_Job
 VAR
-	_iNext: I_JobNode;
-	_iPrev: I_JobNode;
+	{attribute 'hide'}
+	_iNext: I_Job;
+	{attribute 'hide'}
+	_iPrev: I_Job;
+	{attribute 'hide'}
 	_iWorker: I_Worker;
-	_iTask: I_Job;
+	{attribute 'hide'}
 	_eState: JobState;
+	
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="_" Id="{788cea3f-9c89-4c58-9f8b-26391a806f35}" />
+    <Folder Name="Impl" Id="{903468c9-970b-4b8f-8b55-f634617a3fee}" />
     <Folder Name="Job" Id="{30958162-07b8-4f88-92e6-ce23182d425b}" />
     <Property Name="_Next" Id="{5e0a6afe-9bd8-403e-ae27-c1e3514413ad}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_JobNode
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Job
 ]]></Declaration>
       <Get Name="Get" Id="{56f40b47-08b4-4d87-acff-0407d2abd968}">
         <Declaration><![CDATA[VAR
@@ -38,8 +45,55 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Method Name="_OnAbort" Id="{e92d2e04-f1ff-4be7-ab2f-f4ccbe6aaae2}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnAbort
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OnAbort();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_OnDone" Id="{b43c6393-59cc-4804-a684-0f30fe9daee8}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnDone
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OnDone();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_OnExit" Id="{f7c9dfbc-ac16-42d3-b2a3-e8cc47ad0b0e}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OnExit();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_OnRun" Id="{282b1123-78b3-4f76-80ac-354db08c0351}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnRun
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_eState := JobState.Running;
+OnRun();
+_eState := JobState.Ready;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_OnStart" Id="{f1bf3abf-8e4d-4720-8772-4c2bdee28247}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _OnStart
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[OnStart();]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="_Prev" Id="{ab52e9e9-e1b8-4e36-a7cc-c3ffe7b8a011}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_JobNode
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Job
 ]]></Declaration>
       <Get Name="Get" Id="{e01b98b1-7d87-4f71-b8c9-d2aa7f7c1966}">
         <Declaration><![CDATA[VAR
@@ -58,27 +112,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="_Reset" Id="{a0ed9277-faf0-472d-a5ff-d71c18d5c81a}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD INTERNAL _Reset
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_iNext := 0;
-_iPrev := 0;
-_eState := JobState.Idle;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="_Run" Id="{282b1123-78b3-4f76-80ac-354db08c0351}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD INTERNAL _Run
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_eState := JobState.Running;
-_iTask.Run();
-_eState := JobState.Ready;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Abort" Id="{c1b254d3-82b7-426a-bcdd-c337343702ca}">
+    <Method Name="Abort" Id="{c1b254d3-82b7-426a-bcdd-c337343702ca}" FolderPath="Job\">
       <Declaration><![CDATA[(*
 Notifies scheduler to aboort this job.
 Returns Err.IncArg on State = Idle
@@ -97,45 +131,86 @@ _eState := JobState.Aborted;
 Abort := Ok;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Complete" Id="{aabcf2a2-bc4a-433a-851b-c2329283fbd4}">
+    <Method Name="Done" Id="{aabcf2a2-bc4a-433a-851b-c2329283fbd4}" FolderPath="Job\">
       <Declaration><![CDATA[(*
 Notifies scheduler that the jobs is completed.
 Returns Err.IncArg on State <> Running
 *)
-METHOD Complete : Result
+METHOD PROTECTED Done : Result
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _eState <> JobState.Running THEN
-	Complete := Err.IncArg;
+	Done := Err.IncArg;
 	RETURN;
 END_IF
 
 _eState := JobState.Completed;
-Complete := Ok;]]></ST>
+Done := Ok;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_Init" Id="{6a9e7401-d8e2-47ed-9b55-404b5de36348}" FolderPath="_\">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
-{attribute 'hide'}
-METHOD FB_Init: BOOL
+    <Method Name="OnAbort" Id="{f089fbee-eaef-4808-8833-c443e5817bdf}" FolderPath="Impl\">
+      <Declaration><![CDATA[(*
+Executed when this job is aborted.  
+*)
+METHOD PROTECTED OnAbort
 VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
-	iTask: I_Job;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_iTask := iTask;
-IF _iTask = 0 THEN
-	_eState := JobState.Error;
-END_IF]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Start" Id="{64d9d087-d2ba-4baf-8149-dc62e899d49b}">
+    <Method Name="OnDone" Id="{17b94aef-24bb-4442-89db-afa253b700b7}" FolderPath="Impl\">
+      <Declaration><![CDATA[(*
+Executed when this job is done.  
+*)
+METHOD PROTECTED OnDone
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnExit" Id="{9f03c749-7a25-43b3-8a82-56026a5506e0}" FolderPath="Impl\">
+      <Declaration><![CDATA[(*
+Executed when this job is dequeued.  
+*)
+METHOD PROTECTED OnExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnRun" Id="{8c344d1b-09b4-407e-b123-c1b286c36272}" FolderPath="Impl\">
+      <Declaration><![CDATA[(*
+Executed when this job is run.  
+*)
+METHOD PROTECTED OnRun
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnStart" Id="{3d6b24a1-68fc-4aa8-bed1-6da7e16193ea}" FolderPath="Impl\">
+      <Declaration><![CDATA[(*
+Executed when this job is started.  
+*)
+METHOD PROTECTED OnStart
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{64d9d087-d2ba-4baf-8149-dc62e899d49b}" FolderPath="Job\">
       <Declaration><![CDATA[(*
 Starts the job and adds it to Workers queue.
 Returns Err.IncArg on State <> Idle.

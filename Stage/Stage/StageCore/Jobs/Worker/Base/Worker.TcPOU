@@ -6,8 +6,8 @@ Schedules jobs execution.
 *)
 FUNCTION_BLOCK Worker IMPLEMENTS I_Worker
 VAR
-	_iFirst: I_JobNode;
-	_iLast: I_JobNode;	
+	_iFirst: I_Job;
+	_iLast: I_Job;	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -23,11 +23,11 @@ Returns:
 *)
 METHOD Defer : Result
 VAR_INPUT
-    iJob : I_JobNode;
+    iJob : I_Job;
 END_VAR
 VAR
-    _iPrev  : I_JobNode;
-    _iNext  : I_JobNode;
+    _iPrev  : I_Job;
+    _iNext  : I_Job;
     _iThis  : I_Worker := THIS^;
 END_VAR]]></Declaration>
       <Implementation>
@@ -81,11 +81,11 @@ Returns:
 *)
 METHOD Dequeue : Result
 VAR_INPUT
-	iJob: I_JobNode;
+	iJob: I_Job;
 END_VAR
 VAR
-	_iPrev: I_JobNode;
-	_iNext: I_JobNode;
+	_iPrev: I_Job;
+	_iNext: I_Job;
 	_iThis: I_Worker := THIS^;
 END_VAR]]></Declaration>
       <Implementation>
@@ -119,8 +119,13 @@ ELSE
     _iLast := _iPrev;
 END_IF;
 
-iJob._Reset();
+IF iJob.State = JobState.Completed THEN
+	iJob._OnDone();
+ELSIF iJob.State = JobState.Aborted THEN
+	iJob._OnAbort();
+END_IF
 
+iJob._OnExit();
 Dequeue := Ok;]]></ST>
       </Implementation>
     </Method>
@@ -135,7 +140,7 @@ Returns:
 *)
 METHOD Enqueue : Result
 VAR_INPUT
-	iJob: I_JobNode;
+	iJob: I_Job;
 END_VAR
 VAR
 	_iThis: I_Worker := THIS^;
@@ -165,6 +170,7 @@ ELSE
 END_IF;
 _iLast := iJob;
 
+iJob._OnStart();
 Enqueue := Ok;]]></ST>
       </Implementation>
     </Method>
@@ -172,7 +178,7 @@ Enqueue := Ok;]]></ST>
       <Declaration><![CDATA[(*
 Returns first the Job in queue.
 *)
-PROPERTY First : I_JobNode
+PROPERTY First : I_Job
 ]]></Declaration>
       <Get Name="Get" Id="{fb29ce8f-7ac5-46e9-a0ef-d876a531af6a}">
         <Declaration><![CDATA[VAR
@@ -189,7 +195,7 @@ Runs Worker.
 *)
 METHOD Run : Result
 VAR_INPUT
-	iJob	: I_JobNode;
+	iJob	: I_Job;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -202,7 +208,7 @@ END_VAR
 			Run := Ok;	
 		
 		JobState.Ready:
-			iJob._Run();
+			iJob._OnRun();
 			Run := Ok;
 	
 		JobState.Error, JobState.Idle, JobState.Running:

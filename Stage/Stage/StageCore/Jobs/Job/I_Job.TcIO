@@ -1,16 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <Itf Name="I_Job" Id="{87a9768c-0425-48bc-8261-07f4f0c86d1c}">
+  <Itf Name="I_Job" Id="{d740f790-ee67-445b-9a56-dbf77aaa8b7e}">
     <Declaration><![CDATA[(*
-An interface that represents an object that can be executed by Workers.
+Allow others to start and abort job.
 *)
-INTERFACE I_Job EXTENDS I_Debug
+INTERFACE I_Job EXTENDS I_JobInternal
 ]]></Declaration>
-    <Method Name="Run" Id="{c44a7cd6-6690-4a0e-afed-d33e68feddb0}">
+    <Method Name="Abort" Id="{bba4b53e-67ed-4af8-a6e2-ec322380ef7d}">
       <Declaration><![CDATA[(*
-Job implementation.
+Notifies scheduler to aboort this job.
+Returns Err.IncArg on State = Idle
 *)
-METHOD Run]]></Declaration>
+METHOD Abort : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Start" Id="{efd62966-8b23-4509-9c23-13ebf675ee3d}">
+      <Declaration><![CDATA[(*
+Starts the job and adds it to Workers queue.
+Returns Err.IncArg on State <> Idle.
+Returns Err.Itf0 on Worker = 0.
+*)
+METHOD Start : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
     </Method>
   </Itf>
 </TcPlcObject>

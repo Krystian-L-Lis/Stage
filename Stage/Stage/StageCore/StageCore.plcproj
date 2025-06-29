@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>3.2.3</ProjectVersion>
+    <ProjectVersion>3.2.4</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -415,19 +415,16 @@
     <Compile Include="Jobs\Worker\BlockingWorker.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Jobs\JobNode\I_JobNode.TcIO">
+    <Compile Include="Jobs\Job\I_Job.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Jobs\JobNode\I_JobNodeInternal.TcIO">
+    <Compile Include="Jobs\Job\I_JobInternal.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Jobs\JobNode\Job.TcPOU">
+    <Compile Include="Jobs\Job\Job.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Jobs\JobState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Jobs\Job\I_Job.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="_\Param.TcGVL">
@@ -484,7 +481,6 @@
     <Folder Include="Jobs" />
     <Folder Include="Jobs\Worker" />
     <Folder Include="Jobs\Worker\Base" />
-    <Folder Include="Jobs\JobNode" />
     <Folder Include="Jobs\Job" />
     <Folder Include="_" />
     <Folder Include="Tags">
@@ -494,8 +490,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -659,15 +655,15 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Boolean">System.Boolean</Type>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="Int32">System.Int32</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Boolean">System.Boolean</Type>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="Int32">System.Int32</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>
