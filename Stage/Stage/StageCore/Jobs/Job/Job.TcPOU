@@ -84,7 +84,10 @@ END_VAR
       <Implementation>
         <ST><![CDATA[_eState := JobState.Running;
 OnRun();
-_eState := JobState.Ready;]]></ST>
+IF _eState = JobState.Running THEN
+	_eState := JobState.Ready;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="_OnStart" Id="{f1bf3abf-8e4d-4720-8772-4c2bdee28247}" FolderPath="_\">
