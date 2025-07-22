@@ -4,7 +4,7 @@
     <Declaration><![CDATA[(*
 Represents a registered entity in the Entity-Component system.
 *)
-INTERFACE I_Entity EXTENDS I_Debug, I_EntityNode
+INTERFACE I_Entity EXTENDS I_EntityNode
 
 ]]></Declaration>
   </Itf>

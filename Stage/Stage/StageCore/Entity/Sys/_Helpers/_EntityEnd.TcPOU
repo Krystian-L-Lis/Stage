@@ -29,7 +29,7 @@ _Ec.nConstructedScopes := _Ec.nConstructedScopes - 1;
 // If there are still scopes left to complete
 IF _Ec.nConstructedScopes > 0 THEN
     // Traverse backwards to find an entity that is registered but not yet completed
-	iEntity := _Ec.iUnderConstruction._AsIEntity;
+	iEntity := _Ec.iUnderConstruction;
     WHILE IsOk(GetPrevEntity(iEntity)) DO
         // If a registered entity is found, set the return value to OK and exit
         IF _Ec.iUnderConstruction._State = _EntityState.Registered THEN

@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL _StateMachine IMPLEMENTS I_Execute
 VAR
 	_exe					: Execute(THIS^);
-	_iCurrentState			: I_StateInternal;
+	_iCurrentState			: I_State;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -21,10 +21,10 @@ Returns:
 *)
 METHOD Change : Result
 VAR_INPUT
-	iNewState	: I_StateInternal;
+	iNewState	: I_State;
 END_VAR
 VAR_OUTPUT
-	iOldState	: I_StateInternal;
+	iOldState	: I_State;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iNewState = 0 THEN
@@ -78,7 +78,7 @@ PROPERTY State : I_State]]></Declaration>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[State := _iCurrentState._AsIState;]]></ST>
+          <ST><![CDATA[State := _iCurrentState;]]></ST>
         </Implementation>
       </Get>
     </Property>

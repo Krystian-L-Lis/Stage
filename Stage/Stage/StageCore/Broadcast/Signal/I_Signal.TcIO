@@ -4,7 +4,7 @@
     <Declaration><![CDATA[(*
 Enables pairing with receivers and casting to `I_Component`, but no emitting.
 *)
-INTERFACE I_Signal EXTENDS I_Debug, I_Tagged
+INTERFACE I_Signal EXTENDS I_Debug, I_RawComponent
 ]]></Declaration>
     <Method Name="Pair" Id="{ca87eecf-5514-49b6-9ee7-6f01e2786d2f}">
       <Declaration><![CDATA[(*
@@ -22,6 +22,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Property Name="Tag" Id="{f8beb40e-c291-4966-b394-9538a673d0a5}">
+      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{d48c0a70-e0f2-4140-b485-73acb69dfea2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Method Name="Unpair" Id="{fa23d0f6-12ae-44be-a780-a181f4365fc2}">
       <Declaration><![CDATA[(*
 Unpairs the signal from a specified receiver.

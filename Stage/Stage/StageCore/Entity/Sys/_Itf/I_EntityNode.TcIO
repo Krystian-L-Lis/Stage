@@ -5,14 +5,8 @@
 
 ]]></Declaration>
     <Folder Name="_" Id="{da71af14-1425-4366-a03a-2e7575b43e6a}" />
-    <Property Name="_AsIEntity" Id="{a36bb9e8-31af-4f31-8dc3-6d3805c29c03}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _AsIEntity : I_Entity]]></Declaration>
-      <Get Name="Get" Id="{c3cf54b4-8042-4741-b361-98eafe1dee04}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
     <Property Name="_FirstComp" Id="{02fbe986-1bdd-415d-bb4c-ff100c6f2cf1}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _FirstComp : I_ComponentNode]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _FirstComp : I_Component]]></Declaration>
       <Get Name="Get" Id="{2975002c-0cdc-4aa1-b5e9-acee65f8547b}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
@@ -21,7 +15,7 @@
       </Set>
     </Property>
     <Property Name="_LastComp" Id="{c1e4c03f-9fb7-4237-84de-642f771cf470}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _LastComp : I_ComponentNode]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _LastComp : I_Component]]></Declaration>
       <Get Name="Get" Id="{8b32a67b-247b-4f83-a33d-10a5ecb0f5fc}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
@@ -30,7 +24,7 @@
       </Set>
     </Property>
     <Property Name="_Next" Id="{e667f3fa-d3de-4c97-8db5-27fcacd5a238}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_EntityNode]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Entity]]></Declaration>
       <Get Name="Get" Id="{4c57db17-30bf-4e86-8e10-77f9968b4503}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
@@ -39,7 +33,7 @@
       </Set>
     </Property>
     <Property Name="_Prev" Id="{f2f7accb-05a3-40d7-b5a4-49e3057c46d0}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_EntityNode]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Entity]]></Declaration>
       <Get Name="Get" Id="{926a06b1-a5bf-4b7a-bece-89e9ea4eaffa}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

@@ -13,7 +13,7 @@ VAR
 	{attribute 'hide'}
 	_bInQueue					: BOOL;
 	{attribute 'hide'}
-	_iNextInBuffer				: I_StateInternal; // State Buffer management
+	_iNextInBuffer				: I_State; // State Buffer management
 	
 	_tag			: TagBase;	
 END_VAR
@@ -24,28 +24,6 @@ END_VAR
     <Folder Name="_" Id="{b2082cde-a72a-48d1-bf2b-bfe685440ba0}" />
     <Folder Name="Can" Id="{012b303c-ee19-4d59-a8c5-29d7ee56e39c}" />
     <Folder Name="On" Id="{5034b126-7af1-4e3e-aa65-10d454bc5f51}" />
-    <Property Name="_AsIState" Id="{ae988e03-7493-46d9-85de-be6948de1d8e}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL FINAL _AsIState : I_State]]></Declaration>
-      <Get Name="Get" Id="{4c9d6b0d-006b-455b-828d-2ce5937584f8}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_AsIState := THIS^;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="_AsIStateInternal" Id="{4fe75cff-cf53-4cef-a5a6-8ca77becdd1c}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL FINAL _AsIStateInternal : I_StateInternal]]></Declaration>
-      <Get Name="Get" Id="{d8d590d5-9436-40ea-add0-78eaf9a46d23}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_AsIStateInternal := THIS^;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Method Name="_CanActivate" Id="{71c49a83-838e-4656-9fc2-ce8957b8e198}" FolderPath="Can\">
       <Declaration><![CDATA[METHOD INTERNAL _CanActivate : BOOL]]></Declaration>
       <Implementation>
@@ -79,7 +57,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="_NextInBuffer" Id="{26c35362-4f86-4013-add5-ec59f766ab26}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _NextInBuffer : I_StateInternal]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _NextInBuffer : I_State]]></Declaration>
       <Get Name="Get" Id="{ef5ee735-cf5d-4c75-809d-088832acb881}">
         <Declaration><![CDATA[VAR
 END_VAR

@@ -35,7 +35,7 @@ IF iComponent._Entity <> 0 THEN
 END_IF
 
 // Add entity as parent
-iComponent._Entity := _Ec.iUnderConstruction._AsIEntity;
+iComponent._Entity := _Ec.iUnderConstruction;
 iComponent._Entity._Size := iComponent._Entity._Size + 1;
 
 // If the entity already has components, append this one to the end of the component list

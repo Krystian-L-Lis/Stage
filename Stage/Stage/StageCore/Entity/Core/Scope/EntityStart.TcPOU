@@ -8,8 +8,8 @@ Nested scopes are possible, components are always registered within most inner s
 FUNCTION_BLOCK EntityStart IMPLEMENTS I_Entity, I_Debug;
 VAR
 	_eState: _EntityState;
-	_iNext: I_EntityNode;
-	_iPrev: I_EntityNode;
+	_iNext: I_Entity;
+	_iPrev: I_Entity;
 	_iFirstComp: I_Component;
 	_iLastComp: I_Component;
 	_nSize: UDINT;
@@ -19,20 +19,8 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="_" Id="{71138bdc-ea6c-4ac9-85c3-4bca04b71bf2}" />
-    <Property Name="_AsIEntity" Id="{f15f1e7d-0dfc-41b6-be65-4eca041f5806}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _AsIEntity : I_Entity
-]]></Declaration>
-      <Get Name="Get" Id="{18068384-a640-4ba9-9042-d093d27505ce}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_AsIEntity := THIS^;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Property Name="_FirstComp" Id="{8c36c7b5-bea4-41e6-9361-ac708fdba737}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _FirstComp : I_ComponentNode
+      <Declaration><![CDATA[PROPERTY INTERNAL _FirstComp : I_Component
 ]]></Declaration>
       <Get Name="Get" Id="{5d4437ea-6346-45ee-ace0-7503ef48b6c5}">
         <Declaration><![CDATA[VAR
@@ -47,12 +35,12 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_iFirstComp := _FirstComp._AsiComponent;]]></ST>
+          <ST><![CDATA[_iFirstComp := _FirstComp;]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Property Name="_LastComp" Id="{a38a30c0-379b-4f36-b9a7-b26f9b665c5b}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _LastComp : I_ComponentNode
+      <Declaration><![CDATA[PROPERTY INTERNAL _LastComp : I_Component
 ]]></Declaration>
       <Get Name="Get" Id="{15bc4223-5a61-4d79-a54e-b1f51cbd1016}">
         <Declaration><![CDATA[VAR
@@ -67,12 +55,12 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_iLastComp := _LastComp._AsiComponent;]]></ST>
+          <ST><![CDATA[_iLastComp := _LastComp;]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Property Name="_Next" Id="{68d3a67b-8c2a-456d-a892-c4bd169b2e5b}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_EntityNode
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Entity
 ]]></Declaration>
       <Get Name="Get" Id="{935e1c7b-1fbe-4a74-98d0-8a909455142f}">
         <Declaration><![CDATA[VAR
@@ -92,7 +80,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="_Prev" Id="{9810527d-844b-4ebe-9c35-06ff3f26f302}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_EntityNode
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Entity
 ]]></Declaration>
       <Get Name="Get" Id="{bcba2fd7-da05-4ca0-8b61-64d235946143}">
         <Declaration><![CDATA[VAR
@@ -219,7 +207,7 @@ ELSIF iOut._Next = 0 THEN
 
 // Otherwise, return the next component in the list
 ELSE
-    iOut := iOut._Next._AsiComponent;
+    iOut := iOut._Next;
     GetNextComp := Ok;
 END_IF
 ]]></ST>
@@ -272,7 +260,7 @@ ELSIF iOut._Prev = 0 THEN
 
 // Otherwise, return the next component in the list
 ELSE
-    iOut := iOut._Prev._AsiComponent;
+    iOut := iOut._Prev;
     GetPrevComp := Ok;
 END_IF
 ]]></ST>

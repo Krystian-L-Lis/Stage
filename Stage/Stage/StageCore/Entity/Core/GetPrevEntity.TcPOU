@@ -35,12 +35,12 @@ END_IF
 
 // If input entity is 0, start iteration from the last entity in the list
 IF iEntity = 0 THEN
-    iEntity := _Ec.iLast._AsIEntity;
+    iEntity := _Ec.iLast;
     GetPrevEntity := Ok;
 
 // If the current entity has a previous one, move to it
 ELSIF iEntity._Prev <> 0 THEN
-    iEntity := iEntity._Prev._AsIEntity;
+    iEntity := iEntity._Prev;
     GetPrevEntity := Ok;
 
 // If there is no previous entity, beginning of the list is reached

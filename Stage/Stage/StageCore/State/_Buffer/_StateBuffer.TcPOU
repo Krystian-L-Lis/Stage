@@ -6,8 +6,8 @@ A buffer for storing states.
 *)
 FUNCTION_BLOCK INTERNAL _StateBuffer
 VAR
-	_iFirst				: I_StateInternal;
-	_iLast				: I_StateInternal;
+	_iFirst				: I_State;
+	_iLast				: I_State;
 	_nLen				: UDINT;
 END_VAR
 ]]></Declaration>
@@ -38,7 +38,7 @@ Returns:
 *)
 METHOD Pop : Result
 VAR_OUTPUT
-	iState			: I_StateInternal;
+	iState			: I_State;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _iFirst = 0 THEN
@@ -70,7 +70,7 @@ Returns:
 *)
 METHOD Push : Result
 VAR_INPUT
-	iState			: I_StateInternal;
+	iState			: I_State;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iState = 0 THEN

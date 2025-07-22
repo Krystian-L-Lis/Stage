@@ -52,18 +52,18 @@ VAR_INPUT
 	nPhase: INT := 0;
 END_VAR
 VAR
-	_iNewState		: I_StateInternal;
-	_iOldState		: I_StateInternal;
+	_iNewState		: I_State;
+	_iOldState		: I_State;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsOk(_buffer.Pop(iState => _iNewState)) THEN
-	_iPretender := _iNewState._AsIState;
+	_iPretender := _iNewState;
 	IF IsOk(_sm.Change(_iNewState, iOldState => _iOldState)) THEN
-		_stateChangeEvent.Emit(_iNewState._AsIState.Tag);
+		_stateChangeEvent.Emit(_iNewState.Tag);
 		
-		_iCurrent		:= _iNewState._AsIState;
+		_iCurrent		:= _iNewState;
 		IF _iOldState <> 0 THEN
-			_iPrevious		:= _iOldState._AsIState;
+			_iPrevious		:= _iOldState;
 		END_IF
 		
 	END_IF
@@ -163,7 +163,7 @@ IF iState.Owner <> _comp.Entity THEN
 	RETURN;
 END_IF
 
-Request := _buffer.Push(iState._AsIStateInternal);]]></ST>
+Request := _buffer.Push(iState);]]></ST>
       </Implementation>
     </Method>
   </POU>

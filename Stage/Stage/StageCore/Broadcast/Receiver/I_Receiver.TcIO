@@ -5,7 +5,13 @@
 Represents a receiver in the Broadcast system. Implements the necessary methods for receiving events and pairing signals.
 Can be casted to `I_Component`.
 *)
-INTERFACE I_Receiver EXTENDS I_ReceiverNode, I_Tagged
+INTERFACE I_Receiver EXTENDS I_ReceiverNode, I_RawComponent
 ]]></Declaration>
+    <Property Name="Tag" Id="{711232eb-ce6c-45dc-83be-6363eede475c}">
+      <Declaration><![CDATA[PROPERTY Tag : I_Tag]]></Declaration>
+      <Get Name="Get" Id="{4ee237ee-186b-4cd6-be2f-ae6bda7a0ace}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
   </Itf>
 </TcPlcObject>

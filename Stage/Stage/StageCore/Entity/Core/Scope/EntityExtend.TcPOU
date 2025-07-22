@@ -20,13 +20,13 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
 	
-	iEntity	: I_EntityNode;
+	iEntity	: I_Entity;
 END_VAR
 VAR
 	_nResult	: Result;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF IsErr(_EntityExtend(iEntity._AsIEntity), nOut => _nResult) THEN
+        <ST><![CDATA[IF IsErr(_EntityExtend(iEntity), nOut => _nResult) THEN
 	DebugMsg(THIS^, Tc2_Standard.CONCAT('ExtendEntity(I_EntityNode) failed with code: ', ResultToStr(_nResult)));
 END_IF]]></ST>
       </Implementation>

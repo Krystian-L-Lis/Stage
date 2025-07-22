@@ -11,14 +11,14 @@
 
 VAR_GLOBAL INTERNAL    
     // Reference to the first registered entity in the global entity list
-    iFirst: I_EntityNode;
+    iFirst: I_Entity;
 
     // Reference to the last registered entity in the global entity list
-    iLast: I_EntityNode;
+    iLast: I_Entity;
 
     // Points to the entity currently being constructed
     // Used to add components or nested entities during initialization
-    iUnderConstruction: I_EntityNode;
+    iUnderConstruction: I_Entity;
 
     // Tracks how many nested entity scopes are currently under construction
     // Used to manage hierarchical or recursive construction logic

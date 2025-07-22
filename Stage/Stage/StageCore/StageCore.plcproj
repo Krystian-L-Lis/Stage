@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>3.2.6</ProjectVersion>
+    <ProjectVersion>4.0.0</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -337,9 +337,6 @@
     <Compile Include="State\State\I_StateInternal.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="State\State\I_StateAdapter.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="State\State\State.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -364,9 +361,6 @@
     <Compile Include="Tags\Casts\ICompToITag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tags\Casts\ICompToITagged.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Tags\Helpers\GetTag.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -386,9 +380,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\I_TagCmp.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tags\I_Tagged.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tags\TagBase.TcPOU">

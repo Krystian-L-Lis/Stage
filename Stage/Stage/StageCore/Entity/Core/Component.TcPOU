@@ -16,18 +16,6 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="_" Id="{2f64ab46-31e6-48ed-9d95-c4291bcfd948}" />
-    <Property Name="_AsiComponent" Id="{47b9770d-a779-430d-8c42-5bfef0941f79}">
-      <Declaration><![CDATA[PROPERTY _AsiComponent : I_Component
-]]></Declaration>
-      <Get Name="Get" Id="{4a4979e6-2905-4c2b-a12f-d659a7c19d62}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_AsIComponent := THIS^;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Property Name="_Entity" Id="{04992c4b-8576-490a-bc5a-4ea7e42d0690}" FolderPath="_\">
       <Declaration><![CDATA[PROPERTY _Entity : I_Entity
 ]]></Declaration>
@@ -51,8 +39,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="_Next" Id="{b697f57c-1907-4eab-afeb-f88c92893472}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY _Next : I_ComponentNode
-]]></Declaration>
+      <Declaration><![CDATA[PROPERTY _Next : I_Component]]></Declaration>
       <Get Name="Get" Id="{fbe2d6bf-25b1-49dd-b699-6801a0cd8f57}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -66,12 +53,12 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_iNext := _Next._AsiComponent;]]></ST>
+          <ST><![CDATA[_iNext := _Next;]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Property Name="_Prev" Id="{49dba3a3-71ab-4665-bf1c-df44eb849e53}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY _Prev : I_ComponentNode
+      <Declaration><![CDATA[PROPERTY _Prev : I_Component
 ]]></Declaration>
       <Get Name="Get" Id="{5188ba92-1868-49bb-ac7c-116358111ebe}">
         <Declaration><![CDATA[VAR
@@ -86,7 +73,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_iPrev := _Prev._AsiComponent;]]></ST>
+          <ST><![CDATA[_iPrev := _Prev;]]></ST>
         </Implementation>
       </Set>
     </Property>

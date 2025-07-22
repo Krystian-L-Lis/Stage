@@ -5,12 +5,6 @@
     <Folder Name="_" Id="{ea11d2f9-a8d0-4b23-897a-d4e88ba71fee}" />
     <Folder Name="Can" Id="{6780bbc3-1843-4271-8203-ac0040ac9e3c}" />
     <Folder Name="On" Id="{e8f03b0b-d8dc-462c-b1a1-c35c1e2a61ed}" />
-    <Property Name="_AsIState" Id="{3786d724-f559-45a9-9579-3952254ad765}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _AsIState : I_State]]></Declaration>
-      <Get Name="Get" Id="{70e8c9a6-ef24-4473-b26f-94fc097849a5}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
     <Method Name="_CanActivate" Id="{f8f7be64-9c99-4fdf-81b1-a2add969bdf5}" FolderPath="Can\">
       <Declaration><![CDATA[METHOD INTERNAL _CanActivate : BOOL
 VAR_INPUT
@@ -33,7 +27,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="_NextInBuffer" Id="{9d69fbbb-f40c-44f5-a73c-7b16ee2630e0}" FolderPath="_\">
-      <Declaration><![CDATA[PROPERTY INTERNAL _NextInBuffer : I_StateInternal]]></Declaration>
+      <Declaration><![CDATA[PROPERTY INTERNAL _NextInBuffer : I_State]]></Declaration>
       <Get Name="Get" Id="{d75c9538-b75a-4f1f-96c4-0ffdef60e1b2}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
