@@ -105,7 +105,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Tc2_System.TestAndSet(_bIsLocked) THEN
+        <ST><![CDATA[IF _bIsLocked THEN
 	Emit := Err.InfLoop;
 	RETURN;
 END_IF
@@ -114,6 +114,7 @@ IF iArg = 0 THEN
 	iArg := _tag;
 END_IF
 
+_bIsLocked := TRUE;
 _Emit(THIS^, iArg);
 _bIsLocked := FALSE;
 
