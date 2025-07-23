@@ -199,10 +199,12 @@ IF iOut = 0 THEN
 // If the current component does not belong to this entity, reject the call
 ELSIF iOut._Entity <> _iThis THEN
     // Cross-linked or stale reference: component doesn't belong to this context
+	iOut := 0;
     GetNextComp := Err.ItfEq;
 
 // If there's no next component, we've reached the end of the list
 ELSIF iOut._Next = 0 THEN
+	iOut := 0;
     GetNextComp := Err.End;
 
 // Otherwise, return the next component in the list
@@ -252,10 +254,12 @@ IF iOut = 0 THEN
 // If the current component does not belong to this entity, reject the call
 ELSIF iOut._Entity <> _iThis THEN
     // Cross-linked or stale reference: component doesn't belong to this context
+	iOut := 0;
     GetPrevComp := Err.ItfEq;
 
 // If there's no next component, we've reached the end of the list
 ELSIF iOut._Prev = 0 THEN
+	iOut := 0;
     GetPrevComp := Err.End;
 
 // Otherwise, return the next component in the list
