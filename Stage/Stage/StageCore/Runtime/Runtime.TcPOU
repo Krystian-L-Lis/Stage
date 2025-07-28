@@ -16,12 +16,17 @@ END_VAR]]></Declaration>
 	END_WHILE
 
 	IF _Ec.nConstructedScopes <> 0 THEN
-		DebugMsg(0, 'Close all Entity scopes!');
+		NewDebug(0, Param.INIT_INTERNAL_DEBUG_MODE, 'Close all Entity scopes!');
 	END_IF
 	
-	IF _Debug.nErrorNumber > 0 THEN
+	IF _Debug.nPanicNumber > 0 THEN
 		_Runtime.iFirstCyclic := 0;
-		Tc2_System.ADSLOGSTR(Tc2_System.ADSLOG_MSGTYPE_ERROR, Tc2_Standard.CONCAT('Runtime disabled! Errors: ', UDINT_TO_STRING(_Debug.nErrorNumber)), '');
+		Tc2_System.ADSLOGSTR(Tc2_System.ADSLOG_MSGTYPE_ERROR, Tc2_Standard.CONCAT('Runtime disabled! Debug panics: ', UDINT_TO_STRING(_Debug.nPanicNumber)), '');
+	END_IF
+	
+	IF _Debug.nNotifyNumber > 0 THEN
+		_Runtime.iFirstCyclic := 0;
+		Tc2_System.ADSLOGSTR(Tc2_System.ADSLOG_MSGTYPE_WARN, Tc2_Standard.CONCAT('Debug notifies: ', UDINT_TO_STRING(_Debug.nPanicNumber)), '');
 	END_IF
 	
 	_Runtime.bInit := FALSE;

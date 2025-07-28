@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="NewDebug" Id="{7c548072-7d6e-4388-b29f-e0cd2e001bbc}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Logs a debug message as a string tied to a `I_Debug` interface for inspection and troubleshooting within the IDE.
+*)
+FUNCTION NewDebug
+VAR_INPUT
+	iDebugMain: I_Debug;
+	mode: DebugMode;
+	sComment: Str;
+	iDebugSub: I_Debug := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _Debug.nLastIdx < Param.DEBUG_CAP THEN
+	_Debug.nLastIdx := _Debug.nLastIdx + 1;
+ELSE
+	_Debug.nLastIdx := 1;
+END_IF
+
+_Debug.nTotalNumber := _Debug.nTotalNumber + 1;
+
+CASE mode OF
+	DebugMode.Notify:
+		_Debug.nNotifyNumber := _Debug.nNotifyNumber + 1;
+	DebugMode.Panic:	
+		_Debug.nPanicNumber := _Debug.nPanicNumber + 1;
+END_CASE
+
+_Debug.debugMsg[_Debug.nLastIdx].iDebugMain := iDebugMain;
+_Debug.debugMsg[_Debug.nLastIdx].iDebugSub := iDebugSub;
+_Debug.debugMsg[_Debug.nLastIdx].sComment := sComment;
+_Debug.debugMsg[_Debug.nLastIdx].mode := mode;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

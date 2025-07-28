@@ -3,13 +3,12 @@
   <GVL Name="_Debug" Id="{c602205e-748f-438e-a90c-f30a653e50a0}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL INTERNAL
-	debugMsg				: ARRAY[1..Param.DEBUGMSG_CAP] OF _DebugInfo;
-	debugStr				: ARRAY[1..Param.DEBUGSTR_CAP] OF Str;
+	debugMsg: ARRAY[1..Param.DEBUG_CAP] OF _DebugInfo;	
+	nLastIdx: UDINT;
 	
-	nLastMsg				: UDINT;
-	nLastStr				: UDINT;
-	
-	nErrorNumber			: UDINT;
+	nTotalNumber: UDINT;
+	nNotifyNumber: UDINT;
+	nPanicNumber: UDINT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -112,12 +112,12 @@ END_VAR]]></Declaration>
         <ST><![CDATA[_iComponent := iComponent;
 
 IF _Ec.iUnderConstruction = 0 THEN
-	DebugMsg(THIS^, 'Declared outside Entity scope!');
+	NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, 'Declared outside Entity scope!');
 	RETURN;
 END_IF
 			
 IF IsErr(_RegisterComponent(THIS^), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('Failed with code: ', ResultToStr(_nResult)));
+	NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, Tc2_Standard.CONCAT('Failed with code: ', ResultToStr(_nResult)));
 END_IF]]></ST>
       </Implementation>
     </Method>

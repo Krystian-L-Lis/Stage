@@ -177,9 +177,9 @@ END_VAR]]></Declaration>
 	Ok:
 		// Ignore
 	Err.Ovf:
-		DebugMsg(THIS^, '_Broadcast.iSignal table overflow!');
+		NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, '_Broadcast.iSignal table overflow!');
 	ELSE
-		DebugMsg(THIS^, TC2_Standard.CONCAT('_RegSignal(I_Signal): unknown error! Error code: ', TO_STRING(_r)));
+		NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, TC2_Standard.CONCAT('_RegSignal(I_Signal): unknown error! Error code: ', TO_STRING(_r)));
 END_CASE]]></ST>
       </Implementation>
     </Method>

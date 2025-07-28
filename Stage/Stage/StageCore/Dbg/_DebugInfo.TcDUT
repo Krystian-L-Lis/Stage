@@ -3,9 +3,10 @@
   <DUT Name="_DebugInfo" Id="{ff4f564d-74f0-4be1-895f-bc1505d9c37a}">
     <Declaration><![CDATA[TYPE INTERNAL _DebugInfo :
 STRUCT
-	iDebugMain	: I_Debug;
-	iDebugSub	: I_Debug;
-	sInfo		: Str;
+	iDebugMain: I_Debug;
+	iDebugSub: I_Debug;
+	mode: DebugMode;
+	sComment: Str;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

@@ -154,7 +154,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF IsErr(_EntityStart(THIS^), nOut => _nResult) THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT('_StartEntity(THIS^) failed with code: ', ResultToStr(_nResult)));
+	NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, Tc2_Standard.CONCAT('_StartEntity(THIS^) failed with code: ', ResultToStr(_nResult)));
 END_IF
 
 ]]></ST>

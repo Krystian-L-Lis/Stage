@@ -24,17 +24,17 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iExecute = 0 THEN
-	DebugMsg(0, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+	NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
 	RETURN;
 END_IF
 
 IF _iThis <> _Runtime.iLastCyclic THEN
-	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Is not the last node!'));
+	NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, Tc2_Standard.CONCAT(__POUNAME(), ': Is not the last node!'));
 	RETURN;
 END_IF
 
 IF IsSome(iExecute.state) THEN
-	DebugMsg(iExecute, Tc2_Standard.CONCAT(__POUNAME(), ': Has already been added!'));
+	NewDebug(iExecute, Param.INIT_INTERNAL_DEBUG_MODE, Tc2_Standard.CONCAT(__POUNAME(), ': Has already been added!'));
 	RETURN;
 END_IF
 
@@ -77,7 +77,7 @@ END_IF
 
 IF (_iExecute := iExecute) = 0 THEN
 	_nState := Err.Itf0;
-	DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+	NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
 	RETURN;
 END_IF
 
@@ -85,7 +85,7 @@ END_IF
 
 IF _Runtime.iLastCyclic <> 0 THEN
 	IF IsErr(_Runtime.iLastCyclic.Attach(THIS^), nOut => _nState) THEN
-		DebugMsg(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Error Inside!'));
+		NewDebug(THIS^, Param.INIT_INTERNAL_DEBUG_MODE, Tc2_Standard.CONCAT(__POUNAME(), ': Error Inside!'));
 	END_IF
 ELSE
 	_Runtime.iFirstCyclic := THIS^;

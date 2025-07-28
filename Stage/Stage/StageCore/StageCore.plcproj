@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>4.0.3</ProjectVersion>
+    <ProjectVersion>5.0.0</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -179,10 +179,10 @@
     <Compile Include="Dbg\DebugInfo.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dbg\DebugMsg.TcPOU">
+    <Compile Include="Dbg\NewDebug.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dbg\DebugStr.TcPOU">
+    <Compile Include="Dbg\DebugMode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dbg\I_Debug.TcIO">

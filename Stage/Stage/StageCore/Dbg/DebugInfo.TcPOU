@@ -6,11 +6,11 @@ Provides access to registered debug information, enabling monitoring and trouble
 *)
 FUNCTION_BLOCK DebugInfo
 VAR
-	_lastMsgIdx			: REFERENCE TO UDINT REF= _Debug.nLastMsg;
-	_msg				: REFERENCE TO ARRAY[1..Param.DEBUGMSG_CAP] OF _DebugInfo REF= _Debug.debugMsg;
-	
-	_lastStrIdx			: REFERENCE TO UDINT REF= _Debug.nLastStr;
-	_str				: REFERENCE TO ARRAY[1..Param.DEBUGSTR_CAP] OF Str REF= _Debug.debugStr;
+	nLastMsgIdx: REFERENCE TO UDINT REF= _Debug.nLastIdx;
+	nTotalNumber: REFERENCE TO UDINT REF= _Debug.nTotalNumber;
+	nPanicNumber: REFERENCE TO UDINT REF= _Debug.nPanicNumber;
+	nNotifyNumber: REFERENCE TO UDINT REF= _Debug.nNotifyNumber;
+	entry: REFERENCE TO ARRAY[1..Param.DEBUG_CAP] OF _DebugInfo REF= _Debug.debugMsg;	
 END_VAR
 ]]></Declaration>
     <Implementation>

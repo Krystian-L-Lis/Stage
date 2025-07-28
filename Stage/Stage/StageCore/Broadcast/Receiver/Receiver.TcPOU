@@ -4,37 +4,53 @@
     <Declaration><![CDATA[(*
 Represents a receiver in the Broadcast system. Implements the necessary methods for receiving events and pairing signals.
 *)
-FUNCTION_BLOCK FINAL Receiver IMPLEMENTS I_Receiver
+FUNCTION_BLOCK Receiver IMPLEMENTS I_Receiver, I_Callable
 VAR
+	{ attribute 'hide' }
+	_comp: Component(THIS^);
+
+	{ attribute 'hide' }
+	_iCallable: I_Callable := THIS^;
 	
-	_comp			: Component(THIS^);
-	_tag			: TagBase;
-	_iCallable		: I_Callable;
+	_tag: TagBase;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="FB_init" Id="{180c7f71-8e66-475d-822f-48b13e0266b6}">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
-{attribute 'hide'}
-METHOD FB_Init: BOOL
+    <Method Name="Call" Id="{49cdd749-4a7b-481d-a54a-b6add84eeae7}">
+      <Declaration><![CDATA[(*
+This method provides a standardized way for other objects to interact with the object that owns it.
+*)
+{ attribute 'hide' }
+METHOD Call
 VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
-
-	iCallable	: I_Callable;
-END_VAR]]></Declaration>
+	iArg	: I_Arg;
+END_VAR
+]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_iCallable := iCallable;
-IF _iCallable = 0 THEN
-	DebugMsg(THIS^, 'iReceiver = 0!');
-END_IF]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Property Name="Callable" Id="{d843a439-5ce2-4dfd-ac9c-79b8e01845e6}">
+      <Declaration><![CDATA[PROPERTY Callable : I_Callable]]></Declaration>
+      <Get Name="Get" Id="{83af8e2e-cbf9-435b-9870-f7e57b6bba2d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Callable := _iCallable;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{f027301b-568d-40cf-bbb0-713c77825d0a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iCallable := Callable;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="Option" Id="{ec2f92a0-3163-4c2f-b6c4-95d948e23c76}">
       <Declaration><![CDATA[(*
 Allows access to Option property of the internal Tag.
@@ -64,10 +80,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _iCallable <> 0 THEN
-	_iCallable.Call(iArg);
+        <ST><![CDATA[IF _iCallable = 0 THEN
+	NewDebug(THIS^, Param.EXE_INTERNAL_DEBUG_MODE, 'Callable = 0!');
+	RETURN;
 END_IF
-]]></ST>
+
+_iCallable.Call(iArg);]]></ST>
       </Implementation>
     </Method>
     <Property Name="Tag" Id="{c4ff52e5-e8db-4834-b8d3-e55ed4dc8f91}">
