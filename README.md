@@ -1,6 +1,8 @@
 # **Stage**
 _A framework for writing scalable and maintainable ST code_
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Krystian-L-Lis/Stage)
+
 ---
 
 ## Overview
@@ -260,3 +262,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have questions or suggestions, feel free to reach out via:
 
 - **GitHub Issues:** [Submit an issue](https://github.com/Krystian-L-Lis/Stage/issues)  
+
