@@ -22,7 +22,7 @@
     <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
     <Title>StageCore</Title>
-    <ProjectVersion>5.0.0</ProjectVersion>
+    <ProjectVersion>6.0.0</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
@@ -73,49 +73,49 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arg\Args\BOOL\IArgToIBoolArg.TcPOU">
+    <Compile Include="Broadcast\Arg\Args\BOOL\BoolArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\BOOL\BoolArg.TcPOU">
+    <Compile Include="Broadcast\Arg\Args\BOOL\IArgToIBoolArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\BOOL\I_BoolArg.TcIO">
+    <Compile Include="Broadcast\Arg\Args\BOOL\I_BoolArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\REAL\IArgToIRealtArg.TcPOU">
+    <Compile Include="Broadcast\Arg\Args\DWORD\DwordArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\REAL\RealArg.TcPOU">
+    <Compile Include="Broadcast\Arg\Args\DWORD\IArgToIDwordArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\REAL\I_RealArg.TcIO">
+    <Compile Include="Broadcast\Arg\Args\DWORD\I_DwordArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\DWORD\IArgToIDwordArg.TcPOU">
+    <Compile Include="Broadcast\Arg\Args\REAL\IArgToIRealtArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\DWORD\DwordArg.TcPOU">
+    <Compile Include="Broadcast\Arg\Args\REAL\I_RealArg.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\Args\DWORD\I_DwordArg.TcIO">
+    <Compile Include="Broadcast\Arg\Args\REAL\RealArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\ICompToIArg.TcPOU">
+    <Compile Include="Broadcast\Arg\IArgToIComp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\IArgToIComp.TcPOU">
+    <Compile Include="Broadcast\Arg\ICompToIArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arg\I_Arg.TcIO">
+    <Compile Include="Broadcast\Arg\I_Arg.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Broadcast\Callable\I_Callable.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Helpers\GetSignal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Helpers\GetReceiver.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Broadcast\Receiver\AbstractReceiver.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Broadcast\Receiver\ICompToIRec.TcPOU">
@@ -172,9 +172,6 @@
     <Compile Include="Broadcast\Sys\_Broadcast.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Callable\I_Callable.TcIO">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dbg\DebugInfo.TcPOU">
       <SubType>Code</SubType>
@@ -424,11 +421,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Arg\Args\BOOL" />
-    <Folder Include="Arg\Args\REAL" />
-    <Folder Include="Arg\Args\DWORD" />
-    <Folder Include="Arg\Args" />
     <Folder Include="Broadcast" />
+    <Folder Include="Broadcast\Arg" />
+    <Folder Include="Broadcast\Arg\Args" />
+    <Folder Include="Broadcast\Arg\Args\BOOL" />
+    <Folder Include="Broadcast\Arg\Args\DWORD" />
+    <Folder Include="Broadcast\Arg\Args\REAL" />
+    <Folder Include="Broadcast\Callable" />
     <Folder Include="Broadcast\Helpers" />
     <Folder Include="Broadcast\Receiver" />
     <Folder Include="Broadcast\Signal" />
@@ -442,10 +441,8 @@
     <Folder Include="Entity\Core" />
     <Folder Include="Entity\Core\Scope" />
     <Folder Include="Entity\Sys" />
-    <Folder Include="Callable" />
     <Folder Include="Entity\Sys\_Itf" />
     <Folder Include="Entity\Sys\_Helpers" />
-    <Folder Include="Arg" />
     <Folder Include="Runtime" />
     <Folder Include="Result" />
     <Folder Include="Result\Error" />
@@ -481,8 +478,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -646,15 +643,15 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Boolean">System.Boolean</Type>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="Int32">System.Int32</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Boolean">System.Boolean</Type>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="Int32">System.Int32</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

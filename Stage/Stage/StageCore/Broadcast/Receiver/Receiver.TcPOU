@@ -33,7 +33,7 @@ END_VAR
       </Implementation>
     </Method>
     <Property Name="Callable" Id="{d843a439-5ce2-4dfd-ac9c-79b8e01845e6}">
-      <Declaration><![CDATA[PROPERTY Callable : I_Callable]]></Declaration>
+      <Declaration><![CDATA[PROPERTY FINAL Callable : I_Callable]]></Declaration>
       <Get Name="Get" Id="{83af8e2e-cbf9-435b-9870-f7e57b6bba2d}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -48,28 +48,6 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[_iCallable := Callable;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="Option" Id="{ec2f92a0-3163-4c2f-b6c4-95d948e23c76}">
-      <Declaration><![CDATA[(*
-Allows access to Option property of the internal Tag.
-*)
-PROPERTY Option : Str]]></Declaration>
-      <Get Name="Get" Id="{b1db190c-03d6-4fab-862d-099cb59cb8b2}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Option := _tag.Option;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{9696c4d2-63e7-4d6e-b635-a446f31805ea}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_tag.Option := Option;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -92,7 +70,7 @@ _iCallable.Call(iArg);]]></ST>
       <Declaration><![CDATA[(*
 Provides access to the tag associated with the signal.
 *)
-PROPERTY Tag : I_Tag]]></Declaration>
+PROPERTY FINAL Tag : I_Tag]]></Declaration>
       <Get Name="Get" Id="{78444fd4-17bd-40e5-bca6-e460c617c742}">
         <Declaration><![CDATA[VAR
 END_VAR
