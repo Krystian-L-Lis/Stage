@@ -47,18 +47,20 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 
 ## **Wiki**
 
-Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page for:  
-✔️ Detailed guides  
-✔️ API reference  
-✔️ Changelog  
+Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page!  
+- Guides  
+- API reference  
+- Changelog
+- Obsidian-compatible
 
 ---
 
 ## **Features**
 
-- 📦 **Modular Architecture** – Inspired by ECS architecture.  
-- 🔄 **State Management** – Implement flexible state-driven logic.  
-- 📡 **Event-Driven Programming** – Easily connect components via signals.
+- Modular architecture through ECS inspired model.  
+- Implement flexible state-driven logic.  
+- Connect parts of your program via signals.
+- Manage workloads through jobs.
 
 ---
 ## **Tests & Examples**
