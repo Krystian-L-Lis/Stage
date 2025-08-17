@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <Itf Name="I_RgbColor" Id="{c14a9189-f87c-457b-89d1-843d3ff3e927}">
+  <Itf Name="I_Argbb" Id="{c14a9189-f87c-457b-89d1-843d3ff3e927}">
     <Declaration><![CDATA[(*
 Provides methods and properties to operate on RGBA value.
 *)
-INTERFACE I_RgbColor
+INTERFACE I_Argbb
 ]]></Declaration>
     <Property Name="Alpha" Id="{dbf4dd98-9843-49d4-a908-5b54536c0014}">
       <Declaration><![CDATA[(*
@@ -36,7 +36,7 @@ Clones other components of I_RgbaColor interface.
 *)
 METHOD Clone
 VAR_INPUT
-	iColor	: I_RgbColor;
+	iColor	: I_Argbb;
 END_VAR
 ]]></Declaration>
     </Method>
@@ -57,7 +57,7 @@ PROPERTY Green : BYTE]]></Declaration>
 Compute single Color value from RGBA components when used as getter.
 Sets RGBA values by extracting components from a single Color value.
 *)
-PROPERTY Raw : Color]]></Declaration>
+PROPERTY Raw : Argb]]></Declaration>
       <Get Name="Get" Id="{9aede787-8993-471e-992b-ce11ca65f74b}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

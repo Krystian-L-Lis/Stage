@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Argb" Id="{8a6bcbc4-7e62-43a0-b446-48bdd11ecd5a}">
+    <Declaration><![CDATA[(*
+A DWORD alias type to be used with PLC HMI. Encodes ARGB value.
+*)
+TYPE Argb : DWORD; END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

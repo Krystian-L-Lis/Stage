@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="RgbColor" Id="{2722e4a4-8a93-411e-a3ea-39a44af2a9e8}" SpecialFunc="None">
+  <POU Name="Argbb" Id="{2722e4a4-8a93-411e-a3ea-39a44af2a9e8}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Provides methods and properties to operate on RGBA value.
 *)
-FUNCTION_BLOCK RgbColor IMPLEMENTS I_RgbColor
+FUNCTION_BLOCK Argbb IMPLEMENTS I_Argbb
 VAR
 	_r: BYTE;
 	_g: BYTE;
@@ -65,7 +65,7 @@ Clones other components of I_RgbaColor interface.
 *)
 METHOD Clone
 VAR_INPUT
-	iColor	: I_RgbColor;
+	iColor	: I_Argbb;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -126,7 +126,7 @@ END_VAR
 Compute single Color value from RGBA components when used as getter.
 Sets RGBA values by extracting components from a single Color value.
 *)
-PROPERTY Raw : Color]]></Declaration>
+PROPERTY Raw : Argb]]></Declaration>
       <Get Name="Get" Id="{101e36a2-7284-4e50-b5a7-31e84ab6f554}">
         <Declaration><![CDATA[VAR
 END_VAR
