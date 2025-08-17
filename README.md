@@ -1,6 +1,8 @@
 # **Stage**
 _A framework for writing scalable and maintainable ST code_
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Krystian-L-Lis/Stage)
+
 ---
 
 ## Overview
@@ -47,18 +49,20 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 
 ## **Wiki**
 
-Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page for:  
-✔️ Detailed guides  
-✔️ API reference  
-✔️ Changelog  
+Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page!  
+- Guides  
+- API reference  
+- Changelog
+- Obsidian-compatible
 
 ---
 
 ## **Features**
 
-- 📦 **Modular Architecture** – Inspired by ECS architecture.  
-- 🔄 **State Management** – Implement flexible state-driven logic.  
-- 📡 **Event-Driven Programming** – Easily connect components via signals.
+- Modular architecture through ECS inspired model.  
+- Implement flexible state-driven logic.  
+- Connect parts of your program via signals.
+- Manage workloads through jobs.
 
 ---
 ## **Tests & Examples**
@@ -258,3 +262,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have questions or suggestions, feel free to reach out via:
 
 - **GitHub Issues:** [Submit an issue](https://github.com/Krystian-L-Lis/Stage/issues)  
+
