@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>StageUtils</Name>
-    <ProgramVersion>3.1.4026.16</ProgramVersion>
+    <ProgramVersion>3.1.4026.18</ProgramVersion>
     <Application>{27c6098d-2ecd-41f5-8a4c-9dfd760a4ab6}</Application>
     <TypeSystem>{c4e484e8-3149-488c-ac2a-3768c5fe01bd}</TypeSystem>
     <Implicit_Task_Info>{47f005fd-c879-429f-baf9-26e64d516273}</Implicit_Task_Info>
@@ -91,6 +91,11 @@
     <Folder Include="Color\Itf" />
     <Folder Include="Math" />
     <Folder Include="Time" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="StageUtils.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

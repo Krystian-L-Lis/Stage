@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>StageCore</Name>
-    <ProgramVersion>3.1.4026.16</ProgramVersion>
+    <ProgramVersion>3.1.4026.18</ProgramVersion>
     <Application>{fec3d0c7-471d-43f5-84d2-6083b5cf05d6}</Application>
     <TypeSystem>{48aaa59b-78a5-43c8-9209-8584a2741719}</TypeSystem>
     <Implicit_Task_Info>{79ea7876-d3f0-4635-a2b5-0ad959ac0d65}</Implicit_Task_Info>
@@ -443,12 +443,16 @@
     <Folder Include="Entity\Sys" />
     <Folder Include="Entity\Sys\_Itf" />
     <Folder Include="Entity\Sys\_Helpers" />
-    <Folder Include="Runtime" />
+    <Folder Include="Runtime">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
     <Folder Include="Result" />
     <Folder Include="Result\Error" />
     <Folder Include="Runtime\Execute" />
     <Folder Include="Runtime\Init" />
-    <Folder Include="State" />
+    <Folder Include="State">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
     <Folder Include="State\_Buffer">
       <ExcludeFromBuild>false</ExcludeFromBuild>
     </Folder>
@@ -466,7 +470,9 @@
     <Folder Include="Strings\Strf" />
     <Folder Include="Tags\Helpers" />
     <Folder Include="Tags\Casts" />
-    <Folder Include="Jobs" />
+    <Folder Include="Jobs">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
     <Folder Include="Jobs\Worker" />
     <Folder Include="Jobs\Worker\Base" />
     <Folder Include="Jobs\Job" />

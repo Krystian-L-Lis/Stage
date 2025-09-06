@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.16" TcVersionFixed="true">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.18" TcVersionFixed="true">
 	<Project ProjectGUID="{C61CA2FA-5123-4198-9125-8734FBACFE30}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
 			<Tasks>
@@ -16,13 +16,13 @@
 		</System>
 		<Plc>
 			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="StageUtils" PrjFilePath="StageUtils\StageUtils.plcproj" TmcFilePath="StageUtils\StageUtils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{2452B7A6-7B39-B71F-13E7-D92E665405DD}" TmcPath="StageUtils\StageUtils.tmc">
+				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{0FAA2F7A-CCE9-06D3-C92A-2083492A3092}" TmcPath="StageUtils\StageUtils.tmc">
 					<Name>StageUtils Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>
 			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="StageCore" PrjFilePath="StageCore\StageCore.plcproj" TmcFilePath="StageCore\StageCore.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{C03DF894-91F6-FEA0-F165-8C84F31E5096}" TmcPath="StageCore\StageCore.tmc">
+				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{70E0B8AE-4C5C-AEB6-A85A-9871E539D175}" TmcPath="StageCore\StageCore.tmc">
 					<Name>StageCore Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
