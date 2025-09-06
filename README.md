@@ -11,6 +11,16 @@ Stage is a framework designed to simplify PLC programming in TwinCAT 3.1. It pro
 
 ---
 
+## **Wiki**
+
+Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page!  
+- Guides  
+- API reference  
+- Changelog
+- Obsidian-compatible
+
+---
+
 ## **Requirements**
 
 Stage requires **Beckhoff TwinCAT 3.1**, specifically:
@@ -44,16 +54,6 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
       Choose the downloaded `.library` file to add Stage to the repository.
    3. After installation, **right-click** on **References**, select **"Add Library"**, and locate the `Core` and/or `Utils` under `Stage` category to include it in your project.
    4. For more detailed instructions on TwinCAT library installation, refer to the official Beckhoff guide on [Infosys](https://infosys.beckhoff.com/english.php?content=../content/1033/tc3_plc_intro/41891384434359666059.html&id=).
-
----
-
-## **Wiki**
-
-Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page!  
-- Guides  
-- API reference  
-- Changelog
-- Obsidian-compatible
 
 ---
 
