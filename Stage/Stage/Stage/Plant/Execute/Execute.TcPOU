@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Execute" Id="{fd30bbbf-c4e7-4255-aff2-259a2cee51d5}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Allows registration of FB implementing `I_Execute`. 
+*)
+FUNCTION_BLOCK FINAL Execute IMPLEMENTS _I_Execute, I_Debug
+VAR
+	_iThread: I_Thread := _Plant.MainThread;
+	_iExecute: I_Execute;
+	_iPrev: _I_Execute;
+	_iNext: _I_Execute;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="_Exe" Id="{c801d5e7-2cd0-4874-a9b5-b0187da63b5c}">
+      <Declaration><![CDATA[METHOD INTERNAL _Exe
+VAR_OUTPUT
+	iNext: _I_Execute;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iExecute.Execute();
+iNext := _iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="_Next" Id="{ad8103e9-fb8f-4936-a0ee-b2d1c9e1c87b}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : _I_Execute]]></Declaration>
+      <Get Name="Get" Id="{39850231-e716-4e27-b975-9436ea93b7e3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Next := _iNext;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{bf94e75f-d876-4f16-afa1-1974888aa677}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iNext := _Next;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{6abbb40a-4098-4166-9b94-da7893ebc1f2}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : _I_Execute]]></Declaration>
+      <Get Name="Get" Id="{928f6ef0-c4a5-4512-a837-8b15c0552674}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Prev := _iPrev;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{fe73ed36-ade6-4303-8f0b-7b28db470838}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPrev := _Prev;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Thread" Id="{98870889-5142-4df1-b51d-c3f4b912299c}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Thread : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{854462fc-9022-4575-bebf-1f48da7d7416}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Thread := _iThread;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1abd7175-0458-4666-80bb-d076d71ba426}">
+        <Declaration><![CDATA[INTERNAL 
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iThread := _Thread;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_init" Id="{0c4d921f-e0eb-4cc3-851c-9a1e40abf9a1}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+{attribute 'hide'}
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iExecute			: I_Execute;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Plant.IsInit THEN
+	RETURN;
+END_IF
+
+IF (_iExecute := iExecute) = 0 THEN
+	Plant.Panic(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+	RETURN;
+END_IF
+
+_iThread := _Plant.MainThread;
+_Plant.MainThread.AttachExecute(THIS^);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Thread" Id="{007dbe53-a2a0-4e0f-80d9-08047f4a945c}">
+      <Declaration><![CDATA[PROPERTY Thread : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{b47347c0-efdb-4ac8-ad7a-d8c017d37951}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Thread := _iThread;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{476d1068-41d5-4d10-b792-0c8db1cb2340}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF NOT Plant.IsInit THEN
+	RETURN;
+END_IF
+
+_iThread := Thread;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

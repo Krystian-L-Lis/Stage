@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Argbb" Id="{d884fe8f-dddb-49ad-9aef-a4f440a46ea0}" SpecialFunc="None">
+    <Declaration><![CDATA[(*ARGB color class builder.*)
+FUNCTION_BLOCK Argbb
+VAR
+	_r: BYTE;
+	_g: BYTE;
+	_b: BYTE;
+	_a: BYTE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Alpha" Id="{ee2a864b-72ce-497e-8860-76928872cda1}">
+      <Declaration><![CDATA[(*ALPHA component.*)
+PROPERTY Alpha : BYTE]]></Declaration>
+      <Get Name="Get" Id="{6604ddfc-f720-4321-9d50-1c51f2738342}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Alpha := _a;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{22ca581c-eeff-42f7-b89c-3d4fffd7dfb4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_a := Alpha;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Blue" Id="{3f1ac743-1c2b-4d63-bdad-2ec08f81e45a}">
+      <Declaration><![CDATA[(*BLUE component.*)
+PROPERTY Blue : BYTE]]></Declaration>
+      <Get Name="Get" Id="{c4a3c42c-2203-4d76-8c0a-3bc8fb749fb9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Blue := _b;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9cb8ecae-c8ec-4c3b-b497-9d90de0cfbf2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_b := Blue;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Green" Id="{34fb47af-42ff-4bce-9fe5-a581493cffea}">
+      <Declaration><![CDATA[(*GREEN component.*)
+PROPERTY Green : BYTE]]></Declaration>
+      <Get Name="Get" Id="{73b3330f-5972-409a-b6b3-22231de1acf8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Green := _g;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{f0abe708-c83e-4ada-a9f3-b098a0382609}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_g := Green;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Raw" Id="{7498ed64-bd4c-4ff5-82e1-2e5e41239c2d}">
+      <Declaration><![CDATA[(*Compute single ARGB value from stored components when used as getter.
+Sets ARGB values by extracting components from a single ARGB value.*)
+PROPERTY Raw : Argb]]></Declaration>
+      <Get Name="Get" Id="{7bd33e5f-4efa-455b-8c3e-295fca724c53}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Raw := 	USINT_TO_UDINT(_b) OR
+			SHL(USINT_TO_UDINT(_g), 8) OR
+			SHL(USINT_TO_UDINT(_r), 16) OR
+			SHL(USINT_TO_UDINT(_a), 24);]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{115bbdd4-d73f-4b8e-8f6c-e1130736bd89}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_b := UDINT_TO_USINT(Raw AND 16#FF);
+_g := UDINT_TO_USINT(SHR(Raw, 8) AND 16#FF);
+_r := UDINT_TO_USINT(SHR(Raw, 16) AND 16#FF);
+_a := UDINT_TO_USINT(SHR(Raw, 24) AND 16#FF);]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Red" Id="{96853ed3-5cc1-41dc-ad25-9f66e3e7fc3b}">
+      <Declaration><![CDATA[(*RED component.*)
+PROPERTY Red : BYTE]]></Declaration>
+      <Get Name="Get" Id="{91eb7c2b-4415-486f-8050-84a0112e4cbe}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Red := _r;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{4dbbf1ab-b554-4ee9-80e6-1892940e1800}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_r := Red;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Set" Id="{de1e52bc-10d3-4d8a-8f2c-41becbc12b53}">
+      <Declaration><![CDATA[(*Set each ARGB component value separately.*)
+METHOD Set
+VAR_INPUT
+	nRed: USINT;
+	nGreen: USINT;
+	nBlue: USINT;
+	nAlpha: USINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_r := nRed;
+_g := nGreen;
+_b := nBlue;
+_a := nAlpha;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

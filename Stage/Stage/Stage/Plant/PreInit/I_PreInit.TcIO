@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_PreInit" Id="{86558393-4550-4676-9af0-3feafb797384}">
+    <Declaration><![CDATA[(*
+A `PreInit` method of FB implmenting this interface will be called once upon program startup.
+*)
+INTERFACE I_PreInit EXTENDS I_Generic
+]]></Declaration>
+    <Method Name="PreInit" Id="{4a3a1e05-aa4f-4dba-965f-466f8ae16c7e}">
+      <Declaration><![CDATA[(*
+If registered, this method will be executed upon startup.
+*)
+METHOD PreInit
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

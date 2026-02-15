@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Execute" Id="{15413885-918e-40a7-85ba-cc0538727b10}">
+    <Declaration><![CDATA[(*
+A `Execute` method of FB implmenting this interface will be called every control loop cycle.
+*)
+INTERFACE I_Execute EXTENDS I_Debug]]></Declaration>
+    <Method Name="Execute" Id="{d0c1bfc6-1219-4d9b-889c-5e29307fe94f}">
+      <Declaration><![CDATA[(*
+If registered, this method will be executed cyclically.
+*)
+METHOD Execute
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

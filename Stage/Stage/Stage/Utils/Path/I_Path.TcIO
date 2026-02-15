@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Path" Id="{b955facb-7d92-45ed-9f56-bffab42f8eff}">
+    <Declaration><![CDATA[INTERFACE I_Path
+]]></Declaration>
+    <Property Name="Get" Id="{fe919d4f-04bf-47bd-952f-68f25ab34989}">
+      <Declaration><![CDATA[// Read the whole string
+PROPERTY Get : Str]]></Declaration>
+      <Get Name="Get" Id="{1eefc9f4-115f-48d5-9277-198342446fa8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Has" Id="{b8393d0a-c05d-4bd2-96be-faa36956f3c3}">
+      <Declaration><![CDATA[METHOD Has : BOOL
+VAR_INPUT
+	sSegment: Str;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Length" Id="{6161492d-ccbd-4fab-931c-6a0a16cfbe97}">
+      <Declaration><![CDATA[PROPERTY Length : USINT]]></Declaration>
+      <Get Name="Get" Id="{75307abd-3222-476b-8b5e-8ccb26092503}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Name" Id="{1648e52e-030a-4aed-95b8-294b23471c90}">
+      <Declaration><![CDATA[PROPERTY Name : Str]]></Declaration>
+      <Get Name="Get" Id="{c514d655-a1c7-43ca-957f-b0dc52f91241}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Option" Id="{c2c8963d-06eb-416b-a110-0e985fb960a6}">
+      <Declaration><![CDATA[// Modify or read the optional segment.
+PROPERTY Option : Str]]></Declaration>
+      <Get Name="Get" Id="{d32ce12a-4979-49d2-8c44-8008d3b3eca5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{ae001f47-64b0-45fc-bd00-108a840ea6c7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

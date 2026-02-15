@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="SubPlant" Id="{8b3646af-7c89-4248-ba4b-bde043ef6a9a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SubPlant
+VAR
+	iFirstCyclic: I_ExecuteNode;
+	iLastCyclic: I_ExecuteNode;
+	
+	iFirstWorker: I_Worker;
+	iLastWorker: I_Worker;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Run" Id="{312d03b0-5785-4da7-8eb1-55c23394ad73}">
+      <Declaration><![CDATA[METHOD Run
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _Plant.bInit THEN
+	RETURN;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

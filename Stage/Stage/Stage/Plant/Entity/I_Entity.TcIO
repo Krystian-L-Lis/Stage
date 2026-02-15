@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Entity" Id="{34f52675-879c-44cb-b9cd-6851c154fd0c}">
+    <Declaration><![CDATA[(*
+Allows registration of a I_Generic to global registry and runtime interface discovery.
+*)
+INTERFACE I_Entity EXTENDS _I_Entity
+]]></Declaration>
+    <Property Name="Raw" Id="{304f904b-75c2-47dc-94c7-d14b30af4057}">
+      <Declaration><![CDATA[// Function block interface pointer.
+PROPERTY Raw : I_Generic]]></Declaration>
+      <Get Name="Get" Id="{65bf2b6b-3eaa-44ba-8b9d-310345aa0739}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

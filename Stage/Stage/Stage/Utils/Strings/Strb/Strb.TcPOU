@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Strb" Id="{097a9ce5-fff4-459c-bf61-90e104e444f4}" SpecialFunc="None">
+    <Declaration><![CDATA[// A string builder utility that allows for manipulation of a string up to 255 characters. It implements the I_Strb interface that allows for method chaining.
+FUNCTION_BLOCK FINAL Strb IMPLEMENTS I_Strb
+VAR
+	_sString	: Str;
+	_nLength	: INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="_" Id="{ee5226c4-1bfb-4c78-b582-ae1ec7e3d151}" />
+    <Folder Name="I_Build" Id="{ac6c8744-50a3-4f05-8763-d0edced1682d}" />
+    <Property Name="_this" Id="{9f5d4af9-6657-4b84-b94c-f143552d6daa}" FolderPath="_\">
+      <Declaration><![CDATA[PROPERTY PRIVATE _this : I_Strb]]></Declaration>
+      <Get Name="Get" Id="{57c7bcd7-c66a-4ed8-9ead-784876349f3a}">
+        <Declaration><![CDATA[VAR
+	_iThis : I_Strb := THIS^;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_this := _iThis;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Append" Id="{7f7905f2-7818-4e4d-8188-6df497128569}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Appends the specified string to the current string.
+// Truncates if the total length exceeds 255 characters.
+METHOD Append : I_Strb
+VAR_INPUT
+    sToAdd : Str; // String to append
+END_VAR
+
+VAR
+	_nNewLength	: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Append := _this;
+
+IF sToAdd = '' THEN
+	RETURN;
+END_IF
+
+_nNewLength := Tc2_Standard.LEN(sToAdd) + _nLength;
+IF _nNewLength > 255 THEN
+	_nNewLength := 255;
+END_IF
+
+_sString := Tc2_Standard.CONCAT(_sString, sToAdd);
+_nLength := _nNewLength;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FindFirstAfter" Id="{8f9e101f-7a2f-44e6-8d32-11ba6ad80cd3}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Finds the first occurrence of a substring after the specified position.
+// Outputs the start and end positions of the found substring.
+METHOD FindFirstAfter : I_Strb
+VAR_INPUT
+    sToFind : Str;      // Substring to find
+    nPosition : INT := 1; // Starting position for search
+END_VAR
+VAR_OUTPUT
+    nStart : INT;       // Start position of the found substring
+    nEnd : INT;         // End position of the found substring
+END_VAR
+
+VAR
+	_sTemp			: Str;
+	_nOffset		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FindFirstAfter := _this;
+
+IF sToFind = '' THEN
+	RETURN;
+END_IF
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+_sTemp := Tc2_Standard.MID(_sString, _nLength, nPosition);
+IF (_nOffset := Tc2_Standard.FIND(_sTemp, sToFind)) <> 0 THEN
+	nStart := nPosition + _nOffset - 1;
+	nEnd := nPosition + _nOffset - 2 + Tc2_Standard.LEN(sToFind);
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FindLastBefore" Id="{71bc0f49-5ad9-4169-b5ad-3a872c3c466c}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Finds the last occurrence of a substring before the specified position.
+// Outputs the start and end positions of the found substring.
+METHOD FindLastBefore : I_Strb
+VAR_INPUT
+    sToFind : Str;        // Substring to find
+    nPosition : INT := 256; // Starting position for reverse search
+END_VAR
+VAR_OUTPUT
+    nStart : INT;         // Start position of the found substring
+    nEnd : INT;           // End position of the found substring
+END_VAR
+VAR
+	_sTemp			: Str;
+	_nFindLength	: INT := Tc2_Standard.LEN(sToFind);
+	_nOffset		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FindLastBefore := _this;
+
+IF sToFind = '' THEN
+	RETURN;
+END_IF
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nPosition = 256 THEN
+	nPosition := _nLength;
+END_IF
+
+REPEAT
+	_sTemp := Tc2_Standard.MID(_sString, _nFindLength, nPosition);
+	IF _sTemp = sToFind THEN
+		nStart 	:= nPosition;
+		nEnd	:= nPosition + _nFindLength - 1;
+		RETURN;
+	END_IF
+UNTIL
+	(nPosition := nPosition - 1) <= 0
+END_REPEAT]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Get" Id="{519fee78-f6c1-45fe-83b2-23fedc118d14}" FolderPath="I_Build\">
+      <Declaration><![CDATA[PROPERTY Get : Str]]></Declaration>
+      <Get Name="Get" Id="{506d3967-a093-49b6-b90c-0fd2252f8327}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Get := _sString;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="HasAfter" Id="{f544f3ca-8838-4319-9707-f592713024e1}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Checks if the specified substring exists after the given position.
+METHOD HasAfter : BOOL
+VAR_INPUT
+    sToFind : Str;      // Substring to search for
+    nPosition : INT := 0; // Starting position for search
+END_VAR
+VAR_OUTPUT
+    nStart : INT;       // Start position of the found substring
+    nEnd : INT;         // End position of the found substring
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FindFirstAfter(sToFind, nPosition, nStart => nStart, nEnd => nEnd);
+HasAfter := nStart > 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HasBefore" Id="{62915ef4-82cd-46dc-8a4f-63e40918902b}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Checks if the specified substring exists before the given position.
+METHOD HasBefore : BOOL
+VAR_INPUT
+    sToFind : Str;        // Substring to search for
+    nPosition : INT := 256; // Ending position for reverse search
+END_VAR
+VAR_OUTPUT
+    nStart : INT;         // Start position of the found substring
+    nEnd : INT;           // End position of the found substring
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nPosition = 256 THEN
+	nPosition := Tc2_Standard.LEN(_sString);
+END_IF
+
+FindLastBefore(sToFind, nPosition, nStart => nStart, nEnd => nEnd);
+HasBefore := nStart > 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Inject" Id="{2e9ce33a-9a18-4428-92c8-44eae0f3e5ac}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Inserts a specified substring at a given position.
+// Truncates if the total length exceeds 255 characters.
+METHOD Inject : I_Strb
+VAR_INPUT
+    nPosition : INT;    // Position to inject the string
+    sToInject : Str;    // String to inject
+END_VAR
+VAR
+	_nNewLength	: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Inject := _this;
+
+IF sToInject = '' THEN
+	RETURN;
+END_IF
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nPosition > _nLength THEN
+	RETURN;
+END_IF
+
+_nNewLength := Tc2_Standard.LEN(sToInject) + _nLength;
+IF _nNewLength > 255 THEN
+	_nNewLength := 255;
+END_IF
+
+_sString := Tc2_Standard.INSERT(_sString, sToInject, nPosition);
+_nLength := _nNewLength;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsEmpty" Id="{fa4b77ae-d417-4a24-b9a2-557004895354}" FolderPath="I_Build\">
+      <Declaration><![CDATA[PROPERTY IsEmpty : BOOL]]></Declaration>
+      <Get Name="Get" Id="{11a8f9e9-bda9-40a9-ac81-028caff4198c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsEmpty := _sString = '';]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Length" Id="{9317d051-3a8c-43cf-99fe-0ca8a6f11e0c}" FolderPath="I_Build\">
+      <Declaration><![CDATA[PROPERTY Length : INT]]></Declaration>
+      <Get Name="Get" Id="{5ca80cfc-b901-4793-a171-86a9e645eb11}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Length := _nLength;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Prepend" Id="{90cd07b0-8292-43be-8f7c-ccc1f2a79b9d}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Prepends the specified string to the current string.
+// Truncates if the total length exceeds 255 characters.
+METHOD Prepend : I_Strb
+VAR_INPUT
+    sToAdd : Str; // String to prepend
+END_VAR
+VAR
+	_nNewLength	: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Prepend := _this;
+
+IF sToAdd = '' THEN
+	RETURN;
+END_IF
+
+_nNewLength := Tc2_Standard.LEN(sToAdd) + _nLength;
+IF _nNewLength > 255 THEN
+	_nNewLength := 255;
+END_IF
+
+_sString := Tc2_Standard.CONCAT(sToAdd, _sString);
+_nLength := _nNewLength;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Remove" Id="{87c2b449-3936-4b9e-bf9e-9a7e13244b52}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Removes a substring of specified length starting at a given position.
+METHOD Remove : I_Strb
+VAR_INPUT
+    nLength : INT;    // Length of the substring to remove
+    nPosition : INT;  // Starting position of the substring to remove
+END_VAR
+
+VAR
+	_nPosition	: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Remove := _this;
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nPosition > _nLength THEN
+	RETURN;
+END_IF
+
+IF nLength = 0 THEN
+	RETURN;
+END_IF
+
+IF nLength + nPosition > _nLength THEN
+	nLength := _nLength - nPosition + 1;
+END_IF
+
+_sString := Tc2_Standard.DELETE(_sString, nLength, nPosition);
+_nLength := _nLength - nLength;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Set" Id="{4e083d1b-9de2-4451-b0f9-5b881e2173d3}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Sets the current string to a new value.
+METHOD Set : I_Strb
+VAR_INPUT
+    sValue : Str; // New string value
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Set 		:= _this;
+
+_sString 	:= sValue;
+_nLength	:= Tc2_Standard.LEN(sValue);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Slice" Id="{41b26e98-f082-480a-832d-cfbb05d20b83}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Extracts a substring starting from a given position with a specified length.
+METHOD Slice : I_Strb
+VAR_INPUT
+    nLength : INT;   // Length of the slice
+    nPosition : INT; // Starting position of the slice
+END_VAR
+VAR_OUTPUT
+    sSlice : Strb;   // The sliced string
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Slice := _this;
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+IF nLength = 0 THEN
+	RETURN;
+END_IF
+
+sSlice.Set(Tc2_Standard.MID(_sString, nLength, nPosition));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Split" Id="{8062e340-a176-420f-bbf7-07ca296bea0b}" FolderPath="I_Build\">
+      <Declaration><![CDATA[// Splits the string into two parts at the specified position.
+METHOD Split : I_Strb
+VAR_INPUT
+    nPosition : INT; // Position to split the string
+END_VAR
+VAR_OUTPUT
+    sLeft : Strb;    // Left part of the split
+    sRight : Strb;   // Right part of the split
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Split := _this;
+
+IF nPosition = 0 THEN
+	RETURN;
+END_IF
+
+sLeft.Set(Tc2_Standard.LEFT(_sString, nPosition));
+sRight.Set(Tc2_Standard.RIGHT(_sString, _nLength - nPosition));]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

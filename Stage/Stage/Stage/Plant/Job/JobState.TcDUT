@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="JobState" Id="{55deeb7c-88e3-450b-bed9-bc539af6d837}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+(*
+Job state transition.
+Idle > .Start() > Init > .JobInit() > Busy > 
+JobExecute > .Stop() > Done > .JobExit() > Idle.
+*)
+TYPE JobState :
+(
+	Idle,
+	Init,
+	Busy,
+	Done
+	
+) BYTE;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Worker" Id="{b97897ce-fa84-437c-88bb-b049358c2ee9}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Allows registration of FB implementing `I_Job`. 
+*)
+FUNCTION_BLOCK FINAL Worker IMPLEMENTS I_Worker
+VAR
+	_iThread: I_Thread := _Plant.MainThread;
+	_iJob: I_Job;
+	_iNext: I_Worker;
+	_iPrev: I_Worker;
+	_eState: JobState;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="_Next" Id="{eed224c3-deb7-4e6c-8221-96a50a19aa84}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{89caddf5-6a57-4d5b-a24b-62fd71c7f969}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Next := _iNext;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{69d4a879-5df0-47a2-9671-7f75bbe8c2b9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iNext := _Next;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{432454c4-1e01-4849-adc3-cbc72bbfb948}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{11785567-df51-4c66-994d-4b610e2b8ab0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Prev := _iPrev;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d392a6f5-2b1c-4af5-af42-5bebb77edeb3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPrev := _Prev;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_init" Id="{a6ebb3d3-f387-4e6a-8184-5548edc195e7}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+{attribute 'hide'}
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	
+	iJob			: I_Job;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _iJob <> 0 THEN
+	RETURN;
+END_IF
+
+IF iJob = 0 THEN
+	Plant.Panic(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+END_IF
+
+_iJob := iJob;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Process" Id="{91b62463-a3fa-4250-833c-45861b1535b0}">
+      <Declaration><![CDATA[METHOD INTERNAL Process
+VAR_OUTPUT
+	iNext: I_Worker;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE _eState OF
+	JobState.Init:
+		_iJob.JobInit();
+		_eState := JobState.Busy;
+		iNext := _iNext;
+	
+	JobState.Busy:
+		_iJob.JobExecute();
+		iNext := _iNext;
+		
+	JobState.Done:
+		iNext := _iNext;
+		IF IsOk(_iThread.DetachWorker(THIS^)) THEN
+			_iJob.JobExit();
+			_eState := JobState.Idle;
+		END_IF
+	
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{080aa8ff-e200-4b3c-b985-a8813d778807}">
+      <Declaration><![CDATA[METHOD Start : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _iJob = 0 THEN
+	Start := Error;
+	RETURN;
+END_IF
+
+CASE _eState OF
+	JobState.Init:
+		Start := Error;
+
+	JobState.Idle:
+		_eState := JobState.Init;
+		Start := _iThread.AttachWorker(THIS^);
+	
+	JobState.Busy:
+		Start := Error;
+		
+	JobState.Done:
+		Start := Error;
+	
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="State" Id="{1f7a2bd4-ef54-4bc0-a16d-c88efa33c03b}">
+      <Declaration><![CDATA[PROPERTY State : JobState]]></Declaration>
+      <Get Name="Get" Id="{dca00282-a4d9-4d8e-93e4-f54b4d9deb04}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[State := _eState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Stop" Id="{6cfd29a9-2408-440a-b439-b2633f4e1057}">
+      <Declaration><![CDATA[METHOD Stop
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_eState := JobState.Done;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Thread" Id="{850b9f54-d27a-4b2c-880f-f8770f0ce6ea}">
+      <Declaration><![CDATA[PROPERTY Thread : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{2f51b206-b1ce-41a7-9a6b-1ebe7051e60d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Thread := _iThread;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{512ef1c0-3f8d-4725-b247-37f6e86489e6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _eState = JobState.Idle THEN
+	_iThread := Thread;
+END_IF
+	]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

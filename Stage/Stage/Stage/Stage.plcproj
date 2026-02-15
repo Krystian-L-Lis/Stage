@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{498e16f7-0664-4968-a44b-f00c4b4ba6aa}</ProjectGuid>
+    <SubObjectsSortedByName>true</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>false</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Stage</Name>
+    <ProgramVersion>3.1.4026.19</ProgramVersion>
+    <Application>{fec3d0c7-471d-43f5-84d2-6083b5cf05d6}</Application>
+    <TypeSystem>{48aaa59b-78a5-43c8-9209-8584a2741719}</TypeSystem>
+    <Implicit_Task_Info>{79ea7876-d3f0-4635-a2b5-0ad959ac0d65}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{6785aa1d-1e78-4659-9a86-32d3563547eb}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{a8b598d9-903c-4920-b674-0bd0adc5d187}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{06a967b7-4bc3-42df-b6bd-73a4bc1f9b0a}</LibraryReferences>
+    <Company>_</Company>
+    <Released>false</Released>
+    <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
+    <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
+    <Title>Stage</Title>
+    <ProjectVersion>1.0.0</ProjectVersion>
+    <LibraryCategories>
+      <LibraryCategory xmlns="">
+        <Id>{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>Stage</DefaultName>
+      </LibraryCategory>
+    </LibraryCategories>
+    <SelectedLibraryCategories>
+      <Id xmlns="">{eedc5064-9b50-4346-9d68-27bd3603765c}</Id>
+    </SelectedLibraryCategories>
+    <DefaultNamespace>Stage</DefaultNamespace>
+    <Placeholder>_Stage</Placeholder>
+    <Author>Krystian Lis et al.</Author>
+    <Description>
+    </Description>
+    <VirtualLibrary>false</VirtualLibrary>
+    <DocFormat>
+    </DocFormat>
+  </PropertyGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <QualifiedOnly>true</QualifiedOnly>
+      <Optional>true</Optional>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
+      <QualifiedOnly>true</QualifiedOnly>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Plant\Debugging\DebugStruct.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Debugging\I_Debug.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Entity\Entity.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Entity\I_Entity.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Entity\_I_Entity.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Execute\Execute.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Execute\I_Execute.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Execute\_I_Execute.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Init\I_Init.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Job\I_Worker.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Job\_I_Worker.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Job\Worker.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Job\I_Job.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Job\JobState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Plant.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\PreInit\I_PreInit.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\PostInit\I_PostInit.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Thread\I_Thread.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Thread\Thread.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Thread\_I_Thread.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\_Plant.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Utils\Color\Argb.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Color\Argbb.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Color\GenArgb.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Generic\I_Generic.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Math\Math.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Path\I_Path.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Path\Path.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Result\Error\GenericResult.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Utils\Result\IsErr.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Result\IsFail.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Result\IsNone.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Result\IsOk.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Result\IsSome.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Result\Result.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Strings\Alias\Ch.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Strings\Alias\Str.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Strings\Strb\I_Strb.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Strings\Strb\Strb.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Strings\Strf\Strf.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Time\GetTaskCycleTime.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Time\GetUnixTime.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_\Param.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plant" />
+    <Folder Include="Plant\Debugging" />
+    <Folder Include="Plant\Entity" />
+    <Folder Include="Plant\Execute" />
+    <Folder Include="Plant\Init" />
+    <Folder Include="Plant\Job" />
+    <Folder Include="Plant\Thread" />
+    <Folder Include="Plant\PreInit" />
+    <Folder Include="Plant\PostInit" />
+    <Folder Include="Utils" />
+    <Folder Include="Utils\Color" />
+    <Folder Include="Utils\Math" />
+    <Folder Include="Utils\Generic" />
+    <Folder Include="Utils\Path" />
+    <Folder Include="Utils\Result" />
+    <Folder Include="Utils\Result\Error" />
+    <Folder Include="Utils\Strings" />
+    <Folder Include="Utils\Strings\Alias" />
+    <Folder Include="Utils\Strings\Strb" />
+    <Folder Include="Utils\Strings\Strf" />
+    <Folder Include="Utils\Time" />
+    <Folder Include="_" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <o>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>CurrentUmlCompilerVersion</v>
+            <v>4.2.1.0</v>
+          </d>
+        </o>
+        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
+        <o>
+          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String">
+            <v>ExtendedSettings</v>
+            <v>true</v>
+            <v>GeneralPropertySupport</v>
+            <v>false</v>
+            <v>GlobalTextListFilePath</v>
+            <v>""</v>
+            <v>GlobalVisuImageFilePath</v>
+            <v>"%APPLICATIONPATH%\"</v>
+            <v>ImplicitChecksForVisualizationPOUs</v>
+            <v>true</v>
+            <v>UnicodeStrings</v>
+            <v>false</v>
+          </d>
+        </o>
+        <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
+        <o>
+          <v n="Name">"{29BD8D0C-3586-4548-BB48-497B9A01693F}"</v>
+          <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+            <v>NamingConventions</v>
+            <o>
+              <v n="Name">"NamingConventions"</v>
+              <d n="SubKeys" t="Hashtable" />
+              <d n="Values" t="Hashtable" />
+            </o>
+            <v>Rules</v>
+            <o>
+              <v n="Name">"Rules"</v>
+              <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+                <v>167</v>
+                <o>
+                  <v n="Name">"167"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>175</v>
+                <o>
+                  <v n="Name">"175"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>27</v>
+                <o>
+                  <v n="Name">"27"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>28</v>
+                <o>
+                  <v n="Name">"28"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>33</v>
+                <o>
+                  <v n="Name">"33"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>4</v>
+                <o>
+                  <v n="Name">"4"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>6</v>
+                <o>
+                  <v n="Name">"6"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+              </d>
+              <d n="Values" t="Hashtable" />
+            </o>
+          </d>
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
+        <o>
+          <v n="Name">"{40450F57-0AA3-4216-96F3-5444ECB29763}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String">
+            <v>ActiveVisuExtensionsLength</v>
+            <v>0</v>
+            <v>ActiveVisuProfile</v>
+            <v>"IR0whWr8bwfyBwAAMxnWswAAAABVAgAADu3eawAAAAABAAAAAAAAAAEaUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwACTHsAZgA5ADUAYgBiADQAMgA2AC0ANQA1ADIANAAtADQAYgA0ADUALQA5ADQAMAAwAC0AZgBiADAAZgAyAGUANwA3AGUANQAxAGIAfQADCE4AYQBtAGUABDJUAHcAaQBuAEMAQQBUACAAMwAuADEAIABCAHUAaQBsAGQAIAA0ADAAMgA2AC4AMQA4AAUWUAByAG8AZgBpAGwAZQBEAGEAdABhAAZMewAxADYAZQA1ADUAYgA2ADAALQA3ADAANAAzAC0ANABhADYAMwAtAGIANgA1AGIALQA2ADEANAA3ADEAMwA4ADcAOABkADQAMgB9AAcSTABpAGIAcgBhAHIAaQBlAHMACEx7ADMAYgBmAGQANQA0ADUAOQAtAGIAMAA3AGYALQA0AGQANgBlAC0AYQBlADEAYQAtAGEAOAAzADMANQA2AGEANQA1ADEANAAyAH0ACUx7ADkAYwA5ADUAOAA5ADYAOAAtADIAYwA4ADUALQA0ADEAYgBiAC0AOAA4ADcAMQAtADgAOQA1AGYAZgAxAGYAZQBkAGUAMQBhAH0ACg5WAGUAcgBzAGkAbwBuAAsGaQBuAHQADApVAHMAYQBnAGUADQpUAGkAdABsAGUADhpWAGkAcwB1AEUAbABlAG0ATQBlAHQAZQByAA8OQwBvAG0AcABhAG4AeQAQDFMAeQBzAHQAZQBtABESVgBpAHMAdQBFAGwAZQBtAHMAEjBWAGkAcwB1AEUAbABlAG0AcwBTAHAAZQBjAGkAYQBsAEMAbwBuAHQAcgBvAGwAcwATKFYAaQBzAHUARQBsAGUAbQBzAFcAaQBuAEMAbwBuAHQAcgBvAGwAcwAUJFYAaQBzAHUARQBsAGUAbQBUAGUAeAB0AEUAZABpAHQAbwByABUiVgBpAHMAdQBOAGEAdABpAHYAZQBDAG8AbgB0AHIAbwBsABYUVgBpAHMAdQBJAG4AcAB1AHQAcwAXGFYAaQBzAHUARQBsAGUAbQBCAGEAcwBlABgmRABlAHYAUABsAGEAYwBlAGgAbwBsAGQAZQByAHMAVQBzAGUAZAAZCGIAbwBvAGwAGiJQAGwAdQBnAGkAbgBDAG8AbgBzAHQAcgBhAGkAbgB0AHMAG0x7ADQAMwBkADUAMgBiAGMAZQAtADkANAAyAGMALQA0ADQAZAA3AC0AOQBlADkANAAtADEAYgBmAGQAZgAzADEAMABlADYAMwBjAH0AHBxBAHQATABlAGEAcwB0AFYAZQByAHMAaQBvAG4AHRRQAGwAdQBnAGkAbgBHAHUAaQBkAB4WUwB5AHMAdABlAG0ALgBHAHUAaQBkAB9IYQBmAGMAZAA1ADQANAA2AC0ANAA5ADEANAAtADQAZgBlADcALQBiAGIANwA4AC0AOQBiAGYAZgBlAGIANwAwAGYAZAAxADcAIBRVAHAAZABhAHQAZQBJAG4AZgBvACFMewBiADAAMwAzADYANgBhADgALQBiADUAYwAwAC0ANABiADkAYQAtAGEAMAAwAGUALQBlAGIAOAA2ADAAMQAxADEAMAA0AGMAMwB9ACIOVQBwAGQAYQB0AGUAcwAjTHsAMQA4ADYAOABmAGYAYwA5AC0AZQA0AGYAYwAtADQANQAzADIALQBhAGMAMAA2AC0AMQBlADMAOQBiAGIANQA1ADcAYgA2ADkAfQAkTHsAYQA1AGIAZAA0ADgAYwAzAC0AMABkADEANwAtADQAMQBiADUALQBiADEANgA0AC0ANQBmAGMANgBhAGQAMgBiADkANgBiADcAfQAlFk8AYgBqAGUAYwB0AHMAVAB5AHAAZQAmVFUAcABkAGEAdABlAEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwARgBvAHIAQwBvAG4AdgBlAHIAdABpAGIAbABlAEwAaQBiAHIAYQByAGkAZQBzACcQTABpAGIAVABpAHQAbABlACgUTABpAGIAQwBvAG0AcABhAG4AeQApHlUAcABkAGEAdABlAFAAcgBvAHYAaQBkAGUAcgBzACo4UwB5AHMAdABlAG0ALgBDAG8AbABsAGUAYwB0AGkAbwBuAHMALgBIAGEAcwBoAHQAYQBiAGwAZQArEnYAaQBzAHUAZQBsAGUAbQBzACwMcwB5AHMAdABlAG0ALUg2AGMAYgAxAGMAZABlADEALQBkADUAZABjAC0ANABhADMAYgAtADkAMAA1ADQALQAyADEAZgBhADcANQA2AGEAMwBmAGEANAAuKEkAbgB0AGUAcgBmAGEAYwBlAFYAZQByAHMAaQBvAG4ASQBuAGYAbwAvTHsAYwA2ADEAMQBlADQAMAAwAC0ANwBmAGIAOQAtADQAYwAzADUALQBiADkAYQBjAC0ANABlADMAMQA0AGIANQA5ADkANgA0ADMAfQAwGE0AYQBqAG8AcgBWAGUAcgBzAGkAbwBuADEYTQBpAG4AbwByAFYAZQByAHMAaQBvAG4AMgxMAGUAZwBhAGMAeQAzMEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwAVgBlAHIAcwBpAG8AbgBJAG4AZgBvADQwTABvAGEAZABMAGkAYgByAGEAcgBpAGUAcwBJAG4AdABvAFAAcgBvAGoAZQBjAHQANRpDAG8AbQBwAGEAdABpAGIAaQBsAGkAdAB5ANAAAhoD0AMBLQTQBQYaB9AHCBoBRQcJCNAACRoERQoLBAQAAAAHAAAAAAAAAAAAAADQDAutAgAAANANAS0O0A8BLRDQAAkaBEUKCwQEAAAACAAAAAAAAAAAAAAA0AwLrQEAAADQDQEtEdAPAS0Q0AAJGgRFCgsEBAAAAAcAAAAAAAAAAAAAANAMC60CAAAA0A0BLRLQDwEtENAACRoERQoLBAQAAAAIAAAAAAAAAAAAAADQDAutAgAAANANAS0T0A8BLRDQAAkaBEUKCwQEAAAACAAAAAAAAAAAAAAA0AwLrQIAAADQDQEtFNAPAS0Q0AAJGgRFCgsEBAAAAAgAAAAAAAAAAAAAANAMC60CAAAA0A0BLRXQDwEtENAACRoERQoLBAQAAAAHAAAAAAAAAAAAAADQDAutAgAAANANAS0W0A8BLRDQAAkaBEUKCwQEAAAACAAAAAAAAAAAAAAA0AwLrQQAAADQDQEtF9APAS0Q0BgZrQFFGhsB0AAbGgJFHAsEBAAAAAIAAAAAAAAAAAAAANAdHi0f0CAhGgJFIiMC0AAkGgVFCgsEAwAAAAMAAAAAAAAACgAAANAlC60AAAAA0AMBLSbQJwEtEdAoAS0Q0AAkGgVFCgsEAwAAAAMAAAAAAAAACgAAANAlC60BAAAA0AMBLSbQJwEtEdAoAS0QmikqAUUAAQLQAAEtK9AAAS0s0AAeLS3QLi8aA9AwC60BAAAA0DELrSQAAADQMhmtANAzLxoD0DALrQIAAADQMQutBgAAANAyGa0A0DQZrQDQNRmtAA=="</v>
+          </d>
+        </o>
+        <v>{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}</v>
+        <o>
+          <v n="Name">"{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>WriteLineIDs</v>
+            <v>False</v>
+          </d>
+        </o>
+        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
+        <o>
+          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>DisabledWarningIds</v>
+            <v>410,5410</v>
+          </d>
+        </o>
+        <v>{E709B08B-B6E4-4966-8EED-D793A13114C6}</v>
+        <o>
+          <v n="Name">"{E709B08B-B6E4-4966-8EED-D793A13114C6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>ReplaceConstants</v>
+            <v>False</v>
+          </d>
+        </o>
+        <v>{F66C7017-BDD8-4114-926C-81D6D687E35F}</v>
+        <o>
+          <v n="Name">"{F66C7017-BDD8-4114-926C-81D6D687E35F}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>CalcActiveTransOnly</v>
+            <v>True</v>
+          </d>
+        </o>
+      </d>
+      <d n="Values" t="Hashtable" />
+    </o>
+        </Data>
+        <TypeList>
+          <Type n="Boolean">System.Boolean</Type>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="Int32">System.Int32</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>

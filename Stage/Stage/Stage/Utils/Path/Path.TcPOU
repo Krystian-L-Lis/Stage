@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Path" Id="{9e722039-2ee6-406d-85de-afa136b02239}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+An identifier that uses reflection to generate a unique symbol path.
+It simplifies the path by removing project, PLC, and tag segments.
+Allows adding custom segements.
+*)
+{attribute 'reflection'}
+FUNCTION_BLOCK Path IMPLEMENTS I_Path
+VAR
+	{attribute 'instance-path'} 
+    {attribute 'noinit'} 
+	_sPath			: Str;
+	_nLength		: USINT;
+	_nOptionPos		: USINT;
+	_nOptionLen		: USINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{b3df2c75-a408-4765-bef2-398bbf36a972}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+VAR
+	i				: INT;
+	_sChar			: Ch;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Delete this name segment
+FOR i := Tc2_Standard.LEN(_sPath) TO 1 BY -1 DO
+	IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+		_sPath := Tc2_Standard.LEFT(_sPath, i - 1);
+		EXIT;
+	END_IF
+END_FOR
+
+// Delete solution segment
+_sPath := Tc2_Standard.RIGHT(_sPath, Tc2_Standard.LEN(_sPath) - Tc2_Standard.FIND(_sPath, '.'));
+// Delete project segment
+_sPath := Tc2_Standard.RIGHT(_sPath, Tc2_Standard.LEN(_sPath) - Tc2_Standard.FIND(_sPath, '.'));
+
+// Replace '[' with '.' and remove ']' 
+FOR i := 1 TO Tc2_Standard.LEN(_sPath) DO
+	_sChar := Tc2_Standard.MID(_sPath, 1, i);
+	IF _sChar = '[' THEN
+		_sPath := Tc2_Standard.REPLACE(_sPath, '.', 1, i);
+	ELSIF _sChar = ']' THEN
+		_sPath := Tc2_Standard.DELETE(_sPath, 1, i);
+	END_IF
+END_FOR
+
+// Replace dots
+FOR i := 1 TO Tc2_Standard.LEN(_sPath) DO
+	_sChar := Tc2_Standard.MID(_sPath, 1, i);
+	IF _sChar = '.' THEN
+		_sPath := Tc2_Standard.REPLACE(_sPath, '/', 1, i);
+	END_IF
+END_FOR
+_sPath := Tc2_Standard.CONCAT('/', _sPath);
+_nLength := INT_TO_USINT(Tc2_Standard.LEN(_sPath));]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Get" Id="{eb8fbdc4-b458-4f5c-94f5-130e06d73a59}">
+      <Declaration><![CDATA[// Read the whole string
+PROPERTY Get : Str]]></Declaration>
+      <Get Name="Get" Id="{f519681e-17b5-41c0-9a51-46e64399a153}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Get := _sPath;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Has" Id="{0b75961f-8949-4e77-8d1e-d8c5a0bc2735}">
+      <Declaration><![CDATA[// Checks if the path has segment of a given name.
+METHOD Has : BOOL
+VAR_INPUT
+	sSegment: Str;
+END_VAR
+VAR
+	i: USINT;
+	c: Ch;
+	nSegLen: USINT := 0;
+	nSegPos: USINT := 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO _nLength DO
+	c := Tc2_Standard.MID(_sPath, 1, i);
+	IF (c = '/') OR (c = '=') OR (c = '?') OR (c = '&') THEN
+		IF Tc2_Standard.MID(_sPath, nSegLen, nSegPos) = sSegment THEN
+			Has := TRUE;
+			RETURN;
+		END_IF
+		
+		nSegPos := i + 1;
+		nSegLen := 0;
+	ELSE
+		nSegLen := nSegLen + 1;
+	END_IF
+END_FOR
+
+IF Tc2_Standard.MID(_sPath, nSegLen, nSegPos) = sSegment THEN
+	Has := TRUE;
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Length" Id="{2d3c23e1-5e59-4545-bfbe-00ec42d356cd}">
+      <Declaration><![CDATA[// Length of the total path string including Option.
+PROPERTY Length : USINT]]></Declaration>
+      <Get Name="Get" Id="{dda631a3-0975-4a47-9a90-1d584405e0f5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Length := _nLength + _nOptionLen;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Name" Id="{07578c3c-5092-46b2-949e-0195911484a4}">
+      <Declaration><![CDATA[// Generated part of the path.
+PROPERTY Name : Str]]></Declaration>
+      <Get Name="Get" Id="{f4c74140-ee81-4440-badc-ff3ac8d83ddf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _nOptionPos <> 0 THEN
+	Name := Tc2_Standard.LEFT(_sPath, _nOptionPos);
+ELSE
+	Name := Tc2_Standard.LEFT(_sPath, _nLength);
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Option" Id="{ad13b135-15dd-453d-a490-f439d00edcd2}">
+      <Declaration><![CDATA[// Modify or read the optional segments.
+PROPERTY Option : Str]]></Declaration>
+      <Get Name="Get" Id="{88aa651d-a689-42b9-b012-fae4e9124520}">
+        <Declaration><![CDATA[VAR
+	i				: INT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _nOptionPos <> 0 THEN
+	Option := Tc2_Standard.DELETE(_sPath, _nOptionPos, 1);
+ELSE
+	Option := '';
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{67ab3414-6320-44f9-9ea0-898a4df8aa79}">
+        <Declaration><![CDATA[
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF Option <> '' THEN
+    _nOptionLen := INT_TO_USINT(Tc2_Standard.LEN(Option));    
+    IF _nOptionPos <> 0 THEN
+        _sPath := Tc2_Standard.LEFT(_sPath, _nOptionPos);
+        _sPath := Tc2_Standard.CONCAT(_sPath, Option);
+		
+    ELSE
+        // The option does not exist, so we append it
+		_nLength := _nLength + _nOptionLen;
+        _nOptionPos := INT_TO_USINT(Tc2_Standard.LEN(_sPath) + 1);
+        _sPath := Tc2_Standard.CONCAT(_sPath, '?');
+        _sPath := Tc2_Standard.CONCAT(_sPath, Option);
+		
+    END_IF
+	
+ELSIF _nOptionPos <> 0 THEN
+    _sPath := Tc2_Standard.LEFT(_sPath, _nOptionPos - 1);
+	_nLength := _nLength - _nOptionLen;
+	_nOptionLen := 0;
+    _nOptionPos := 0;
+	
+END_IF
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

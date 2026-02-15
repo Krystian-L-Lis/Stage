@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.18" TcVersionFixed="true">
-	<Project ProjectGUID="{C61CA2FA-5123-4198-9125-8734FBACFE30}" Target64Bit="true" ShowHideConfigurations="#x6">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.19" TcVersionFixed="true">
+	<Project ProjectGUID="{C61CA2FA-5123-4198-9125-8734FBACFE30}" TargetNetId="199.4.42.250.1.1" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
@@ -12,18 +12,18 @@
 				<Task Id="5" Priority="30" CycleTime="2000000" AmsPort="352" DisableFpExceptions="true" AdtTasks="true">
 					<Name>VISU_TASK</Name>
 				</Task>
+				<Task Id="6" Priority="22" CycleTime="100000" AmsPort="353" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+				<Task Id="7" Priority="23" CycleTime="100000" AmsPort="354" AdtTasks="true">
+					<Name>PlcTask1</Name>
+				</Task>
 			</Tasks>
 		</System>
 		<Plc>
-			<Project GUID="{A4313D0C-5223-4DA4-B2E2-B88C20B6A69F}" Name="StageUtils" PrjFilePath="StageUtils\StageUtils.plcproj" TmcFilePath="StageUtils\StageUtils.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{0FAA2F7A-CCE9-06D3-C92A-2083492A3092}" TmcPath="StageUtils\StageUtils.tmc">
-					<Name>StageUtils Instance</Name>
-					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-				</Instance>
-			</Project>
-			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="StageCore" PrjFilePath="StageCore\StageCore.plcproj" TmcFilePath="StageCore\StageCore.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{70E0B8AE-4C5C-AEB6-A85A-9871E539D175}" TmcPath="StageCore\StageCore.tmc">
-					<Name>StageCore Instance</Name>
+			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="Stage" PrjFilePath="Stage\Stage.plcproj" TmcFilePath="Stage\Stage.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{9C0F92D1-93B3-CEC8-C187-9207BAEBC3F3}" TmcPath="Stage\Stage.tmc">
+					<Name>Stage Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>

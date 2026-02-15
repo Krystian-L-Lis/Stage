@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Argb" Id="{ac8fa48f-31f7-4a96-8768-9b14bebd683c}">
+    <Declaration><![CDATA[(*DWORD alias for ARGB values.*)
+TYPE Argb : DWORD; END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

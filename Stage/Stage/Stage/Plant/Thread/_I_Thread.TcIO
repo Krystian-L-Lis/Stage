@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="_I_Thread" Id="{a9568707-b22e-4555-9884-6d4e1026cc8c}">
+    <Declaration><![CDATA[INTERFACE INTERNAL _I_Thread EXTENDS I_Debug
+]]></Declaration>
+    <Method Name="AttachExecute" Id="{0535368c-1e65-495c-bfb4-5ad515b03a41}">
+      <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result
+VAR_INPUT
+	iExecute: _I_Execute;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AttachWorker" Id="{7f94a2a0-c190-4191-8748-c53f74504f85}">
+      <Declaration><![CDATA[METHOD INTERNAL AttachWorker : Result
+VAR_INPUT
+	iWorker: I_Worker;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="DetachExecute" Id="{6c975bb5-71be-43a0-a457-e4cc7c2e9c68}">
+      <Declaration><![CDATA[METHOD INTERNAL DetachExecute : Result
+VAR_INPUT
+	iExecute: _I_Execute;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="DetachWorker" Id="{8e8574ae-ed06-4a80-9809-8071cc0a41bb}">
+      <Declaration><![CDATA[METHOD INTERNAL DetachWorker : Result
+VAR_INPUT
+	iWorker: I_Worker;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

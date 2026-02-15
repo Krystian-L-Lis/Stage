@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="_Plant" Id="{a8108114-c7a2-455b-babd-f14b1e02d6df}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL INTERNAL
+	panic: ARRAY[1..PARAM.MAX_PANIC_MSG] OF DebugStruct;
+	warn: ARRAY[1..PARAM.MAX_WARN_MSG] OF DebugStruct;
+	
+	nLastPanic: UDINT := 1;
+	nLastWarn: UDINT := 1;
+	nTotalPanic: UDINT;
+	nTotalWarn: UDINT;
+
+	MainThread: Thread;
+	
+	iFirstEntity: I_Entity;
+	iLastEntity: I_Entity;
+	
+	bPanic: BOOL;
+	bInit: BOOL := TRUE;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

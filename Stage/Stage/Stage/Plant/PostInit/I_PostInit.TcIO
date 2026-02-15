@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_PostInit" Id="{9b9651e4-045e-4b17-8f2b-108f12ea7bf1}">
+    <Declaration><![CDATA[(*
+A `PostInit` method of FB implmenting this interface will be called once upon program startup.
+*)
+INTERFACE I_PostInit EXTENDS I_Generic
+]]></Declaration>
+    <Method Name="PostInit" Id="{1237434a-0b74-4202-8a56-33e757a0a879}">
+      <Declaration><![CDATA[(*
+If registered, this method will be executed upon startup.
+*)
+METHOD PostInit
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

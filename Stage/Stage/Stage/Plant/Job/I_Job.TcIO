@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Job" Id="{e5e86b3e-8f5d-4f0e-8f93-6a1bea47cd17}">
+    <Declaration><![CDATA[INTERFACE I_Job EXTENDS I_Debug]]></Declaration>
+    <Method Name="JobExecute" Id="{9ac5d431-1fda-46e0-ab4e-6656d6c24d71}">
+      <Declaration><![CDATA[METHOD JobExecute
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="JobExit" Id="{054d6bc8-13d0-47de-b56b-f58a14af1d76}">
+      <Declaration><![CDATA[METHOD JobExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="JobInit" Id="{f14910af-641c-4be5-ac57-b421cbbb9b13}">
+      <Declaration><![CDATA[METHOD JobInit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

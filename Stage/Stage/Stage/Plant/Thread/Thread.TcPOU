@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Thread" Id="{8b3646af-7c89-4248-ba4b-bde043ef6a9a}" SpecialFunc="None">
+    <Declaration><![CDATA[// Executes associated executors and workers. Plant.Run() alternative. Can be passed to Executors and Workers using `:= (Thread := I_Thread)`.
+FUNCTION_BLOCK Thread IMPLEMENTS I_Thread
+VAR
+	iFirstExecute: _I_Execute;
+	iLastExecute: _I_Execute;
+	
+	iFirstWorker: I_Worker;
+	iLastWorker: I_Worker;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="_First" Id="{a69258e8-ab03-4532-98f4-c6f1e77b0eed}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _First : _I_Execute]]></Declaration>
+      <Get Name="Get" Id="{4db61099-868c-4b8b-90f5-5f62a620bc26}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_First := iFirstExecute;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="AttachExecute" Id="{09cc9772-526f-41a4-9b80-35664d45d756}">
+      <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result
+VAR_INPUT
+	iExecute: _I_Execute;
+END_VAR
+VAR
+	iThis: I_Thread := THIS^;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iExecute = 0 THEN
+	AttachExecute := Error;
+	RETURN;
+END_IF
+
+IF NOT Plant.IsInit THEN
+	AttachExecute := Error;
+	RETURN;
+END_IF
+
+IF iExecute._Thread <> iThis THEN
+	AttachExecute := Error;
+	RETURN;
+END_IF
+
+IF iExecute._Prev <> 0 OR iExecute._Next <> 0 OR
+	iFirstExecute = iExecute OR iLastExecute = iExecute THEN
+	AttachExecute := Error;
+    RETURN;
+END_IF
+
+iExecute._Prev := iLastExecute;
+iExecute._Next := 0;
+
+IF iLastExecute <> 0 THEN
+	iLastExecute._Next := iExecute;
+	iLastExecute := iExecute;
+ELSE
+	iFirstExecute := iExecute;
+	iLastExecute  := iExecute;
+END_IF
+
+AttachExecute := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AttachWorker" Id="{2efb670a-ea30-4a61-9482-c1d80aa85772}">
+      <Declaration><![CDATA[METHOD INTERNAL AttachWorker : Result
+VAR_INPUT
+	iWorker: I_Worker;
+END_VAR
+VAR
+	iThis: I_Thread := THIS^;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iWorker = 0 THEN
+	AttachWorker := Error;
+	RETURN;
+END_IF
+
+IF iWorker.Thread <> iThis THEN
+	AttachWorker := Error;
+	RETURN;
+END_IF
+
+IF iWorker._Prev <> 0 OR iWorker._Next <> 0 OR
+	iFirstWorker = iWorker OR iLastWorker = iWorker THEN
+	AttachWorker := Error;
+    RETURN;
+END_IF
+
+iWorker._Prev := iLastWorker;
+iWorker._Next := 0;
+
+IF iLastWorker <> 0 THEN
+	iLastWorker._Next := iWorker;
+	iLastWorker := iWorker;
+ELSE
+	iFirstWorker := iWorker;
+	iLastWorker  := iWorker;
+END_IF
+
+AttachWorker := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DetachExecute" Id="{2bdcfa7d-9071-4893-8a31-241b3d5383c5}">
+      <Declaration><![CDATA[METHOD INTERNAL DetachExecute : Result
+VAR_INPUT
+	iExecute: _I_Execute;
+END_VAR
+VAR
+	iThis: I_Thread := THIS^;
+	iPrev : _I_Execute;
+	iNext : _I_Execute;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iExecute = 0 THEN
+	DetachExecute := Error;
+	RETURN;
+END_IF
+
+IF NOT Plant.IsInit THEN
+	DetachExecute := Error;
+	RETURN;
+END_IF
+
+IF iExecute._Thread <> iThis THEN
+	DetachExecute := Error;
+	RETURN;
+END_IF
+
+iPrev := iExecute._Prev;
+iNext := iExecute._Next;
+
+IF iPrev <> 0 THEN
+    iPrev._Next := iNext;
+END_IF
+
+IF iNext <> 0 THEN
+    iNext._Prev := iPrev;
+END_IF
+
+IF iFirstExecute = iExecute THEN
+    iFirstExecute := iNext;
+END_IF
+
+IF iLastExecute = iExecute THEN
+    iLastExecute := iPrev;
+END_IF
+
+iExecute._Prev := 0;
+iExecute._Next := 0;
+
+DetachExecute := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DetachWorker" Id="{186741ed-6fbb-4ec7-ab81-3027a9546f00}">
+      <Declaration><![CDATA[METHOD INTERNAL DetachWorker : Result
+VAR_INPUT
+	iWorker: I_Worker;
+END_VAR
+VAR
+	iThis: I_Thread := THIS^;
+	iNext: I_Worker;
+	iPrev: I_Worker;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iWorker = 0 THEN
+	DetachWorker := Error;
+	RETURN;
+END_IF
+
+IF iWorker.Thread <> iThis THEN
+	DetachWorker := Error;
+	RETURN;
+END_IF
+
+iPrev := iWorker._Prev;
+iNext := iWorker._Next;
+
+IF iPrev <> 0 THEN
+    iPrev._Next := iNext;
+END_IF
+
+IF iNext <> 0 THEN
+    iNext._Prev := iPrev;
+END_IF
+
+IF iFirstWorker = iWorker THEN
+    iFirstWorker := iNext;
+END_IF
+
+IF iLastWorker = iWorker THEN
+    iLastWorker := iPrev;
+END_IF
+
+iWorker._Prev := 0;
+iWorker._Next := 0;
+
+DetachWorker := Ok;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Run" Id="{312d03b0-5785-4da7-8eb1-55c23394ad73}">
+      <Declaration><![CDATA[// Runs associated executors and workers.
+METHOD Run
+VAR
+	iWorker: I_Worker := iFirstWorker;
+	iExecute: _I_Execute := iFirstExecute;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Plant.IsInit OR Plant.Panicked THEN
+	RETURN;
+END_IF
+
+WHILE iWorker <> 0 DO
+	iWorker.Process(iNext => iWorker);
+END_WHILE
+
+WHILE iExecute <> 0 DO
+	iExecute._Exe(iNext => iExecute);
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

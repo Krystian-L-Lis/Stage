@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GenArgb" Id="{9c58ba81-b5d6-4a9d-8df8-dc2f4420ed2f}" SpecialFunc="None">
+    <Declaration><![CDATA[(*ARGB color raw value generator.*)
+FUNCTION GenArgb : Argb
+VAR_INPUT
+	nRed: USINT;
+	nGreen: USINT;
+	nBlue: USINT;
+	nAlpha: USINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GenArgb := USINT_TO_UDINT(nBlue) OR
+			SHL(USINT_TO_UDINT(nGreen), 8) OR
+			SHL(USINT_TO_UDINT(nRed), 16) OR
+			SHL(USINT_TO_UDINT(nAlpha), 24);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

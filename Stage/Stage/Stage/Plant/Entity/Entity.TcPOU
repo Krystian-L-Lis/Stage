@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Entity" Id="{a874bde5-f689-48f5-96c9-83b47d2bb01b}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Allows registration of a I_Generic to global registry and runtime interface discovery.
+*)
+FUNCTION_BLOCK FINAL Entity IMPLEMENTS I_Entity
+VAR
+	_iGeneric: I_Generic;
+	_iNext: I_Entity;
+	_iPrev: I_Entity;
+	_eResult: Result;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="_Next" Id="{8d0df887-d92e-47e4-9173-d51dc5f71061}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{69c479c6-496d-4544-8e03-2fa101a500bd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Next := _iNext;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1d587535-a01f-42f1-90a8-6913adb4690d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iNext := _Next;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{dc959834-2b1f-412a-84d1-9286f005eb2d}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Entity]]></Declaration>
+      <Get Name="Get" Id="{a91a7dde-6ccb-4e09-ba88-706222add5e4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Prev := _iPrev;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d3db405a-7139-4c8d-84b4-96f56835e7f4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPrev := _Prev;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Raw" Id="{84bc605e-077c-4e23-bbd5-93ce370af17c}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Raw : I_Generic
+]]></Declaration>
+      <Get Name="Get" Id="{7c364d4d-4000-47ec-b72c-702748352337}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Raw := _iGeneric;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{995e244f-c388-41a4-ac14-937884337efd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iGeneric := _Raw;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Result" Id="{32a97810-b8fd-4467-843e-b19132c8f3f4}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Result : Result]]></Declaration>
+      <Get Name="Get" Id="{636a706b-3bf6-496c-89d6-d262add3263b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Result := _eResult;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_Init" Id="{30a5db3d-56de-4ed6-bc93-41367e567754}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	iGeneric: I_Generic;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iGeneric = 0 THEN
+	_eResult := Error;
+	Plant.Panic(THIS^, 'Entity cannot be initialized with 0');
+	RETURN;
+
+END_IF
+
+IF IsSome(_eResult) THEN
+	RETURN;
+END_IF
+
+_iGeneric := iGeneric;
+
+IF IsOk(Plant._AttachEntity(THIS^)) THEN
+	_eResult := Ok;
+ELSE
+	Plant.Panic(THIS^, __POUNAME());
+	_eResult := Error;	
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Raw" Id="{80501f44-2696-4f4b-ba62-8e5556db4eab}">
+      <Declaration><![CDATA[PROPERTY Raw : I_Generic]]></Declaration>
+      <Get Name="Get" Id="{3d5d7f86-a929-4c23-81d0-7c6ff884abb3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Raw := _iGeneric;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Replace" Id="{bd4b7f87-d26a-40a3-8f93-3a48e61c5f72}">
+      <Declaration><![CDATA[METHOD Replace : Result
+VAR_INPUT
+	iGeneric: I_Generic;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _iGeneric = 0 THEN
+	Replace := Error;
+	RETURN;
+END_IF
+
+_iGeneric := iGeneric;
+Replace := Ok;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

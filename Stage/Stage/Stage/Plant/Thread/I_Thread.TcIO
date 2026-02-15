@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Thread" Id="{919f2c9a-a145-41ef-97f2-9f811fe90153}">
+    <Declaration><![CDATA[// Executes associated executors and workers. Plant.Run() alternative. Can be passed to Executors and Workers using `:= (Thread := I_Thread)`.
+INTERFACE I_Thread EXTENDS _I_Thread
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

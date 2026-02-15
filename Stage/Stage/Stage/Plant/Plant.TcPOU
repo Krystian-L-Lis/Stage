@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Plant" Id="{57f056fa-9062-499a-a7e4-db28982dc70c}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Manages the initialization and cyclic execution of registered function blocks.
+*)
+PROGRAM Plant]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="_" Id="{c78e1550-b387-4a8d-9d79-49e62466c147}" />
+    <Folder Name="Debug" Id="{e6d85270-d75e-413e-ad3b-647f81f1c906}" />
+    <Folder Name="Entity" Id="{35e63acc-805b-4873-8c1e-69618d2c4f29}" />
+    <Method Name="_AttachEntity" Id="{be744718-8786-4ff8-afd9-d362a16bb8a5}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _AttachEntity : Result
+VAR_INPUT
+	iEntity: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iEntity = 0 THEN
+	Plant.Panic(0, 'Entity = 0!');
+	_AttachEntity := Error;
+	
+ELSIF IsSome(iEntity._Result) THEN
+	Plant.Panic(0, 'Entity already attached!');
+	_AttachEntity := Error;	
+	
+ELSIF _Plant.iLastEntity <> 0 AND _Plant.iFirstEntity <> 0 THEN
+	_Plant.iLastEntity._Next := iEntity;
+	iEntity._Prev := _Plant.iLastEntity;
+	_Plant.iLastEntity := iEntity;
+	_AttachEntity := Ok;
+	
+ELSIF _Plant.iLastEntity = 0 AND _Plant.iFirstEntity = 0 THEN
+	_Plant.iFirstEntity := iEntity;
+	_Plant.iLastEntity := iEntity;
+	_AttachEntity := Ok;
+	
+ELSE
+	_AttachEntity := Error;
+
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_CallInits" Id="{65bd8ddc-8338-4e56-a75c-dc7d09b072d3}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD PRIVATE _CallInits
+VAR
+	_iInit: I_Init;
+	_iEtt: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
+	IF __QUERYINTERFACE(_iEtt._Raw, _iInit) THEN
+		_iInit.Init();
+	END_IF
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_CallPostInits" Id="{47037820-3bab-4675-ad39-6e7063e5e95f}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD PRIVATE _CallPostInits
+VAR
+	_iPostInit: I_PostInit;
+	_iEtt: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
+	IF __QUERYINTERFACE(_iEtt._Raw, _iPostInit) THEN
+		_iPostInit.PostInit();
+	END_IF
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_CallPreInits" Id="{4eb830a3-c048-4a24-a77d-4d9f0379f8fd}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD PRIVATE _CallPreInits
+VAR
+	_iPreInit: I_PreInit;
+	_iEtt: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
+	IF __QUERYINTERFACE(_iEtt._Raw, _iPreInit) THEN
+		_iPreInit.PreInit();
+	END_IF
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_ThreadDispatcher" Id="{3c6830ed-2cd7-4aa9-adad-7835ee965e5a}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _ThreadDispatcher
+VAR
+	iExecute: _I_Execute := _Plant.MainThread._First;
+	iMainThread: I_Thread := _Plant.MainThread;
+	iDestThread: I_Thread;
+	iNext: _I_Execute;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE iExecute <> 0 DO
+    iNext := iExecute._Next;
+    iDestThread := iExecute._Thread;
+
+    IF iDestThread <> 0 THEN
+        IF iDestThread <> iMainThread THEN
+			iExecute._Thread := iMainThread;
+            iMainThread.DetachExecute(iExecute);
+			iExecute._Thread := iDestThread;
+            iDestThread.AttachExecute(iExecute);
+        END_IF
+    END_IF
+
+    iExecute := iNext;
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsInit" Id="{47aa55bb-5f38-456d-8ae6-449a8fb7b7c1}">
+      <Declaration><![CDATA[// Returns TRUE when plant is in initialization phase.
+PROPERTY IsInit : BOOL]]></Declaration>
+      <Get Name="Get" Id="{e9b76d2b-9bfe-4c42-9ef5-17f0d5f04c16}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsInit := _Plant.bInit;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="NextEtt" Id="{fc94b275-8099-46b3-826b-ceb5994205a2}" FolderPath="Entity\">
+      <Declaration><![CDATA[(*Overwrites passed interface pointer and returns Ok upon returning next Entity*)
+METHOD NextEtt : Result
+VAR_INPUT
+	iEntity: REFERENCE TO I_Entity; // Reference to interface pointer to be overwritten.
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT __ISVALIDREF(iEntity) THEN
+	NextEtt := Error;
+	RETURN;
+END_IF
+
+IF iEntity = 0 THEN
+	iEntity := _Plant.iFirstEntity;
+ELSE
+	iEntity := iEntity._Next;
+END_IF
+
+IF iEntity <> 0 THEN
+	NextEtt := Ok;
+ELSE
+	NextEtt := None;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Panic" Id="{88cec364-69ff-40ea-83cd-fc94c687cdd6}" FolderPath="Debug\">
+      <Declaration><![CDATA[// Registers panic message. When called during initialization phase, stops cyclic execution.
+METHOD Panic
+VAR_INPUT
+	iSource: I_Debug;
+	sComment: Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _Plant.nLastPanic > Param.MAX_PANIC_MSG THEN
+	_Plant.nTotalPanic := _Plant.nTotalPanic + 1;
+	RETURN;
+
+
+ELSIF _Plant.nLastPanic = Param.MAX_PANIC_MSG THEN
+	_Plant.panic[_Plant.nLastPanic].iSource := 0;
+	_Plant.panic[_Plant.nLastPanic].sComment := 'Panics buffer overflow!';
+
+	_Plant.nLastPanic := _Plant.nLastPanic + 1;
+	_Plant.nTotalPanic := _Plant.nTotalPanic + 1;
+	RETURN;
+
+END_IF
+
+_Plant.panic[_Plant.nLastPanic].iSource := iSource;
+_Plant.panic[_Plant.nLastPanic].sComment := sComment;
+_Plant.nLastPanic := _Plant.nLastPanic + 1;
+_Plant.nTotalPanic := _Plant.nTotalPanic + 1;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="PanicArr" Id="{f84267cc-df7a-4466-8cfb-e636b27eb288}" FolderPath="Debug\">
+      <Declaration><![CDATA[PROPERTY PanicArr : ARRAY[1..PARAM.MAX_PANIC_MSG] OF DebugStruct;]]></Declaration>
+      <Get Name="Get" Id="{8248e65b-59f5-4efd-a9d9-ce7c65329efd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PanicArr := _Plant.panic;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Panicked" Id="{e97302c6-cf42-4d1f-9e87-05dc04348073}" FolderPath="Debug\">
+      <Declaration><![CDATA[PROPERTY Panicked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c4fe24ca-15a1-44e5-a8f2-c36c924dfe56}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Panicked := _Plant.nTotalPanic <> 0;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="PrevEtt" Id="{78ce1eb1-e319-4ecf-8b2e-898c0522286b}" FolderPath="Entity\">
+      <Declaration><![CDATA[(*Overwrites passed interface pointer and returns Ok upon returning previous Entity*)
+METHOD PrevEtt : Result
+VAR_INPUT
+	iEntity: REFERENCE TO I_Entity; // Reference to interface pointer to be overwritten.
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT __ISVALIDREF(iEntity) THEN
+	PrevEtt := Error;
+	RETURN;
+END_IF
+
+IF iEntity = 0 THEN
+	iEntity := _Plant.iLastEntity;
+ELSE
+	iEntity := iEntity._Prev;
+END_IF
+
+IF iEntity <> 0 THEN
+	PrevEtt := Ok;
+ELSE
+	PrevEtt := None;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Run" Id="{dc34cc4b-a853-4448-9354-7419d1f33f9a}">
+      <Declaration><![CDATA[// Initializes registered function blocks and manages code execution.
+METHOD Run
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _Plant.bInit THEN
+	IF _Plant.bPanic THEN
+		RETURN;
+	END_IF
+	
+	_ThreadDispatcher();
+	_CallPreInits();
+	_CallInits();
+	_CallPostInits();
+	
+	
+	IF Panicked THEN
+		Tc2_System.ADSLOGSTR(Tc2_System.ADSLOG_MSGTYPE_ERROR, Tc2_Standard.CONCAT('Runtime disabled! Total Panic: ', UDINT_TO_STRING(_Plant.nTotalPanic)), '');
+		_Plant.bPanic := TRUE;
+	END_IF
+	
+	IF _Plant.nTotalWarn > 0 THEN
+		Tc2_System.ADSLOGSTR(Tc2_System.ADSLOG_MSGTYPE_WARN, Tc2_Standard.CONCAT('Total warnings: ', UDINT_TO_STRING(_Plant.nTotalWarn)), '');
+	END_IF
+	
+	_Plant.bInit := FALSE;
+	RETURN;
+END_IF
+
+_Plant.MainThread.Run();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="TotalPanic" Id="{31a7e8a6-6ed1-41ac-8b6b-f0e63026c133}" FolderPath="Debug\">
+      <Declaration><![CDATA[PROPERTY TotalPanic : UDINT]]></Declaration>
+      <Get Name="Get" Id="{697f264e-4113-453b-886d-91942569445e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TotalPanic := _Plant.nTotalPanic;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="TotalWarn" Id="{968af1f6-4cbb-48fe-94a2-fca8f5063d32}" FolderPath="Debug\">
+      <Declaration><![CDATA[PROPERTY TotalWarn : UDINT]]></Declaration>
+      <Get Name="Get" Id="{1b8ce417-d1a8-4308-b875-08ced35d3d87}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TotalWarn := _Plant.nTotalWarn;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Warn" Id="{e58b4fa2-e306-49bb-bae3-e081e937d273}" FolderPath="Debug\">
+      <Declaration><![CDATA[// Registers warning message.
+METHOD Warn
+VAR_INPUT
+	iSource: I_Debug;
+	sComment: Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _Plant.nLastWarn > Param.MAX_PANIC_MSG THEN
+	_Plant.nTotalWarn := _Plant.nTotalWarn + 1;
+	RETURN;
+
+
+ELSIF _Plant.nLastWarn = Param.MAX_PANIC_MSG THEN
+	_Plant.warn[_Plant.nLastWarn].iSource := 0;
+	_Plant.warn[_Plant.nLastWarn].sComment := 'Warnings buffer overflow!';
+
+	_Plant.nLastWarn := _Plant.nLastWarn + 1;
+	_Plant.nTotalWarn := _Plant.nTotalWarn + 1;
+	RETURN;
+
+END_IF
+
+_Plant.warn[_Plant.nLastWarn].iSource := iSource;
+_Plant.warn[_Plant.nLastWarn].sComment := sComment;
+_Plant.nLastWarn := _Plant.nLastWarn + 1;
+_Plant.nTotalWarn := _Plant.nTotalWarn + 1;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="WarnArr" Id="{078c0e3f-c6a3-4dd5-9a35-2b707ed71a33}" FolderPath="Debug\">
+      <Declaration><![CDATA[PROPERTY WarnArr : ARRAY[1..PARAM.MAX_WARN_MSG] OF DebugStruct;]]></Declaration>
+      <Get Name="Get" Id="{237a44a4-cfa6-457c-8a67-ec358eb4fcc6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[WarnArr := _Plant.warn;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Worker" Id="{cf0ee183-0056-4830-bcdb-219351329d42}">
+    <Declaration><![CDATA[INTERFACE I_Worker EXTENDS _I_Worker]]></Declaration>
+    <Method Name="Start" Id="{c19e8475-caa0-4669-afd8-6d9af8e07fba}">
+      <Declaration><![CDATA[METHOD Start : Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="State" Id="{2f9f3114-975b-4331-a00b-ffbc0b3559d9}">
+      <Declaration><![CDATA[PROPERTY State : JobState]]></Declaration>
+      <Get Name="Get" Id="{ec335181-6e97-4eac-a6fd-5f3b403f44f5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Stop" Id="{ac7127aa-39d4-435f-b5d0-74c0f4a14a7e}">
+      <Declaration><![CDATA[METHOD Stop
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
