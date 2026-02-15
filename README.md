@@ -7,7 +7,7 @@ _A framework for writing scalable and maintainable ST code_
 
 ## Overview
 
-Stage is a framework designed to simplify PLC programming in TwinCAT 3.1. It promotes a modular approach to developing scalable and maintainable automation software through features based on composition, state and observer patterns. Stage integrates seamlessly into both simple and complex control applications, offering a structured and flexible development approach without unnecessary complexity.
+Stage is a framework designed to simplify PLC programming in TwinCAT 3.1. It does not provide pre-made function blocks for analogue inputs or motion components as these you will need to write yourself. It provides scaffolding that allows you to build highly extensible features through automatic registration, discovery and execution.
 
 ---
 
@@ -59,15 +59,15 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 
 ## **Features**
 
-- Modular architecture through ECS inspired model.  
-- Implement flexible state-driven logic.  
-- Connect parts of your program via signals.
-- Manage workloads through jobs.
+- Automatic dependency injection – register your function block for others to discover at runtime.
+- Automatic execution – register function blocks and execute them on an assigned thread.
+- Workers – define jobs, start them, and execute them until completion on an assigned thread.
+- Utilities – string and color builders, and more.
 
 ---
 ## **Tests & Examples**
 
-Tests and Examples can be found [here](https://github.com/Krystian-L-Lis/Stage-Examples).
+Tests and Examples can be found here. WIP.
 
 ---
 
@@ -81,162 +81,11 @@ This guide provides a brief overview of using the **Stage** framework.
 Entities are declared within an entity scope, ensuring automatic registration of components.
 
 ```structured-text
-FUNCTION_BLOCK Pump IMPLEMENTS I_Callable, I_Execute, I_Init
-VAR_INPUT
-	bOverload		: BOOL;
-END_VAR
-VAR_OUTPUT
-	bRunning		: BOOL;
-END_VAR
-VAR
-	_exe			: Execute(THIS^);
-	_init			: Init(THIS^);
-
-	// Define an entity scope
-	_entityStart		: EntityStart;
-	
-		// Automatically register components within the entity scope
-		_tag			: Tag := (Option := 'Pump');
-		_stateChangeEvent	: Signal; 
-		_onCommand		: Receiver(THIS^); 
-
-	_entityEnd		: EntityEnd;
-END_VAR
-
-METHOD Init; END_METHOD		// Implemented from I_Init
-METHOD Execute; END_METHOD	// Implemented from I_Execute
-METHOD Call;			// Implemented from I_Callable
-	VAR_INPUT
-		iArg		: I_Arg;
-	END_VAR
-END_METHOD
-
-END_FUNCTION_BLOCK
-
+WIP
 ```
 
 ---
 
-### **Define States**
-
-```structured-text
-// Create a context structure or interface
-TYPE Tank_Ctx:  
-STRUCT  
-	rSomeSensor			: LREAL;
-	iPumpEventCache			: I_Signal;
-	iPumpCommandCache		: I_Receiver;
-	sHmiStatusText			: Str;
-	nHmiStatusColor			: Color;
-END_STRUCT  
-END_TYPE
-
-// Create an abstract state definition for a given context
-FUNCTION_BLOCK ABSTRACT _Tank_State EXTENDS State
-VAR
-	_ctx	: REFERENCE TO Tank_Ctx;
-END_VAR
-METHOD FB_Init
-VAR_INPUT
-	ctx		: REFERENCE TO Tank_Ctx;
-END_VAR
-	_ctx REF= ctx;
-END_METHOD
-END_FUNCTION_BLOCK
-
-// Create a concrete state definition
-FUNCTION_BLOCK Tank_State_Empty EXTENDS _Tank_State
-METHOD PROTECTED OnEntry; END_METHOD 				// Override...
-METHOD PROTECTED OnExecute; END_METHOD 				// any or all...
-METHOD PROTECTED OnExit; END_METHOD 				// of these...
-METHOD PROTECTED CanActivate; CanActivate := TRUE; END_METHOD 	// methods.
-METHOD PROTECTED CanDeactivate; CanDeactivate := TRUE; END_METHOD
-END_FUNCTION_BLOCK
-```
-
----
-
-### **Define an Entity with a State Manager**
-
-```structured-text
-// Create a concrete state definition
-FUNCTION_BLOCK Tank_State_Full EXTENDS _Tank_State
-END_FUNCTION_BLOCK
-
-// Create a state machine entity definition
-FUNCTION_BLOCK Tank EXTENDS State
-VAR
-	_ctx		: Tank_Ctx;
-
-	_entityStart	: EntityStart;
-		// Create a StateManager which wraps around the StateMachine
-		// Apart from managing the state lifecycle, it also handles queues and change requests
-		_smgr		: StateManager;
-		_empty		: Tank_State_Empty(_ctx);
-		_full		: Tank_State_Full(_ctx);
-
-	_entityEnd	: EntityStart;
-END_VAR
-END_FUNCTION_BLOCK
-```
-
----
-
-### **Browse the Entities Through the Registry**
-
-#### **Simple Method**
-
-```structured-text
-// Browse entities 
-WHILE IsOk(GetNextEntity(_iEntity)) DO
-	// Use a helper function to browse and extract
-	IF IsOk(GetTag(iEntity, 'Pump', _iPumpTag)) THEN
-		EXIT;
-	END_IF
-END_WHILE
-```
-
----
-
-#### **Verbose Method**
-
-```structured-text
-// Alternatively, browse and cast components manually
-// This allows for multiple searches in one iteration
-WHILE IsOk(_iEntity.GetNextComp(_iComp)) DO
-	IF IsOk(ICompToISignal(_iComp.Raw, _iSignal)) THEN
-		_ctx.iPumpEventCache := _iSignal;
-	ELSIF IsOk(ICompToIRec(_iComp.Raw, _iReceiver)) THEN
-		_ctx.iPumpCommandCache := _iReceiver;
-	END_IF
-	
-	// Exit early if both components are found
-	IF _ctx.iPumpEventCache <> 0 AND _ctx.iPumpCommandCache <> 0 THEN
-		EXIT;
-	END_IF
-END_WHILE
-```
-
----
-
-### **Emit Signals**
-
-```structured-text
-VAR
-	// Declare an emittable argument
-	// Remember: arguments declared in a temporary scope
-	// should not be cached or saved, as this will cause an exception!
-	_bIsRunning		: BoolArg(TRUE);
-END_VAR
-
-// Emit a signal
-_stateChangeEvent.Emit(_bIsRunning);
-
-// You should not use _bIsRunning after RETURN
-RETURN;
-```
-
----
 
 ## **Contributing**
 
