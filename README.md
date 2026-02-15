@@ -1,3 +1,5 @@
+# THIS BRANCH IS INACTIVE AND WON'T BE FURTHER DEVELOPED
+
 # **Stage**
 _A framework for writing scalable and maintainable ST code_
 
