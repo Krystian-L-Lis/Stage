@@ -75,13 +75,8 @@ Tests and Examples can be found here. WIP.
 
 This guide provides a brief overview of using the **Stage** framework.
 
----
-
-### **Define a Simple Entity**
-Entities are declared within an entity scope, ensuring automatic registration of components.
-
-```structured-text
-WIP
+```
+   WIP
 ```
 
 ---
