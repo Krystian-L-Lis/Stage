@@ -12,6 +12,7 @@ VAR
 	{attribute 'instance-path'} 
     {attribute 'noinit'} 
 	_sPath			: Str;
+	
 	_nLength		: USINT;
 	_nOptionPos		: USINT;
 	_nOptionLen		: USINT;
@@ -27,6 +28,48 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 END_VAR
+VAR
+	i				: INT;
+	_sChar			: Ch;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Delete this name segment
+FOR i := Tc2_Standard.LEN(_sPath) TO 1 BY -1 DO
+	IF Tc2_Standard.MID(_sPath, 1, i) = '.' THEN
+		_sPath := Tc2_Standard.LEFT(_sPath, i - 1);
+		EXIT;
+	END_IF
+END_FOR
+
+// Delete solution segment
+_sPath := Tc2_Standard.RIGHT(_sPath, Tc2_Standard.LEN(_sPath) - Tc2_Standard.FIND(_sPath, '.'));
+// Delete project segment
+_sPath := Tc2_Standard.RIGHT(_sPath, Tc2_Standard.LEN(_sPath) - Tc2_Standard.FIND(_sPath, '.'));
+
+// Replace '[' with '.' and remove ']' 
+FOR i := 1 TO Tc2_Standard.LEN(_sPath) DO
+	_sChar := Tc2_Standard.MID(_sPath, 1, i);
+	IF _sChar = '[' THEN
+		_sPath := Tc2_Standard.REPLACE(_sPath, '.', 1, i);
+	ELSIF _sChar = ']' THEN
+		_sPath := Tc2_Standard.DELETE(_sPath, 1, i);
+	END_IF
+END_FOR
+
+// Replace dots
+FOR i := 1 TO Tc2_Standard.LEN(_sPath) DO
+	_sChar := Tc2_Standard.MID(_sPath, 1, i);
+	IF _sChar = '.' THEN
+		_sPath := Tc2_Standard.REPLACE(_sPath, '/', 1, i);
+	END_IF
+END_FOR
+_sPath := Tc2_Standard.CONCAT('/', _sPath);
+_nLength := INT_TO_USINT(Tc2_Standard.LEN(_sPath));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_reinit" Id="{40adc678-b303-4dd2-a6b1-bf2cf313c5ec}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD FB_Reinit: BOOL
 VAR
 	i				: INT;
 	_sChar			: Ch;
