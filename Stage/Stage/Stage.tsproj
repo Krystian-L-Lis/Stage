@@ -22,7 +22,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="Stage" PrjFilePath="Stage\Stage.plcproj" TmcFilePath="Stage\Stage.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{9C0F92D1-93B3-CEC8-C187-9207BAEBC3F3}" TmcPath="Stage\Stage.tmc">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{091B7550-BE9C-41CF-4942-EB63CC015A2E}" TmcPath="Stage\Stage.tmc">
 					<Name>Stage Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>

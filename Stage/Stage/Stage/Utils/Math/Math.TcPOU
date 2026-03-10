@@ -109,5 +109,21 @@ END_VAR
 _nSeed := _nSeed + 1;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Round" Id="{34e0d5ed-7b8b-4a67-875b-cea49a04c3c3}">
+      <Declaration><![CDATA[METHOD Round : LREAL
+VAR_INPUT
+	rValue: LREAL;
+	nPosition: SINT;
+END_VAR
+VAR
+	rFactor: LREAL := 0;
+	rTemp: LINT := 0;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[rFactor := EXPT(10, -nPosition);
+rTemp := LREAL_TO_LINT(rValue * rFactor);
+Round := LINT_TO_LREAL(rTemp) / rFactor;]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>
