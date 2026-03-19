@@ -119,16 +119,16 @@ _sValues[5].Set(Strf.Padding(UINT_TO_STRING(_nValues[5]), 3, 0, '0')).Append('d'
 IF _nMaxUnit < 5 THEN
     FOR _i := 5 TO _nMaxUnit + 1 BY -1 DO
         IF _nValues[_i] <> 0 THEN
-            _strb.Append(_sValues[_i].Get).Append(' ');
+            _strb.Append(_sValues[_i].Get()).Append(' ');
         END_IF
     END_FOR
 END_IF
 
 FOR _i := _nMaxUnit TO _nMinUnit BY -1 DO
-    _strb.Append(_sValues[_i].Get).Append(' ');
+    _strb.Append(_sValues[_i].Get()).Append(' ');
 END_FOR
 
-SimpleTime := _strb.Get;
+SimpleTime := _strb.Get();
 ]]></ST>
       </Implementation>
     </Method>

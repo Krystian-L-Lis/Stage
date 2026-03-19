@@ -132,17 +132,24 @@ UNTIL
 END_REPEAT]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Get" Id="{519fee78-f6c1-45fe-83b2-23fedc118d14}" FolderPath="I_Build\">
-      <Declaration><![CDATA[PROPERTY Get : Str]]></Declaration>
-      <Get Name="Get" Id="{506d3967-a093-49b6-b90c-0fd2252f8327}">
-        <Declaration><![CDATA[VAR
+    <Method Name="Get" Id="{00a5e226-6cad-4cfd-9ed8-2d2605b9d6e6}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Get : Str
+VAR_INPUT
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Get := _sString;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
+      <Implementation>
+        <ST><![CDATA[Get := _sString;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLength" Id="{2dfd9775-4443-406b-99ee-6727c1dce1b5}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD GetLength : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLength := _nLength;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="HasAfter" Id="{f544f3ca-8838-4319-9707-f592713024e1}" FolderPath="I_Build\">
       <Declaration><![CDATA[// Checks if the specified substring exists after the given position.
 METHOD HasAfter : BOOL
@@ -217,28 +224,26 @@ _sString := Tc2_Standard.INSERT(_sString, sToInject, nPosition);
 _nLength := _nNewLength;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="IsEmpty" Id="{fa4b77ae-d417-4a24-b9a2-557004895354}" FolderPath="I_Build\">
-      <Declaration><![CDATA[PROPERTY IsEmpty : BOOL]]></Declaration>
-      <Get Name="Get" Id="{11a8f9e9-bda9-40a9-ac81-028caff4198c}">
-        <Declaration><![CDATA[VAR
+    <Method Name="IsEmpty" Id="{9e32988d-1dba-4b45-9469-6ad534af70d9}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD IsEmpty : BOOL
+VAR_INPUT
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IsEmpty := _sString = '';]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="Length" Id="{9317d051-3a8c-43cf-99fe-0ca8a6f11e0c}" FolderPath="I_Build\">
-      <Declaration><![CDATA[PROPERTY Length : INT]]></Declaration>
-      <Get Name="Get" Id="{5ca80cfc-b901-4793-a171-86a9e645eb11}">
-        <Declaration><![CDATA[VAR
+      <Implementation>
+        <ST><![CDATA[IsEmpty := _nLength = 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Length" Id="{43da97c2-f83a-4e05-81ed-ec147eada31a}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Length : I_Strb
+VAR_OUTPUT
+	nLen: INT;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Length := _nLength;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
+      <Implementation>
+        <ST><![CDATA[Length := _this;
+nLen := _nLength;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Prepend" Id="{90cd07b0-8292-43be-8f7c-ccc1f2a79b9d}" FolderPath="I_Build\">
       <Declaration><![CDATA[// Prepends the specified string to the current string.
 // Truncates if the total length exceeds 255 characters.
@@ -363,6 +368,17 @@ END_IF
 
 sLeft.Set(Tc2_Standard.LEFT(_sString, nPosition));
 sRight.Set(Tc2_Standard.RIGHT(_sString, _nLength - nPosition));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Write" Id="{eb0a04ea-d10d-479c-80cd-3778447f4291}" FolderPath="I_Build\">
+      <Declaration><![CDATA[METHOD Write : I_Strb;
+VAR_OUTPUT
+	sString: Str;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Write := _this;
+sString := _sString;]]></ST>
       </Implementation>
     </Method>
   </POU>

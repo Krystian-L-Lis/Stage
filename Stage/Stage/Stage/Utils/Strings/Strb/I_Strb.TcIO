@@ -41,12 +41,18 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="Get" Id="{55157888-cf1d-48b5-88d5-cc61d27a5df8}">
-      <Declaration><![CDATA[PROPERTY Get : Str]]></Declaration>
-      <Get Name="Get" Id="{08947601-c4ed-4e97-9434-e7e1229d8b35}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
+    <Method Name="Get" Id="{3e18555f-93c7-4867-826e-d1df008ba5f5}">
+      <Declaration><![CDATA[METHOD Get : Str
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetLength" Id="{28af4e6d-e908-4012-808f-6bdc656fda8d}">
+      <Declaration><![CDATA[METHOD GetLength : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="HasAfter" Id="{f6606593-96a5-466f-bbd2-567dc49ba5e1}">
       <Declaration><![CDATA[// Checks if the specified substring exists after the given position.
 METHOD HasAfter : BOOL
@@ -83,18 +89,19 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="IsEmpty" Id="{febefe27-910e-405e-b488-aa4416c86352}">
-      <Declaration><![CDATA[PROPERTY IsEmpty : BOOL]]></Declaration>
-      <Get Name="Get" Id="{c4876f83-7001-4aa7-b861-169423527889}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
-    <Property Name="Length" Id="{42717ac0-50c2-447e-a7f2-fea16168c393}">
-      <Declaration><![CDATA[PROPERTY Length : INT]]></Declaration>
-      <Get Name="Get" Id="{0c6650fc-a3af-4d22-bc1f-eb155858ecf3}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-    </Property>
+    <Method Name="IsEmpty" Id="{da0eb481-a681-4dc1-a9b6-bcdbbaeca255}">
+      <Declaration><![CDATA[METHOD IsEmpty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Length" Id="{a89198ee-1469-4ece-8be4-81bee1841744}">
+      <Declaration><![CDATA[METHOD Length : I_Strb
+VAR_OUTPUT
+	nLen: INT;
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="Prepend" Id="{5bc04033-c6a6-47d8-8c78-bbe521b9bc45}">
       <Declaration><![CDATA[// Prepends the specified string to the current string.
 // Truncates if the total length exceeds 255 characters.
@@ -142,6 +149,13 @@ END_VAR
 VAR_OUTPUT
     sLeft : Strb;    // Left part of the split
     sRight : Strb;   // Right part of the split
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Write" Id="{70df4ad8-01ef-4ed4-8373-85eed225ddfa}">
+      <Declaration><![CDATA[METHOD Write : I_Strb;
+VAR_OUTPUT
+	sString: Str;
 END_VAR
 ]]></Declaration>
     </Method>
