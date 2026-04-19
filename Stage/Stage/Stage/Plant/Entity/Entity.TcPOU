@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Entity" Id="{a874bde5-f689-48f5-96c9-83b47d2bb01b}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Allows registration of a I_Generic to global registry and runtime interface discovery.
-*)
+    <Declaration><![CDATA[// Registers an I_Generic owner in the global entity list.
 FUNCTION_BLOCK FINAL Entity IMPLEMENTS I_Entity
 VAR
 	_iGeneric: I_Generic;
@@ -85,15 +83,12 @@ END_VAR
       </Get>
     </Property>
     <Method Name="FB_Init" Id="{30a5db3d-56de-4ed6-bc93-41367e567754}">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
+      <Declaration><![CDATA[// Registers iGeneric during initialization; panics if iGeneric is 0.
 METHOD FB_Init: BOOL
 VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
-	iGeneric: I_Generic;
+    bInitRetains: BOOL; // TRUE on retain initialization.
+    bInCopyCode: BOOL;  // TRUE before online-change copy.
+	iGeneric: I_Generic; // Owner to register; must not be 0.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iGeneric = 0 THEN
@@ -120,7 +115,8 @@ END_IF
       </Implementation>
     </Method>
     <Property Name="Raw" Id="{80501f44-2696-4f4b-ba62-8e5556db4eab}">
-      <Declaration><![CDATA[PROPERTY Raw : I_Generic]]></Declaration>
+      <Declaration><![CDATA[// Raw discoverable interface for __QUERYINTERFACE.
+PROPERTY Raw : I_Generic]]></Declaration>
       <Get Name="Get" Id="{3d5d7f86-a929-4c23-81d0-7c6ff884abb3}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -131,9 +127,10 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Replace" Id="{bd4b7f87-d26a-40a3-8f93-3a48e61c5f72}">
-      <Declaration><![CDATA[METHOD Replace : Result
+      <Declaration><![CDATA[// Replaces registered interface; returns Ok replaced, Error if no current interface.
+METHOD Replace : Result
 VAR_INPUT
-	iGeneric: I_Generic;
+	iGeneric: I_Generic; // Replacement interface.
 END_VAR
 ]]></Declaration>
       <Implementation>

@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Path" Id="{9e722039-2ee6-406d-85de-afa136b02239}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-An identifier that uses reflection to generate a unique symbol path.
-It simplifies the path by removing project, PLC, and tag segments.
-Allows adding custom segements.
-*)
+    <Declaration><![CDATA[// Builds a slash-delimited path from the TwinCAT instance path.
 {attribute 'reflection'}
 FUNCTION_BLOCK Path IMPLEMENTS I_Path
 VAR
@@ -110,7 +106,7 @@ _nLength := INT_TO_USINT(Tc2_Standard.LEN(_sPath));]]></ST>
       </Implementation>
     </Method>
     <Property Name="Get" Id="{eb8fbdc4-b458-4f5c-94f5-130e06d73a59}">
-      <Declaration><![CDATA[// Read the whole string
+      <Declaration><![CDATA[// Full generated path including options.
 PROPERTY Get : Str]]></Declaration>
       <Get Name="Get" Id="{f519681e-17b5-41c0-9a51-46e64399a153}">
         <Declaration><![CDATA[VAR
@@ -122,10 +118,10 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Has" Id="{0b75961f-8949-4e77-8d1e-d8c5a0bc2735}">
-      <Declaration><![CDATA[// Checks if the path has segment of a given name.
+      <Declaration><![CDATA[// TRUE when the path contains sSegment.
 METHOD Has : BOOL
 VAR_INPUT
-	sSegment: Str;
+	sSegment: Str; // Segment to find.
 END_VAR
 VAR
 	i: USINT;
@@ -156,7 +152,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Length" Id="{2d3c23e1-5e59-4545-bfbe-00ec42d356cd}">
-      <Declaration><![CDATA[// Length of the total path string including Option.
+      <Declaration><![CDATA[// Full path length including options.
 PROPERTY Length : USINT]]></Declaration>
       <Get Name="Get" Id="{dda631a3-0975-4a47-9a90-1d584405e0f5}">
         <Declaration><![CDATA[VAR
@@ -168,7 +164,7 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Name" Id="{07578c3c-5092-46b2-949e-0195911484a4}">
-      <Declaration><![CDATA[// Generated part of the path.
+      <Declaration><![CDATA[// Generated path without options.
 PROPERTY Name : Str]]></Declaration>
       <Get Name="Get" Id="{f4c74140-ee81-4440-badc-ff3ac8d83ddf}">
         <Declaration><![CDATA[VAR
@@ -184,7 +180,7 @@ END_IF]]></ST>
       </Get>
     </Property>
     <Property Name="Option" Id="{ad13b135-15dd-453d-a490-f439d00edcd2}">
-      <Declaration><![CDATA[// Modify or read the optional segments.
+      <Declaration><![CDATA[// Optional query-style path segment.
 PROPERTY Option : Str]]></Declaration>
       <Get Name="Get" Id="{88aa651d-a689-42b9-b012-fae4e9124520}">
         <Declaration><![CDATA[VAR

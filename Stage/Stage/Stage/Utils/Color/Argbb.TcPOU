@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Argbb" Id="{d884fe8f-dddb-49ad-9aef-a4f440a46ea0}" SpecialFunc="None">
-    <Declaration><![CDATA[(*ARGB color class builder.*)
+    <Declaration><![CDATA[// ARGB component builder.
 FUNCTION_BLOCK Argbb
 VAR
 	_r: BYTE;
@@ -14,7 +14,7 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Property Name="Alpha" Id="{ee2a864b-72ce-497e-8860-76928872cda1}">
-      <Declaration><![CDATA[(*ALPHA component.*)
+      <Declaration><![CDATA[// Alpha channel.
 PROPERTY Alpha : BYTE]]></Declaration>
       <Get Name="Get" Id="{6604ddfc-f720-4321-9d50-1c51f2738342}">
         <Declaration><![CDATA[VAR
@@ -34,7 +34,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="Blue" Id="{3f1ac743-1c2b-4d63-bdad-2ec08f81e45a}">
-      <Declaration><![CDATA[(*BLUE component.*)
+      <Declaration><![CDATA[// Blue channel.
 PROPERTY Blue : BYTE]]></Declaration>
       <Get Name="Get" Id="{c4a3c42c-2203-4d76-8c0a-3bc8fb749fb9}">
         <Declaration><![CDATA[VAR
@@ -54,7 +54,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="Green" Id="{34fb47af-42ff-4bce-9fe5-a581493cffea}">
-      <Declaration><![CDATA[(*GREEN component.*)
+      <Declaration><![CDATA[// Green channel.
 PROPERTY Green : BYTE]]></Declaration>
       <Get Name="Get" Id="{73b3330f-5972-409a-b6b3-22231de1acf8}">
         <Declaration><![CDATA[VAR
@@ -74,8 +74,7 @@ END_VAR
       </Set>
     </Property>
     <Property Name="Raw" Id="{7498ed64-bd4c-4ff5-82e1-2e5e41239c2d}">
-      <Declaration><![CDATA[(*Compute single ARGB value from stored components when used as getter.
-Sets ARGB values by extracting components from a single ARGB value.*)
+      <Declaration><![CDATA[// Packed ARGB value.
 PROPERTY Raw : Argb]]></Declaration>
       <Get Name="Get" Id="{7bd33e5f-4efa-455b-8c3e-295fca724c53}">
         <Declaration><![CDATA[VAR
@@ -101,7 +100,7 @@ _a := UDINT_TO_USINT(SHR(Raw, 24) AND 16#FF);]]></ST>
       </Set>
     </Property>
     <Property Name="Red" Id="{96853ed3-5cc1-41dc-ad25-9f66e3e7fc3b}">
-      <Declaration><![CDATA[(*RED component.*)
+      <Declaration><![CDATA[// Red channel.
 PROPERTY Red : BYTE]]></Declaration>
       <Get Name="Get" Id="{91eb7c2b-4415-486f-8050-84a0112e4cbe}">
         <Declaration><![CDATA[VAR
@@ -121,13 +120,13 @@ END_VAR
       </Set>
     </Property>
     <Method Name="Set" Id="{de1e52bc-10d3-4d8a-8f2c-41becbc12b53}">
-      <Declaration><![CDATA[(*Set each ARGB component value separately.*)
+      <Declaration><![CDATA[// Sets all color channels.
 METHOD Set
 VAR_INPUT
-	nRed: USINT;
-	nGreen: USINT;
-	nBlue: USINT;
-	nAlpha: USINT;
+	nRed: USINT; // Red channel.
+	nGreen: USINT; // Green channel.
+	nBlue: USINT; // Blue channel.
+	nAlpha: USINT; // Alpha channel.
 END_VAR
 ]]></Declaration>
       <Implementation>

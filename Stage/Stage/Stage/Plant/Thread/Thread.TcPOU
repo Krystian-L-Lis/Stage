@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Thread" Id="{8b3646af-7c89-4248-ba4b-bde043ef6a9a}" SpecialFunc="None">
-    <Declaration><![CDATA[// Executes associated executors and workers. Plant.Run() alternative. Can be passed to Executors and Workers using `:= (Thread := I_Thread)`.
+    <Declaration><![CDATA[// Runs executors and active workers assigned to this TwinCAT task.
 FUNCTION_BLOCK Thread IMPLEMENTS I_Thread
 VAR
 	iFirstExecute: _I_Execute;
@@ -206,7 +206,7 @@ DetachWorker := Ok;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Run" Id="{312d03b0-5785-4da7-8eb1-55c23394ad73}">
-      <Declaration><![CDATA[// Runs associated executors and workers.
+      <Declaration><![CDATA[// Processes active workers, then cyclic executors; returns during init or panic.
 METHOD Run
 VAR
 	iWorker: I_Worker := iFirstWorker;

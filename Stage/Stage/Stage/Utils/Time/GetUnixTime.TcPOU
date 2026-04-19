@@ -1,14 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="GetUnixTime" Id="{2743d7a2-b5ef-4e7a-a5e4-a656ba43ea9a}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Generates TIME in 100ns since 1ST January 1970.
-Bases on Tc2_System.F_GetSystemTime FUNCTION.
-The result can be adjusted through the nOffset variable.
-*)
+    <Declaration><![CDATA[// Returns Unix-relative system time in 100 ns ticks.
 FUNCTION GetUnixTime : ULINT
 VAR_INPUT
-	nOffset : LINT := 0;
+	nOffset : LINT := 0; // Offset applied before epoch conversion.
 END_VAR
 VAR
 END_VAR

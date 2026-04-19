@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Execute" Id="{fd30bbbf-c4e7-4255-aff2-259a2cee51d5}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Allows registration of FB implementing `I_Execute`. 
-*)
+    <Declaration><![CDATA[// Registers an I_Execute owner for cyclic execution.
 FUNCTION_BLOCK FINAL Execute IMPLEMENTS _I_Execute, I_Debug
 VAR
 	_iThread: I_Thread := _Plant.MainThread;
@@ -85,17 +83,14 @@ END_VAR
       </Set>
     </Property>
     <Method Name="FB_init" Id="{0c4d921f-e0eb-4cc3-851c-9a1e40abf9a1}">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
+      <Declaration><![CDATA[// Registers iExecute during initialization; panics if iExecute is 0.
 {attribute 'hide'}
 METHOD FB_Init: BOOL
 VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+    bInitRetains: BOOL; // TRUE on retain initialization.
+    bInCopyCode: BOOL;  // TRUE before online-change copy.
 	
-	iExecute			: I_Execute;
+	iExecute			: I_Execute; // Owner to execute cyclically; must not be 0.
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -113,7 +108,8 @@ _Plant.MainThread.AttachExecute(THIS^);]]></ST>
       </Implementation>
     </Method>
     <Property Name="Thread" Id="{007dbe53-a2a0-4e0f-80d9-08047f4a945c}">
-      <Declaration><![CDATA[PROPERTY Thread : I_Thread]]></Declaration>
+      <Declaration><![CDATA[// Thread that runs this executor; set during initialization.
+PROPERTY Thread : I_Thread]]></Declaration>
       <Get Name="Get" Id="{b47347c0-efdb-4ac8-ad7a-d8c017d37951}">
         <Declaration><![CDATA[VAR
 END_VAR

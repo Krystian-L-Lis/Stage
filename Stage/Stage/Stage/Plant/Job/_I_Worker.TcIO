@@ -29,7 +29,8 @@ END_VAR
 ]]></Declaration>
     </Method>
     <Property Name="Thread" Id="{72664e5a-4e4f-4a16-a656-7b32bc2b89e7}">
-      <Declaration><![CDATA[PROPERTY Thread : I_Thread]]></Declaration>
+      <Declaration><![CDATA[// Thread that processes this worker; can change while Idle.
+PROPERTY Thread : I_Thread]]></Declaration>
       <Get Name="Get" Id="{1ae9c584-ea6d-4c91-be59-16d88dfc59d3}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

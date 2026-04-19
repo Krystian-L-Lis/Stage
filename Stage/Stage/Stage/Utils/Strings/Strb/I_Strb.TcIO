@@ -1,161 +1,161 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="I_Strb" Id="{ba21f907-2947-410b-a5fe-d31c0fb60621}">
-    <Declaration><![CDATA[// A string builder utility that allows for manipulation of a string up to 255 characters. It implements the I_Strb interface that allows for method chaining.
+    <Declaration><![CDATA[// Chainable string builder interface.
 INTERFACE INTERNAL I_Strb EXTENDS I_Debug
 ]]></Declaration>
     <Method Name="Append" Id="{248d4e6a-1d63-4a88-a9ff-6f22af843738}">
-      <Declaration><![CDATA[// Appends the specified string to the current string.
-// Truncates if the total length exceeds 255 characters.
+      <Declaration><![CDATA[// Appends text; truncates at 255 chars.
 METHOD Append : I_Strb
 VAR_INPUT
-    sToAdd : Str; // String to append
+    sToAdd : Str; // Text to append.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="FindFirstAfter" Id="{cbb45280-4d0a-46e0-9518-44d206a10b65}">
-      <Declaration><![CDATA[// Finds the first occurrence of a substring after the specified position.
-// Outputs the start and end positions of the found substring.
+      <Declaration><![CDATA[// Finds first match after position; outputs zero positions when not found.
 METHOD FindFirstAfter : I_Strb
 VAR_INPUT
-    sToFind : Str;      // Substring to find
-    nPosition : INT := 1; // Starting position for search
+    sToFind : Str;      // Text to find.
+    nPosition : INT := 1; // One-based start position.
 END_VAR
 VAR_OUTPUT
-    nStart : INT;       // Start position of the found substring
-    nEnd : INT;         // End position of the found substring
+    nStart : INT;       // Match start, or 0.
+    nEnd : INT;         // Match end, or 0.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="FindLastBefore" Id="{4605251b-2100-457a-9572-22dbfde23e5d}">
-      <Declaration><![CDATA[// Finds the last occurrence of a substring before the specified position.
-// Outputs the start and end positions of the found substring.
+      <Declaration><![CDATA[// Finds last match before position; outputs zero positions when not found.
 METHOD FindLastBefore : I_Strb
 VAR_INPUT
-    sToFind : Str;        // Substring to find
-    nPosition : INT := 256; // Starting position for reverse search
+    sToFind : Str;        // Text to find.
+    nPosition : INT := 256; // One-based end position; 256 means current length.
 END_VAR
 VAR_OUTPUT
-    nStart : INT;         // Start position of the found substring
-    nEnd : INT;           // End position of the found substring
+    nStart : INT;         // Match start, or 0.
+    nEnd : INT;           // Match end, or 0.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Get" Id="{3e18555f-93c7-4867-826e-d1df008ba5f5}">
-      <Declaration><![CDATA[METHOD Get : Str
+      <Declaration><![CDATA[// Returns current text.
+METHOD Get : Str
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="GetLength" Id="{28af4e6d-e908-4012-808f-6bdc656fda8d}">
-      <Declaration><![CDATA[METHOD GetLength : INT
+      <Declaration><![CDATA[// Returns current length.
+METHOD GetLength : INT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="HasAfter" Id="{f6606593-96a5-466f-bbd2-567dc49ba5e1}">
-      <Declaration><![CDATA[// Checks if the specified substring exists after the given position.
+      <Declaration><![CDATA[// TRUE when text is found after position.
 METHOD HasAfter : BOOL
 VAR_INPUT
-    sToFind : Str;      // Substring to search for
-    nPosition : INT := 0; // Starting position for search
+    sToFind : Str;      // Text to find.
+    nPosition : INT := 0; // One-based start position.
 END_VAR
 VAR_OUTPUT
-    nStart : INT;       // Start position of the found substring
-    nEnd : INT;         // End position of the found substring
+    nStart : INT;       // Match start, or 0.
+    nEnd : INT;         // Match end, or 0.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="HasBefore" Id="{3ba32025-a527-449a-a307-df9b66ed9eda}">
-      <Declaration><![CDATA[// Checks if the specified substring exists before the given position.
+      <Declaration><![CDATA[// TRUE when text is found before position.
 METHOD HasBefore : BOOL
 VAR_INPUT
-    sToFind : Str;        // Substring to search for
-    nPosition : INT := 256; // Ending position for reverse search
+    sToFind : Str;        // Text to find.
+    nPosition : INT := 256; // One-based end position; 256 means current length.
 END_VAR
 VAR_OUTPUT
-    nStart : INT;         // Start position of the found substring
-    nEnd : INT;           // End position of the found substring
+    nStart : INT;         // Match start, or 0.
+    nEnd : INT;           // Match end, or 0.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Inject" Id="{42b4e730-2675-4489-9fe4-217e8e7d42d0}">
-      <Declaration><![CDATA[// Inserts a specified substring at a given position.
-// Truncates if the total length exceeds 255 characters.
+      <Declaration><![CDATA[// Inserts text; no change when position is invalid.
 METHOD Inject : I_Strb
 VAR_INPUT
-    nPosition : INT;    // Position to inject the string
-    sToInject : Str;    // String to inject
+    nPosition : INT;    // One-based insert position.
+    sToInject : Str;    // Text to insert.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="IsEmpty" Id="{da0eb481-a681-4dc1-a9b6-bcdbbaeca255}">
-      <Declaration><![CDATA[METHOD IsEmpty : BOOL
+      <Declaration><![CDATA[// TRUE when current length is 0.
+METHOD IsEmpty : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Length" Id="{a89198ee-1469-4ece-8be4-81bee1841744}">
-      <Declaration><![CDATA[METHOD Length : I_Strb
+      <Declaration><![CDATA[// Outputs current length and returns this builder.
+METHOD Length : I_Strb
 VAR_OUTPUT
-	nLen: INT;
+	nLen: INT; // Current length.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Prepend" Id="{5bc04033-c6a6-47d8-8c78-bbe521b9bc45}">
-      <Declaration><![CDATA[// Prepends the specified string to the current string.
-// Truncates if the total length exceeds 255 characters.
+      <Declaration><![CDATA[// Prepends text; truncates at 255 chars.
 METHOD Prepend : I_Strb
 VAR_INPUT
-    sToAdd : Str; // String to prepend
+    sToAdd : Str; // Text to prepend.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Remove" Id="{38c87d18-4637-4049-b384-460f530c2152}">
-      <Declaration><![CDATA[// Removes a substring of specified length starting at a given position.
+      <Declaration><![CDATA[// Removes text; no change when position or length is invalid.
 METHOD Remove : I_Strb
 VAR_INPUT
-    nLength : INT;    // Length of the substring to remove
-    nPosition : INT;  // Starting position of the substring to remove
+    nLength : INT;    // Characters to remove.
+    nPosition : INT;  // One-based start position.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Set" Id="{cde054de-26e3-4022-b4ee-a7751f8859aa}">
-      <Declaration><![CDATA[// Sets the current string to a new value.
+      <Declaration><![CDATA[// Sets current text.
 METHOD Set : I_Strb
 VAR_INPUT
-    sValue : Str; // New string value
+    sValue : Str; // New text.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Slice" Id="{c5d2cbbd-cd3e-4818-966c-244420d51bcb}">
-      <Declaration><![CDATA[// Extracts a substring starting from a given position with a specified length.
+      <Declaration><![CDATA[// Copies substring into sSlice; no change when position or length is invalid.
 METHOD Slice : I_Strb
 VAR_INPUT
-	nLength : INT;   // Length of the slice
-    nPosition : INT; // Starting position of the slice
+	nLength : INT;   // Characters to copy.
+    nPosition : INT; // One-based start position.
 END_VAR
 VAR_OUTPUT
-    sSlice : Strb;   // The sliced string
+    sSlice : Strb;   // Output slice builder.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Split" Id="{827c2322-1e1a-4752-891a-627fe8cdc2d1}">
-      <Declaration><![CDATA[// Splits the string into two parts at the specified position.
+      <Declaration><![CDATA[// Splits text into left and right builders.
 METHOD Split : I_Strb
 VAR_INPUT
-    nPosition : INT; // Position to split the string
+    nPosition : INT; // One-based split position.
 END_VAR
 VAR_OUTPUT
-    sLeft : Strb;    // Left part of the split
-    sRight : Strb;   // Right part of the split
+    sLeft : Strb;    // Left side.
+    sRight : Strb;   // Right side.
 END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Write" Id="{70df4ad8-01ef-4ed4-8373-85eed225ddfa}">
-      <Declaration><![CDATA[METHOD Write : I_Strb;
+      <Declaration><![CDATA[// Outputs current text and returns this builder.
+METHOD Write : I_Strb;
 VAR_OUTPUT
-	sString: Str;
+	sString: Str; // Current text.
 END_VAR
 ]]></Declaration>
     </Method>

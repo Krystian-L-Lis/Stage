@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Math" Id="{79849915-ccca-45cc-a51a-353bb7315daa}" SpecialFunc="None">
-    <Declaration><![CDATA[(*Provides various mathematical functions*)
+    <Declaration><![CDATA[// Numeric helper namespace.
 PROGRAM Math
 VAR
 END_VAR
@@ -10,14 +10,11 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="ExptDecay" Id="{8d3aa407-7a4a-435a-88e6-4592a7a47b65}">
-      <Declaration><![CDATA[(* 
-    Time-compensated smoothing coefficient. 
-    Alpha = 1 - (1 - B)^dt
-*)
+      <Declaration><![CDATA[// Time-compensated smoothing coefficient clamped to 0..1.
 METHOD ExptDecay : LREAL
 VAR_INPUT
-    rBlendFactor : LREAL;   // Blending factor [0, 1]
-    rDeltaTime   : LREAL := 0.01;   // Sample time [s]
+    rBlendFactor : LREAL;   // Base blend factor, clamped 0..1.
+    rDeltaTime   : LREAL := 0.01;   // Sample time in seconds.
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -27,17 +24,14 @@ ExptDecay := LIMIT(0.0, 1.0 - EXPT(1.0 - rBlendFactor, rDeltaTime), 1.0);]]></ST
       </Implementation>
     </Method>
     <Method Name="FreqCutoffCoef" Id="{bd72f08d-8d4f-43e5-b950-5b0461356dd2}">
-      <Declaration><![CDATA[(* 
-    Time-compensated low-pass coefficient from cutoff frequency. 
-    Alpha = 1 - exp(-2π · Fc · dt)
-*)
+      <Declaration><![CDATA[// Low-pass coefficient from cutoff frequency; clamped to 0..1.
 METHOD FreqCutoffCoef : LREAL
 VAR_STAT CONSTANT
 	rA: LREAL := 2.0 * 3.141592653589793;
 END_VAR
 VAR_INPUT
-    rCutoffHz  : LREAL;   // Cutoff frequency [Hz]
-    rDeltaTime : LREAL;   // Sample time [s]
+    rCutoffHz  : LREAL;   // Cutoff frequency in Hz.
+    rDeltaTime : LREAL;   // Sample time in seconds.
 END_VAR
 VAR
 	rOmega : LREAL;
@@ -53,18 +47,14 @@ FreqCutoffCoef := LIMIT(0.0, FreqCutoffCoef, 1.0);
       </Implementation>
     </Method>
     <Method Name="LinearScale" Id="{57ad8d01-8b3d-4c66-a03e-ccd8286efe23}">
-      <Declaration><![CDATA[(*
-Allows for value scalling.
-Y = MinY + ((X − MinX) / (MaxX − MinX)) * (MaxY − MinY)
-Returns 0 when rMaxX - rMinX = 0.
-*)
+      <Declaration><![CDATA[// Scales rX from input range to output range; returns 0 when input span is 0.
 METHOD LinearScale : LREAL
 VAR_INPUT
-	rX				: LREAL;
-	rMinX			: LREAL;
-	rMaxX			: LREAL;
-	rMinY			: LREAL := 0;
-	rMaxY			: LREAL := 1;
+	rX				: LREAL; // Input value.
+	rMinX			: LREAL; // Input range minimum.
+	rMaxX			: LREAL; // Input range maximum.
+	rMinY			: LREAL := 0; // Output range minimum.
+	rMaxY			: LREAL := 1; // Output range maximum.
 END_VAR
 VAR
 	_rDnmtr			: LREAL := rMaxX - rMinX;
@@ -77,25 +67,20 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="LowPassFilter" Id="{8bf1a163-e19a-406a-9e5d-a23ea6bfa2ad}">
-      <Declaration><![CDATA[(*
-First-order low pass filter.
-Yt = Xt * Coeff + Y(t-1) * (1- Coeff)
-*)
+      <Declaration><![CDATA[// First-order filter output.
 METHOD LowPassFilter : LREAL
 VAR_INPUT
-	rX				: LREAL;
-	rPrvY			: LREAL;
+	rX				: LREAL; // New input.
+	rPrvY			: LREAL; // Previous output.
 	
-	rCoefficient	: LREAL;
+	rCoefficient	: LREAL; // Blend coefficient, normally 0..1.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[LowPassFilter := rX * rCoefficient + rPrvY * (1 - rCoefficient);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Random" Id="{446e7349-8d3a-44ca-b827-be8536ff03cb}">
-      <Declaration><![CDATA[(*
-Generates random number every time is called.
-*)
+      <Declaration><![CDATA[// Returns pseudo-random LREAL.
 METHOD Random : LREAL
 VAR_STAT
 	_nSeed		: INT;
@@ -110,10 +95,11 @@ _nSeed := _nSeed + 1;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Round" Id="{34e0d5ed-7b8b-4a67-875b-cea49a04c3c3}">
-      <Declaration><![CDATA[METHOD Round : LREAL
+      <Declaration><![CDATA[// Rounds rValue at decimal position nPosition.
+METHOD Round : LREAL
 VAR_INPUT
-	rValue: LREAL;
-	nPosition: SINT;
+	rValue: LREAL; // Value to round.
+	nPosition: SINT; // Decimal position.
 END_VAR
 VAR
 	rFactor: LREAL := 0;

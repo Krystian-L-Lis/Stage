@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Worker" Id="{b97897ce-fa84-437c-88bb-b049358c2ee9}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Allows registration of FB implementing `I_Job`. 
-*)
+    <Declaration><![CDATA[// Registers an I_Job owner as a startable worker.
 FUNCTION_BLOCK FINAL Worker IMPLEMENTS I_Worker
 VAR
 	_iThread: I_Thread := _Plant.MainThread;
@@ -54,17 +52,14 @@ END_VAR
       </Set>
     </Property>
     <Method Name="FB_init" Id="{a6ebb3d3-f387-4e6a-8184-5548edc195e7}">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
+      <Declaration><![CDATA[// Registers iJob; panics if iJob is 0.
 {attribute 'hide'}
 METHOD FB_Init: BOOL
 VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+    bInitRetains: BOOL; // TRUE on retain initialization.
+    bInCopyCode: BOOL;  // TRUE before online-change copy.
 	
-	iJob			: I_Job;
+	iJob			: I_Job; // Job owner; must not be 0.
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -109,7 +104,8 @@ END_CASE
       </Implementation>
     </Method>
     <Method Name="Start" Id="{080aa8ff-e200-4b3c-b985-a8813d778807}">
-      <Declaration><![CDATA[METHOD Start : Result
+      <Declaration><![CDATA[// Starts idle job; returns Ok attached, None command busy, Error invalid state or job.
+METHOD Start : Result
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -137,7 +133,8 @@ END_CASE]]></ST>
       </Implementation>
     </Method>
     <Property Name="State" Id="{1f7a2bd4-ef54-4bc0-a16d-c88efa33c03b}">
-      <Declaration><![CDATA[PROPERTY State : JobState]]></Declaration>
+      <Declaration><![CDATA[// Current worker state.
+PROPERTY State : JobState]]></Declaration>
       <Get Name="Get" Id="{dca00282-a4d9-4d8e-93e4-f54b4d9deb04}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -148,7 +145,8 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Stop" Id="{6cfd29a9-2408-440a-b439-b2633f4e1057}">
-      <Declaration><![CDATA[METHOD Stop
+      <Declaration><![CDATA[// Requests stop; Busy moves to Done and calls JobExit before returning Idle.
+METHOD Stop
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -157,7 +155,8 @@ END_VAR
       </Implementation>
     </Method>
     <Property Name="Thread" Id="{850b9f54-d27a-4b2c-880f-f8770f0ce6ea}">
-      <Declaration><![CDATA[PROPERTY Thread : I_Thread]]></Declaration>
+      <Declaration><![CDATA[// Thread that processes this worker; can change while Idle.
+PROPERTY Thread : I_Thread]]></Declaration>
       <Get Name="Get" Id="{2f51b206-b1ce-41a7-9a6b-1ebe7051e60d}">
         <Declaration><![CDATA[VAR
 END_VAR

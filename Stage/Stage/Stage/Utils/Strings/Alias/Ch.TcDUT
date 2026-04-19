@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <DUT Name="Ch" Id="{ddd91310-5dcc-459c-a150-49ad8e7e22bc}">
-    <Declaration><![CDATA[// Alias for STRING(1) values.
+    <Declaration><![CDATA[// Single-character string alias.
 TYPE Ch : STRING(1); END_TYPE
 ]]></Declaration>
   </DUT>

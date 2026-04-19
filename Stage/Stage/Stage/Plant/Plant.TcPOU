@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Plant" Id="{57f056fa-9062-499a-a7e4-db28982dc70c}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Manages the initialization and cyclic execution of registered function blocks.
-*)
+    <Declaration><![CDATA[// Stage runtime: startup hooks, entity registry, main-thread execution, and diagnostics.
 PROGRAM Plant]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -116,7 +114,7 @@ END_WHILE]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsInit" Id="{47aa55bb-5f38-456d-8ae6-449a8fb7b7c1}">
-      <Declaration><![CDATA[// Returns TRUE when plant is in initialization phase.
+      <Declaration><![CDATA[// TRUE while Plant is running startup initialization.
 PROPERTY IsInit : BOOL]]></Declaration>
       <Get Name="Get" Id="{e9b76d2b-9bfe-4c42-9ef5-17f0d5f04c16}">
         <Declaration><![CDATA[VAR
@@ -128,10 +126,10 @@ END_VAR
       </Get>
     </Property>
     <Method Name="NextEtt" Id="{fc94b275-8099-46b3-826b-ceb5994205a2}" FolderPath="Entity\">
-      <Declaration><![CDATA[(*Overwrites passed interface pointer and returns Ok upon returning next Entity*)
+      <Declaration><![CDATA[// Advances iEntity to next registered entity; returns Ok found, None end, Error invalid ref.
 METHOD NextEtt : Result
 VAR_INPUT
-	iEntity: REFERENCE TO I_Entity; // Reference to interface pointer to be overwritten.
+	iEntity: REFERENCE TO I_Entity; // Iterator variable; set to 0 before first call.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT __ISVALIDREF(iEntity) THEN
@@ -153,11 +151,11 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Panic" Id="{88cec364-69ff-40ea-83cd-fc94c687cdd6}" FolderPath="Debug\">
-      <Declaration><![CDATA[// Registers panic message. When called during initialization phase, stops cyclic execution.
+      <Declaration><![CDATA[// Records a panic; startup panics stop cyclic execution after init.
 METHOD Panic
 VAR_INPUT
-	iSource: I_Debug;
-	sComment: Str;
+	iSource: I_Debug; // Source object for diagnostics; may be 0.
+	sComment: Str; // Short diagnostic message.
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -183,7 +181,8 @@ _Plant.nTotalPanic := _Plant.nTotalPanic + 1;]]></ST>
       </Implementation>
     </Method>
     <Property Name="PanicArr" Id="{f84267cc-df7a-4466-8cfb-e636b27eb288}" FolderPath="Debug\">
-      <Declaration><![CDATA[PROPERTY PanicArr : ARRAY[1..PARAM.MAX_PANIC_MSG] OF DebugStruct;]]></Declaration>
+      <Declaration><![CDATA[// Fixed-size panic message buffer.
+PROPERTY PanicArr : ARRAY[1..PARAM.MAX_PANIC_MSG] OF DebugStruct;]]></Declaration>
       <Get Name="Get" Id="{8248e65b-59f5-4efd-a9d9-ce7c65329efd}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -194,7 +193,8 @@ END_VAR
       </Get>
     </Property>
     <Property Name="Panicked" Id="{e97302c6-cf42-4d1f-9e87-05dc04348073}" FolderPath="Debug\">
-      <Declaration><![CDATA[PROPERTY Panicked : BOOL]]></Declaration>
+      <Declaration><![CDATA[// TRUE after at least one panic has been recorded.
+PROPERTY Panicked : BOOL]]></Declaration>
       <Get Name="Get" Id="{c4fe24ca-15a1-44e5-a8f2-c36c924dfe56}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -205,10 +205,10 @@ END_VAR
       </Get>
     </Property>
     <Method Name="PrevEtt" Id="{78ce1eb1-e319-4ecf-8b2e-898c0522286b}" FolderPath="Entity\">
-      <Declaration><![CDATA[(*Overwrites passed interface pointer and returns Ok upon returning previous Entity*)
+      <Declaration><![CDATA[// Moves iEntity to previous registered entity; returns Ok found, None end, Error invalid ref.
 METHOD PrevEtt : Result
 VAR_INPUT
-	iEntity: REFERENCE TO I_Entity; // Reference to interface pointer to be overwritten.
+	iEntity: REFERENCE TO I_Entity; // Iterator variable; set to 0 before first call.
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -231,7 +231,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Run" Id="{dc34cc4b-a853-4448-9354-7419d1f33f9a}">
-      <Declaration><![CDATA[// Initializes registered function blocks and manages code execution.
+      <Declaration><![CDATA[// Runs startup once, then main thread each cycle; cyclic work stops after startup panic.
 METHOD Run
 ]]></Declaration>
       <Implementation>
@@ -263,7 +263,8 @@ _Plant.MainThread.Run();]]></ST>
       </Implementation>
     </Method>
     <Property Name="TotalPanic" Id="{31a7e8a6-6ed1-41ac-8b6b-f0e63026c133}" FolderPath="Debug\">
-      <Declaration><![CDATA[PROPERTY TotalPanic : UDINT]]></Declaration>
+      <Declaration><![CDATA[// Total number of recorded panic attempts.
+PROPERTY TotalPanic : UDINT]]></Declaration>
       <Get Name="Get" Id="{697f264e-4113-453b-886d-91942569445e}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -274,7 +275,8 @@ END_VAR
       </Get>
     </Property>
     <Property Name="TotalWarn" Id="{968af1f6-4cbb-48fe-94a2-fca8f5063d32}" FolderPath="Debug\">
-      <Declaration><![CDATA[PROPERTY TotalWarn : UDINT]]></Declaration>
+      <Declaration><![CDATA[// Total number of recorded warning attempts.
+PROPERTY TotalWarn : UDINT]]></Declaration>
       <Get Name="Get" Id="{1b8ce417-d1a8-4308-b875-08ced35d3d87}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -285,11 +287,11 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Warn" Id="{e58b4fa2-e306-49bb-bae3-e081e937d273}" FolderPath="Debug\">
-      <Declaration><![CDATA[// Registers warning message.
+      <Declaration><![CDATA[// Records a warning without stopping cyclic execution.
 METHOD Warn
 VAR_INPUT
-	iSource: I_Debug;
-	sComment: Str;
+	iSource: I_Debug; // Source object for diagnostics; may be 0.
+	sComment: Str; // Short diagnostic message.
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -315,7 +317,8 @@ _Plant.nTotalWarn := _Plant.nTotalWarn + 1;]]></ST>
       </Implementation>
     </Method>
     <Property Name="WarnArr" Id="{078c0e3f-c6a3-4dd5-9a35-2b707ed71a33}" FolderPath="Debug\">
-      <Declaration><![CDATA[PROPERTY WarnArr : ARRAY[1..PARAM.MAX_WARN_MSG] OF DebugStruct;]]></Declaration>
+      <Declaration><![CDATA[// Fixed-size warning message buffer.
+PROPERTY WarnArr : ARRAY[1..PARAM.MAX_WARN_MSG] OF DebugStruct;]]></Declaration>
       <Get Name="Get" Id="{237a44a4-cfa6-457c-8a67-ec358eb4fcc6}">
         <Declaration><![CDATA[VAR
 END_VAR
