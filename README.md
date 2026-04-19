@@ -19,6 +19,9 @@ Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page!
 - Changelog
 - Obsidian-compatible
 
+Local docs:
+- [API Reference](Docs/API/home.md)
+
 ---
 
 ## **Requirements**
@@ -59,24 +62,127 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 
 ## **Features**
 
-- Automatic dependency injection – register your function block for others to discover at runtime.
-- Automatic execution – register function blocks and execute them on an assigned thread.
-- Workers – define jobs, start them, and execute them until completion on an assigned thread.
-- Utilities – string and color builders, and more.
+- Automatic dependency injection - register your function block for others to discover at runtime.
+- Automatic execution - register function blocks and execute them on an assigned thread.
+- Workers - define jobs, start them, and execute them until completion on an assigned thread.
+- Utilities - result helpers, string builders, path identifiers, time helpers, math helpers, and color builders.
 
 ---
 ## **Tests & Examples**
 
-Tests and Examples can be found here. WIP.
+The main example project is [Gates Belt Measurement](Example/GatesBeltMeasurement/README.md). It shows how Stage is used in a real TwinCAT solution with a main PLC task, a fast task, discoverable devices, HMI table builders, and startable procedures.
+
+API examples are also available in the local [API Reference](Docs/API/home.md).
 
 ---
 
 ## **Quick Start**
 
-This guide provides a brief overview of using the **Stage** framework.
+This guide shows the normal Stage wiring pattern: call `Plant.Run()` once from the main PLC program, register cyclic function blocks with `Execute`, register discoverable function blocks with `Entity`, and register startable procedures with `Worker`.
 
+### **Run Stage From MAIN**
+
+```iecst
+PROGRAM MAIN
+VAR
+    SystemTime: SystemTime;
+    Safety: Safety;
+END_VAR
+
+Plant.Run();
 ```
-   WIP
+
+### **Register A Cyclic Function Block**
+
+```iecst
+FUNCTION_BLOCK SystemTime IMPLEMENTS I_Execute, I_SystemTime
+VAR
+    _exe: Execute(THIS^);
+    _ett: Entity(THIS^);
+    nUnixTime: ULINT;
+END_VAR
+```
+
+```iecst
+METHOD Execute
+nUnixTime := GetUnixTime();
+```
+
+`Execute(THIS^)` registers the function block for cyclic execution. `Entity(THIS^)` makes it discoverable through interfaces that extend `I_Generic`.
+
+### **Discover Registered Entities**
+
+```iecst
+VAR
+    iEtt: I_Entity;
+    iSystemTime: I_SystemTime;
+END_VAR
+
+WHILE IsOk(Plant.NextEtt(iEtt)) DO
+    IF __QUERYINTERFACE(iEtt.Raw, iSystemTime) THEN
+        // Use iSystemTime here.
+    END_IF
+END_WHILE
+```
+
+### **Create A Startable Procedure**
+
+```iecst
+FUNCTION_BLOCK FindBelt IMPLEMENTS I_Job, I_Procedure
+VAR
+    _worker: Worker(THIS^);
+    _ett: Entity(THIS^);
+END_VAR
+```
+
+```iecst
+METHOD JobInit
+// Reset procedure state.
+```
+
+```iecst
+METHOD JobExecute
+// Run one step per worker cycle.
+IF bComplete THEN
+    _worker.Stop();
+END_IF
+```
+
+```iecst
+METHOD JobExit
+// Publish final state and clear command bits.
+```
+
+Start the procedure from another function block:
+
+```iecst
+_result := FindBelt.Start();
+
+IF IsOk(_result) THEN
+    // The job was accepted by its thread.
+END_IF
+```
+
+### **Use A Fast Task Thread**
+
+```iecst
+{attribute 'global_init_slot' := '49000'}
+PROGRAM FAST
+VAR
+    Thread: Thread;
+END_VAR
+
+Thread.Run();
+```
+
+Assign cyclic work to the fast task during initialization:
+
+```iecst
+FUNCTION_BLOCK LoadCell IMPLEMENTS I_Execute, I_LoadCell
+VAR
+    _exe: Execute(THIS^) := (Thread := FAST.Thread);
+    _ett: Entity(THIS^);
+END_VAR
 ```
 
 ---
@@ -106,4 +212,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have questions or suggestions, feel free to reach out via:
 
 - **GitHub Issues:** [Submit an issue](https://github.com/Krystian-L-Lis/Stage/issues)  
-
