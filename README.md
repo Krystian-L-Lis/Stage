@@ -19,9 +19,6 @@ Check the [Wiki](https://github.com/Krystian-L-Lis/Stage/wiki) page!
 - Changelog
 - Obsidian-compatible
 
-Local docs:
-- [API Reference](Docs/API/home.md)
-
 ---
 
 ## **Requirements**
