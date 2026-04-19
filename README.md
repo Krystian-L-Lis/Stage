@@ -65,13 +65,6 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 - Utilities - result helpers, string builders, path identifiers, time helpers, math helpers, and color builders.
 
 ---
-## **Tests & Examples**
-
-The main example project is [Gates Belt Measurement](Example/GatesBeltMeasurement/README.md). It shows how Stage is used in a real TwinCAT solution with a main PLC task, a fast task, discoverable devices, HMI table builders, and startable procedures.
-
-API examples are also available in the local [API Reference](Docs/API/home.md).
-
----
 
 ## **Quick Start**
 
