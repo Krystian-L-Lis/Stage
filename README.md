@@ -146,7 +146,7 @@ METHOD JobExit
 Start the procedure from another function block:
 
 ```iecst
-_result := FindBelt.Start();
+_result := StartConveyors.Start();
 
 IF IsOk(_result) THEN
     // The job was accepted by its thread.
@@ -168,7 +168,7 @@ Thread.Run();
 Assign cyclic work to the fast task during initialization:
 
 ```iecst
-FUNCTION_BLOCK LoadCell IMPLEMENTS I_Execute, I_LoadCell
+FUNCTION_BLOCK SerialComs IMPLEMENTS I_Execute, I_SerialComs
 VAR
     _exe: Execute(THIS^) := (Thread := FAST.Thread);
     _ett: Entity(THIS^);
