@@ -70,18 +70,6 @@ Stage requires **Beckhoff TwinCAT 3.1**, specifically:
 
 This guide shows the normal Stage wiring pattern: call `Plant.Run()` once from the main PLC program, register cyclic function blocks with `Execute`, register discoverable function blocks with `Entity`, and register startable procedures with `Worker`.
 
-### **Run Stage From MAIN**
-
-```iecst
-PROGRAM MAIN
-VAR
-    SystemTime: SystemTime;
-    Safety: Safety;
-END_VAR
-
-Plant.Run();
-```
-
 ### **Register A Cyclic Function Block**
 
 ```iecst
@@ -99,6 +87,18 @@ nUnixTime := GetUnixTime();
 ```
 
 `Execute(THIS^)` registers the function block for cyclic execution. `Entity(THIS^)` makes it discoverable through interfaces that extend `I_Generic`.
+
+### **Run Stage From MAIN**
+
+```iecst
+PROGRAM MAIN
+VAR
+    SystemTime: SystemTime;
+    Safety: Safety;
+END_VAR
+
+Plant.Run();
+```
 
 ### **Discover Registered Entities**
 
