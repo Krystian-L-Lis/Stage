@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="_I_Thread" Id="{a9568707-b22e-4555-9884-6d4e1026cc8c}">
-    <Declaration><![CDATA[INTERFACE INTERNAL _I_Thread EXTENDS I_Debug
+    <Declaration><![CDATA[INTERFACE INTERNAL _I_Thread EXTENDS I_Debug, I_ValidateInterface
 ]]></Declaration>
     <Method Name="AttachExecute" Id="{0535368c-1e65-495c-bfb4-5ad515b03a41}">
       <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result

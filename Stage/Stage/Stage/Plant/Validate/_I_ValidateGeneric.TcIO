@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="_I_ValidateGeneric" Id="{2485e777-bc34-4faa-9644-c49ae0e559ef}">
+    <Declaration><![CDATA[INTERFACE INTERNAL _I_ValidateGeneric EXTENDS __SYSTEM.IQueryInterface, I_Debug
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

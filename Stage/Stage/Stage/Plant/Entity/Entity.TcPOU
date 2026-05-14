@@ -4,7 +4,9 @@
     <Declaration><![CDATA[// Registers an I_Generic owner in the global entity list.
 FUNCTION_BLOCK FINAL Entity IMPLEMENTS I_Entity
 VAR
-	_iGeneric: I_Generic;
+	{attribute 'no_copy'}
+	{attribute 'no_init'}
+	_iGeneric: I_Generic;	
 	_iNext: I_Entity;
 	_iPrev: I_Entity;
 	_eResult: Result;
@@ -82,8 +84,26 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="FB_Exit" Id="{42208c5b-7f6e-464d-8c2a-eeb37816f581}">
+      <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
+//method is called before the controller removes the code of the function block instance
+//(implicit call). The return value is not evaluated.
+{attribute 'hide'}
+METHOD FB_Exit: BOOL
+VAR_INPUT
+    bInCopyCode: BOOL;  // TRUE: the exit method is called in order to leave the instance which will be copied afterwards (online change).  
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	Plant._DetachEntity(THIS^);
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_Init" Id="{30a5db3d-56de-4ed6-bc93-41367e567754}">
       <Declaration><![CDATA[// Registers iGeneric during initialization; panics if iGeneric is 0.
+{attribute 'hide'}
 METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE on retain initialization.
@@ -126,21 +146,12 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Replace" Id="{bd4b7f87-d26a-40a3-8f93-3a48e61c5f72}">
-      <Declaration><![CDATA[// Replaces registered interface; returns Ok replaced, Error if no current interface.
-METHOD Replace : Result
-VAR_INPUT
-	iGeneric: I_Generic; // Replacement interface.
-END_VAR
+    <Method Name="ValidateInterface" Id="{e34bd26f-f29f-49cc-8f20-b10bb8bf4181}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD ValidateInterface
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _iGeneric = 0 THEN
-	Replace := Error;
-	RETURN;
-END_IF
-
-_iGeneric := iGeneric;
-Replace := Ok;]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
   </POU>

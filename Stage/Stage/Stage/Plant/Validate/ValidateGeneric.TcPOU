@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ValidateGeneric" Id="{70d9f663-5b35-4175-8e0a-2100e2e5c298}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ValidateGeneric : Result
+VAR_INPUT
+	iToValidate: I_Generic;
+END_VAR
+VAR
+	_err: __SYSTEM.ExceptionCode;
+	_iValidate: _I_ValidateGeneric;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF iToValidate = 0 THEN
+	ValidateGeneric := Error;
+	RETURN;
+END_IF
+
+__TRY
+	__QUERYINTERFACE(iToValidate, _iValidate);
+__CATCH(_err)
+	ValidateGeneric := Error;
+__ENDTRY]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

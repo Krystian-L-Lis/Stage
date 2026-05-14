@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="_I_Entity" Id="{1f3e5d12-6188-40e2-9c90-96da8b656fc4}">
-    <Declaration><![CDATA[INTERFACE INTERNAL _I_Entity EXTENDS I_Debug
+    <Declaration><![CDATA[INTERFACE INTERNAL _I_Entity EXTENDS I_Debug, I_ValidateInterface
 ]]></Declaration>
     <Property Name="_Next" Id="{74a5b398-fcd6-40c3-938e-d42157f8245f}">
       <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Entity]]></Declaration>

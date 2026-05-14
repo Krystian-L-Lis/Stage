@@ -227,5 +227,15 @@ WHILE iExecute <> 0 DO
 END_WHILE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="ValidateInterface" Id="{c25915fa-ff5e-40d2-928c-da91ae08f4b2}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD ValidateInterface
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

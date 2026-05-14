@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="_I_Execute" Id="{8b79cbd5-d7c4-4c85-85bb-38aa830221fc}">
-    <Declaration><![CDATA[INTERFACE INTERNAL _I_Execute EXTENDS I_Debug;
+    <Declaration><![CDATA[INTERFACE INTERNAL _I_Execute EXTENDS I_Debug, I_ValidateInterface;
 ]]></Declaration>
     <Method Name="_Exe" Id="{8d48a61b-dcd6-4e45-8916-d669dffef6c5}">
       <Declaration><![CDATA[METHOD INTERNAL _Exe

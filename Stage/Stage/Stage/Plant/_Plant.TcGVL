@@ -10,6 +10,9 @@ VAR_GLOBAL INTERNAL
 	nLastWarn: UDINT := 1;
 	nTotalPanic: UDINT;
 	nTotalWarn: UDINT;
+	
+	{attribute 'init_on_onlchange'}
+	bOnlineChange: BOOL := TRUE;
 
 	MainThread: Thread;
 	

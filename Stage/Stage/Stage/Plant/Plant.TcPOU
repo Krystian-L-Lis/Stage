@@ -86,6 +86,53 @@ END_VAR
 END_WHILE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="_DetachEntity" Id="{f3d7e9f7-e4c2-4978-a8fb-123b5c5f0f5c}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _DetachEntity : Result
+VAR_INPUT
+	iEntity: I_Entity;
+END_VAR
+VAR
+	iPrev: I_Entity;
+	iNext: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iEntity = 0 THEN
+	_DetachEntity := Error;
+	RETURN;
+END_IF
+
+iPrev := iEntity._Prev;
+iNext := iEntity._Next;
+
+IF iPrev = 0 AND iNext = 0 AND
+	_Plant.iFirstEntity <> iEntity AND _Plant.iLastEntity <> iEntity THEN
+	_DetachEntity := None;
+	RETURN;
+END_IF
+
+IF iPrev <> 0 THEN
+	iPrev._Next := iNext;
+END_IF
+
+IF iNext <> 0 THEN
+	iNext._Prev := iPrev;
+END_IF
+
+IF _Plant.iFirstEntity = iEntity THEN
+	_Plant.iFirstEntity := iNext;
+END_IF
+
+IF _Plant.iLastEntity = iEntity THEN
+	_Plant.iLastEntity := iPrev;
+END_IF
+
+iEntity._Prev := 0;
+iEntity._Next := 0;
+
+_DetachEntity := Ok;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="_ThreadDispatcher" Id="{3c6830ed-2cd7-4aa9-adad-7835ee965e5a}" FolderPath="_\">
       <Declaration><![CDATA[METHOD INTERNAL _ThreadDispatcher
 VAR
@@ -111,6 +158,179 @@ END_VAR
 
     iExecute := iNext;
 END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_ValidatePlant" Id="{41374844-0fb6-4955-bce7-420662636250}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _ValidatePlant : Result
+VAR CONSTANT
+	GUARD: UDINT := 100_000;
+END_VAR
+VAR
+	iEntity: I_Entity;
+	iPrevEntity: I_Entity;
+	iNextEntity: I_Entity;
+	iEntityRaw: I_Generic;
+	iMainThread: I_Thread := _Plant.MainThread;
+	iExecute: _I_Execute;
+	iPrevExecute: _I_Execute;
+	iNextExecute: _I_Execute;
+	iExecuteThread: I_Thread;
+	nGuard: UDINT;
+	_err: __SYSTEM.ExceptionCode;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ValidatePlant := Error;
+
+__TRY
+	IF IsErr(ValidateInterface(iMainThread)) THEN
+		Plant.Panic(0, 'Plant validation failed: _Plant.MainThread did not pass ValidateInterface.');
+		RETURN;
+	END_IF
+	
+	IF _Plant.iFirstEntity = 0 THEN
+		IF _Plant.iLastEntity <> 0 THEN
+			Plant.Panic(0, 'Plant validation failed: first entity is 0 but last entity is not 0.');
+			RETURN;
+		END_IF
+	ELSE
+		IF IsErr(ValidateInterface(_Plant.iFirstEntity)) THEN
+			Plant.Panic(0, 'Plant validation failed: first entity did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF _Plant.iLastEntity = 0 THEN
+			Plant.Panic(0, 'Plant validation failed: first entity is not 0 but last entity is 0.');
+			RETURN;
+		END_IF
+		
+		IF IsErr(ValidateInterface(_Plant.iLastEntity)) THEN
+			Plant.Panic(0, 'Plant validation failed: last entity did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF _Plant.iFirstEntity._Prev <> 0 THEN
+			Plant.Panic(_Plant.iFirstEntity, 'Plant validation failed: first entity has a nonzero _Prev link.');
+			RETURN;
+		END_IF
+		
+		IF _Plant.iLastEntity._Next <> 0 THEN
+			Plant.Panic(_Plant.iLastEntity, 'Plant validation failed: last entity has a nonzero _Next link.');
+			RETURN;
+		END_IF
+	END_IF
+	
+	iEntity := _Plant.iFirstEntity;
+	iPrevEntity := 0;
+	nGuard := 0;
+	
+	WHILE iEntity <> 0 DO
+		nGuard := nGuard + 1;
+		IF nGuard > GUARD THEN
+			Plant.Panic(0, 'Plant validation failed: entity traversal exceeded GUARD; probable cycle.');
+			RETURN;
+		END_IF
+		
+		IF IsErr(ValidateInterface(iEntity)) THEN
+			Plant.Panic(0, 'Plant validation failed: current entity did not pass ValidateInterface before link access.');
+			RETURN;
+		END_IF
+		
+		IF iEntity._Prev <> iPrevEntity THEN
+			Plant.Panic(iEntity, 'Plant validation failed: current entity _Prev does not match previous visited entity.');
+			RETURN;
+		END_IF
+		
+		iEntityRaw := iEntity._Raw;
+		IF IsErr(ValidateGeneric(iEntityRaw)) THEN
+			Plant.Panic(iEntity, 'Plant validation failed: current entity _Raw is 0, garbage, or failed generic validation.');
+			RETURN;
+		END_IF
+		
+		iNextEntity := iEntity._Next;
+		
+		IF iNextEntity <> 0 THEN
+			IF IsErr(ValidateInterface(iNextEntity)) THEN
+				Plant.Panic(iEntity, 'Plant validation failed: current entity _Next did not pass ValidateInterface.');
+				RETURN;
+			END_IF
+			
+			IF iNextEntity = iEntity THEN
+				Plant.Panic(iEntity, 'Plant validation failed: current entity _Next points to itself.');
+				RETURN;
+			END_IF
+			
+			IF iNextEntity._Prev <> iEntity THEN
+				Plant.Panic(iEntity, 'Plant validation failed: next entity _Prev does not point back to current entity.');
+				RETURN;
+			END_IF
+		END_IF
+		
+		iPrevEntity := iEntity;
+		iEntity := iNextEntity;
+	END_WHILE
+	
+	IF iPrevEntity <> _Plant.iLastEntity THEN
+		Plant.Panic(0, 'Plant validation failed: last visited entity does not match _Plant.iLastEntity.');
+		RETURN;
+	END_IF
+	
+	iExecute := _Plant.MainThread._First;
+	iPrevExecute := 0;
+	nGuard := 0;
+	
+	WHILE iExecute <> 0 DO
+		nGuard := nGuard + 1;
+		IF nGuard > GUARD THEN
+			Plant.Panic(0, 'Plant validation failed: execute traversal exceeded GUARD; probable cycle.');
+			RETURN;
+		END_IF
+		
+		IF IsErr(ValidateInterface(iExecute)) THEN
+			Plant.Panic(0, 'Plant validation failed: current execute did not pass ValidateInterface before link access.');
+			RETURN;
+		END_IF
+		
+		IF iExecute._Prev <> iPrevExecute THEN
+			Plant.Panic(iExecute, 'Plant validation failed: current execute _Prev does not match previous visited execute.');
+			RETURN;
+		END_IF
+		
+		iExecuteThread := iExecute._Thread;
+		IF IsErr(ValidateInterface(iExecuteThread)) THEN
+			Plant.Panic(iExecute, 'Plant validation failed: current execute _Thread is 0 or failed ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		iNextExecute := iExecute._Next;
+		
+		IF iNextExecute <> 0 THEN
+			IF IsErr(ValidateInterface(iNextExecute)) THEN
+				Plant.Panic(iExecute, 'Plant validation failed: current execute _Next did not pass ValidateInterface.');
+				RETURN;
+			END_IF
+			
+			IF iNextExecute = iExecute THEN
+				Plant.Panic(iExecute, 'Plant validation failed: current execute _Next points to itself.');
+				RETURN;
+			END_IF
+			
+			IF iNextExecute._Prev <> iExecute THEN
+				Plant.Panic(iExecute, 'Plant validation failed: next execute _Prev does not point back to current execute.');
+				RETURN;
+			END_IF
+		END_IF
+		
+		iPrevExecute := iExecute;
+		iExecute := iNextExecute;
+	END_WHILE
+	
+	_ValidatePlant := Ok;
+	
+__CATCH(_err)
+	Plant.Panic(0, 'Plant validation failed: exception while reading validation interfaces or links.');
+	_ValidatePlant := Error;
+__ENDTRY]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsInit" Id="{47aa55bb-5f38-456d-8ae6-449a8fb7b7c1}">
@@ -235,10 +455,12 @@ END_IF]]></ST>
 METHOD Run
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _Plant.bInit THEN
+        <ST><![CDATA[IF _Plant.bInit OR _Plant.bOnlineChange THEN
 	IF _Plant.bPanic THEN
 		RETURN;
 	END_IF
+	
+	// Validation goes here.
 	
 	_ThreadDispatcher();
 	_CallPreInits();
@@ -256,6 +478,7 @@ METHOD Run
 	END_IF
 	
 	_Plant.bInit := FALSE;
+	_Plant.bOnlineChange := FALSE;
 	RETURN;
 END_IF
 

@@ -2,9 +2,11 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Execute" Id="{fd30bbbf-c4e7-4255-aff2-259a2cee51d5}" SpecialFunc="None">
     <Declaration><![CDATA[// Registers an I_Execute owner for cyclic execution.
-FUNCTION_BLOCK FINAL Execute IMPLEMENTS _I_Execute, I_Debug
+FUNCTION_BLOCK FINAL Execute IMPLEMENTS _I_Execute, I_Debug, I_ValidateInterface
 VAR
 	_iThread: I_Thread := _Plant.MainThread;
+	{attribute 'no_copy'}
+	{attribute 'no_init'}
 	_iExecute: I_Execute;
 	_iPrev: _I_Execute;
 	_iNext: _I_Execute;
@@ -82,6 +84,21 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Method Name="FB_Exit" Id="{fbaf27a8-1c97-413f-b76d-2e38666e1e5d}">
+      <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
+//method is called before the controller removes the code of the function block instance
+//(implicit call). The return value is not evaluated.
+{attribute 'hide'}
+METHOD FB_Exit: BOOL
+VAR_INPUT
+    bInCopyCode: BOOL;  // TRUE: the exit method is called in order to leave the instance which will be copied afterwards (online change).  
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	_iThread.DetachExecute(THIS^);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_init" Id="{0c4d921f-e0eb-4cc3-851c-9a1e40abf9a1}">
       <Declaration><![CDATA[// Registers iExecute during initialization; panics if iExecute is 0.
 {attribute 'hide'}
@@ -94,12 +111,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Plant.IsInit THEN
+        <ST><![CDATA[IF (_iExecute := iExecute) = 0 THEN
+	Plant.Panic(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
 	RETURN;
 END_IF
 
-IF (_iExecute := iExecute) = 0 THEN
-	Plant.Panic(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+IF bInCopyCode THEN
 	RETURN;
 END_IF
 
@@ -132,5 +149,13 @@ _iThread := Thread;
         </Implementation>
       </Set>
     </Property>
+    <Method Name="ValidateInterface" Id="{b5b5eaed-d558-4ece-b8e0-6e522161a80d}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD ValidateInterface
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

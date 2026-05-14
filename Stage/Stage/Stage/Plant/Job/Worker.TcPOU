@@ -2,9 +2,11 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Worker" Id="{b97897ce-fa84-437c-88bb-b049358c2ee9}" SpecialFunc="None">
     <Declaration><![CDATA[// Registers an I_Job owner as a startable worker.
-FUNCTION_BLOCK FINAL Worker IMPLEMENTS I_Worker
+FUNCTION_BLOCK FINAL Worker IMPLEMENTS I_Worker, I_ValidateInterface
 VAR
 	_iThread: I_Thread := _Plant.MainThread;
+	{attribute 'no_copy'}
+	{attribute 'no_init'}
 	_iJob: I_Job;
 	_iNext: I_Worker;
 	_iPrev: I_Worker;
@@ -51,6 +53,21 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Method Name="FB_Exit" Id="{1865975b-9d3d-4344-a6d6-f172841684e0}">
+      <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
+//method is called before the controller removes the code of the function block instance
+//(implicit call). The return value is not evaluated.
+{attribute 'hide'}
+METHOD FB_Exit: BOOL
+VAR_INPUT
+    bInCopyCode: BOOL;  // TRUE: the exit method is called in order to leave the instance which will be copied afterwards (online change).  
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	_iThread.DetachWorker(THIS^);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_init" Id="{a6ebb3d3-f387-4e6a-8184-5548edc195e7}">
       <Declaration><![CDATA[// Registers iJob; panics if iJob is 0.
 {attribute 'hide'}
@@ -177,5 +194,14 @@ END_IF
         </Implementation>
       </Set>
     </Property>
+    <Method Name="ValidateInterface" Id="{68669c64-b11b-47a6-b108-6bc2eb04aa4a}">
+      <Declaration><![CDATA[METHOD ValidateInterface
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>
