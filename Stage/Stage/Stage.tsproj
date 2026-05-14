@@ -18,6 +18,9 @@
 				<Task Id="7" Priority="23" CycleTime="100000" AmsPort="354" AdtTasks="true">
 					<Name>PlcTask1</Name>
 				</Task>
+				<Task Id="8" Priority="24" CycleTime="100000" AmsPort="355" AdtTasks="true">
+					<Name>PlcTask2</Name>
+				</Task>
 			</Tasks>
 		</System>
 		<Plc>
@@ -25,6 +28,18 @@
 				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{03A1A54E-A0B5-001A-215A-77B3F706DF56}" TmcPath="Stage\Stage.tmc">
 					<Name>Stage Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+				</Instance>
+			</Project>
+			<Project GUID="{CC7E72C0-0C38-4EEA-A974-F286AD8A786D}" Name="Test_OnlineChange" PrjFilePath="Test_OnlineChange\Test_OnlineChange.plcproj" TmcFilePath="Test_OnlineChange\Test_OnlineChange.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>Test_OnlineChange Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
 				</Instance>
 			</Project>
 		</Plc>
