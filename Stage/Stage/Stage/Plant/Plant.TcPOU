@@ -41,6 +41,40 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="_AttachThread" Id="{2863e58b-2511-40c3-abd5-5602f696b6fb}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _AttachThread : Result
+VAR_INPUT
+	iThread: I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iThread = 0 THEN
+	Plant.Panic(0, 'Thread attach failed: thread is 0.');
+	_AttachThread := Error;
+	RETURN;
+END_IF
+
+IF iThread._Prev <> 0 OR iThread._Next <> 0 OR
+	_Plant.iFirstThread = iThread OR _Plant.iLastThread = iThread THEN
+	Plant.Panic(iThread, 'Thread attach failed: thread is already linked in the Plant thread registry.');
+	_AttachThread := Error;
+	RETURN;
+END_IF
+
+iThread._Prev := _Plant.iLastThread;
+iThread._Next := 0;
+
+IF _Plant.iLastThread <> 0 THEN
+	_Plant.iLastThread._Next := iThread;
+	_Plant.iLastThread := iThread;
+ELSE
+	_Plant.iFirstThread := iThread;
+	_Plant.iLastThread := iThread;
+END_IF
+
+_AttachThread := Ok;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="_CallInits" Id="{65bd8ddc-8338-4e56-a75c-dc7d09b072d3}" FolderPath="_\">
       <Declaration><![CDATA[METHOD PRIVATE _CallInits
 VAR
@@ -150,6 +184,56 @@ iEntity._Next := 0;
 _DetachEntity := Ok;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="_DetachThread" Id="{5ef659e7-b053-45f6-a083-e23b3805e846}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD INTERNAL _DetachThread : Result
+VAR_INPUT
+	iThread: I_Thread;
+END_VAR
+VAR
+	iPrev: I_Thread;
+	iNext: I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iThread = 0 THEN
+	_DetachThread := Error;
+	RETURN;
+END_IF
+
+iPrev := iThread._Prev;
+iNext := iThread._Next;
+
+IF iPrev = 0 
+	AND iNext = 0
+	AND _Plant.iFirstThread <> iThread
+	AND _Plant.iLastThread <> iThread
+THEN
+	_DetachThread := None;
+	RETURN;
+END_IF
+
+IF iPrev <> 0 THEN
+	iPrev._Next := iNext;
+END_IF
+
+IF iNext <> 0 THEN
+	iNext._Prev := iPrev;
+END_IF
+
+IF _Plant.iFirstThread = iThread THEN
+	_Plant.iFirstThread := iNext;
+END_IF
+
+IF _Plant.iLastThread = iThread THEN
+	_Plant.iLastThread := iPrev;
+END_IF
+
+iThread._Prev := 0;
+iThread._Next := 0;
+
+_DetachThread := Ok;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="_ThreadDispatcher" Id="{3c6830ed-2cd7-4aa9-adad-7835ee965e5a}" FolderPath="_\">
       <Declaration><![CDATA[METHOD INTERNAL _ThreadDispatcher
 VAR
@@ -188,10 +272,10 @@ VAR
 	iNextEntity: I_Entity;
 	iEntityRaw: I_Generic;
 	iMainThread: I_Thread := _Plant.MainThread;
-	iExecute: _I_Execute;
-	iPrevExecute: _I_Execute;
-	iNextExecute: _I_Execute;
-	iExecuteThread: I_Thread;
+	iThread: I_Thread;
+	iPrevThread: I_Thread;
+	iNextThread: I_Thread;
+	bMainThreadFound: BOOL;
 	nGuard: UDINT;
 	_err: __SYSTEM.ExceptionCode;
 END_VAR
@@ -292,55 +376,101 @@ __TRY
 		RETURN;
 	END_IF
 	
-	iExecute := _Plant.MainThread._First;
-	iPrevExecute := 0;
+	IF _Plant.iFirstThread = 0 THEN
+		IF _Plant.iLastThread <> 0 THEN
+			Plant.Panic(0, 'Plant validation failed: first thread is 0 but last thread is not 0.');
+			RETURN;
+		END_IF
+	ELSE
+		IF ValidateInterface(_Plant.iFirstThread) <> Ok THEN
+			Plant.Panic(0, 'Plant validation failed: first thread did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF _Plant.iLastThread = 0 THEN
+			Plant.Panic(0, 'Plant validation failed: first thread is not 0 but last thread is 0.');
+			RETURN;
+		END_IF
+		
+		IF ValidateInterface(_Plant.iLastThread) <> Ok THEN
+			Plant.Panic(0, 'Plant validation failed: last thread did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF _Plant.iFirstThread._Prev <> 0 THEN
+			Plant.Panic(_Plant.iFirstThread, 'Plant validation failed: first thread has a nonzero _Prev link.');
+			RETURN;
+		END_IF
+		
+		IF _Plant.iLastThread._Next <> 0 THEN
+			Plant.Panic(_Plant.iLastThread, 'Plant validation failed: last thread has a nonzero _Next link.');
+			RETURN;
+		END_IF
+	END_IF
+	
+	iThread := _Plant.iFirstThread;
+	iPrevThread := 0;
+	bMainThreadFound := FALSE;
 	nGuard := 0;
 	
-	WHILE iExecute <> 0 DO
+	WHILE iThread <> 0 DO
 		nGuard := nGuard + 1;
 		IF nGuard > GUARD THEN
-			Plant.Panic(0, 'Plant validation failed: execute traversal exceeded GUARD; probable cycle.');
+			Plant.Panic(0, 'Plant validation failed: thread traversal exceeded GUARD; probable cycle.');
 			RETURN;
 		END_IF
 		
-		IF ValidateInterface(iExecute) <> Ok THEN
-			Plant.Panic(0, 'Plant validation failed: current execute did not pass ValidateInterface before link access.');
+		IF ValidateInterface(iThread) <> Ok THEN
+			Plant.Panic(0, 'Plant validation failed: current thread did not pass ValidateInterface before link access.');
 			RETURN;
 		END_IF
 		
-		IF iExecute._Prev <> iPrevExecute THEN
-			Plant.Panic(iExecute, 'Plant validation failed: current execute _Prev does not match previous visited execute.');
+		IF iThread._Prev <> iPrevThread THEN
+			Plant.Panic(iThread, 'Plant validation failed: current thread _Prev does not match previous visited thread.');
 			RETURN;
 		END_IF
 		
-		iExecuteThread := iExecute._Thread;
-		IF ValidateInterface(iExecuteThread) <> Ok THEN
-			Plant.Panic(iExecute, 'Plant validation failed: current execute _Thread is 0 or failed ValidateInterface.');
+		IF iThread = iMainThread THEN
+			bMainThreadFound := TRUE;
+		END_IF
+		
+		IF iThread.ValidateThread() <> Ok THEN
+			Plant.Panic(iThread, 'Plant validation failed: current thread did not pass ValidateThread.');
 			RETURN;
 		END_IF
 		
-		iNextExecute := iExecute._Next;
+		iNextThread := iThread._Next;
 		
-		IF iNextExecute <> 0 THEN
-			IF IsErr(ValidateInterface(iNextExecute)) THEN
-				Plant.Panic(iExecute, 'Plant validation failed: current execute _Next did not pass ValidateInterface.');
+		IF iNextThread <> 0 THEN
+			IF ValidateInterface(iNextThread) <> Ok THEN
+				Plant.Panic(iThread, 'Plant validation failed: current thread _Next did not pass ValidateInterface.');
 				RETURN;
 			END_IF
 			
-			IF iNextExecute = iExecute THEN
-				Plant.Panic(iExecute, 'Plant validation failed: current execute _Next points to itself.');
+			IF iNextThread = iThread THEN
+				Plant.Panic(iThread, 'Plant validation failed: current thread _Next points to itself.');
 				RETURN;
 			END_IF
 			
-			IF iNextExecute._Prev <> iExecute THEN
-				Plant.Panic(iExecute, 'Plant validation failed: next execute _Prev does not point back to current execute.');
+			IF iNextThread._Prev <> iThread THEN
+				Plant.Panic(iThread, 'Plant validation failed: next thread _Prev does not point back to current thread.');
 				RETURN;
 			END_IF
 		END_IF
 		
-		iPrevExecute := iExecute;
-		iExecute := iNextExecute;
+		iPrevThread := iThread;
+		iThread := iNextThread;
 	END_WHILE
+	
+	IF iPrevThread <> _Plant.iLastThread THEN
+		Plant.Panic(0, 'Plant validation failed: last visited thread does not match _Plant.iLastThread.');
+		RETURN;
+	END_IF
+	
+	IF NOT bMainThreadFound THEN
+		Plant.Panic(0, 'Plant validation failed: _Plant.MainThread is not linked in the Plant thread registry.');
+		RETURN;
+	END_IF
 	
 	_ValidatePlant := Ok;
 	

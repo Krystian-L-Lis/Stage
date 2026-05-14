@@ -3,6 +3,24 @@
   <Itf Name="_I_Thread" Id="{a9568707-b22e-4555-9884-6d4e1026cc8c}">
     <Declaration><![CDATA[INTERFACE INTERNAL _I_Thread EXTENDS I_Debug, I_ValidateInterface
 ]]></Declaration>
+    <Property Name="_Next" Id="{d4acbf50-5c3f-4e98-9715-99202ec4b1b2}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{c6f59d7d-ac2b-4854-9c39-d85c5f0a0f83}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{6d542b42-1ec7-4a66-94f4-6634118f090b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{8530daf6-755d-437e-9206-7d1c4137e2b7}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{b7ebc08f-9efa-442d-b86e-d0a03bf9b318}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{8a13cc84-0b37-4096-a3d2-a4637e48d8f3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
     <Method Name="AttachExecute" Id="{0535368c-1e65-495c-bfb4-5ad515b03a41}">
       <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result
 VAR_INPUT
@@ -29,6 +47,10 @@ END_VAR
 VAR_INPUT
 	iWorker: I_Worker;
 END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="ValidateThread" Id="{2ad037ff-b095-4fa7-b4f0-7978bbbc608d}">
+      <Declaration><![CDATA[METHOD INTERNAL ValidateThread : Result
 ]]></Declaration>
     </Method>
   </Itf>

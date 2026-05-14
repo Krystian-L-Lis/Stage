@@ -17,6 +17,9 @@ VAR_GLOBAL INTERNAL
 	bOnlineChangeEntityCreated: BOOL := FALSE;
 	bOnlineChangeEntityDeleted: BOOL := FALSE;
 
+	iFirstThread: I_Thread;
+	iLastThread: I_Thread;
+	
 	MainThread: Thread;
 	
 	iFirstEntity: I_Entity;

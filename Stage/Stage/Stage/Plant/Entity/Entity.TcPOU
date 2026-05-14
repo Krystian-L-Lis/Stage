@@ -130,9 +130,7 @@ IF (_eResult := Plant._AttachEntity(THIS^)) = Ok THEN
 	_Plant.bOnlineChangeEntityCreated := TRUE;
 ELSE
 	Plant.Panic(THIS^, __POUNAME());
-END_IF
-
-]]></ST>
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Raw" Id="{80501f44-2696-4f4b-ba62-8e5556db4eab}">

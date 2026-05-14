@@ -9,6 +9,9 @@ VAR
 	
 	iFirstWorker: I_Worker;
 	iLastWorker: I_Worker;
+	
+	iPrevThread: I_Thread;
+	iNextThread: I_Thread;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -24,6 +27,44 @@ END_VAR
           <ST><![CDATA[_First := iFirstExecute;]]></ST>
         </Implementation>
       </Get>
+    </Property>
+    <Property Name="_Next" Id="{f7a79220-0600-4d7d-9569-b60306c08184}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{5d15dfc1-f2fe-46e9-a9a6-648aa0ebd419}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Next := iNextThread;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{01bf9bf3-7d2b-44de-bd62-73170ec092f1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[iNextThread := _Next;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{9f34c22e-ddc3-49b3-9f00-0c3c3179331e}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{3740d4ec-b7dc-4312-8675-bf53f4c9ca75}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Prev := iPrevThread;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1f36793c-248f-45df-b3e3-4058cbd74f40}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[iPrevThread := _Prev;]]></ST>
+        </Implementation>
+      </Set>
     </Property>
     <Method Name="AttachExecute" Id="{09cc9772-526f-41a4-9b80-35664d45d756}">
       <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result
@@ -205,6 +246,37 @@ iWorker._Next := 0;
 DetachWorker := Ok;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="FB_Exit" Id="{4d742ca3-01ee-406f-a81f-33459eaeb372}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD FB_Exit : BOOL
+VAR_INPUT
+	bInCopyCode: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	Plant._DetachThread(THIS^);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{55119d5d-9bd5-4d72-a24a-603c9384b8f6}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD FB_Init : BOOL
+VAR_INPUT
+	bInitRetains: BOOL;
+	bInCopyCode: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInCopyCode THEN
+	RETURN;
+END_IF
+
+IF Plant._AttachThread(THIS^) <> Ok THEN
+	Plant.Panic(THIS^, 'Thread initialization failed: could not attach thread to Plant registry.');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Run" Id="{312d03b0-5785-4da7-8eb1-55c23394ad73}">
       <Declaration><![CDATA[// Processes active workers, then cyclic executors; returns during init or panic.
 METHOD Run
@@ -225,6 +297,221 @@ END_WHILE
 WHILE iExecute <> 0 DO
 	iExecute._Exe(iNext => iExecute);
 END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ValidateThread" Id="{a44e3ef3-37a9-495a-b289-edc5f0c924d0}">
+      <Declaration><![CDATA[METHOD INTERNAL ValidateThread : Result
+VAR CONSTANT
+	GUARD: UDINT := Param.VALIDATION_GUARD;
+END_VAR
+VAR
+	iThis: I_Thread := THIS^;
+	iExecute: _I_Execute;
+	iPrevExecute: _I_Execute;
+	iNextExecute: _I_Execute;
+	iExecuteThread: I_Thread;
+	iWorker: I_Worker;
+	iPrevWorker: I_Worker;
+	iNextWorker: I_Worker;
+	iWorkerThread: I_Thread;
+	nGuard: UDINT;
+	_err: __SYSTEM.ExceptionCode;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ValidateThread := Error;
+
+__TRY
+	IF iFirstExecute = 0 THEN
+		IF iLastExecute <> 0 THEN
+			Plant.Panic(THIS^, 'Thread validation failed: first execute is 0 but last execute is not 0.');
+			RETURN;
+		END_IF
+	ELSE
+		IF ValidateInterface(iFirstExecute) <> Ok THEN
+			Plant.Panic(THIS^, 'Thread validation failed: first execute did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF iLastExecute = 0 THEN
+			Plant.Panic(THIS^, 'Thread validation failed: first execute is not 0 but last execute is 0.');
+			RETURN;
+		END_IF
+		
+		IF ValidateInterface(iLastExecute) <> Ok THEN
+			Plant.Panic(THIS^, 'Thread validation failed: last execute did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF iFirstExecute._Prev <> 0 THEN
+			Plant.Panic(iFirstExecute, 'Thread validation failed: first execute has a nonzero _Prev link.');
+			RETURN;
+		END_IF
+		
+		IF iLastExecute._Next <> 0 THEN
+			Plant.Panic(iLastExecute, 'Thread validation failed: last execute has a nonzero _Next link.');
+			RETURN;
+		END_IF
+	END_IF
+	
+	iExecute := iFirstExecute;
+	iPrevExecute := 0;
+	nGuard := 0;
+	
+	WHILE iExecute <> 0 DO
+		nGuard := nGuard + 1;
+		IF nGuard > GUARD THEN
+			Plant.Panic(THIS^, 'Thread validation failed: execute traversal exceeded GUARD; probable cycle.');
+			RETURN;
+		END_IF
+		
+		IF ValidateInterface(iExecute) <> Ok THEN
+			Plant.Panic(THIS^, 'Thread validation failed: current execute did not pass ValidateInterface before link access.');
+			RETURN;
+		END_IF
+		
+		IF iExecute._Prev <> iPrevExecute THEN
+			Plant.Panic(iExecute, 'Thread validation failed: current execute _Prev does not match previous visited execute.');
+			RETURN;
+		END_IF
+		
+		iExecuteThread := iExecute._Thread;
+		IF ValidateInterface(iExecuteThread) <> Ok THEN
+			Plant.Panic(iExecute, 'Thread validation failed: current execute _Thread is 0 or failed ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF iExecuteThread <> iThis THEN
+			Plant.Panic(iExecute, 'Thread validation failed: current execute _Thread does not point to the owning thread.');
+			RETURN;
+		END_IF
+		
+		iNextExecute := iExecute._Next;
+		
+		IF iNextExecute <> 0 THEN
+			IF ValidateInterface(iNextExecute) <> Ok THEN
+				Plant.Panic(iExecute, 'Thread validation failed: current execute _Next did not pass ValidateInterface.');
+				RETURN;
+			END_IF
+			
+			IF iNextExecute = iExecute THEN
+				Plant.Panic(iExecute, 'Thread validation failed: current execute _Next points to itself.');
+				RETURN;
+			END_IF
+			
+			IF iNextExecute._Prev <> iExecute THEN
+				Plant.Panic(iExecute, 'Thread validation failed: next execute _Prev does not point back to current execute.');
+				RETURN;
+			END_IF
+		END_IF
+		
+		iPrevExecute := iExecute;
+		iExecute := iNextExecute;
+	END_WHILE
+	
+	IF iPrevExecute <> iLastExecute THEN
+		Plant.Panic(THIS^, 'Thread validation failed: last visited execute does not match thread last execute.');
+		RETURN;
+	END_IF
+	
+	IF iFirstWorker = 0 THEN
+		IF iLastWorker <> 0 THEN
+			Plant.Panic(THIS^, 'Thread validation failed: first worker is 0 but last worker is not 0.');
+			RETURN;
+		END_IF
+	ELSE
+		IF ValidateInterface(iFirstWorker) <> Ok THEN
+			Plant.Panic(THIS^, 'Thread validation failed: first worker did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF iLastWorker = 0 THEN
+			Plant.Panic(THIS^, 'Thread validation failed: first worker is not 0 but last worker is 0.');
+			RETURN;
+		END_IF
+		
+		IF ValidateInterface(iLastWorker) <> Ok THEN
+			Plant.Panic(THIS^, 'Thread validation failed: last worker did not pass ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF iFirstWorker._Prev <> 0 THEN
+			Plant.Panic(iFirstWorker, 'Thread validation failed: first worker has a nonzero _Prev link.');
+			RETURN;
+		END_IF
+		
+		IF iLastWorker._Next <> 0 THEN
+			Plant.Panic(iLastWorker, 'Thread validation failed: last worker has a nonzero _Next link.');
+			RETURN;
+		END_IF
+	END_IF
+	
+	iWorker := iFirstWorker;
+	iPrevWorker := 0;
+	nGuard := 0;
+	
+	WHILE iWorker <> 0 DO
+		nGuard := nGuard + 1;
+		IF nGuard > GUARD THEN
+			Plant.Panic(THIS^, 'Thread validation failed: worker traversal exceeded GUARD; probable cycle.');
+			RETURN;
+		END_IF
+		
+		IF ValidateInterface(iWorker) <> Ok THEN
+			Plant.Panic(THIS^, 'Thread validation failed: current worker did not pass ValidateInterface before link access.');
+			RETURN;
+		END_IF
+		
+		IF iWorker._Prev <> iPrevWorker THEN
+			Plant.Panic(iWorker, 'Thread validation failed: current worker _Prev does not match previous visited worker.');
+			RETURN;
+		END_IF
+		
+		iWorkerThread := iWorker.Thread;
+		IF ValidateInterface(iWorkerThread) <> Ok THEN
+			Plant.Panic(iWorker, 'Thread validation failed: current worker Thread is 0 or failed ValidateInterface.');
+			RETURN;
+		END_IF
+		
+		IF iWorkerThread <> iThis THEN
+			Plant.Panic(iWorker, 'Thread validation failed: current worker Thread does not point to the owning thread.');
+			RETURN;
+		END_IF
+		
+		iNextWorker := iWorker._Next;
+		
+		IF iNextWorker <> 0 THEN
+			IF ValidateInterface(iNextWorker) <> Ok THEN
+				Plant.Panic(iWorker, 'Thread validation failed: current worker _Next did not pass ValidateInterface.');
+				RETURN;
+			END_IF
+			
+			IF iNextWorker = iWorker THEN
+				Plant.Panic(iWorker, 'Thread validation failed: current worker _Next points to itself.');
+				RETURN;
+			END_IF
+			
+			IF iNextWorker._Prev <> iWorker THEN
+				Plant.Panic(iWorker, 'Thread validation failed: next worker _Prev does not point back to current worker.');
+				RETURN;
+			END_IF
+		END_IF
+		
+		iPrevWorker := iWorker;
+		iWorker := iNextWorker;
+	END_WHILE
+	
+	IF iPrevWorker <> iLastWorker THEN
+		Plant.Panic(THIS^, 'Thread validation failed: last visited worker does not match thread last worker.');
+		RETURN;
+	END_IF
+	
+	ValidateThread := Ok;
+	
+__CATCH(_err)
+	Plant.Panic(THIS^, 'Thread validation failed: exception while reading validation interfaces or links.');
+	ValidateThread := Error;
+__ENDTRY]]></ST>
       </Implementation>
     </Method>
     <Method Name="ValidateInterface" Id="{c25915fa-ff5e-40d2-928c-da91ae08f4b2}">
