@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_TestJob" Id="{5741c13e-56ab-4906-9d92-8e122760e7de}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TestJob IMPLEMENTS Stage.I_Job
+VAR
+	_worker: Stage.Worker(THIS^);
+END_VAR
+VAR
+	nId: UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{1b7a98f8-403a-4506-a7af-ba0134dc4ae8}">
+      <Declaration><![CDATA[METHOD FB_Init : BOOL
+VAR_INPUT
+	bInitRetains: BOOL;
+	bInCopyCode: BOOL;
+	nNewId: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nId := nNewId;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="JobExecute" Id="{63e12130-67ca-4020-b8d2-093add536bbb}">
+      <Declaration><![CDATA[METHOD JobExecute
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nId OF
+	1:
+		GVL_OnlineChangeTest.Worker.nActiveExecute := GVL_OnlineChangeTest.Worker.nActiveExecute + 1;
+
+	2:
+		GVL_OnlineChangeTest.Worker.nIdleExecute := GVL_OnlineChangeTest.Worker.nIdleExecute + 1;
+
+	20:
+		GVL_OnlineChangeTest.Worker.nMovedExecute := GVL_OnlineChangeTest.Worker.nMovedExecute + 1;
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="JobExit" Id="{30c44cda-aee5-4907-8dab-74a490a922e5}">
+      <Declaration><![CDATA[METHOD JobExit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nId OF
+	1:
+		GVL_OnlineChangeTest.Worker.nActiveExit := GVL_OnlineChangeTest.Worker.nActiveExit + 1;
+
+	2:
+		GVL_OnlineChangeTest.Worker.nIdleExit := GVL_OnlineChangeTest.Worker.nIdleExit + 1;
+
+	20:
+		GVL_OnlineChangeTest.Worker.nMovedExit := GVL_OnlineChangeTest.Worker.nMovedExit + 1;
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="JobInit" Id="{f7d55002-6c14-402b-9f87-226aad767a63}">
+      <Declaration><![CDATA[METHOD JobInit
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nId OF
+	1:
+		GVL_OnlineChangeTest.Worker.nActiveInit := GVL_OnlineChangeTest.Worker.nActiveInit + 1;
+
+	2:
+		GVL_OnlineChangeTest.Worker.nIdleInit := GVL_OnlineChangeTest.Worker.nIdleInit + 1;
+
+	20:
+		GVL_OnlineChangeTest.Worker.nMovedInit := GVL_OnlineChangeTest.Worker.nMovedInit + 1;
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetThread" Id="{dc3fc278-97be-4832-b2c3-88527b7fc607}">
+      <Declaration><![CDATA[METHOD SetThread
+VAR_INPUT
+	iThread: Stage.I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_worker.Thread := iThread;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetId" Id="{7fb618c0-3a03-4f2d-892c-b327d4d42d69}">
+      <Declaration><![CDATA[METHOD SetId
+VAR_INPUT
+	nNewId: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nId := nNewId;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{3a090495-0b10-4c7b-ae43-ec98144e7fa0}">
+      <Declaration><![CDATA[METHOD Start : Stage.Result
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start := _worker.Start();
+
+CASE nId OF
+	1:
+		IF Start > 0 THEN
+			GVL_OnlineChangeTest.Worker.nActiveStartOk := GVL_OnlineChangeTest.Worker.nActiveStartOk + 1;
+		ELSIF Start = 0 THEN
+			GVL_OnlineChangeTest.Worker.nActiveStartNone := GVL_OnlineChangeTest.Worker.nActiveStartNone + 1;
+		ELSE
+			GVL_OnlineChangeTest.Worker.nActiveStartError := GVL_OnlineChangeTest.Worker.nActiveStartError + 1;
+		END_IF
+
+	2:
+		IF Start > 0 THEN
+			GVL_OnlineChangeTest.Worker.nIdleStartOk := GVL_OnlineChangeTest.Worker.nIdleStartOk + 1;
+		ELSIF Start = 0 THEN
+			GVL_OnlineChangeTest.Worker.nIdleStartNone := GVL_OnlineChangeTest.Worker.nIdleStartNone + 1;
+		ELSE
+			GVL_OnlineChangeTest.Worker.nIdleStartError := GVL_OnlineChangeTest.Worker.nIdleStartError + 1;
+		END_IF
+
+	20:
+		IF Start > 0 THEN
+			GVL_OnlineChangeTest.Worker.nMovedStartOk := GVL_OnlineChangeTest.Worker.nMovedStartOk + 1;
+		ELSIF Start = 0 THEN
+			GVL_OnlineChangeTest.Worker.nMovedStartNone := GVL_OnlineChangeTest.Worker.nMovedStartNone + 1;
+		ELSE
+			GVL_OnlineChangeTest.Worker.nMovedStartError := GVL_OnlineChangeTest.Worker.nMovedStartError + 1;
+		END_IF
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="State" Id="{2dd9b19b-6ea4-4123-95ad-35bcf6352d0e}">
+      <Declaration><![CDATA[PROPERTY State : Stage.JobState]]></Declaration>
+      <Get Name="Get" Id="{4dc9bfa3-d759-4502-9520-1d59a8a74b08}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[State := _worker.State;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Stop" Id="{2610ac47-6a71-46f8-abcd-8ce3d34964ef}">
+      <Declaration><![CDATA[METHOD Stop
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_worker.Stop();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

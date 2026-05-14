@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_FastThreadConfig" Id="{42ff1aeb-9055-432c-af33-219bca3358fa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_FastThreadConfig
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Exit" Id="{3d238f9a-d8d9-4ce6-99a8-237d21dab466}">
+      <Declaration><![CDATA[METHOD FB_Exit : BOOL
+VAR_INPUT
+	bInCopyCode: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	GVL_OnlineChangeTest.StageState.iConfiguredFastThread := 0;
+	GVL_OnlineChangeTest.StageState.bFastThreadConfigured := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{c532530f-adac-48a9-ae5e-5573e50b648f}">
+      <Declaration><![CDATA[METHOD FB_Init : BOOL
+VAR_INPUT
+	bInitRetains: BOOL;
+	bInCopyCode: BOOL;
+	iThread: Stage.I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GVL_OnlineChangeTest.StageState.iConfiguredFastThread := iThread;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

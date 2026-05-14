@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="T_OnlineChangeTestCheck" Id="{96766ca4-c653-4aa5-b815-a491d940a39e}">
+    <Declaration><![CDATA[TYPE T_OnlineChangeTestCheck :
+STRUCT
+	bRequired: BOOL;
+	bPassed: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

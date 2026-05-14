@@ -6,6 +6,7 @@
 VAR_GLOBAL CONSTANT
 	MAX_PANIC_MSG: UDINT(1..16#7FFFFFFF) := 10; // Panic buffer entries; do not set to 0.
 	MAX_WARN_MSG: UDINT(1..16#7FFFFFFF) := 10; // Warning buffer entries; do not set to 0.
+	VALIDATION_GUARD: UDINT(1..16#7FFFFFFF) := 100_000;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

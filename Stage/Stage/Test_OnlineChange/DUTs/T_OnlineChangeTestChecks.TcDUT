@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="T_OnlineChangeTestChecks" Id="{f2bb1d54-1e54-475c-b8bd-f68f1329f073}">
+    <Declaration><![CDATA[TYPE T_OnlineChangeTestChecks :
+STRUCT
+	NoPanic: T_OnlineChangeTestCheck;
+	StageSelected: T_OnlineChangeTestCheck;
+	StableCallback: T_OnlineChangeTestCheck;
+	NoChangeFlags: T_OnlineChangeTestCheck;
+	AddDeleteFlags: T_OnlineChangeTestCheck;
+	CreatedInit: T_OnlineChangeTestCheck;
+	CreatedCallback: T_OnlineChangeTestCheck;
+	RepairWarn: T_OnlineChangeTestCheck;
+	ActiveJobRunning: T_OnlineChangeTestCheck;
+	IdleJobStarted: T_OnlineChangeTestCheck;
+	MovedCallback: T_OnlineChangeTestCheck;
+	MovedExecuteRunning: T_OnlineChangeTestCheck;
+	MovedJobRunning: T_OnlineChangeTestCheck;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

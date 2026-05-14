@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="GVL_OnlineChangeTest" Id="{cca188bd-0f7b-4919-b1a1-01d51bf45ddc}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	StageState: T_OnlineChangeTestStage;
+	Runtime: T_OnlineChangeTestRuntime;
+	Entity: T_OnlineChangeTestEntity;
+	Execute: T_OnlineChangeTestExecute;
+	Worker: T_OnlineChangeTestWorker;
+	Checks: T_OnlineChangeTestChecks;
+	Report: T_OnlineChangeTestReport;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="T_OnlineChangeTestStage" Id="{482f4d8e-7f78-43eb-b0fc-27511399e8ef}">
+    <Declaration><![CDATA[TYPE T_OnlineChangeTestStage :
+STRUCT
+	sName: STRING(80);
+	nId: UINT;
+	iConfiguredFastThread: Stage.I_Thread;
+	bFastThreadConfigured: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -2,12 +2,16 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="Worker" Id="{b97897ce-fa84-437c-88bb-b049358c2ee9}" SpecialFunc="None">
     <Declaration><![CDATA[// Registers an I_Job owner as a startable worker.
-FUNCTION_BLOCK FINAL Worker IMPLEMENTS I_Worker
+FUNCTION_BLOCK FINAL Worker IMPLEMENTS I_Worker, I_ValidateInterface
 VAR
 	_iThread: I_Thread := _Plant.MainThread;
+	{attribute 'no_copy'}
+	{attribute 'no_init'}
 	_iJob: I_Job;
 	_iNext: I_Worker;
 	_iPrev: I_Worker;
+	_iPlantNext: I_Worker;
+	_iPlantPrev: I_Worker;
 	_eState: JobState;
 END_VAR]]></Declaration>
     <Implementation>
@@ -32,6 +36,44 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Property Name="_PlantNext" Id="{e48bc48f-6bb1-43ec-813c-4b25bd9fbf01}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _PlantNext : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{1fb6d9ea-4e4c-4480-80e7-553cc780be29}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_PlantNext := _iPlantNext;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{913617a9-abcb-4f3a-8239-dda7dcdbfc84}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPlantNext := _PlantNext;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="_PlantPrev" Id="{7fa619b6-d6e1-45e8-ac75-3e0164c5ef87}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _PlantPrev : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{7d6d4999-83e0-447e-baa4-c655e047c65e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_PlantPrev := _iPlantPrev;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{157a797e-68ec-4b63-bffc-e28325c495ac}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPlantPrev := _PlantPrev;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="_Prev" Id="{432454c4-1e01-4849-adc3-cbc72bbfb948}">
       <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Worker]]></Declaration>
       <Get Name="Get" Id="{11785567-df51-4c66-994d-4b610e2b8ab0}">
@@ -51,6 +93,44 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Property Name="_Thread" Id="{6bf5cd23-4d87-40e2-90d1-6d24e9c5812f}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Thread : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{7cfd8622-83f9-4eb6-b0d7-5bc97b63b711}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Thread := _iThread;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{412bec2b-4d54-4f2f-8162-43f555777cba}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iThread := _Thread;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_Exit" Id="{1865975b-9d3d-4344-a6d6-f172841684e0}">
+      <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
+//method is called before the controller removes the code of the function block instance
+//(implicit call). The return value is not evaluated.
+{attribute 'hide'}
+METHOD FB_Exit: BOOL
+VAR_INPUT
+    bInCopyCode: BOOL;  // TRUE: the exit method is called in order to leave the instance which will be copied afterwards (online change).
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	IF Plant.ValidateInterface(_iThread) = Ok THEN
+		_iThread.DetachWorker(THIS^);
+	END_IF
+
+	Plant._DetachWorker(THIS^);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_init" Id="{a6ebb3d3-f387-4e6a-8184-5548edc195e7}">
       <Declaration><![CDATA[// Registers iJob; panics if iJob is 0.
 {attribute 'hide'}
@@ -58,20 +138,27 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE on retain initialization.
     bInCopyCode: BOOL;  // TRUE before online-change copy.
-	
+
 	iJob			: I_Job; // Job owner; must not be 0.
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _iJob <> 0 THEN
+        <ST><![CDATA[IF _iJob = 0 THEN
+	IF iJob = 0 THEN
+		Plant.Panic(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
+		RETURN;
+	END_IF
+
+	_iJob := iJob;
+END_IF
+
+IF bInCopyCode THEN
 	RETURN;
 END_IF
 
-IF iJob = 0 THEN
-	Plant.Panic(THIS^, Tc2_Standard.CONCAT(__POUNAME(), ': Itf = 0!'));
-END_IF
-
-_iJob := iJob;]]></ST>
+IF IsErr(Plant._AttachWorker(THIS^)) THEN
+	Plant.Panic(THIS^, 'Worker initialization failed: could not attach worker to Plant registry.');
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Process" Id="{91b62463-a3fa-4250-833c-45861b1535b0}">
@@ -87,18 +174,18 @@ END_VAR
 		_iJob.JobInit();
 		_eState := JobState.Busy;
 		iNext := _iNext;
-	
+
 	JobState.Busy:
 		_iJob.JobExecute();
 		iNext := _iNext;
-		
+
 	JobState.Done:
 		iNext := _iNext;
 		IF IsOk(_iThread.DetachWorker(THIS^)) THEN
 			_iJob.JobExit();
 			_eState := JobState.Idle;
 		END_IF
-	
+
 END_CASE
 ]]></ST>
       </Implementation>
@@ -122,13 +209,13 @@ CASE _eState OF
 	JobState.Idle:
 		_eState := JobState.Init;
 		Start := _iThread.AttachWorker(THIS^);
-	
+
 	JobState.Busy:
 		Start := Error;
-		
+
 	JobState.Done:
 		Start := Error;
-	
+
 END_CASE]]></ST>
       </Implementation>
     </Method>
@@ -171,11 +258,31 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[IF _eState = JobState.Idle THEN
+	IF Plant.IsInit THEN
+		_iThread := Thread;
+		RETURN;
+	END_IF
+
+	IF Plant.ValidateInterface(Thread) <> Ok OR NOT Plant._IsThreadRegistered(Thread) THEN
+		Plant.Warn(THIS^, 'Worker thread assignment repair: configured Thread was 0, invalid, or not registered; assigned MainThread.');
+		_iThread := _Plant.MainThread;
+		RETURN;
+	END_IF
+
 	_iThread := Thread;
 END_IF
 	]]></ST>
         </Implementation>
       </Set>
     </Property>
+    <Method Name="ValidateInterface" Id="{68669c64-b11b-47a6-b108-6bc2eb04aa4a}">
+      <Declaration><![CDATA[METHOD ValidateInterface
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

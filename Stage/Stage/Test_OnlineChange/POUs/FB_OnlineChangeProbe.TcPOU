@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_OnlineChangeProbe" Id="{c050501c-de88-4e7f-a595-e25735a40c0f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OnlineChangeProbe IMPLEMENTS Stage.I_OnlineChange, Stage.I_Init
+VAR
+	_ett: Stage.Entity(THIS^);
+END_VAR
+VAR
+	nId: UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{1a2a0e39-6f44-4228-9b30-babcacf1e115}">
+      <Declaration><![CDATA[METHOD FB_Init : BOOL
+VAR_INPUT
+	bInitRetains: BOOL;
+	bInCopyCode: BOOL;
+	nNewId: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nId := nNewId;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{530ca0df-a169-4ad6-af23-8496b16a7116}">
+      <Declaration><![CDATA[METHOD Init
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nId OF
+	1:
+		GVL_OnlineChangeTest.Entity.nStableInit := GVL_OnlineChangeTest.Entity.nStableInit + 1;
+
+	2:
+		GVL_OnlineChangeTest.Entity.nRemovedInit := GVL_OnlineChangeTest.Entity.nRemovedInit + 1;
+
+	3:
+		GVL_OnlineChangeTest.Entity.nCreatedInit := GVL_OnlineChangeTest.Entity.nCreatedInit + 1;
+
+	20:
+		GVL_OnlineChangeTest.Entity.nMovedInit := GVL_OnlineChangeTest.Entity.nMovedInit + 1;
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnOnlineChange" Id="{1e6de51c-811a-49c5-bb48-cf2d89c48928}">
+      <Declaration><![CDATA[METHOD OnOnlineChange
+VAR_INPUT
+	bEntityDeleted: BOOL;
+	bEntityCreated: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nId OF
+	1:
+		GVL_OnlineChangeTest.Entity.nStableOnlineChange := GVL_OnlineChangeTest.Entity.nStableOnlineChange + 1;
+		GVL_OnlineChangeTest.Entity.bStableLastEntityCreated := bEntityCreated;
+		GVL_OnlineChangeTest.Entity.bStableLastEntityDeleted := bEntityDeleted;
+
+	3:
+		GVL_OnlineChangeTest.Entity.nCreatedOnlineChange := GVL_OnlineChangeTest.Entity.nCreatedOnlineChange + 1;
+		GVL_OnlineChangeTest.Entity.bCreatedLastEntityCreated := bEntityCreated;
+		GVL_OnlineChangeTest.Entity.bCreatedLastEntityDeleted := bEntityDeleted;
+
+	20:
+		GVL_OnlineChangeTest.Entity.nMovedOnlineChange := GVL_OnlineChangeTest.Entity.nMovedOnlineChange + 1;
+		GVL_OnlineChangeTest.Entity.bMovedLastEntityCreated := bEntityCreated;
+		GVL_OnlineChangeTest.Entity.bMovedLastEntityDeleted := bEntityDeleted;
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetId" Id="{4ae0606a-31ce-4211-b5b7-ce237dc9828c}">
+      <Declaration><![CDATA[METHOD SetId
+VAR_INPUT
+	nNewId: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nId := nNewId;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

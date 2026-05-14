@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_OnlineChangeMovePadding" Id="{b9be61c7-0f84-4204-86dd-d6a6604c25b6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OnlineChangeMovePadding
+VAR
+	aPadding: ARRAY[1..512] OF UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

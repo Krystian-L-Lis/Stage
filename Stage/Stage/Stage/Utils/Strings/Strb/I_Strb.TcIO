@@ -155,7 +155,7 @@ END_VAR
       <Declaration><![CDATA[// Outputs current text and returns this builder.
 METHOD Write : I_Strb;
 VAR_OUTPUT
-	sString: Str; // Current text.
+	sOut: Str; // Current text.
 END_VAR
 ]]></Declaration>
     </Method>

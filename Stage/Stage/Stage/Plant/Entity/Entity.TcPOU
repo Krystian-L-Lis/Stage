@@ -4,10 +4,13 @@
     <Declaration><![CDATA[// Registers an I_Generic owner in the global entity list.
 FUNCTION_BLOCK FINAL Entity IMPLEMENTS I_Entity
 VAR
-	_iGeneric: I_Generic;
+	{attribute 'no_copy'}
+	{attribute 'no_init'}
+	_iGeneric: I_Generic;	
 	_iNext: I_Entity;
 	_iPrev: I_Entity;
 	_eResult: Result;
+	_bNewInstance: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -82,8 +85,47 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="_NewInstance" Id="{ef8b5d0d-6058-4d83-b0a0-909741d15d02}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _NewInstance : BOOL]]></Declaration>
+      <Get Name="Get" Id="{107da3fe-a735-4eef-98b5-66eec9926679}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_NewInstance := _bNewInstance;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{2b86de76-0628-4fb4-be09-8c90c7437531}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_bNewInstance := _NewInstance;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_Exit" Id="{42208c5b-7f6e-464d-8c2a-eeb37816f581}">
+      <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
+//method is called before the controller removes the code of the function block instance
+//(implicit call). The return value is not evaluated.
+{attribute 'hide'}
+METHOD FB_Exit: BOOL
+VAR_INPUT
+    bInCopyCode: BOOL;  // TRUE: the exit method is called in order to leave the instance which will be copied afterwards (online change).  
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInCopyCode THEN
+	IF Plant._DetachEntity(THIS^) = Ok THEN
+		_Plant.bOnlineChangeEntityDeleted := TRUE;
+	END_IF
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_Init" Id="{30a5db3d-56de-4ed6-bc93-41367e567754}">
       <Declaration><![CDATA[// Registers iGeneric during initialization; panics if iGeneric is 0.
+{attribute 'hide'}
 METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE on retain initialization.
@@ -98,20 +140,18 @@ END_VAR]]></Declaration>
 
 END_IF
 
-IF IsSome(_eResult) THEN
+_iGeneric := iGeneric;
+
+IF _eResult <> None THEN
 	RETURN;
 END_IF
 
-_iGeneric := iGeneric;
-
-IF IsOk(Plant._AttachEntity(THIS^)) THEN
-	_eResult := Ok;
+IF (_eResult := Plant._AttachEntity(THIS^)) = Ok THEN
+	_bNewInstance := TRUE;
+	_Plant.bOnlineChangeEntityCreated := TRUE;
 ELSE
 	Plant.Panic(THIS^, __POUNAME());
-	_eResult := Error;	
-END_IF
-
-]]></ST>
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Raw" Id="{80501f44-2696-4f4b-ba62-8e5556db4eab}">
@@ -126,21 +166,12 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Replace" Id="{bd4b7f87-d26a-40a3-8f93-3a48e61c5f72}">
-      <Declaration><![CDATA[// Replaces registered interface; returns Ok replaced, Error if no current interface.
-METHOD Replace : Result
-VAR_INPUT
-	iGeneric: I_Generic; // Replacement interface.
-END_VAR
+    <Method Name="ValidateInterface" Id="{e34bd26f-f29f-49cc-8f20-b10bb8bf4181}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD ValidateInterface
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _iGeneric = 0 THEN
-	Replace := Error;
-	RETURN;
-END_IF
-
-_iGeneric := iGeneric;
-Replace := Ok;]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
   </POU>
