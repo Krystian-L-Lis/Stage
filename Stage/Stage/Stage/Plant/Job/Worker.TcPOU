@@ -36,25 +36,6 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Property Name="_Prev" Id="{432454c4-1e01-4849-adc3-cbc72bbfb948}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{11785567-df51-4c66-994d-4b610e2b8ab0}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Prev := _iPrev;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{d392a6f5-2b1c-4af5-af42-5bebb77edeb3}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_iPrev := _Prev;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Property Name="_PlantNext" Id="{e48bc48f-6bb1-43ec-813c-4b25bd9fbf01}">
       <Declaration><![CDATA[PROPERTY INTERNAL _PlantNext : I_Worker]]></Declaration>
       <Get Name="Get" Id="{1fb6d9ea-4e4c-4480-80e7-553cc780be29}">
@@ -93,6 +74,25 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Property Name="_Prev" Id="{432454c4-1e01-4849-adc3-cbc72bbfb948}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{11785567-df51-4c66-994d-4b610e2b8ab0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Prev := _iPrev;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d392a6f5-2b1c-4af5-af42-5bebb77edeb3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_iPrev := _Prev;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="_Thread" Id="{6bf5cd23-4d87-40e2-90d1-6d24e9c5812f}">
       <Declaration><![CDATA[PROPERTY INTERNAL _Thread : I_Thread]]></Declaration>
       <Get Name="Get" Id="{7cfd8622-83f9-4eb6-b0d7-5bc97b63b711}">
@@ -123,7 +123,7 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT bInCopyCode THEN
-	IF ValidateInterface(_iThread) = Ok THEN
+	IF Plant.ValidateInterface(_iThread) = Ok THEN
 		_iThread.DetachWorker(THIS^);
 	END_IF
 
@@ -263,7 +263,7 @@ END_VAR
 		RETURN;
 	END_IF
 
-	IF ValidateInterface(Thread) <> Ok OR NOT Plant._IsThreadRegistered(Thread) THEN
+	IF Plant.ValidateInterface(Thread) <> Ok OR NOT Plant._IsThreadRegistered(Thread) THEN
 		Plant.Warn(THIS^, 'Worker thread assignment repair: configured Thread was 0, invalid, or not registered; assigned MainThread.');
 		_iThread := _Plant.MainThread;
 		RETURN;

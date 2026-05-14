@@ -10,6 +10,7 @@ VAR
 	_iNext: I_Entity;
 	_iPrev: I_Entity;
 	_eResult: Result;
+	_bNewInstance: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -84,6 +85,25 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="_NewInstance" Id="{ef8b5d0d-6058-4d83-b0a0-909741d15d02}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _NewInstance : BOOL]]></Declaration>
+      <Get Name="Get" Id="{107da3fe-a735-4eef-98b5-66eec9926679}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_NewInstance := _bNewInstance;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{2b86de76-0628-4fb4-be09-8c90c7437531}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_bNewInstance := _NewInstance;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Method Name="FB_Exit" Id="{42208c5b-7f6e-464d-8c2a-eeb37816f581}">
       <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
 //method is called before the controller removes the code of the function block instance
@@ -127,6 +147,7 @@ IF _eResult <> None THEN
 END_IF
 
 IF (_eResult := Plant._AttachEntity(THIS^)) = Ok THEN
+	_bNewInstance := TRUE;
 	_Plant.bOnlineChangeEntityCreated := TRUE;
 ELSE
 	Plant.Panic(THIS^, __POUNAME());

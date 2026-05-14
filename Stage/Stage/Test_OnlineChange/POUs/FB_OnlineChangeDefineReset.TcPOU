@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_OnlineChangeDefineReset" Id="{c4145b88-bf98-44d1-a426-f7982e5081c6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OnlineChangeDefineReset
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{e7b34044-f820-4853-a160-402869dafb10}">
+      <Declaration><![CDATA[METHOD FB_Init : BOOL
+VAR_INPUT
+	bInitRetains: BOOL;
+	bInCopyCode: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GVL_OnlineChangeTest.StageState.nId := 0;
+GVL_OnlineChangeTest.StageState.sName := 'TEST_OC_UNDEFINED';
+GVL_OnlineChangeTest.Report.bJsonReady := FALSE;
+GVL_OnlineChangeTest.Report.bJsonCopyOk := FALSE;
+GVL_OnlineChangeTest.Report.nJsonLength := 0;
+GVL_OnlineChangeTest.Report.sJson := '';]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

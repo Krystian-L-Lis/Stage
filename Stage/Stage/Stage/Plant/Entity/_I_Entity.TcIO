@@ -36,5 +36,14 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
+    <Property Name="_NewInstance" Id="{8234272d-6167-4c34-9007-0e46cd80224e}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _NewInstance : BOOL]]></Declaration>
+      <Get Name="Get" Id="{3752a4de-625e-4260-ac74-1674fb725c12}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{97bb8f31-c579-4709-bd6f-7fa6af1be49f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
   </Itf>
 </TcPlcObject>

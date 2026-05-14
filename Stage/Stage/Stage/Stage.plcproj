@@ -128,12 +128,6 @@
     <Compile Include="Plant\Thread\_I_Thread.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Plant\Validate\ValidateInterface.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Plant\Validate\ValidateGeneric.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Plant\Validate\_I_ValidateGeneric.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -238,6 +232,11 @@
     <Folder Include="Utils\Strings\Strf" />
     <Folder Include="Utils\Time" />
     <Folder Include="_" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stage.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

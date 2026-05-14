@@ -15,6 +15,18 @@ PROGRAM Plant]]></Declaration>
     </Folder>
     <Folder Name="Debug" Id="{e6d85270-d75e-413e-ad3b-647f81f1c906}" />
     <Folder Name="Entity" Id="{35e63acc-805b-4873-8c1e-69618d2c4f29}" />
+    <Method Name="_ClearNewInstanceFlags" Id="{49984dc4-4086-4bcf-911b-9201af18ba8e}" FolderPath="_\Entity\">
+      <Declaration><![CDATA[METHOD PRIVATE _ClearNewInstanceFlags
+VAR
+	_iEtt: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
+	_iEtt._NewInstance := FALSE;
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="_AttachEntity" Id="{be744718-8786-4ff8-afd9-d362a16bb8a5}" FolderPath="_\Entity\">
       <Declaration><![CDATA[METHOD INTERNAL _AttachEntity : Result
 VAR_INPUT
@@ -125,8 +137,10 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
-	IF __QUERYINTERFACE(_iEtt._Raw, _iInit) THEN
-		_iInit.Init();
+	IF _iEtt._NewInstance THEN
+		IF __QUERYINTERFACE(_iEtt._Raw, _iInit) THEN
+			_iInit.Init();
+		END_IF
 	END_IF
 END_WHILE]]></ST>
       </Implementation>
@@ -157,8 +171,10 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
-	IF __QUERYINTERFACE(_iEtt._Raw, _iPostInit) THEN
-		_iPostInit.PostInit();
+	IF _iEtt._NewInstance THEN
+		IF __QUERYINTERFACE(_iEtt._Raw, _iPostInit) THEN
+			_iPostInit.PostInit();
+		END_IF
 	END_IF
 END_WHILE]]></ST>
       </Implementation>
@@ -172,8 +188,10 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
-	IF __QUERYINTERFACE(_iEtt._Raw, _iPreInit) THEN
-		_iPreInit.PreInit();
+	IF _iEtt._NewInstance THEN
+		IF __QUERYINTERFACE(_iEtt._Raw, _iPreInit) THEN
+			_iPreInit.PreInit();
+		END_IF
 	END_IF
 END_WHILE]]></ST>
       </Implementation>
@@ -1249,6 +1267,7 @@ METHOD Run
 	_CallPreInits();
 	_CallInits();
 	_CallPostInits();
+	_ClearNewInstanceFlags();
 
 
 	IF Panicked THEN
@@ -1279,7 +1298,22 @@ IF _Plant.bOnlineChange THEN
 		RETURN;
 	END_IF
 
+	IF _Plant.bOnlineChangeEntityCreated THEN
+		_CallPreInits();
+		_CallInits();
+		_CallPostInits();
+
+		IF Panicked THEN
+			_Plant.bPanic := TRUE;
+			_Plant.bOnlineChangeEntityCreated := FALSE;
+			_Plant.bOnlineChangeEntityDeleted := FALSE;
+			_Plant.bOnlineChange := FALSE;
+			RETURN;
+		END_IF
+	END_IF
+
 	_CallOnlineChange();
+	_ClearNewInstanceFlags();
 
 	_Plant.bOnlineChangeEntityCreated := FALSE;
 	_Plant.bOnlineChangeEntityDeleted := FALSE;
@@ -1313,6 +1347,53 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="ValidateGeneric" Id="{bd73aaa8-e496-4412-9f52-9ae8c4d21514}" FolderPath="_\Validation\">
+      <Declaration><![CDATA[METHOD ValidateGeneric : Result
+VAR_INPUT
+	iToValidate: I_Generic;
+END_VAR
+VAR
+	_err: __SYSTEM.ExceptionCode;
+	_iValidate: _I_ValidateGeneric;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iToValidate = 0 THEN
+	ValidateGeneric := Error;
+	RETURN;
+END_IF
+
+__TRY
+	__QUERYINTERFACE(iToValidate, _iValidate);
+	ValidateGeneric := Ok;
+__CATCH(_err)
+	ValidateGeneric := Error;
+__ENDTRY]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ValidateInterface" Id="{21714e4f-ed96-4dab-a1ed-1f783845c8ee}" FolderPath="_\Validation\">
+      <Declaration><![CDATA[METHOD ValidateInterface : Result
+VAR_INPUT
+	iToValidate: I_ValidateInterface;
+END_VAR
+VAR
+	_err: __SYSTEM.ExceptionCode;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iToValidate = 0 THEN
+	ValidateInterface := Error;
+	RETURN;
+END_IF
+
+__TRY
+	iToValidate.ValidateInterface();
+	ValidateInterface := Ok;
+__CATCH(_err)
+	ValidateInterface := Error;
+__ENDTRY]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Warn" Id="{e58b4fa2-e306-49bb-bae3-e081e937d273}" FolderPath="Debug\">
       <Declaration><![CDATA[// Records a warning without stopping cyclic execution.
 METHOD Warn

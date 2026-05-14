@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="T_OnlineChangeTestEntity" Id="{dc12cb96-3fc3-4226-839e-a2ae6c5beb14}">
+    <Declaration><![CDATA[TYPE T_OnlineChangeTestEntity :
+STRUCT
+	nStableInit: UDINT;
+	nRemovedInit: UDINT;
+	nCreatedInit: UDINT;
+
+	nStableOnlineChange: UDINT;
+	bStableLastEntityCreated: BOOL;
+	bStableLastEntityDeleted: BOOL;
+
+	nCreatedOnlineChange: UDINT;
+	bCreatedLastEntityCreated: BOOL;
+	bCreatedLastEntityDeleted: BOOL;
+
+	nMovedInit: UDINT;
+	nMovedOnlineChange: UDINT;
+	bMovedLastEntityCreated: BOOL;
+	bMovedLastEntityDeleted: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

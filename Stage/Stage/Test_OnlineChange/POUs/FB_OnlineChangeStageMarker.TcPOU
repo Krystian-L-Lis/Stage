@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_OnlineChangeStageMarker" Id="{7e70f3e5-2e1a-494f-930a-f84e0424908a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OnlineChangeStageMarker
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{e3472657-35be-4367-ab6d-2e734d5298ae}">
+      <Declaration><![CDATA[METHOD FB_Init : BOOL
+VAR_INPUT
+	bInitRetains: BOOL;
+	bInCopyCode: BOOL;
+	nStage: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GVL_OnlineChangeTest.StageState.nId := nStage;
+
+CASE nStage OF
+	1:
+		GVL_OnlineChangeTest.StageState.sName := 'TEST_OC_INIT';
+
+	2:
+		GVL_OnlineChangeTest.StageState.sName := 'TEST_OC_NO_CHANGE';
+
+	3:
+		GVL_OnlineChangeTest.StageState.sName := 'TEST_OC_REMOVE_THREAD';
+
+	4:
+		GVL_OnlineChangeTest.StageState.sName := 'TEST_OC_ADD_DELETE_ENTITY';
+
+	5:
+		GVL_OnlineChangeTest.StageState.sName := 'TEST_OC_MOVE_MEMORY';
+
+ELSE
+	GVL_OnlineChangeTest.StageState.sName := 'TEST_OC_UNDEFINED';
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

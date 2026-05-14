@@ -370,6 +370,16 @@ WHILE iExecute <> 0 DO
 END_WHILE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="ValidateInterface" Id="{c25915fa-ff5e-40d2-928c-da91ae08f4b2}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD ValidateInterface
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="ValidateThread" Id="{a44e3ef3-37a9-495a-b289-edc5f0c924d0}">
       <Declaration><![CDATA[METHOD INTERNAL ValidateThread : Result
 VAR CONSTANT
@@ -399,7 +409,7 @@ __TRY
 			RETURN;
 		END_IF
 	ELSE
-		IF ValidateInterface(iFirstExecute) <> Ok THEN
+		IF Plant.ValidateInterface(iFirstExecute) <> Ok THEN
 			Plant.Panic(THIS^, 'Thread validation failed: first execute did not pass ValidateInterface.');
 			RETURN;
 		END_IF
@@ -409,7 +419,7 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF ValidateInterface(iLastExecute) <> Ok THEN
+		IF Plant.ValidateInterface(iLastExecute) <> Ok THEN
 			Plant.Panic(THIS^, 'Thread validation failed: last execute did not pass ValidateInterface.');
 			RETURN;
 		END_IF
@@ -436,7 +446,7 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF ValidateInterface(iExecute) <> Ok THEN
+		IF Plant.ValidateInterface(iExecute) <> Ok THEN
 			Plant.Panic(THIS^, 'Thread validation failed: current execute did not pass ValidateInterface before link access.');
 			RETURN;
 		END_IF
@@ -447,7 +457,7 @@ __TRY
 		END_IF
 
 		iExecuteThread := iExecute._Thread;
-		IF ValidateInterface(iExecuteThread) <> Ok THEN
+		IF Plant.ValidateInterface(iExecuteThread) <> Ok THEN
 			Plant.Panic(iExecute, 'Thread validation failed: current execute _Thread is 0 or failed ValidateInterface.');
 			RETURN;
 		END_IF
@@ -460,7 +470,7 @@ __TRY
 		iNextExecute := iExecute._Next;
 
 		IF iNextExecute <> 0 THEN
-			IF ValidateInterface(iNextExecute) <> Ok THEN
+			IF Plant.ValidateInterface(iNextExecute) <> Ok THEN
 				Plant.Panic(iExecute, 'Thread validation failed: current execute _Next did not pass ValidateInterface.');
 				RETURN;
 			END_IF
@@ -491,7 +501,7 @@ __TRY
 			RETURN;
 		END_IF
 	ELSE
-		IF ValidateInterface(iFirstWorker) <> Ok THEN
+		IF Plant.ValidateInterface(iFirstWorker) <> Ok THEN
 			Plant.Panic(THIS^, 'Thread validation failed: first worker did not pass ValidateInterface.');
 			RETURN;
 		END_IF
@@ -501,7 +511,7 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF ValidateInterface(iLastWorker) <> Ok THEN
+		IF Plant.ValidateInterface(iLastWorker) <> Ok THEN
 			Plant.Panic(THIS^, 'Thread validation failed: last worker did not pass ValidateInterface.');
 			RETURN;
 		END_IF
@@ -528,7 +538,7 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF ValidateInterface(iWorker) <> Ok THEN
+		IF Plant.ValidateInterface(iWorker) <> Ok THEN
 			Plant.Panic(THIS^, 'Thread validation failed: current worker did not pass ValidateInterface before link access.');
 			RETURN;
 		END_IF
@@ -539,7 +549,7 @@ __TRY
 		END_IF
 
 		iWorkerThread := iWorker.Thread;
-		IF ValidateInterface(iWorkerThread) <> Ok THEN
+		IF Plant.ValidateInterface(iWorkerThread) <> Ok THEN
 			Plant.Panic(iWorker, 'Thread validation failed: current worker Thread is 0 or failed ValidateInterface.');
 			RETURN;
 		END_IF
@@ -552,7 +562,7 @@ __TRY
 		iNextWorker := iWorker._Next;
 
 		IF iNextWorker <> 0 THEN
-			IF ValidateInterface(iNextWorker) <> Ok THEN
+			IF Plant.ValidateInterface(iNextWorker) <> Ok THEN
 				Plant.Panic(iWorker, 'Thread validation failed: current worker _Next did not pass ValidateInterface.');
 				RETURN;
 			END_IF
@@ -583,16 +593,6 @@ __CATCH(_err)
 	Plant.Panic(THIS^, 'Thread validation failed: exception while reading validation interfaces or links.');
 	ValidateThread := Error;
 __ENDTRY]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ValidateInterface" Id="{c25915fa-ff5e-40d2-928c-da91ae08f4b2}">
-      <Declaration><![CDATA[{attribute 'hide'}
-METHOD ValidateInterface
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
   </POU>

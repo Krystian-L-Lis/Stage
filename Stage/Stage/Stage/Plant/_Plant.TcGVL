@@ -14,7 +14,11 @@ VAR_GLOBAL INTERNAL
 	{attribute 'init_on_onlchange'}
 	bOnlineChange: BOOL := TRUE;
 	
+	{attribute 'no_copy'}
+	{attribute 'no_init'}
 	bOnlineChangeEntityCreated: BOOL := FALSE;
+	{attribute 'no_copy'}
+	{attribute 'no_init'}
 	bOnlineChangeEntityDeleted: BOOL := FALSE;
 
 	iFirstThread: I_Thread;
