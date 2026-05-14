@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_OnlineChangeJsonReport" Id="{9ecb797d-dbd8-46a9-ac1a-13c0e58a9015}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OnlineChangeJsonReport
+VAR
+	fbJson: Tc3_JsonXml.FB_JsonSaxPrettyWriter;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddCheck" Id="{588f9c28-d424-4c34-a828-12ca55b57025}">
+      <Declaration><![CDATA[METHOD PRIVATE AddCheck
+VAR_INPUT
+	sName: STRING;
+	stCheck: T_OnlineChangeTestCheck;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbJson.AddKey(sName);
+fbJson.StartObject();
+fbJson.AddKeyBool('required', stCheck.bRequired);
+fbJson.AddKeyBool('passed', stCheck.bPassed);
+fbJson.EndObject();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Write" Id="{732640f9-513d-45bc-b260-1bf6c2534358}">
+      <Declaration><![CDATA[METHOD Write
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbJson.ResetDocument();
+fbJson.StartObject();
+
+fbJson.AddKeyString('stage', GVL_OnlineChangeTest.StageState.sName);
+fbJson.AddKeyBool('ready', GVL_OnlineChangeTest.Report.bJsonReady);
+fbJson.AddKeyBool('all', GVL_OnlineChangeTest.Report.bAllRequiredPassed);
+fbJson.AddKeyBool('fail', GVL_OnlineChangeTest.Report.bRequiredFailure);
+
+fbJson.AddKey('panic');
+fbJson.AddUdint(GVL_OnlineChangeTest.Runtime.nTotalPanic);
+fbJson.AddKey('warn');
+fbJson.AddUdint(GVL_OnlineChangeTest.Runtime.nTotalWarn);
+
+fbJson.AddKey('checks');
+fbJson.StartObject();
+AddCheck('NoPanic', GVL_OnlineChangeTest.Checks.NoPanic);
+AddCheck('StageSelected', GVL_OnlineChangeTest.Checks.StageSelected);
+AddCheck('StableCallback', GVL_OnlineChangeTest.Checks.StableCallback);
+AddCheck('NoChangeFlags', GVL_OnlineChangeTest.Checks.NoChangeFlags);
+AddCheck('AddDeleteFlags', GVL_OnlineChangeTest.Checks.AddDeleteFlags);
+AddCheck('CreatedInit', GVL_OnlineChangeTest.Checks.CreatedInit);
+AddCheck('CreatedCallback', GVL_OnlineChangeTest.Checks.CreatedCallback);
+AddCheck('RepairWarn', GVL_OnlineChangeTest.Checks.RepairWarn);
+AddCheck('ActiveJobRunning', GVL_OnlineChangeTest.Checks.ActiveJobRunning);
+AddCheck('IdleJobStarted', GVL_OnlineChangeTest.Checks.IdleJobStarted);
+AddCheck('MovedCallback', GVL_OnlineChangeTest.Checks.MovedCallback);
+AddCheck('MovedExecuteRunning', GVL_OnlineChangeTest.Checks.MovedExecuteRunning);
+AddCheck('MovedJobRunning', GVL_OnlineChangeTest.Checks.MovedJobRunning);
+fbJson.EndObject();
+
+fbJson.EndObject();
+
+GVL_OnlineChangeTest.Report.nJsonLength := fbJson.CopyDocument(
+	GVL_OnlineChangeTest.Report.sJson,
+	SIZEOF(GVL_OnlineChangeTest.Report.sJson));
+GVL_OnlineChangeTest.Report.bJsonCopyOk := GVL_OnlineChangeTest.Report.nJsonLength > 0;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

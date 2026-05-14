@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_ValidateInterface" Id="{437a69c8-a4e0-4a55-a63e-9368065bdc44}">
+    <Declaration><![CDATA[INTERFACE I_ValidateInterface EXTENDS I_Debug
+]]></Declaration>
+    <Method Name="ValidateInterface" Id="{540c56c6-6fcf-44ac-8e48-d827e929ffe3}">
+      <Declaration><![CDATA[{attribute 'hide'}
+METHOD ValidateInterface
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

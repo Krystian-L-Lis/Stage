@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="T_OnlineChangeTestExecute" Id="{a8c0fe48-1199-4ad6-a6aa-035af71dbe3c}">
+    <Declaration><![CDATA[TYPE T_OnlineChangeTestExecute :
+STRUCT
+	nMainCycles: UDINT;
+	nThreadedCycles: UDINT;
+	nMovedCycles: UDINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

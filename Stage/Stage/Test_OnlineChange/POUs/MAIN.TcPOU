@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MAIN" Id="{7b4518f5-626f-453e-8ddd-cc47dee66309}" SpecialFunc="None">
+    <Declaration><![CDATA[// TEST_OC_STAGE values:
+// 'INIT' = init baseline
+// 'NO_CHANGE' = same-shape online change
+// 'REMOVE_THREAD' = remove fast thread
+// 'ADD_DELETE_ENTITY' = add/delete entity
+// 'MOVE_MEMORY' = force stable instances to move inside program memory
+{define TEST_OC_STAGE 'MOVE_MEMORY'}
+PROGRAM MAIN
+VAR
+	fbDefineReset: FB_OnlineChangeDefineReset;
+	fbJsonReport: FB_OnlineChangeJsonReport;
+
+	fbStableProbe: FB_OnlineChangeProbe(1);
+	fbMainExecute: FB_TestExecute(1);
+	fbThreadedExecute: FB_TestExecute(2);
+	fbActiveJob: FB_TestJob(1);
+	fbIdleJob: FB_TestJob(2);
+
+{IF hasvalue(TEST_OC_STAGE, 'INIT')}
+	fbStageInit: FB_OnlineChangeStageMarker(1);
+	fbFastThread: Stage.Thread;
+	fbFastConfig: FB_FastThreadConfig(fbFastThread);
+	fbRemovedProbe: FB_OnlineChangeProbe(2);
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'NO_CHANGE')}
+	fbStageNoChange: FB_OnlineChangeStageMarker(2);
+	fbFastThread: Stage.Thread;
+	fbFastConfig: FB_FastThreadConfig(fbFastThread);
+	fbRemovedProbe: FB_OnlineChangeProbe(2);
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'REMOVE_THREAD')}
+	fbStageRemoveThread: FB_OnlineChangeStageMarker(3);
+	fbRemovedProbe: FB_OnlineChangeProbe(2);
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'ADD_DELETE_ENTITY')}
+	fbStageAddDeleteEntity: FB_OnlineChangeStageMarker(4);
+	fbCreatedProbe: FB_OnlineChangeProbe(3);
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'MOVE_MEMORY')}
+	fbStageMoveMemory: FB_OnlineChangeStageMarker(5);
+	fbFastThread: Stage.Thread;
+	fbFastConfig: FB_FastThreadConfig(fbFastThread);
+	fbRemovedProbe: FB_OnlineChangeProbe(2);
+{END_IF}
+
+{IF hasvalue(TEST_OC_STAGE, 'INIT')}
+	fbMovePadInit: FB_OnlineChangeMovePadding;
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'NO_CHANGE')}
+	fbMovePadNoChange: FB_OnlineChangeMovePadding;
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'REMOVE_THREAD')}
+	fbMovePadRemoveThread: FB_OnlineChangeMovePadding;
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'ADD_DELETE_ENTITY')}
+	fbMovePadAddDeleteEntity: FB_OnlineChangeMovePadding;
+{END_IF}
+{IF hasvalue(TEST_OC_STAGE, 'MOVE_MEMORY')}
+	fbMovePadA: FB_OnlineChangeMovePadding;
+	fbMovePadB: FB_OnlineChangeMovePadding;
+	fbMovePadC: FB_OnlineChangeMovePadding;
+{END_IF}
+
+	fbMovedProbe: FB_OnlineChangeProbe(20);
+	fbMovedExecute: FB_TestExecute(20);
+	fbMovedJob: FB_TestJob(20);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL_OnlineChangeTest.Runtime.nMainCycles := GVL_OnlineChangeTest.Runtime.nMainCycles + 1;
+
+IF NOT GVL_OnlineChangeTest.StageState.bFastThreadConfigured THEN
+	IF GVL_OnlineChangeTest.StageState.iConfiguredFastThread <> 0 THEN
+		fbThreadedExecute.SetThread(GVL_OnlineChangeTest.StageState.iConfiguredFastThread);
+		fbActiveJob.SetThread(GVL_OnlineChangeTest.StageState.iConfiguredFastThread);
+		fbIdleJob.SetThread(GVL_OnlineChangeTest.StageState.iConfiguredFastThread);
+		GVL_OnlineChangeTest.StageState.bFastThreadConfigured := TRUE;
+	END_IF
+END_IF
+
+Stage.Plant.Run();
+
+IF NOT Stage.Plant.Panicked THEN
+	IF NOT GVL_OnlineChangeTest.Worker.bActiveStartRequested THEN
+		fbActiveJob.Start();
+		GVL_OnlineChangeTest.Worker.bActiveStartRequested := TRUE;
+	END_IF
+
+	IF NOT GVL_OnlineChangeTest.Worker.bIdleStartRequested THEN
+		IF (GVL_OnlineChangeTest.StageState.nId = 3) OR
+			(GVL_OnlineChangeTest.StageState.nId = 4)
+		THEN
+			fbIdleJob.Start();
+			GVL_OnlineChangeTest.Worker.bIdleStartRequested := TRUE;
+		END_IF
+	END_IF
+
+	IF NOT GVL_OnlineChangeTest.Worker.bMovedStartRequested THEN
+		IF GVL_OnlineChangeTest.StageState.nId = 5 THEN
+			fbMovedJob.Start();
+			GVL_OnlineChangeTest.Worker.bMovedStartRequested := TRUE;
+		END_IF
+	END_IF
+END_IF
+
+GVL_OnlineChangeTest.Worker.eActiveState := fbActiveJob.State;
+GVL_OnlineChangeTest.Worker.eIdleState := fbIdleJob.State;
+GVL_OnlineChangeTest.Worker.eMovedState := fbMovedJob.State;
+GVL_OnlineChangeTest.Runtime.nTotalPanic := Stage.Plant.TotalPanic;
+GVL_OnlineChangeTest.Runtime.nTotalWarn := Stage.Plant.TotalWarn;
+
+GVL_OnlineChangeTest.Checks.NoPanic.bRequired := TRUE;
+GVL_OnlineChangeTest.Checks.NoPanic.bPassed := GVL_OnlineChangeTest.Runtime.nTotalPanic = 0;
+
+GVL_OnlineChangeTest.Checks.StageSelected.bRequired := TRUE;
+GVL_OnlineChangeTest.Checks.StageSelected.bPassed := GVL_OnlineChangeTest.StageState.nId > 0;
+
+GVL_OnlineChangeTest.Checks.StableCallback.bRequired := GVL_OnlineChangeTest.StageState.nId > 1;
+GVL_OnlineChangeTest.Checks.StableCallback.bPassed := GVL_OnlineChangeTest.Entity.nStableOnlineChange > 0;
+
+GVL_OnlineChangeTest.Checks.NoChangeFlags.bRequired :=
+	(GVL_OnlineChangeTest.StageState.nId = 2) OR
+	(GVL_OnlineChangeTest.StageState.nId = 3) OR
+	(GVL_OnlineChangeTest.StageState.nId = 5);
+GVL_OnlineChangeTest.Checks.NoChangeFlags.bPassed :=
+	GVL_OnlineChangeTest.Entity.nStableOnlineChange > 0 AND
+	NOT GVL_OnlineChangeTest.Entity.bStableLastEntityCreated AND
+	NOT GVL_OnlineChangeTest.Entity.bStableLastEntityDeleted;
+
+GVL_OnlineChangeTest.Checks.AddDeleteFlags.bRequired := GVL_OnlineChangeTest.StageState.nId = 4;
+GVL_OnlineChangeTest.Checks.AddDeleteFlags.bPassed :=
+	GVL_OnlineChangeTest.Entity.nStableOnlineChange > 0 AND
+	GVL_OnlineChangeTest.Entity.bStableLastEntityCreated AND
+	GVL_OnlineChangeTest.Entity.bStableLastEntityDeleted;
+
+GVL_OnlineChangeTest.Checks.CreatedInit.bRequired := GVL_OnlineChangeTest.StageState.nId = 4;
+GVL_OnlineChangeTest.Checks.CreatedInit.bPassed := GVL_OnlineChangeTest.Entity.nCreatedInit > 0;
+
+GVL_OnlineChangeTest.Checks.CreatedCallback.bRequired := GVL_OnlineChangeTest.StageState.nId = 4;
+GVL_OnlineChangeTest.Checks.CreatedCallback.bPassed :=
+	GVL_OnlineChangeTest.Entity.nCreatedOnlineChange > 0 AND
+	GVL_OnlineChangeTest.Entity.bCreatedLastEntityCreated AND
+	GVL_OnlineChangeTest.Entity.bCreatedLastEntityDeleted;
+
+GVL_OnlineChangeTest.Checks.RepairWarn.bRequired := GVL_OnlineChangeTest.StageState.nId = 3;
+GVL_OnlineChangeTest.Checks.RepairWarn.bPassed := GVL_OnlineChangeTest.Runtime.nTotalWarn > 0;
+
+GVL_OnlineChangeTest.Checks.ActiveJobRunning.bRequired :=
+	(GVL_OnlineChangeTest.StageState.nId = 3) OR
+	(GVL_OnlineChangeTest.StageState.nId = 4);
+GVL_OnlineChangeTest.Checks.ActiveJobRunning.bPassed := GVL_OnlineChangeTest.Worker.nActiveExecute > 0;
+
+GVL_OnlineChangeTest.Checks.IdleJobStarted.bRequired :=
+	(GVL_OnlineChangeTest.StageState.nId = 3) OR
+	(GVL_OnlineChangeTest.StageState.nId = 4);
+GVL_OnlineChangeTest.Checks.IdleJobStarted.bPassed :=
+	GVL_OnlineChangeTest.Worker.nIdleStartOk > 0 AND
+	GVL_OnlineChangeTest.Worker.nIdleExecute > 0;
+
+GVL_OnlineChangeTest.Checks.MovedCallback.bRequired := GVL_OnlineChangeTest.StageState.nId = 5;
+GVL_OnlineChangeTest.Checks.MovedCallback.bPassed :=
+	GVL_OnlineChangeTest.Entity.nMovedOnlineChange > 0 AND
+	NOT GVL_OnlineChangeTest.Entity.bMovedLastEntityCreated AND
+	NOT GVL_OnlineChangeTest.Entity.bMovedLastEntityDeleted;
+
+GVL_OnlineChangeTest.Checks.MovedExecuteRunning.bRequired := GVL_OnlineChangeTest.StageState.nId = 5;
+GVL_OnlineChangeTest.Checks.MovedExecuteRunning.bPassed :=
+	GVL_OnlineChangeTest.Execute.nMovedCycles > 0;
+
+GVL_OnlineChangeTest.Checks.MovedJobRunning.bRequired := GVL_OnlineChangeTest.StageState.nId = 5;
+GVL_OnlineChangeTest.Checks.MovedJobRunning.bPassed :=
+	GVL_OnlineChangeTest.Worker.nMovedStartOk > 0 AND
+	GVL_OnlineChangeTest.Worker.nMovedExecute > 0;
+
+GVL_OnlineChangeTest.Report.bAllRequiredPassed :=
+	(NOT GVL_OnlineChangeTest.Checks.NoPanic.bRequired OR GVL_OnlineChangeTest.Checks.NoPanic.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.StageSelected.bRequired OR GVL_OnlineChangeTest.Checks.StageSelected.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.StableCallback.bRequired OR GVL_OnlineChangeTest.Checks.StableCallback.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.NoChangeFlags.bRequired OR GVL_OnlineChangeTest.Checks.NoChangeFlags.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.AddDeleteFlags.bRequired OR GVL_OnlineChangeTest.Checks.AddDeleteFlags.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.CreatedInit.bRequired OR GVL_OnlineChangeTest.Checks.CreatedInit.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.CreatedCallback.bRequired OR GVL_OnlineChangeTest.Checks.CreatedCallback.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.RepairWarn.bRequired OR GVL_OnlineChangeTest.Checks.RepairWarn.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.ActiveJobRunning.bRequired OR GVL_OnlineChangeTest.Checks.ActiveJobRunning.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.IdleJobStarted.bRequired OR GVL_OnlineChangeTest.Checks.IdleJobStarted.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.MovedCallback.bRequired OR GVL_OnlineChangeTest.Checks.MovedCallback.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.MovedExecuteRunning.bRequired OR GVL_OnlineChangeTest.Checks.MovedExecuteRunning.bPassed) AND
+	(NOT GVL_OnlineChangeTest.Checks.MovedJobRunning.bRequired OR GVL_OnlineChangeTest.Checks.MovedJobRunning.bPassed);
+
+GVL_OnlineChangeTest.Report.bRequiredFailure :=
+	(GVL_OnlineChangeTest.Checks.NoPanic.bRequired AND NOT GVL_OnlineChangeTest.Checks.NoPanic.bPassed) OR
+	(GVL_OnlineChangeTest.Checks.StageSelected.bRequired AND NOT GVL_OnlineChangeTest.Checks.StageSelected.bPassed);
+
+GVL_OnlineChangeTest.Report.bJsonReady :=
+	GVL_OnlineChangeTest.Report.bAllRequiredPassed OR
+	GVL_OnlineChangeTest.Report.bRequiredFailure;
+
+fbJsonReport.Write();]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

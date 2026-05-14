@@ -1,8 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <Itf Name="_I_Thread" Id="{a9568707-b22e-4555-9884-6d4e1026cc8c}">
-    <Declaration><![CDATA[INTERFACE INTERNAL _I_Thread EXTENDS I_Debug
+    <Declaration><![CDATA[INTERFACE INTERNAL _I_Thread EXTENDS I_Debug, I_ValidateInterface
 ]]></Declaration>
+    <Property Name="_First" Id="{d6e8e0d0-59e4-4c0a-b37c-e7f2bcdd117d}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _First : _I_Execute]]></Declaration>
+      <Get Name="Get" Id="{6a186a4f-84f9-46e5-af72-7a5594673ad8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="_FirstWorker" Id="{62dc454b-1f1a-4701-8cb1-98b3f2719846}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _FirstWorker : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{561f6028-5ec7-42a9-b9c2-1258f52ec9bd}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="_Last" Id="{5e0b5e70-70bb-4b7d-a6d0-3be74d10a5e8}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Last : _I_Execute]]></Declaration>
+      <Get Name="Get" Id="{d31102da-9f66-450e-bd8c-9b618a7c5655}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="_LastWorker" Id="{6c7c7748-1d81-424e-a196-91e779457b53}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _LastWorker : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{c7f747f3-805d-479e-8a7e-0adf0cd29c3c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="_Next" Id="{d4acbf50-5c3f-4e98-9715-99202ec4b1b2}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{c6f59d7d-ac2b-4854-9c39-d85c5f0a0f83}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{6d542b42-1ec7-4a66-94f4-6634118f090b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_Prev" Id="{8530daf6-755d-437e-9206-7d1c4137e2b7}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{b7ebc08f-9efa-442d-b86e-d0a03bf9b318}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{8a13cc84-0b37-4096-a3d2-a4637e48d8f3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
     <Method Name="AttachExecute" Id="{0535368c-1e65-495c-bfb4-5ad515b03a41}">
       <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result
 VAR_INPUT
@@ -29,6 +71,10 @@ END_VAR
 VAR_INPUT
 	iWorker: I_Worker;
 END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="ValidateThread" Id="{2ad037ff-b095-4fa7-b4f0-7978bbbc608d}">
+      <Declaration><![CDATA[METHOD INTERNAL ValidateThread : Result
 ]]></Declaration>
     </Method>
   </Itf>

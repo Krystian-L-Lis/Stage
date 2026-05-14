@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_TestExecute" Id="{53807922-55c7-4869-895e-3c29f9e2c5e6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TestExecute IMPLEMENTS Stage.I_Execute
+VAR
+	_exe: Stage.Execute(THIS^);
+END_VAR
+VAR
+	nId: UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{53254656-922e-4149-b97a-8fe534078039}">
+      <Declaration><![CDATA[METHOD FB_Init : BOOL
+VAR_INPUT
+	bInitRetains: BOOL;
+	bInCopyCode: BOOL;
+	nNewId: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nId := nNewId;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{9ef70c41-fb45-4af2-9739-0f6d7309ca6b}">
+      <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nId OF
+	1:
+		GVL_OnlineChangeTest.Execute.nMainCycles := GVL_OnlineChangeTest.Execute.nMainCycles + 1;
+
+	2:
+		GVL_OnlineChangeTest.Execute.nThreadedCycles := GVL_OnlineChangeTest.Execute.nThreadedCycles + 1;
+
+	20:
+		IF GVL_OnlineChangeTest.StageState.nId = 5 THEN
+			GVL_OnlineChangeTest.Execute.nMovedCycles := GVL_OnlineChangeTest.Execute.nMovedCycles + 1;
+		END_IF
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetThread" Id="{8db50ea6-a84c-4be1-aed8-42663d3b6331}">
+      <Declaration><![CDATA[METHOD SetThread
+VAR_INPUT
+	iThread: Stage.I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_exe.Thread := iThread;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetId" Id="{41c41cd8-95b5-44d1-aab6-413d14e88e6f}">
+      <Declaration><![CDATA[METHOD SetId
+VAR_INPUT
+	nNewId: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nId := nNewId;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

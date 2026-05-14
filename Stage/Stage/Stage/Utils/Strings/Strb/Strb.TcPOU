@@ -373,12 +373,12 @@ sRight.Set(Tc2_Standard.RIGHT(_sString, _nLength - nPosition));]]></ST>
       <Declaration><![CDATA[// Outputs current text and returns this builder.
 METHOD Write : I_Strb;
 VAR_OUTPUT
-	sString: Str; // Current text.
+	sOut: Str; // Current text.
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[Write := _this;
-sString := _sString;]]></ST>
+sOut := _sString;]]></ST>
       </Implementation>
     </Method>
   </POU>

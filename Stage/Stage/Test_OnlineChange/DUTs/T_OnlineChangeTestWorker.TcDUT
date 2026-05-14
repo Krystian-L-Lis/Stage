@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="T_OnlineChangeTestWorker" Id="{4a7db337-cf9a-462e-b020-74aa175da1b6}">
+    <Declaration><![CDATA[TYPE T_OnlineChangeTestWorker :
+STRUCT
+	nActiveInit: UDINT;
+	nActiveExecute: UDINT;
+	nActiveExit: UDINT;
+	nIdleInit: UDINT;
+	nIdleExecute: UDINT;
+	nIdleExit: UDINT;
+	nMovedInit: UDINT;
+	nMovedExecute: UDINT;
+	nMovedExit: UDINT;
+
+	nActiveStartOk: UDINT;
+	nActiveStartNone: UDINT;
+	nActiveStartError: UDINT;
+	nIdleStartOk: UDINT;
+	nIdleStartNone: UDINT;
+	nIdleStartError: UDINT;
+	nMovedStartOk: UDINT;
+	nMovedStartNone: UDINT;
+	nMovedStartError: UDINT;
+
+	bActiveStartRequested: BOOL;
+	bIdleStartRequested: BOOL;
+	bMovedStartRequested: BOOL;
+
+	eActiveState: Stage.JobState;
+	eIdleState: Stage.JobState;
+	eMovedState: Stage.JobState;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
