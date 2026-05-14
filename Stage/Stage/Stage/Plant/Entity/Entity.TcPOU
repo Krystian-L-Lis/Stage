@@ -95,7 +95,9 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT bInCopyCode THEN
-	Plant._DetachEntity(THIS^);
+	IF Plant._DetachEntity(THIS^) = Ok THEN
+		_Plant.bOnlineChangeEntityDeleted := TRUE;
+	END_IF
 END_IF
 
 ]]></ST>
@@ -118,17 +120,16 @@ END_VAR]]></Declaration>
 
 END_IF
 
-IF IsSome(_eResult) THEN
+_iGeneric := iGeneric;
+
+IF _eResult <> None THEN
 	RETURN;
 END_IF
 
-_iGeneric := iGeneric;
-
-IF IsOk(Plant._AttachEntity(THIS^)) THEN
-	_eResult := Ok;
+IF (_eResult := Plant._AttachEntity(THIS^)) = Ok THEN
+	_Plant.bOnlineChangeEntityCreated := TRUE;
 ELSE
 	Plant.Panic(THIS^, __POUNAME());
-	_eResult := Error;	
 END_IF
 
 ]]></ST>

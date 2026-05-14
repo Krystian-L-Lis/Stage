@@ -13,6 +13,9 @@ VAR_GLOBAL INTERNAL
 	
 	{attribute 'init_on_onlchange'}
 	bOnlineChange: BOOL := TRUE;
+	
+	bOnlineChangeEntityCreated: BOOL := FALSE;
+	bOnlineChangeEntityDeleted: BOOL := FALSE;
 
 	MainThread: Thread;
 	

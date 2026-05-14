@@ -18,6 +18,7 @@ END_IF
 
 __TRY
 	__QUERYINTERFACE(iToValidate, _iValidate);
+	ValidateGeneric := Ok;
 __CATCH(_err)
 	ValidateGeneric := Error;
 __ENDTRY]]></ST>

@@ -56,6 +56,23 @@ END_VAR
 END_WHILE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="_CallOnlineChange" Id="{b871d198-2013-49e7-bca2-31429da97108}" FolderPath="_\">
+      <Declaration><![CDATA[METHOD PRIVATE _CallOnlineChange
+VAR
+	_iOnlineChange: I_OnlineChange;
+	_iEtt: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE Plant.NextEtt(_iEtt) = Ok DO
+	IF __QUERYINTERFACE(_iEtt._Raw, _iOnlineChange) THEN
+		_iOnlineChange.OnOnlineChange(
+				bEntityDeleted := _Plant.bOnlineChangeEntityDeleted,
+				bEntityCreated := _Plant.bOnlineChangeEntityCreated);
+	END_IF
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="_CallPostInits" Id="{47037820-3bab-4675-ad39-6e7063e5e95f}" FolderPath="_\">
       <Declaration><![CDATA[METHOD PRIVATE _CallPostInits
 VAR
@@ -161,9 +178,9 @@ END_WHILE]]></ST>
       </Implementation>
     </Method>
     <Method Name="_ValidatePlant" Id="{41374844-0fb6-4955-bce7-420662636250}" FolderPath="_\">
-      <Declaration><![CDATA[METHOD INTERNAL _ValidatePlant : Result
+      <Declaration><![CDATA[METHOD PRIVATE _ValidatePlant : Result
 VAR CONSTANT
-	GUARD: UDINT := 100_000;
+	GUARD: UDINT := Param.VALIDATION_GUARD;
 END_VAR
 VAR
 	iEntity: I_Entity;
@@ -183,7 +200,7 @@ END_VAR
         <ST><![CDATA[_ValidatePlant := Error;
 
 __TRY
-	IF IsErr(ValidateInterface(iMainThread)) THEN
+	IF ValidateInterface(iMainThread) <> Ok THEN
 		Plant.Panic(0, 'Plant validation failed: _Plant.MainThread did not pass ValidateInterface.');
 		RETURN;
 	END_IF
@@ -194,7 +211,7 @@ __TRY
 			RETURN;
 		END_IF
 	ELSE
-		IF IsErr(ValidateInterface(_Plant.iFirstEntity)) THEN
+		IF ValidateInterface(_Plant.iFirstEntity) <> Ok THEN
 			Plant.Panic(0, 'Plant validation failed: first entity did not pass ValidateInterface.');
 			RETURN;
 		END_IF
@@ -204,7 +221,7 @@ __TRY
 			RETURN;
 		END_IF
 		
-		IF IsErr(ValidateInterface(_Plant.iLastEntity)) THEN
+		IF ValidateInterface(_Plant.iLastEntity) <> Ok THEN
 			Plant.Panic(0, 'Plant validation failed: last entity did not pass ValidateInterface.');
 			RETURN;
 		END_IF
@@ -231,7 +248,7 @@ __TRY
 			RETURN;
 		END_IF
 		
-		IF IsErr(ValidateInterface(iEntity)) THEN
+		IF ValidateInterface(iEntity) <> Ok THEN
 			Plant.Panic(0, 'Plant validation failed: current entity did not pass ValidateInterface before link access.');
 			RETURN;
 		END_IF
@@ -242,7 +259,7 @@ __TRY
 		END_IF
 		
 		iEntityRaw := iEntity._Raw;
-		IF IsErr(ValidateGeneric(iEntityRaw)) THEN
+		IF ValidateGeneric(iEntityRaw) <> Ok THEN
 			Plant.Panic(iEntity, 'Plant validation failed: current entity _Raw is 0, garbage, or failed generic validation.');
 			RETURN;
 		END_IF
@@ -250,7 +267,7 @@ __TRY
 		iNextEntity := iEntity._Next;
 		
 		IF iNextEntity <> 0 THEN
-			IF IsErr(ValidateInterface(iNextEntity)) THEN
+			IF ValidateInterface(iNextEntity) <> Ok THEN
 				Plant.Panic(iEntity, 'Plant validation failed: current entity _Next did not pass ValidateInterface.');
 				RETURN;
 			END_IF
@@ -286,7 +303,7 @@ __TRY
 			RETURN;
 		END_IF
 		
-		IF IsErr(ValidateInterface(iExecute)) THEN
+		IF ValidateInterface(iExecute) <> Ok THEN
 			Plant.Panic(0, 'Plant validation failed: current execute did not pass ValidateInterface before link access.');
 			RETURN;
 		END_IF
@@ -297,7 +314,7 @@ __TRY
 		END_IF
 		
 		iExecuteThread := iExecute._Thread;
-		IF IsErr(ValidateInterface(iExecuteThread)) THEN
+		IF ValidateInterface(iExecuteThread) <> Ok THEN
 			Plant.Panic(iExecute, 'Plant validation failed: current execute _Thread is 0 or failed ValidateInterface.');
 			RETURN;
 		END_IF
@@ -455,12 +472,10 @@ END_IF]]></ST>
 METHOD Run
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF _Plant.bInit OR _Plant.bOnlineChange THEN
+        <ST><![CDATA[IF _Plant.bInit THEN
 	IF _Plant.bPanic THEN
 		RETURN;
 	END_IF
-	
-	// Validation goes here.
 	
 	_ThreadDispatcher();
 	_CallPreInits();
@@ -477,9 +492,25 @@ METHOD Run
 		Tc2_System.ADSLOGSTR(Tc2_System.ADSLOG_MSGTYPE_WARN, Tc2_Standard.CONCAT('Total warnings: ', UDINT_TO_STRING(_Plant.nTotalWarn)), '');
 	END_IF
 	
-	_Plant.bInit := FALSE;
+	_Plant.bOnlineChangeEntityCreated := FALSE;
+	_Plant.bOnlineChangeEntityDeleted := FALSE;
 	_Plant.bOnlineChange := FALSE;
+	
+	_Plant.bInit := FALSE;
 	RETURN;
+END_IF
+
+IF _Plant.bOnlineChange THEN
+	IF _ValidatePlant() <> Ok THEN
+		_Plant.bPanic := TRUE;
+		RETURN;
+	END_IF
+	
+	_CallOnlineChange();
+
+	_Plant.bOnlineChangeEntityCreated := FALSE;
+	_Plant.bOnlineChangeEntityDeleted := FALSE;
+	_Plant.bOnlineChange := FALSE;
 END_IF
 
 _Plant.MainThread.Run();]]></ST>

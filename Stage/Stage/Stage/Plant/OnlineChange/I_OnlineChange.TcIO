@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_OnlineChange" Id="{6cc3b00d-eb89-4fe3-9d4e-ba398a678a26}">
+    <Declaration><![CDATA[INTERFACE I_OnlineChange EXTENDS I_Generic
+]]></Declaration>
+    <Method Name="OnOnlineChange" Id="{41955f3a-b1de-42fb-be12-ad92209e49a9}">
+      <Declaration><![CDATA[METHOD OnOnlineChange
+VAR_INPUT
+	bEntityDeleted: BOOL;
+	bEntityCreated: BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
