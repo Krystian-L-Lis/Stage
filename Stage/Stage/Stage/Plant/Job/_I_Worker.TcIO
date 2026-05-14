@@ -21,6 +21,24 @@
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
+    <Property Name="_PlantNext" Id="{c6d58d7a-2cd6-4afd-8daa-ed94a0208514}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _PlantNext : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{3d896fcf-8d59-42a3-967a-a8e5550e2a6e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{fb9dde27-4f2d-4d7e-b0fc-37e2334fd385}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="_PlantPrev" Id="{0fd0ef65-3e59-4581-ae7d-feb5ba434f7f}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _PlantPrev : I_Worker]]></Declaration>
+      <Get Name="Get" Id="{923b7a69-b545-4bc4-ac5a-11803d2fedcd}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{5c50dd8f-b4c6-488d-9ce8-05dfcb3e27cd}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
     <Method Name="Process" Id="{bf44a028-9259-46a3-b6eb-6c366a7704c7}">
       <Declaration><![CDATA[METHOD INTERNAL Process
 VAR_OUTPUT
@@ -28,6 +46,15 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Property Name="_Thread" Id="{3aa35d64-97c9-4d18-ac1c-6f33e1ac0b2d}">
+      <Declaration><![CDATA[PROPERTY INTERNAL _Thread : I_Thread]]></Declaration>
+      <Get Name="Get" Id="{cbd7efab-dfc6-425b-bccb-3b57d4ea6d14}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{bf4380d8-eeac-4286-9690-d2db8e6d960d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
     <Property Name="Thread" Id="{72664e5a-4e4f-4a16-a656-7b32bc2b89e7}">
       <Declaration><![CDATA[// Thread that processes this worker; can change while Idle.
 PROPERTY Thread : I_Thread]]></Declaration>

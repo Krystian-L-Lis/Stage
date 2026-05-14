@@ -19,6 +19,9 @@ VAR_GLOBAL INTERNAL
 
 	iFirstThread: I_Thread;
 	iLastThread: I_Thread;
+
+	iFirstWorker: I_Worker;
+	iLastWorker: I_Worker;
 	
 	MainThread: Thread;
 	
