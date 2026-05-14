@@ -107,6 +107,9 @@
     <Compile Include="Plant\Job\JobState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Plant\OnlineChange\I_OnlineChange.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Plant\Plant.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -123,6 +126,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Plant\Thread\_I_Thread.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Validate\_I_ValidateGeneric.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Plant\Validate\I_ValidateInterface.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Plant\_Plant.TcGVL">
@@ -205,6 +214,8 @@
     <Folder Include="Plant\Execute" />
     <Folder Include="Plant\Init" />
     <Folder Include="Plant\Job" />
+    <Folder Include="Plant\OnlineChange" />
+    <Folder Include="Plant\Validate" />
     <Folder Include="Plant\Thread" />
     <Folder Include="Plant\PreInit" />
     <Folder Include="Plant\PostInit" />
