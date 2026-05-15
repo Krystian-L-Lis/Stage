@@ -7,8 +7,8 @@
 // 'REMOVE_THREAD' = remove fast thread
 // 'ADD_DELETE_ENTITY' = add/delete entity
 // 'MOVE_MEMORY' = force stable instances to move inside program memory
-{define TEST_OC_STAGE 'MOVE_MEMORY'}
 PROGRAM MAIN
+{define TEST_OC_STAGE 'MOVE_MEMORY'}
 VAR
 	fbDefineReset: FB_OnlineChangeDefineReset;
 	fbJsonReport: FB_OnlineChangeJsonReport;

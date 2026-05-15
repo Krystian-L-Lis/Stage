@@ -106,6 +106,9 @@ VAR_INPUT
 END_VAR
 VAR
 	iThis: I_Thread := THIS^;
+	iThread: I_Thread;
+	iPrev: _I_Execute;
+	iNext: _I_Execute;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iExecute = 0 THEN
@@ -113,12 +116,16 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF iExecute._Thread <> iThis THEN
+iThread := iExecute._Thread;
+IF iThread <> iThis THEN
 	AttachExecute := Error;
 	RETURN;
 END_IF
 
-IF iExecute._Prev <> 0 OR iExecute._Next <> 0 OR
+iPrev := iExecute._Prev;
+iNext := iExecute._Next;
+
+IF iPrev <> 0 OR iNext <> 0 OR
 	iFirstExecute = iExecute OR iLastExecute = iExecute THEN
 	Plant.Warn(iExecute, 'Execute attach skipped: execute is already linked in a thread execute list.');
 	AttachExecute := None;
@@ -146,6 +153,9 @@ VAR_INPUT
 END_VAR
 VAR
 	iThis: I_Thread := THIS^;
+	iThread: I_Thread;
+	iPrev: I_Worker;
+	iNext: I_Worker;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF iWorker = 0 THEN
@@ -153,12 +163,16 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF iWorker.Thread <> iThis THEN
+iThread := iWorker.Thread;
+IF iThread <> iThis THEN
 	AttachWorker := Error;
 	RETURN;
 END_IF
 
-IF iWorker._Prev <> 0 OR iWorker._Next <> 0 OR
+iPrev := iWorker._Prev;
+iNext := iWorker._Next;
+
+IF iPrev <> 0 OR iNext <> 0 OR
 	iFirstWorker = iWorker OR iLastWorker = iWorker THEN
 	Plant.Warn(iWorker, 'Worker attach skipped: worker is already linked in a thread worker list.');
 	AttachWorker := None;
@@ -186,6 +200,7 @@ VAR_INPUT
 END_VAR
 VAR
 	iThis: I_Thread := THIS^;
+	iThread: I_Thread;
 	iPrev : _I_Execute;
 	iNext : _I_Execute;
 END_VAR]]></Declaration>
@@ -195,7 +210,8 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF iExecute._Thread <> iThis THEN
+iThread := iExecute._Thread;
+IF iThread <> iThis THEN
 	DetachExecute := Error;
 	RETURN;
 END_IF
@@ -232,6 +248,7 @@ VAR_INPUT
 END_VAR
 VAR
 	iThis: I_Thread := THIS^;
+	iThread: I_Thread;
 	iNext: I_Worker;
 	iPrev: I_Worker;
 END_VAR]]></Declaration>
@@ -241,7 +258,8 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF iWorker.Thread <> iThis THEN
+iThread := iWorker.Thread;
+IF iThread <> iThis THEN
 	DetachWorker := Error;
 	RETURN;
 END_IF
@@ -395,6 +413,8 @@ VAR
 	iPrevWorker: I_Worker;
 	iNextWorker: I_Worker;
 	iWorkerThread: I_Thread;
+	iCheckExecute: _I_Execute;
+	iCheckWorker: I_Worker;
 	nGuard: UDINT;
 	_err: __SYSTEM.ExceptionCode;
 END_VAR
@@ -424,12 +444,14 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF iFirstExecute._Prev <> 0 THEN
+		iCheckExecute := iFirstExecute._Prev;
+		IF iCheckExecute <> 0 THEN
 			Plant.Panic(iFirstExecute, 'Thread validation failed: first execute has a nonzero _Prev link.');
 			RETURN;
 		END_IF
 
-		IF iLastExecute._Next <> 0 THEN
+		iCheckExecute := iLastExecute._Next;
+		IF iCheckExecute <> 0 THEN
 			Plant.Panic(iLastExecute, 'Thread validation failed: last execute has a nonzero _Next link.');
 			RETURN;
 		END_IF
@@ -451,7 +473,8 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF iExecute._Prev <> iPrevExecute THEN
+		iCheckExecute := iExecute._Prev;
+		IF iCheckExecute <> iPrevExecute THEN
 			Plant.Panic(iExecute, 'Thread validation failed: current execute _Prev does not match previous visited execute.');
 			RETURN;
 		END_IF
@@ -480,7 +503,8 @@ __TRY
 				RETURN;
 			END_IF
 
-			IF iNextExecute._Prev <> iExecute THEN
+			iCheckExecute := iNextExecute._Prev;
+			IF iCheckExecute <> iExecute THEN
 				Plant.Panic(iExecute, 'Thread validation failed: next execute _Prev does not point back to current execute.');
 				RETURN;
 			END_IF
@@ -516,12 +540,14 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF iFirstWorker._Prev <> 0 THEN
+		iCheckWorker := iFirstWorker._Prev;
+		IF iCheckWorker <> 0 THEN
 			Plant.Panic(iFirstWorker, 'Thread validation failed: first worker has a nonzero _Prev link.');
 			RETURN;
 		END_IF
 
-		IF iLastWorker._Next <> 0 THEN
+		iCheckWorker := iLastWorker._Next;
+		IF iCheckWorker <> 0 THEN
 			Plant.Panic(iLastWorker, 'Thread validation failed: last worker has a nonzero _Next link.');
 			RETURN;
 		END_IF
@@ -543,7 +569,8 @@ __TRY
 			RETURN;
 		END_IF
 
-		IF iWorker._Prev <> iPrevWorker THEN
+		iCheckWorker := iWorker._Prev;
+		IF iCheckWorker <> iPrevWorker THEN
 			Plant.Panic(iWorker, 'Thread validation failed: current worker _Prev does not match previous visited worker.');
 			RETURN;
 		END_IF
@@ -572,7 +599,8 @@ __TRY
 				RETURN;
 			END_IF
 
-			IF iNextWorker._Prev <> iWorker THEN
+			iCheckWorker := iNextWorker._Prev;
+			IF iCheckWorker <> iWorker THEN
 				Plant.Panic(iWorker, 'Thread validation failed: next worker _Prev does not point back to current worker.');
 				RETURN;
 			END_IF

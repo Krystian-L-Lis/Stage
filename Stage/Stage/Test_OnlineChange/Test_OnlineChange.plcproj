@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>Test_OnlineChange</Name>
-    <ProgramVersion>3.1.4026.19</ProgramVersion>
+    <ProgramVersion>3.1.4026.22</ProgramVersion>
     <Application>{e8d94500-78dd-491a-a460-f0052b39238f}</Application>
     <TypeSystem>{d1357b75-d419-44ed-a9cd-f8914d27c15e}</TypeSystem>
     <Implicit_Task_Info>{b016067b-797a-4846-aba3-306508aae919}</Implicit_Task_Info>
