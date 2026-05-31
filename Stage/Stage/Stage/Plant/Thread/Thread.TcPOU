@@ -17,88 +17,68 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="_First" Id="{a69258e8-ab03-4532-98f4-c6f1e77b0eed}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _First : _I_Execute]]></Declaration>
-      <Get Name="Get" Id="{4db61099-868c-4b8b-90f5-5f62a620bc26}">
-        <Declaration><![CDATA[VAR
+    <Method Name="GetFirst" Id="{a59bcb9c-be91-403f-9979-4a60279971c5}">
+      <Declaration><![CDATA[METHOD INTERNAL GetFirst : _I_Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetFirst := iFirstExecute;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetFirstWorker" Id="{00d30d2c-eb3f-4306-be34-21f09e75eb18}">
+      <Declaration><![CDATA[METHOD INTERNAL GetFirstWorker : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetFirstWorker := iFirstWorker;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLast" Id="{98a300b6-9e55-46d0-b643-9d79ac387c0c}">
+      <Declaration><![CDATA[METHOD INTERNAL GetLast : _I_Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLast := iLastExecute;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLastWorker" Id="{4e7016fe-85ea-4ba9-89cd-421946be8e07}">
+      <Declaration><![CDATA[METHOD INTERNAL GetLastWorker : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLastWorker := iLastWorker;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetNext" Id="{a8d947c6-4468-4ad8-8b5e-fe9a59584dd2}">
+      <Declaration><![CDATA[METHOD INTERNAL GetNext : I_Thread
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetNext := iNextThread;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetNext" Id="{dc0cde70-8ea2-4cc9-86a9-b5c9e1966a3f}">
+      <Declaration><![CDATA[METHOD INTERNAL SetNext
+VAR_INPUT
+	iNext: I_Thread;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_First := iFirstExecute;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="_FirstWorker" Id="{1dc05f76-d766-410c-8416-941e0e2be422}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _FirstWorker : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{8662ad19-2a97-4204-a6f0-8b5870da79e2}">
-        <Declaration><![CDATA[VAR
+      <Implementation>
+        <ST><![CDATA[iNextThread := iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPrev" Id="{1142f898-2952-4cbf-ad28-4c5ab04e1cc2}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPrev : I_Thread
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetPrev := iPrevThread;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPrev" Id="{94aedec5-318a-4d93-9b50-d0bafd095252}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPrev
+VAR_INPUT
+	iPrev: I_Thread;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_FirstWorker := iFirstWorker;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="_Last" Id="{52f96cb0-8ef8-4118-8fe1-42a84f366889}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Last : _I_Execute]]></Declaration>
-      <Get Name="Get" Id="{c5976106-93c4-4bbe-b041-e16625b4868f}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Last := iLastExecute;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="_LastWorker" Id="{bbf5e346-34e5-4ec0-8d6a-c990faf1f869}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _LastWorker : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{6cd3e676-9441-416b-b06b-9d8f03331d8b}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_LastWorker := iLastWorker;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="_Next" Id="{f7a79220-0600-4d7d-9569-b60306c08184}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Thread]]></Declaration>
-      <Get Name="Get" Id="{5d15dfc1-f2fe-46e9-a9a6-648aa0ebd419}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Next := iNextThread;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{01bf9bf3-7d2b-44de-bd62-73170ec092f1}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[iNextThread := _Next;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="_Prev" Id="{9f34c22e-ddc3-49b3-9f00-0c3c3179331e}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Thread]]></Declaration>
-      <Get Name="Get" Id="{3740d4ec-b7dc-4312-8675-bf53f4c9ca75}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Prev := iPrevThread;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{1f36793c-248f-45df-b3e3-4058cbd74f40}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[iPrevThread := _Prev;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
+      <Implementation>
+        <ST><![CDATA[iPrevThread := iPrev;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AttachExecute" Id="{09cc9772-526f-41a4-9b80-35664d45d756}">
       <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result
 VAR_INPUT
@@ -116,14 +96,14 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-iThread := iExecute._Thread;
+iThread := iExecute.GetThread();
 IF iThread <> iThis THEN
 	AttachExecute := Error;
 	RETURN;
 END_IF
 
-iPrev := iExecute._Prev;
-iNext := iExecute._Next;
+iPrev := iExecute.GetPrev();
+iNext := iExecute.GetNext();
 
 IF iPrev <> 0 OR iNext <> 0 OR
 	iFirstExecute = iExecute OR iLastExecute = iExecute THEN
@@ -132,11 +112,11 @@ IF iPrev <> 0 OR iNext <> 0 OR
     RETURN;
 END_IF
 
-iExecute._Prev := iLastExecute;
-iExecute._Next := 0;
+iExecute.SetPrev(iLastExecute);
+iExecute.SetNext(0);
 
 IF iLastExecute <> 0 THEN
-	iLastExecute._Next := iExecute;
+	iLastExecute.SetNext(iExecute);
 	iLastExecute := iExecute;
 ELSE
 	iFirstExecute := iExecute;
@@ -163,14 +143,14 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-iThread := iWorker.Thread;
+iThread := iWorker.GetThread();
 IF iThread <> iThis THEN
 	AttachWorker := Error;
 	RETURN;
 END_IF
 
-iPrev := iWorker._Prev;
-iNext := iWorker._Next;
+iPrev := iWorker.GetPrev();
+iNext := iWorker.GetNext();
 
 IF iPrev <> 0 OR iNext <> 0 OR
 	iFirstWorker = iWorker OR iLastWorker = iWorker THEN
@@ -179,11 +159,11 @@ IF iPrev <> 0 OR iNext <> 0 OR
     RETURN;
 END_IF
 
-iWorker._Prev := iLastWorker;
-iWorker._Next := 0;
+iWorker.SetPrev(iLastWorker);
+iWorker.SetNext(0);
 
 IF iLastWorker <> 0 THEN
-	iLastWorker._Next := iWorker;
+	iLastWorker.SetNext(iWorker);
 	iLastWorker := iWorker;
 ELSE
 	iFirstWorker := iWorker;
@@ -210,21 +190,21 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-iThread := iExecute._Thread;
+iThread := iExecute.GetThread();
 IF iThread <> iThis THEN
 	DetachExecute := Error;
 	RETURN;
 END_IF
 
-iPrev := iExecute._Prev;
-iNext := iExecute._Next;
+iPrev := iExecute.GetPrev();
+iNext := iExecute.GetNext();
 
 IF iPrev <> 0 THEN
-    iPrev._Next := iNext;
+    iPrev.SetNext(iNext);
 END_IF
 
 IF iNext <> 0 THEN
-    iNext._Prev := iPrev;
+    iNext.SetPrev(iPrev);
 END_IF
 
 IF iFirstExecute = iExecute THEN
@@ -235,8 +215,8 @@ IF iLastExecute = iExecute THEN
     iLastExecute := iPrev;
 END_IF
 
-iExecute._Prev := 0;
-iExecute._Next := 0;
+iExecute.SetPrev(0);
+iExecute.SetNext(0);
 
 DetachExecute := Ok;]]></ST>
       </Implementation>
@@ -258,21 +238,21 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-iThread := iWorker.Thread;
+iThread := iWorker.GetThread();
 IF iThread <> iThis THEN
 	DetachWorker := Error;
 	RETURN;
 END_IF
 
-iPrev := iWorker._Prev;
-iNext := iWorker._Next;
+iPrev := iWorker.GetPrev();
+iNext := iWorker.GetNext();
 
 IF iPrev <> 0 THEN
-    iPrev._Next := iNext;
+    iPrev.SetNext(iNext);
 END_IF
 
 IF iNext <> 0 THEN
-    iNext._Prev := iPrev;
+    iNext.SetPrev(iPrev);
 END_IF
 
 IF iFirstWorker = iWorker THEN
@@ -283,8 +263,8 @@ IF iLastWorker = iWorker THEN
     iLastWorker := iPrev;
 END_IF
 
-iWorker._Prev := 0;
-iWorker._Next := 0;
+iWorker.SetPrev(0);
+iWorker.SetNext(0);
 
 DetachWorker := Ok;]]></ST>
       </Implementation>
@@ -307,14 +287,14 @@ END_VAR
 	IF iThis <> iMainThread THEN
 		WHILE iFirstExecute <> 0 DO
 			iExecute := iFirstExecute;
-			iExecute._Thread := iThis;
+			iExecute.SetThread(iThis);
 
 			IF DetachExecute(iExecute) <> Ok THEN
 				Plant.Panic(iExecute, 'Thread exit failed: could not detach execute before moving it to MainThread.');
 				EXIT;
 			END_IF
 
-			iExecute._Thread := iMainThread;
+			iExecute.SetThread(iMainThread);
 
 			IF IsErr(iMainThread.AttachExecute(iExecute)) THEN
 				Plant.Panic(iExecute, 'Thread exit failed: could not attach execute to MainThread before detaching thread.');
@@ -326,14 +306,14 @@ END_VAR
 
 		WHILE iFirstWorker <> 0 DO
 			iWorker := iFirstWorker;
-			iWorker._Thread := iThis;
+			iWorker.SetThread(iThis);
 
 			IF DetachWorker(iWorker) <> Ok THEN
 				Plant.Panic(iWorker, 'Thread exit failed: could not detach worker before moving it to MainThread.');
 				EXIT;
 			END_IF
 
-			iWorker._Thread := iMainThread;
+			iWorker.SetThread(iMainThread);
 
 			IF IsErr(iMainThread.AttachWorker(iWorker)) THEN
 				Plant.Panic(iWorker, 'Thread exit failed: could not attach worker to MainThread before detaching thread.');
@@ -444,13 +424,13 @@ __TRY
 			RETURN;
 		END_IF
 
-		iCheckExecute := iFirstExecute._Prev;
+		iCheckExecute := iFirstExecute.GetPrev();
 		IF iCheckExecute <> 0 THEN
 			Plant.Panic(iFirstExecute, 'Thread validation failed: first execute has a nonzero _Prev link.');
 			RETURN;
 		END_IF
 
-		iCheckExecute := iLastExecute._Next;
+		iCheckExecute := iLastExecute.GetNext();
 		IF iCheckExecute <> 0 THEN
 			Plant.Panic(iLastExecute, 'Thread validation failed: last execute has a nonzero _Next link.');
 			RETURN;
@@ -473,13 +453,13 @@ __TRY
 			RETURN;
 		END_IF
 
-		iCheckExecute := iExecute._Prev;
+		iCheckExecute := iExecute.GetPrev();
 		IF iCheckExecute <> iPrevExecute THEN
 			Plant.Panic(iExecute, 'Thread validation failed: current execute _Prev does not match previous visited execute.');
 			RETURN;
 		END_IF
 
-		iExecuteThread := iExecute._Thread;
+		iExecuteThread := iExecute.GetThread();
 		IF Plant.ValidateInterface(iExecuteThread) <> Ok THEN
 			Plant.Panic(iExecute, 'Thread validation failed: current execute _Thread is 0 or failed ValidateInterface.');
 			RETURN;
@@ -490,7 +470,7 @@ __TRY
 			RETURN;
 		END_IF
 
-		iNextExecute := iExecute._Next;
+		iNextExecute := iExecute.GetNext();
 
 		IF iNextExecute <> 0 THEN
 			IF Plant.ValidateInterface(iNextExecute) <> Ok THEN
@@ -503,7 +483,7 @@ __TRY
 				RETURN;
 			END_IF
 
-			iCheckExecute := iNextExecute._Prev;
+			iCheckExecute := iNextExecute.GetPrev();
 			IF iCheckExecute <> iExecute THEN
 				Plant.Panic(iExecute, 'Thread validation failed: next execute _Prev does not point back to current execute.');
 				RETURN;
@@ -540,13 +520,13 @@ __TRY
 			RETURN;
 		END_IF
 
-		iCheckWorker := iFirstWorker._Prev;
+		iCheckWorker := iFirstWorker.GetPrev();
 		IF iCheckWorker <> 0 THEN
 			Plant.Panic(iFirstWorker, 'Thread validation failed: first worker has a nonzero _Prev link.');
 			RETURN;
 		END_IF
 
-		iCheckWorker := iLastWorker._Next;
+		iCheckWorker := iLastWorker.GetNext();
 		IF iCheckWorker <> 0 THEN
 			Plant.Panic(iLastWorker, 'Thread validation failed: last worker has a nonzero _Next link.');
 			RETURN;
@@ -569,13 +549,13 @@ __TRY
 			RETURN;
 		END_IF
 
-		iCheckWorker := iWorker._Prev;
+		iCheckWorker := iWorker.GetPrev();
 		IF iCheckWorker <> iPrevWorker THEN
 			Plant.Panic(iWorker, 'Thread validation failed: current worker _Prev does not match previous visited worker.');
 			RETURN;
 		END_IF
 
-		iWorkerThread := iWorker.Thread;
+		iWorkerThread := iWorker.GetThread();
 		IF Plant.ValidateInterface(iWorkerThread) <> Ok THEN
 			Plant.Panic(iWorker, 'Thread validation failed: current worker Thread is 0 or failed ValidateInterface.');
 			RETURN;
@@ -586,7 +566,7 @@ __TRY
 			RETURN;
 		END_IF
 
-		iNextWorker := iWorker._Next;
+		iNextWorker := iWorker.GetNext();
 
 		IF iNextWorker <> 0 THEN
 			IF Plant.ValidateInterface(iNextWorker) <> Ok THEN
@@ -599,7 +579,7 @@ __TRY
 				RETURN;
 			END_IF
 
-			iCheckWorker := iNextWorker._Prev;
+			iCheckWorker := iNextWorker.GetPrev();
 			IF iCheckWorker <> iWorker THEN
 				Plant.Panic(iWorker, 'Thread validation failed: next worker _Prev does not point back to current worker.');
 				RETURN;

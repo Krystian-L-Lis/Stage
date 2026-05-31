@@ -10,38 +10,38 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="_Next" Id="{d85e49a0-c960-4d80-817f-27dad2bbc85f}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : _I_Execute]]></Declaration>
-      <Get Name="Get" Id="{189e3f84-8bed-4ea6-92ea-85f841394350}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{1e76c6e5-67d5-4435-813f-3cc572f42016}">
-        <Declaration><![CDATA[VAR
+    <Method Name="GetNext" Id="{5b543610-e1fa-4f2b-a8a0-54202ae4a9dc}">
+      <Declaration><![CDATA[METHOD INTERNAL GetNext : _I_Execute
+]]></Declaration>
+    </Method>
+    <Method Name="SetNext" Id="{ac7fcdda-3d58-45fe-b3c7-62ee13cdb491}">
+      <Declaration><![CDATA[METHOD INTERNAL SetNext
+VAR_INPUT
+	iNext: _I_Execute;
 END_VAR
 ]]></Declaration>
-      </Set>
-    </Property>
-    <Property Name="_Prev" Id="{0da4288c-72b7-44fb-999b-42f4c5d756fd}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : _I_Execute]]></Declaration>
-      <Get Name="Get" Id="{ec452bbc-9253-4100-8fc7-26dc8d1838a1}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{ad9dc126-21c9-4d41-987b-2b4f0ec01fb6}">
-        <Declaration><![CDATA[VAR
+    </Method>
+    <Method Name="GetPrev" Id="{8ec9a1af-7511-4197-89bc-92c02af4d758}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPrev : _I_Execute
+]]></Declaration>
+    </Method>
+    <Method Name="SetPrev" Id="{56724861-3fee-415a-a57c-8f1a19c2647b}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPrev
+VAR_INPUT
+	iPrev: _I_Execute;
 END_VAR
 ]]></Declaration>
-      </Set>
-    </Property>
-    <Property Name="_Thread" Id="{fbc718ea-5bbc-4d6c-b547-3338cf33512d}">
-      <Declaration><![CDATA[PROPERTY INTERNAl _Thread : I_Thread]]></Declaration>
-      <Get Name="Get" Id="{fb3b3bf1-aa1d-4267-a059-167fa22ee1ac}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{5ea3b330-eab9-464c-a96c-61c8dcacb86e}">
-        <Declaration><![CDATA[VAR
+    </Method>
+    <Method Name="GetThread" Id="{135e4469-81eb-4248-a642-31db2477d4be}">
+      <Declaration><![CDATA[METHOD INTERNAL GetThread : I_Thread
+]]></Declaration>
+    </Method>
+    <Method Name="SetThread" Id="{76dab680-b561-44e5-a302-e9e92c47b7f6}">
+      <Declaration><![CDATA[METHOD INTERNAL SetThread
+VAR_INPUT
+	iThread: I_Thread;
 END_VAR
 ]]></Declaration>
-      </Set>
-    </Property>
+    </Method>
   </Itf>
 </TcPlcObject>

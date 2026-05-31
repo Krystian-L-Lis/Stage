@@ -26,64 +26,57 @@ END_VAR
 iNext := _iNext;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="_Next" Id="{ad8103e9-fb8f-4936-a0ee-b2d1c9e1c87b}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : _I_Execute]]></Declaration>
-      <Get Name="Get" Id="{39850231-e716-4e27-b975-9436ea93b7e3}">
-        <Declaration><![CDATA[VAR
+    <Method Name="GetNext" Id="{3d96c1fb-39f0-442f-9718-f6d5a86e211b}">
+      <Declaration><![CDATA[METHOD INTERNAL GetNext : _I_Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetNext := _iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetNext" Id="{677f2992-18c1-4c5a-b2ec-d486da3438ff}">
+      <Declaration><![CDATA[METHOD INTERNAL SetNext
+VAR_INPUT
+	iNext: _I_Execute;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Next := _iNext;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{bf94e75f-d876-4f16-afa1-1974888aa677}">
-        <Declaration><![CDATA[VAR
+      <Implementation>
+        <ST><![CDATA[_iNext := iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPrev" Id="{3b3ff7c6-bb9b-4733-bc64-54d2c8dcb4cd}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPrev : _I_Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetPrev := _iPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPrev" Id="{44730286-9026-4f66-98e9-3d355cd1aaea}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPrev
+VAR_INPUT
+	iPrev: _I_Execute;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_iNext := _Next;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="_Prev" Id="{6abbb40a-4098-4166-9b94-da7893ebc1f2}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : _I_Execute]]></Declaration>
-      <Get Name="Get" Id="{928f6ef0-c4a5-4512-a837-8b15c0552674}">
-        <Declaration><![CDATA[VAR
+      <Implementation>
+        <ST><![CDATA[_iPrev := iPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetThread" Id="{72227220-0359-407a-8720-7719b42011bf}">
+      <Declaration><![CDATA[METHOD INTERNAL GetThread : I_Thread
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetThread := _iThread;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetThread" Id="{2857cd8b-9e67-46ff-a686-f2ae4abe909f}">
+      <Declaration><![CDATA[METHOD INTERNAL SetThread
+VAR_INPUT
+	iThread: I_Thread;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Prev := _iPrev;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{fe73ed36-ade6-4303-8f0b-7b28db470838}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_iPrev := _Prev;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="_Thread" Id="{98870889-5142-4df1-b51d-c3f4b912299c}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Thread : I_Thread]]></Declaration>
-      <Get Name="Get" Id="{854462fc-9022-4575-bebf-1f48da7d7416}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Thread := _iThread;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{1abd7175-0458-4666-80bb-d076d71ba426}">
-        <Declaration><![CDATA[INTERNAL 
-VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_iThread := _Thread;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
+      <Implementation>
+        <ST><![CDATA[_iThread := iThread;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_Exit" Id="{fbaf27a8-1c97-413f-b76d-2e38666e1e5d}">
       <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
 //method is called before the controller removes the code of the function block instance

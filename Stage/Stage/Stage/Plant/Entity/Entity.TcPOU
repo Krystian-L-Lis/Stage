@@ -16,64 +16,57 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="_Next" Id="{8d0df887-d92e-47e4-9173-d51dc5f71061}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Entity]]></Declaration>
-      <Get Name="Get" Id="{69c479c6-496d-4544-8e03-2fa101a500bd}">
-        <Declaration><![CDATA[VAR
+    <Method Name="GetNext" Id="{178d67ef-3966-4f80-9d4d-4adf4da36a08}">
+      <Declaration><![CDATA[METHOD INTERNAL GetNext : I_Entity
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetNext := _iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetNext" Id="{9a2570dd-3b04-4ee8-be69-5d090f18021b}">
+      <Declaration><![CDATA[METHOD INTERNAL SetNext
+VAR_INPUT
+	iNext: I_Entity;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Next := _iNext;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{1d587535-a01f-42f1-90a8-6913adb4690d}">
-        <Declaration><![CDATA[VAR
+      <Implementation>
+        <ST><![CDATA[_iNext := iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPrev" Id="{5b68acf2-0a0c-4738-ab86-7b60fc3e9b62}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPrev : I_Entity
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetPrev := _iPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPrev" Id="{87cd0db6-44b3-4110-a1fa-b5f473d2851d}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPrev
+VAR_INPUT
+	iPrev: I_Entity;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_iNext := _Next;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="_Prev" Id="{dc959834-2b1f-412a-84d1-9286f005eb2d}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Entity]]></Declaration>
-      <Get Name="Get" Id="{a91a7dde-6ccb-4e09-ba88-706222add5e4}">
-        <Declaration><![CDATA[VAR
+      <Implementation>
+        <ST><![CDATA[_iPrev := iPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetRaw" Id="{cc134584-0896-4043-bd88-ebfc51f0d41f}">
+      <Declaration><![CDATA[METHOD INTERNAL GetRaw : I_Generic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetRaw := _iGeneric;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetRaw" Id="{b9332142-957a-413d-8fa9-742039183f0f}">
+      <Declaration><![CDATA[METHOD INTERNAL SetRaw
+VAR_INPUT
+	iRaw: I_Generic;
 END_VAR
 ]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Prev := _iPrev;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{d3db405a-7139-4c8d-84b4-96f56835e7f4}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_iPrev := _Prev;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="_Raw" Id="{84bc605e-077c-4e23-bbd5-93ce370af17c}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Raw : I_Generic
-]]></Declaration>
-      <Get Name="Get" Id="{7c364d4d-4000-47ec-b72c-702748352337}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_Raw := _iGeneric;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{995e244f-c388-41a4-ac14-937884337efd}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_iGeneric := _Raw;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
+      <Implementation>
+        <ST><![CDATA[_iGeneric := iRaw;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="_Result" Id="{32a97810-b8fd-4467-843e-b19132c8f3f4}">
       <Declaration><![CDATA[PROPERTY INTERNAL _Result : Result]]></Declaration>
       <Get Name="Get" Id="{636a706b-3bf6-496c-89d6-d262add3263b}">

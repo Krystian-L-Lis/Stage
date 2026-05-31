@@ -3,42 +3,50 @@
   <Itf Name="_I_Worker" Id="{07430000-e899-49ca-9847-972737ca3f53}">
     <Declaration><![CDATA[INTERFACE INTERNAL _I_Worker EXTENDS I_Debug, I_ValidateInterface;
 ]]></Declaration>
-    <Property Name="_Next" Id="{426096a7-01e2-40c8-a7dd-d67bd6f6a327}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Next : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{ec3f1859-9bac-4254-a57c-9db6e7eb29cf}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{677614c4-5f73-475a-b54d-cb7b12bb9a90}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Set>
-    </Property>
-    <Property Name="_Prev" Id="{db271ff8-3568-4693-8384-2665bec344a9}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Prev : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{b65827bb-4606-4fd8-8596-4b34ee1291ea}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{ccd5eece-c562-41e4-903f-9e6dcacf894d}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Set>
-    </Property>
-    <Property Name="_PlantNext" Id="{c6d58d7a-2cd6-4afd-8daa-ed94a0208514}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _PlantNext : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{3d896fcf-8d59-42a3-967a-a8e5550e2a6e}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{fb9dde27-4f2d-4d7e-b0fc-37e2334fd385}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Set>
-    </Property>
-    <Property Name="_PlantPrev" Id="{0fd0ef65-3e59-4581-ae7d-feb5ba434f7f}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _PlantPrev : I_Worker]]></Declaration>
-      <Get Name="Get" Id="{923b7a69-b545-4bc4-ac5a-11803d2fedcd}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{5c50dd8f-b4c6-488d-9ce8-05dfcb3e27cd}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Set>
-    </Property>
+    <Method Name="GetNext" Id="{bf576099-72aa-4741-ab3b-4ff8ba9d9bcd}">
+      <Declaration><![CDATA[METHOD INTERNAL GetNext : I_Worker
+]]></Declaration>
+    </Method>
+    <Method Name="SetNext" Id="{13cfc724-bda7-4fbe-b736-ba55f969e8ee}">
+      <Declaration><![CDATA[METHOD INTERNAL SetNext
+VAR_INPUT
+	iNext: I_Worker;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetPrev" Id="{5dcc9758-b1d1-4969-84bd-b848c6370ead}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPrev : I_Worker
+]]></Declaration>
+    </Method>
+    <Method Name="SetPrev" Id="{a133ab78-dfc3-4067-bbaa-536bfee3b91b}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPrev
+VAR_INPUT
+	iPrev: I_Worker;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetPlantNext" Id="{f4c8307b-eedf-4acf-a52b-a15ca08c5ce6}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPlantNext : I_Worker
+]]></Declaration>
+    </Method>
+    <Method Name="SetPlantNext" Id="{0e194799-00e7-4808-b040-2e8e34ab33f0}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPlantNext
+VAR_INPUT
+	iNext: I_Worker;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetPlantPrev" Id="{c3f0168d-e2a0-4e0f-86e7-d1aaac5e5f46}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPlantPrev : I_Worker
+]]></Declaration>
+    </Method>
+    <Method Name="SetPlantPrev" Id="{3f68b2f1-b9b4-4b3a-afa8-cc820d1c12c7}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPlantPrev
+VAR_INPUT
+	iPrev: I_Worker;
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="Process" Id="{bf44a028-9259-46a3-b6eb-6c366a7704c7}">
       <Declaration><![CDATA[METHOD INTERNAL Process
 VAR_OUTPUT
@@ -46,24 +54,16 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="_Thread" Id="{3aa35d64-97c9-4d18-ac1c-6f33e1ac0b2d}">
-      <Declaration><![CDATA[PROPERTY INTERNAL _Thread : I_Thread]]></Declaration>
-      <Get Name="Get" Id="{cbd7efab-dfc6-425b-bccb-3b57d4ea6d14}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{bf4380d8-eeac-4286-9690-d2db8e6d960d}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Set>
-    </Property>
-    <Property Name="Thread" Id="{72664e5a-4e4f-4a16-a656-7b32bc2b89e7}">
-      <Declaration><![CDATA[// Thread that processes this worker; can change while Idle.
-PROPERTY Thread : I_Thread]]></Declaration>
-      <Get Name="Get" Id="{1ae9c584-ea6d-4c91-be59-16d88dfc59d3}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Get>
-      <Set Name="Set" Id="{f042ba81-7885-4cd1-8f03-fcb05f790817}">
-        <Declaration><![CDATA[]]></Declaration>
-      </Set>
-    </Property>
+    <Method Name="GetThread" Id="{1fce7347-efd2-4ab7-9f31-007766c781a0}">
+      <Declaration><![CDATA[METHOD INTERNAL GetThread : I_Thread
+]]></Declaration>
+    </Method>
+    <Method Name="SetThread" Id="{484128aa-92d9-4f9e-8674-c4769f6a87b7}">
+      <Declaration><![CDATA[METHOD INTERNAL SetThread
+VAR_INPUT
+	iThread: I_Thread;
+END_VAR
+]]></Declaration>
+    </Method>
   </Itf>
 </TcPlcObject>
