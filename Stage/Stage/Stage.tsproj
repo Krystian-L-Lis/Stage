@@ -25,13 +25,13 @@
 		</System>
 		<Plc>
 			<Project GUID="{498E16F7-0664-4968-A44B-F00C4B4BA6AA}" Name="Stage" PrjFilePath="Stage\Stage.plcproj" TmcFilePath="Stage\Stage.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{D8F3CE82-C222-A9E2-84EF-FB6556009144}" TmcPath="Stage\Stage.tmc">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{3AA6C5C8-40B2-0436-E7F7-670C3BB941D7}" TmcPath="Stage\Stage.tmc">
 					<Name>Stage Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>
 			<Project GUID="{CC7E72C0-0C38-4EEA-A974-F286AD8A786D}" Name="Test_OnlineChange" PrjFilePath="Test_OnlineChange\Test_OnlineChange.plcproj" TmcFilePath="Test_OnlineChange\Test_OnlineChange.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{2CDF992F-6C6F-AA87-70C7-05493A70ACC3}" TmcPath="Test_OnlineChange\Test_OnlineChange.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{CCBF22D9-176A-B1D0-D00E-6A54C0240661}" TmcPath="Test_OnlineChange\Test_OnlineChange.tmc">
 					<Name>Test_OnlineChange Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

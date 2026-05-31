@@ -17,68 +17,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="GetFirst" Id="{a59bcb9c-be91-403f-9979-4a60279971c5}">
-      <Declaration><![CDATA[METHOD INTERNAL GetFirst : _I_Execute
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetFirst := iFirstExecute;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetFirstWorker" Id="{00d30d2c-eb3f-4306-be34-21f09e75eb18}">
-      <Declaration><![CDATA[METHOD INTERNAL GetFirstWorker : I_Worker
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetFirstWorker := iFirstWorker;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetLast" Id="{98a300b6-9e55-46d0-b643-9d79ac387c0c}">
-      <Declaration><![CDATA[METHOD INTERNAL GetLast : _I_Execute
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetLast := iLastExecute;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetLastWorker" Id="{4e7016fe-85ea-4ba9-89cd-421946be8e07}">
-      <Declaration><![CDATA[METHOD INTERNAL GetLastWorker : I_Worker
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetLastWorker := iLastWorker;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetNext" Id="{a8d947c6-4468-4ad8-8b5e-fe9a59584dd2}">
-      <Declaration><![CDATA[METHOD INTERNAL GetNext : I_Thread
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetNext := iNextThread;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetNext" Id="{dc0cde70-8ea2-4cc9-86a9-b5c9e1966a3f}">
-      <Declaration><![CDATA[METHOD INTERNAL SetNext
-VAR_INPUT
-	iNext: I_Thread;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[iNextThread := iNext;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetPrev" Id="{1142f898-2952-4cbf-ad28-4c5ab04e1cc2}">
-      <Declaration><![CDATA[METHOD INTERNAL GetPrev : I_Thread
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetPrev := iPrevThread;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetPrev" Id="{94aedec5-318a-4d93-9b50-d0bafd095252}">
-      <Declaration><![CDATA[METHOD INTERNAL SetPrev
-VAR_INPUT
-	iPrev: I_Thread;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[iPrevThread := iPrev;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="AttachExecute" Id="{09cc9772-526f-41a4-9b80-35664d45d756}">
       <Declaration><![CDATA[METHOD INTERNAL AttachExecute : Result
 VAR_INPUT
@@ -346,6 +284,48 @@ IF IsErr(Plant._AttachThread(THIS^)) THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="GetFirst" Id="{a59bcb9c-be91-403f-9979-4a60279971c5}">
+      <Declaration><![CDATA[METHOD INTERNAL GetFirst : _I_Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetFirst := iFirstExecute;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetFirstWorker" Id="{00d30d2c-eb3f-4306-be34-21f09e75eb18}">
+      <Declaration><![CDATA[METHOD INTERNAL GetFirstWorker : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetFirstWorker := iFirstWorker;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLast" Id="{98a300b6-9e55-46d0-b643-9d79ac387c0c}">
+      <Declaration><![CDATA[METHOD INTERNAL GetLast : _I_Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLast := iLastExecute;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLastWorker" Id="{4e7016fe-85ea-4ba9-89cd-421946be8e07}">
+      <Declaration><![CDATA[METHOD INTERNAL GetLastWorker : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLastWorker := iLastWorker;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetNext" Id="{a8d947c6-4468-4ad8-8b5e-fe9a59584dd2}">
+      <Declaration><![CDATA[METHOD INTERNAL GetNext : I_Thread
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetNext := iNextThread;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPrev" Id="{1142f898-2952-4cbf-ad28-4c5ab04e1cc2}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPrev : I_Thread
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetPrev := iPrevThread;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Run" Id="{312d03b0-5785-4da7-8eb1-55c23394ad73}">
       <Declaration><![CDATA[// Processes active workers, then cyclic executors; returns during init or panic.
 METHOD Run
@@ -366,6 +346,26 @@ END_WHILE
 WHILE iExecute <> 0 DO
 	iExecute._Exe(iNext => iExecute);
 END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetNext" Id="{dc0cde70-8ea2-4cc9-86a9-b5c9e1966a3f}">
+      <Declaration><![CDATA[METHOD INTERNAL SetNext
+VAR_INPUT
+	iNext: I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[iNextThread := iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPrev" Id="{94aedec5-318a-4d93-9b50-d0bafd095252}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPrev
+VAR_INPUT
+	iPrev: I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[iPrevThread := iPrev;]]></ST>
       </Implementation>
     </Method>
     <Method Name="ValidateInterface" Id="{c25915fa-ff5e-40d2-928c-da91ae08f4b2}">

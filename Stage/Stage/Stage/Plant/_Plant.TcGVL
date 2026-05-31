@@ -2,6 +2,7 @@
 <TcPlcObject Version="1.1.0.1">
   <GVL Name="_Plant" Id="{a8108114-c7a2-455b-babd-f14b1e02d6df}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'global_init_slot' := '40001'}
 VAR_GLOBAL INTERNAL
 	panic: ARRAY[1..PARAM.MAX_PANIC_MSG] OF DebugStruct;
 	warn: ARRAY[1..PARAM.MAX_WARN_MSG] OF DebugStruct;

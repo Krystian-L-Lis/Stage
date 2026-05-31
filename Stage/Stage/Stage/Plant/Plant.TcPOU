@@ -15,18 +15,6 @@ PROGRAM Plant]]></Declaration>
     </Folder>
     <Folder Name="Debug" Id="{e6d85270-d75e-413e-ad3b-647f81f1c906}" />
     <Folder Name="Entity" Id="{35e63acc-805b-4873-8c1e-69618d2c4f29}" />
-    <Method Name="_ClearNewInstanceFlags" Id="{49984dc4-4086-4bcf-911b-9201af18ba8e}" FolderPath="_\Entity\">
-      <Declaration><![CDATA[METHOD PRIVATE _ClearNewInstanceFlags
-VAR
-	_iEtt: I_Entity;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
-	_iEtt._NewInstance := FALSE;
-END_WHILE]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="_AttachEntity" Id="{be744718-8786-4ff8-afd9-d362a16bb8a5}" FolderPath="_\Entity\">
       <Declaration><![CDATA[METHOD INTERNAL _AttachEntity : Result
 VAR_INPUT
@@ -207,6 +195,18 @@ END_VAR
 			_iPreInit.PreInit();
 		END_IF
 	END_IF
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_ClearNewInstanceFlags" Id="{49984dc4-4086-4bcf-911b-9201af18ba8e}" FolderPath="_\Entity\">
+      <Declaration><![CDATA[METHOD PRIVATE _ClearNewInstanceFlags
+VAR
+	_iEtt: I_Entity;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE IsOk(Plant.NextEtt(_iEtt)) DO
+	_iEtt._NewInstance := FALSE;
 END_WHILE]]></ST>
       </Implementation>
     </Method>
