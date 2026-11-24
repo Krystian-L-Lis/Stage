@@ -10,9 +10,9 @@ TYPE JobState :
 	Idle, // Not attached to a thread.	
 	Init, // On JobInit call.
 	Busy, // Calls JobExecute each worker cycle.
-	Done, // Will call JobExit and detach.
+	Done, // Detaches from the thread.
 	PreInit, // Attached to thread, before JobInit is called.
-	PreExit // Between Stop and JobExit call.
+	PreExit // Between Stop and JobExit call. Will call JobExit and detach. 
 	
 ) BYTE;
 END_TYPE

@@ -18,7 +18,7 @@ PROPERTY State : JobState]]></Declaration>
       </Get>
     </Property>
     <Method Name="Stop" Id="{ac7127aa-39d4-435f-b5d0-74c0f4a14a7e}">
-      <Declaration><![CDATA[// Requests stop; Busy moves to Done and calls JobExit before returning Idle.
+      <Declaration><![CDATA[// Requests stop; Busy moves to PreExit then Done and calls JobExit before returning Idle; PreInit moves straight to Done.
 METHOD Stop
 VAR_INPUT
 END_VAR

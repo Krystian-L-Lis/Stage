@@ -11,7 +11,7 @@ END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="JobExit" Id="{054d6bc8-13d0-47de-b56b-f58a14af1d76}">
-      <Declaration><![CDATA[// Called once when the worker leaves Done.
+      <Declaration><![CDATA[// Called once when the worker leaves PreExit.
 METHOD JobExit
 VAR_INPUT
 END_VAR
