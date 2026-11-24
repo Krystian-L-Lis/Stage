@@ -7,12 +7,12 @@
 {attribute 'to_string'}
 TYPE JobState :
 (
-	Idle, // Not attached to a thread.
-	PreInit, // Attached to thread, before JobInit is called.
+	Idle, // Not attached to a thread.	
 	Init, // On JobInit call.
 	Busy, // Calls JobExecute each worker cycle.
-	PreExit, // Between Stop and JobExit call.
-	Done // Will call JobExit and detach.
+	Done, // Will call JobExit and detach.
+	PreInit, // Attached to thread, before JobInit is called.
+	PreExit // Between Stop and JobExit call.
 	
 ) BYTE;
 END_TYPE

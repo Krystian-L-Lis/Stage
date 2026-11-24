@@ -139,6 +139,9 @@ END_VAR
 	JobState.Busy:
 		_iJob.JobExecute();
 		iNext := _iNext;
+		
+	ELSE
+		iNext := _iNext;
 
 END_CASE]]></ST>
       </Implementation>
@@ -229,7 +232,7 @@ END_VAR
       </Get>
     </Property>
     <Method Name="Stop" Id="{6cfd29a9-2408-440a-b439-b2633f4e1057}">
-      <Declaration><![CDATA[// Requests stop; Busy moves to Done and calls JobExit before returning Idle.
+      <Declaration><![CDATA[// Requests stop; Busy moves to PreExit then Done and calls JobExit before returning Idle; PreInit moves straight to Done.
 METHOD Stop
 VAR_INPUT
 END_VAR
