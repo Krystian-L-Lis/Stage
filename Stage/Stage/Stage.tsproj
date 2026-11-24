@@ -1,25 +1,10 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.22">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.27">
 	<Project ProjectGUID="{C61CA2FA-5123-4198-9125-8734FBACFE30}" TargetNetId="199.4.42.250.1.1" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
 			<Tasks>
-				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
-					<Name>Example</Name>
-				</Task>
-				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
-					<Name>Test</Name>
-				</Task>
-				<Task Id="5" Priority="30" CycleTime="2000000" AmsPort="352" DisableFpExceptions="true" AdtTasks="true">
-					<Name>VISU_TASK</Name>
-				</Task>
-				<Task Id="6" Priority="22" CycleTime="100000" AmsPort="353" AdtTasks="true">
-					<Name>PlcTask</Name>
-				</Task>
-				<Task Id="7" Priority="23" CycleTime="100000" AmsPort="354" AdtTasks="true">
-					<Name>PlcTask1</Name>
-				</Task>
 				<Task Id="8" Priority="24" CycleTime="100000" AmsPort="355" AdtTasks="true">
-					<Name>PlcTask2</Name>
+					<Name>PlcTask</Name>
 				</Task>
 			</Tasks>
 		</System>
@@ -30,7 +15,7 @@
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 				</Instance>
 			</Project>
-			<Project GUID="{CC7E72C0-0C38-4EEA-A974-F286AD8A786D}" Name="Test_OnlineChange" PrjFilePath="Test_OnlineChange\Test_OnlineChange.plcproj" TmcFilePath="Test_OnlineChange\Test_OnlineChange.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+			<Project Disabled="true" GUID="{CC7E72C0-0C38-4EEA-A974-F286AD8A786D}" Name="Test_OnlineChange" PrjFilePath="Test_OnlineChange\Test_OnlineChange.plcproj" TmcFilePath="Test_OnlineChange\Test_OnlineChange.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{CCBF22D9-176A-B1D0-D00E-6A54C0240661}" TmcPath="Test_OnlineChange\Test_OnlineChange.tmc">
 					<Name>Test_OnlineChange Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>

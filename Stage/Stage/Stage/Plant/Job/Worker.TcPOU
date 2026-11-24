@@ -17,91 +17,6 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="GetNext" Id="{0c602b56-b5e1-4abf-91dd-fb731c365c0a}">
-      <Declaration><![CDATA[METHOD INTERNAL GetNext : I_Worker
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetNext := _iNext;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetNext" Id="{696044ab-0c56-4ddd-90e1-0eb46b6f56e6}">
-      <Declaration><![CDATA[METHOD INTERNAL SetNext
-VAR_INPUT
-	iNext: I_Worker;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_iNext := iNext;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetPlantNext" Id="{3f76ac7f-aafc-4b12-86d9-622b9f9ea03d}">
-      <Declaration><![CDATA[METHOD INTERNAL GetPlantNext : I_Worker
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetPlantNext := _iPlantNext;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetPlantNext" Id="{c5f3bc5d-4715-4877-9c6a-b8609c3af597}">
-      <Declaration><![CDATA[METHOD INTERNAL SetPlantNext
-VAR_INPUT
-	iNext: I_Worker;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_iPlantNext := iNext;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetPlantPrev" Id="{e0e7976d-6e35-4ab5-ac93-af93d8afbca9}">
-      <Declaration><![CDATA[METHOD INTERNAL GetPlantPrev : I_Worker
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetPlantPrev := _iPlantPrev;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetPlantPrev" Id="{efbaac9f-77ba-4545-980e-c8431337b558}">
-      <Declaration><![CDATA[METHOD INTERNAL SetPlantPrev
-VAR_INPUT
-	iPrev: I_Worker;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_iPlantPrev := iPrev;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetPrev" Id="{f6c7c889-d151-4527-b323-4b10ab3e0b86}">
-      <Declaration><![CDATA[METHOD INTERNAL GetPrev : I_Worker
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetPrev := _iPrev;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetPrev" Id="{d6b008f5-8105-4280-8234-5bca2de48083}">
-      <Declaration><![CDATA[METHOD INTERNAL SetPrev
-VAR_INPUT
-	iPrev: I_Worker;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_iPrev := iPrev;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetThread" Id="{e79cefac-027c-44da-b9c0-13dc412f9f3a}">
-      <Declaration><![CDATA[METHOD INTERNAL GetThread : I_Thread
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[GetThread := _iThread;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetThread" Id="{baafe9cb-b723-42a7-8675-2873ad8701c6}">
-      <Declaration><![CDATA[METHOD INTERNAL SetThread
-VAR_INPUT
-	iThread: I_Thread;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_iThread := iThread;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="FB_Exit" Id="{1865975b-9d3d-4344-a6d6-f172841684e0}">
       <Declaration><![CDATA[//FB_Exit must be implemented explicitly. If there is an implementation, then the
 //method is called before the controller removes the code of the function block instance
@@ -151,6 +66,41 @@ IF IsErr(Plant._AttachWorker(THIS^)) THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="GetNext" Id="{0c602b56-b5e1-4abf-91dd-fb731c365c0a}">
+      <Declaration><![CDATA[METHOD INTERNAL GetNext : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetNext := _iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPlantNext" Id="{3f76ac7f-aafc-4b12-86d9-622b9f9ea03d}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPlantNext : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetPlantNext := _iPlantNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPlantPrev" Id="{e0e7976d-6e35-4ab5-ac93-af93d8afbca9}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPlantPrev : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetPlantPrev := _iPlantPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetPrev" Id="{f6c7c889-d151-4527-b323-4b10ab3e0b86}">
+      <Declaration><![CDATA[METHOD INTERNAL GetPrev : I_Worker
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetPrev := _iPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetThread" Id="{e79cefac-027c-44da-b9c0-13dc412f9f3a}">
+      <Declaration><![CDATA[METHOD INTERNAL GetThread : I_Thread
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetThread := _iThread;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Process" Id="{91b62463-a3fa-4250-833c-45861b1535b0}">
       <Declaration><![CDATA[METHOD INTERNAL Process
 VAR_OUTPUT
@@ -160,24 +110,87 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE _eState OF
-	JobState.Init:
+	JobState.PreExit:
+		_eState := JobState.Done;
+		_iJob.JobExit();
+
+		iNext := _iNext;
+		IF IsOk(_iThread.DetachWorker(THIS^)) THEN
+			_eState := JobState.Idle;
+		END_IF
+
+	JobState.Done:
+		iNext := _iNext;
+		IF IsOk(_iThread.DetachWorker(THIS^)) THEN
+			_eState := JobState.Idle;
+		END_IF
+
+	JobState.PreInit:
+		_eState := JobState.Init;
 		_iJob.JobInit();
-		_eState := JobState.Busy;
+
+		IF _eState = JobState.Init THEN
+			_eState := JobState.Busy;
+			_iJob.JobExecute();
+		END_IF
+		
 		iNext := _iNext;
 
 	JobState.Busy:
 		_iJob.JobExecute();
 		iNext := _iNext;
 
-	JobState.Done:
-		iNext := _iNext;
-		IF IsOk(_iThread.DetachWorker(THIS^)) THEN
-			_iJob.JobExit();
-			_eState := JobState.Idle;
-		END_IF
-
-END_CASE
-]]></ST>
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetNext" Id="{696044ab-0c56-4ddd-90e1-0eb46b6f56e6}">
+      <Declaration><![CDATA[METHOD INTERNAL SetNext
+VAR_INPUT
+	iNext: I_Worker;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iNext := iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPlantNext" Id="{c5f3bc5d-4715-4877-9c6a-b8609c3af597}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPlantNext
+VAR_INPUT
+	iNext: I_Worker;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iPlantNext := iNext;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPlantPrev" Id="{efbaac9f-77ba-4545-980e-c8431337b558}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPlantPrev
+VAR_INPUT
+	iPrev: I_Worker;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iPlantPrev := iPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPrev" Id="{d6b008f5-8105-4280-8234-5bca2de48083}">
+      <Declaration><![CDATA[METHOD INTERNAL SetPrev
+VAR_INPUT
+	iPrev: I_Worker;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iPrev := iPrev;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetThread" Id="{baafe9cb-b723-42a7-8675-2873ad8701c6}">
+      <Declaration><![CDATA[METHOD INTERNAL SetThread
+VAR_INPUT
+	iThread: I_Thread;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iThread := iThread;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Start" Id="{080aa8ff-e200-4b3c-b985-a8813d778807}">
@@ -193,17 +206,11 @@ END_VAR
 END_IF
 
 CASE _eState OF
-	JobState.Init:
-		Start := Error;
-
 	JobState.Idle:
-		_eState := JobState.Init;
-		Start := _iThread.AttachWorker(THIS^);
+		_eState := JobState.PreInit;
+		Start := _iThread.AttachWorker(THIS^);	
 
-	JobState.Busy:
-		Start := Error;
-
-	JobState.Done:
+	ELSE
 		Start := Error;
 
 END_CASE]]></ST>
@@ -228,7 +235,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_eState := JobState.Done;]]></ST>
+        <ST><![CDATA[CASE _eState OF
+	JobState.PreInit:
+		_eState := JobState.Done;
+	JobState.Init, JobState.Busy:
+		_eState := JobState.PreExit;
+END_CASE]]></ST>
       </Implementation>
     </Method>
     <Property Name="Thread" Id="{850b9f54-d27a-4b2c-880f-f8770f0ce6ea}">
